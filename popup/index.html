@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Textum</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      min-height: 200px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      color: #1a2533;
+      background: #f5f7fa;
+    }
+
+    #root {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 0;
+      color: #374151;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: #1a2533;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      accent-color: #3a7bd5;
+      height: 4px;
+      cursor: pointer;
+    }
+
+    .slider-label {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 32px;
+      text-align: right;
+      color: #3a7bd5;
+    }
+
+    .known-filter {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .filter-btn {
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      color: #4b5563;
+    }
+
+    .filter-btn.active {
+      background: #3a7bd5;
+      border-color: #3a7bd5;
+      color: #fff;
+    }
+
+    .known-list {
+      max-height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .known-chip {
+      padding: 2px 10px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      font-size: 12px;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    .empty-msg {
+      font-size: 12px;
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    .domain-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .domain-input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 7px 9px;
+      font: inherit;
+      color: #1a2533;
+      background: #fff;
+    }
+
+    .domain-button {
+      border: 1px solid #2a5c82;
+      border-radius: 6px;
+      padding: 7px 10px;
+      background: #2a5c82;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+    }
+
+    .domain-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .domain-chip {
+      padding: 2px 9px;
+      border-radius: 10px;
+      background: #eef3f7;
+      font-size: 12px;
+      color: #263746;
+      border: 1px solid #d8e2ea;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="../src/popup/index.ts"></script>
+</body>
+</html>
