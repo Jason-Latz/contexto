@@ -1,0 +1,23 @@
+{
+  "name": "textum",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node node_modules/vite/bin/vite.js build && node node_modules/vite/bin/vite.js build --config vite.popup.config.ts",
+    "dev": "node node_modules/vite/bin/vite.js build --watch",
+    "typecheck": "node node_modules/typescript/bin/tsc --noEmit",
+    "validate:language-packs": "node scripts/validate-language-packs.mjs",
+    "test": "rm -rf .test-build && node node_modules/typescript/bin/tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js",
+    "package": "npm run build && node scripts/package-extension.mjs"
+  },
+  "dependencies": {
+    "compromise": "^14.14.4"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.300",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.3",
+    "vite": "^8.0.0"
+  }
+}
