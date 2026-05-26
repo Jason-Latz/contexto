@@ -41,7 +41,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/content/index.ts'),
       formats: ['iife'],
-      name: '_textum',  // IIFE wrapper name — never assigned by the caller
+      name: '_contexto',  // IIFE wrapper name — never assigned by the caller
     },
     rollupOptions: {
       output: {

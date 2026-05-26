@@ -1,10 +1,10 @@
-# Textum Privacy Policy Draft
+# Contexto Privacy Policy Draft
 
-Textum runs locally in Chrome and uses a bundled Spanish language pack.
+Contexto runs locally in Chrome and uses a bundled Spanish language pack.
 
 ## Data Collected
 
-Textum stores extension state in `chrome.storage.local`, including:
+Contexto stores extension state in `chrome.storage.local`, including:
 
 - selected replacement density
 - known-word and review state
@@ -15,15 +15,15 @@ This data stays on the user's device.
 
 ## Network Use
 
-Textum v1 does not send page text, browsing history, or translation requests to a server. The extension does not use a hosted backend or runtime translation API.
+Contexto v1 does not send page text, browsing history, or translation requests to a server. The extension does not use a hosted backend or runtime translation API.
 
 ## Page Access
 
-Textum needs access to page text so it can replace eligible English words with Spanish translations. Textum skips form controls, code blocks, editable content, its own UI, and user-blocked domains.
+Contexto needs access to page text so it can replace eligible English words with Spanish translations. Contexto skips form controls, code blocks, editable content, its own UI, and user-blocked domains.
 
 ## Third Parties
 
-Textum v1 does not share user data with third parties.
+Contexto v1 does not share user data with third parties.
 
 ## Contact
 

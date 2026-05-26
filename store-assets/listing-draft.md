@@ -2,7 +2,7 @@
 
 ## Name
 
-Textum
+Contexto
 
 ## Short Description
 
@@ -10,9 +10,9 @@ Passive Spanish immersion while you read the web.
 
 ## Detailed Description
 
-Textum turns everyday reading into lightweight language practice. It replaces a user-controlled percentage of eligible English words with Spanish translations directly on the page. Hover over any translated word to see the original English word, a short English definition, and the Spanish translation.
+Contexto turns everyday reading into lightweight language practice. It replaces a user-controlled percentage of eligible English words with Spanish translations directly on the page. Hover over any translated word to see the original English word, a short English definition, and the Spanish translation.
 
-Textum is designed to feel quiet and academic rather than game-like. It uses a local Spanish language pack, stores learning state on your device, and makes no runtime translation API calls in v1.
+Contexto is designed to feel quiet and academic rather than game-like. It uses a local Spanish language pack, stores learning state on your device, and makes no runtime translation API calls in v1.
 
 ## Permission Rationale
 

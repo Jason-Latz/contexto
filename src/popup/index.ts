@@ -3,9 +3,9 @@ import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
 import { renderKnownWordsList } from './KnownWordsList.js'
 
-const LEXICON_KEY  = 'textum_lexicon'
-const SESSION_KEY  = 'textum_session'
-const SETTINGS_KEY = 'textum_settings'
+const LEXICON_KEY  = 'contexto_lexicon'
+const SESSION_KEY  = 'contexto_session'
+const SETTINGS_KEY = 'contexto_settings'
 
 interface SessionStore {
   wordsSeen?: Array<{ englishLemma: string }>

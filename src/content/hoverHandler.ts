@@ -1,7 +1,7 @@
 import { setKnown } from '../engine/wordLifecycle.js'
 
-// The data attribute written by injector.ts to identify Textum-managed spans.
-const TEXTUM_ATTR = 'data-textum'
+// The data attribute written by injector.ts to identify Contexto-managed spans.
+const CONTEXTO_ATTR = 'data-contexto'
 
 // Threshold for the informational self-mark warning toast.
 // Not a hard cap — the user may mark as many words as they like.
@@ -49,8 +49,8 @@ function getOrCreateTooltip(): HTMLElement {
   if (tooltip) return tooltip
 
   tooltip = document.createElement('div')
-  tooltip.setAttribute('id', 'textum-tooltip')
-  tooltip.setAttribute('data-textum-ui', 'true')
+  tooltip.setAttribute('id', 'contexto-tooltip')
+  tooltip.setAttribute('data-contexto-ui', 'true')
   tooltip.setAttribute('style', [
     'position: absolute',
     'z-index: 2147483647',
@@ -82,7 +82,7 @@ function positionTooltip(tip: HTMLElement, event: MouseEvent): void {
 
 function showTooltip(target: HTMLElement, event: MouseEvent): void {
   const tip = getOrCreateTooltip()
-  const isKnown = target.getAttribute('data-textum-known') === 'true'
+  const isKnown = target.getAttribute('data-contexto-known') === 'true'
 
   if (isKnown) {
     tip.textContent = 'Known - click to undo'
@@ -168,17 +168,17 @@ function handleSpanClick(target: HTMLElement): void {
   const englishLemma = target.getAttribute('data-lemma')
   if (!englishLemma) return
 
-  const isKnown = target.getAttribute('data-textum-known') === 'true'
+  const isKnown = target.getAttribute('data-contexto-known') === 'true'
 
   if (isKnown) {
     // Second click — undo the mark.
     setKnown(englishLemma, false)
-    target.removeAttribute('data-textum-known')
+    target.removeAttribute('data-contexto-known')
     target.setAttribute('style', BASE_SPAN_STYLE)
   } else {
     // First click — mark as known.
     setKnown(englishLemma, true)
-    target.setAttribute('data-textum-known', 'true')
+    target.setAttribute('data-contexto-known', 'true')
     target.setAttribute('style', KNOWN_SPAN_STYLE)
 
     sessionSelfMarkCount++
@@ -199,11 +199,11 @@ function handleSpanClick(target: HTMLElement): void {
 export function setupHoverHandler(): void {
   document.body.addEventListener('mouseover', (event: MouseEvent) => {
     const target = event.target as HTMLElement
-    if (!target.hasAttribute(TEXTUM_ATTR)) return
+    if (!target.hasAttribute(CONTEXTO_ATTR)) return
 
     // Known words use a muted style with no hover highlight — the base style
     // applied at mark time is already visually distinct.
-    if (target.getAttribute('data-textum-known') !== 'true') {
+    if (target.getAttribute('data-contexto-known') !== 'true') {
       target.style.backgroundColor = 'rgba(42, 92, 130, 0.14)'
     }
     showTooltip(target, event)
@@ -211,7 +211,7 @@ export function setupHoverHandler(): void {
 
   document.body.addEventListener('mouseout', (event: MouseEvent) => {
     const target = event.target as HTMLElement
-    if (!target.hasAttribute(TEXTUM_ATTR)) return
+    if (!target.hasAttribute(CONTEXTO_ATTR)) return
     target.style.backgroundColor = ''
     hideTooltip()
   })
@@ -222,10 +222,10 @@ export function setupHoverHandler(): void {
     }
   })
 
-  // Self-mark: delegated click on all Textum spans.
+  // Self-mark: delegated click on all Contexto spans.
   document.body.addEventListener('click', (event: MouseEvent) => {
     const target = event.target as HTMLElement
-    if (!target.hasAttribute(TEXTUM_ATTR)) return
+    if (!target.hasAttribute(CONTEXTO_ATTR)) return
     handleSpanClick(target)
   })
 }

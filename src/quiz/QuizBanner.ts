@@ -247,7 +247,7 @@ function showBanner(eligibleCount: number): void {
   // --- Wrapper (full-viewport, pointer-events: none) ---
   const wrapper = document.createElement('div')
   wrapper.style.cssText = WRAPPER_STYLE
-  wrapper.setAttribute('data-textum-quiz', 'true')
+  wrapper.setAttribute('data-contexto-quiz', 'true')
 
   // --- Panel (actual visible banner, pointer-events: auto) ---
   const panel = document.createElement('div')

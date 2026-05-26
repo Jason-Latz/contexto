@@ -114,7 +114,7 @@ function buildSpan(
 ): HTMLSpanElement {
   const span = document.createElement('span')
   span.textContent = displayText
-  span.setAttribute('data-textum', 'true')
+  span.setAttribute('data-contexto', 'true')
   span.setAttribute('data-source', originalEnglish)
   span.setAttribute('data-target', displayText)
   span.setAttribute('data-base-target', entry.target)

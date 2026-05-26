@@ -139,7 +139,7 @@ export function showCalibrationQuiz(): Promise<void> {
     const questions = buildQuizQuestions()
 
     const overlay = document.createElement('div')
-    overlay.id = 'textum-calibration'
+    overlay.id = 'contexto-calibration'
     overlay.setAttribute('style', [
       'position: fixed',
       'inset: 0',
@@ -314,10 +314,10 @@ function showSummary(
     detail.textContent =
       `We've adjusted your level to ${LEVEL_LABELS[droppedLevel]} so replacements start at a comfortable pace.`
   } else if (score >= PASS_THRESHOLD) {
-    detail.textContent = 'Great — Textum will skip words you already know and focus on new ones.'
+    detail.textContent = 'Great — Contexto will skip words you already know and focus on new ones.'
   } else {
     // currentLevel is beginner and score < 5 — no lower level to drop to
-    detail.textContent = 'No worries — Textum will start with the most common words.'
+    detail.textContent = 'No worries — Contexto will start with the most common words.'
   }
 
   const continueBtn = document.createElement('button')
