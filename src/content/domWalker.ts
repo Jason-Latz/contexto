@@ -29,13 +29,13 @@ const SKIP_SELECTORS: readonly string[] = [
   '.cm-editor',
   // Monaco editor (VS Code web, GitHub Codespaces)
   '.monaco-editor',
-  // Textum-managed UI and replacement spans must never be translated.
-  '[data-textum]',
-  '[data-textum-ui]',
-  '[data-textum-quiz]',
-  '#textum-tooltip',
-  '#textum-onboarding',
-  '#textum-calibration',
+  // Contexto-managed UI and replacement spans must never be translated.
+  '[data-contexto]',
+  '[data-contexto-ui]',
+  '[data-contexto-quiz]',
+  '#contexto-tooltip',
+  '#contexto-onboarding',
+  '#contexto-calibration',
   // Elements explicitly tagged as non-English — skip to avoid double-translation
   '[lang]:not([lang^="en"])',
 ]
@@ -72,7 +72,7 @@ const HIGH_STAKES_DOMAINS: { pattern: RegExp; category: string }[] = [
 function showHighStakesBanner(hostname: string, category: string): Promise<boolean> {
   return new Promise((resolve) => {
     const banner = document.createElement('div')
-    banner.setAttribute('id', 'textum-hsd-banner')
+    banner.setAttribute('id', 'contexto-hsd-banner')
     banner.setAttribute('style', [
       'position: fixed',
       'top: 0',
@@ -92,9 +92,9 @@ function showHighStakesBanner(hostname: string, category: string): Promise<boole
 
     const message = document.createElement('span')
     message.style.flex = '1'
-    banner.setAttribute('data-textum-ui', 'true')
+    banner.setAttribute('data-contexto-ui', 'true')
     message.textContent =
-      `Textum: ${category} site detected (${hostname}). Enable language immersion here?`
+      `Contexto: ${category} site detected (${hostname}). Enable language immersion here?`
 
     const enableBtn = document.createElement('button')
     enableBtn.textContent = 'Enable'

@@ -8,7 +8,7 @@ import { ZipArchive } from './zip-archive.mjs'
 
 const root = cwd()
 const outDir = join(root, 'release')
-const zipPath = join(outDir, argv[2] ?? 'textum-extension.zip')
+const zipPath = join(outDir, argv[2] ?? 'contexto-extension.zip')
 
 await mkdir(outDir, { recursive: true })
 await rm(zipPath, { force: true })

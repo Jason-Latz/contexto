@@ -6,11 +6,11 @@
  * or runtime translation calls into the Chrome extension.
  */
 
-const enabled = process.env.TEXTUM_TRANSLATION_API_ENABLED === '1'
+const enabled = process.env.CONTEXTO_TRANSLATION_API_ENABLED === '1'
 
 if (!enabled) {
-  console.log('Textum pack generation is disabled by default.')
-  console.log('Set TEXTUM_TRANSLATION_API_ENABLED=1 when a backend/API workflow exists.')
+  console.log('Contexto pack generation is disabled by default.')
+  console.log('Set CONTEXTO_TRANSLATION_API_ENABLED=1 when a backend/API workflow exists.')
   process.exit(0)
 }
 

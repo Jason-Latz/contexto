@@ -15,7 +15,7 @@ function toPercent(density: number): string {
  * popup remains decoupled from the content script's settingsStore module.
  */
 export async function renderDensitySlider(container: HTMLElement): Promise<void> {
-  const SETTINGS_KEY = 'textum_settings'
+  const SETTINGS_KEY = 'contexto_settings'
 
   const stored = await chrome.storage.local.get(SETTINGS_KEY)
   const settings = stored[SETTINGS_KEY] ?? {}

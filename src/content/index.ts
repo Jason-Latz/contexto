@@ -29,8 +29,8 @@ function countPageWords(): number {
 async function flushStorage(): Promise<void> {
   if (!isDirty()) return
   await chrome.storage.local.set({
-    textum_lexicon: getLexiconForStorage(),
-    textum_session: getSessionForStorage(),
+    contexto_lexicon: getLexiconForStorage(),
+    contexto_session: getSessionForStorage(),
   })
   clearDirty()
 }
@@ -56,7 +56,7 @@ async function main(): Promise<void> {
     await loadLanguagePack(getTargetLanguage())
     await loadLexicon()
   } catch (err) {
-    console.warn('[Textum] Startup failed, extension inactive:', err)
+    console.warn('[Contexto] Startup failed, extension inactive:', err)
     return
   }
 

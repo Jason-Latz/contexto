@@ -27,17 +27,17 @@ export async function loadLanguagePack(
   if (activePack?.targetLanguage === targetLanguage && entries !== null) return
 
   if (!chrome.runtime?.id || chrome.runtime.id === 'invalid') {
-    throw new Error('[Textum] Extension context invalidated; refresh the page to restore it')
+    throw new Error('[Contexto] Extension context invalidated; refresh the page to restore it')
   }
 
   const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
   if (!response.ok) {
-    throw new Error(`[Textum] Failed to load ${targetLanguage} language pack`)
+    throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
   }
 
   const pack = (await response.json()) as LanguagePack
   if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
-    throw new Error(`[Textum] Invalid language pack metadata for ${targetLanguage}`)
+    throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
   }
 
   activePack = pack

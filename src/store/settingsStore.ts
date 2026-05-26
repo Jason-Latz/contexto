@@ -1,6 +1,6 @@
 import type { OnboardingLevel, TargetLanguage } from '../types/index.js'
 
-const STORAGE_KEY = 'textum_settings'
+const STORAGE_KEY = 'contexto_settings'
 
 // Density defaults per onboarding level — user-adjustable in Phase 4 popup.
 const LEVEL_DENSITY: Record<OnboardingLevel, number> = {

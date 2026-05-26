@@ -342,9 +342,9 @@ All four implementation phases complete. Extension is feature-complete for v1.
 
 ## User Preferences
 
-- Jason likes the name `Textum`; preserve the name and branding direction unless a concrete shipping, trademark, or store-listing issue requires revisiting it.
-- Textum should not be German-specific; design product copy, architecture, and configuration around target-language packs. Spanish is the required test language from now on.
-- Prefer deny-list behavior over allow-list behavior: Textum should run broadly by default, with specific blocked domains/pages/settings where needed.
+- Jason no longer wants the `Textum` name. Use `Contexto` as the current working title and keep branding easy to change because the name is provisional.
+- Contexto should not be German-specific; design product copy, architecture, and configuration around target-language packs. Spanish is the required test language from now on.
+- Prefer deny-list behavior over allow-list behavior: Contexto should run broadly by default, with specific blocked domains/pages/settings where needed.
 - Keep v1 minimal: remove or defer notification/nudge features unless Jason explicitly re-adds them.
 - The end goal is Chrome Web Store distribution, so release work should account for store policy, privacy copy, icons, packaging, and permission minimization.
 - Replacement density should be user-controlled by a slider that ranges from very few words to almost all/all eligible words where technically reasonable.

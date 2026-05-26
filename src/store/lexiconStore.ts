@@ -1,7 +1,7 @@
 import type { LexiconEntry } from '../types/index.js'
 import { WordLifecycleState } from '../types/index.js'
 
-const STORAGE_KEY = 'textum_lexicon'
+const STORAGE_KEY = 'contexto_lexicon'
 
 // Baseline seenCount applied to pre-populated words during onboarding.
 // High enough to depress novelty scores (noveltyScore = 1/(1+seenCount)),

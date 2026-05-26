@@ -2,7 +2,7 @@ import { collectTextNodesSync } from './domWalker.js'
 import { injectReplacements } from './injector.js'
 
 // The data attribute written by injector.ts — used to gate characterData processing.
-const TEXTUM_ATTR = 'data-textum'
+const CONTEXTO_ATTR = 'data-contexto'
 
 // How long to wait after the last mutation before processing. Batches rapid DOM
 // bursts (virtual scroll recycling, SPA route transitions) into a single pass.
@@ -51,7 +51,7 @@ function flush(approvedLemmas: ReadonlySet<string>): void {
     pendingRoots.clear()
 
     // Process characterData parents — text content of an existing node changed.
-    // Only arrives when the parent carries data-textum (a Textum-managed span whose
+    // Only arrives when the parent carries data-contexto (a Contexto-managed span whose
     // text was recycled). Re-inject so the replacement stays active after recycling.
     for (const parent of pendingCharacterDataParents) {
       if (!document.contains(parent)) continue
@@ -74,7 +74,7 @@ function flush(approvedLemmas: ReadonlySet<string>): void {
  * The observer is SPA-safe:
  *   - 500 ms debounce absorbs rapid bursts (route transitions, infinite scroll)
  *   - isInjecting guard prevents re-entrant cycles from span insertions
- *   - characterData processing is gated on the parent carrying data-textum,
+ *   - characterData processing is gated on the parent carrying data-contexto,
  *     so routine text edits on the page are never processed
  */
 export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): void {
@@ -100,10 +100,10 @@ export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): void
           }
         }
       } else if (mutation.type === 'characterData') {
-        // A text node's data changed. Only act when the parent is a Textum span —
+        // A text node's data changed. Only act when the parent is a Contexto span —
         // virtual scroll recyclers reuse the span node but write new text into it.
         const parent = mutation.target.parentElement
-        if (parent && parent.hasAttribute(TEXTUM_ATTR)) {
+        if (parent && parent.hasAttribute(CONTEXTO_ATTR)) {
           pendingCharacterDataParents.add(parent)
           hasWork = true
         }

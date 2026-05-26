@@ -24,7 +24,7 @@ export function showLevelPicker(): Promise<void> {
 
 function buildOverlay(onDone: () => void): HTMLDivElement {
   const overlay = document.createElement('div')
-  overlay.id = 'textum-onboarding'
+  overlay.id = 'contexto-onboarding'
   overlay.setAttribute('style', [
     'position: fixed',
     'inset: 0',
@@ -48,11 +48,11 @@ function buildOverlay(onDone: () => void): HTMLDivElement {
   ].join('; '))
 
   const title = document.createElement('h2')
-  title.textContent = 'Welcome to Textum'
+  title.textContent = 'Welcome to Contexto'
   title.setAttribute('style', 'margin: 0 0 8px; font-size: 1.4rem; color: #1a1a2e;')
 
   const subtitle = document.createElement('p')
-  subtitle.textContent = 'Choose your starting level. Textum will replace English words with Spanish as you browse.'
+  subtitle.textContent = 'Choose your starting level. Contexto will replace English words with Spanish as you browse.'
   subtitle.setAttribute('style', 'margin: 0 0 24px; font-size: 0.95rem; color: #555; line-height: 1.5;')
 
   const levels: OnboardingLevel[] = ['beginner', 'intermediate', 'advanced']

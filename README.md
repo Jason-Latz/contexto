@@ -1,6 +1,6 @@
-# Textum
+# Contexto
 
-Textum is a Chrome extension for passive language immersion. It replaces a user-controlled percentage of eligible English words on web pages with Spanish translations, then shows the original English word and definition on hover.
+Contexto is a Chrome extension for passive language immersion. It replaces a user-controlled percentage of eligible English words on web pages with Spanish translations, then shows the original English word and definition on hover.
 
 ## Current V1 Scope
 
@@ -39,7 +39,7 @@ Use `fixtures/spanish-article.html` for a local smoke test.
 npm run package
 ```
 
-This creates `release/textum-extension.zip` from `dist/`.
+This creates `release/contexto-extension.zip` from `dist/`.
 
 ## Language Packs
 
