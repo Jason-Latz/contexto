@@ -14,6 +14,8 @@ interface Settings {
   level: OnboardingLevel | null
   targetLanguage: TargetLanguage
   density: number
+  replacementsEnabled: boolean
+  quizzesEnabled: boolean
   blockedDomains: string[]
   // Per-hostname decisions made on the high-stakes banner.
   // true = user allowed replacements; false = user paused for that domain.
@@ -29,6 +31,8 @@ function makeDefaultSettings(): Settings {
     level: null,
     targetLanguage: 'es',
     density: LEVEL_DENSITY.beginner,
+    replacementsEnabled: true,
+    quizzesEnabled: false,
     blockedDomains: [],
     domainDecisions: {},
   }
@@ -44,6 +48,8 @@ export async function loadSettings(): Promise<void> {
       ...makeDefaultSettings(),
       ...raw,
       targetLanguage: raw.targetLanguage ?? 'es',
+      replacementsEnabled: raw.replacementsEnabled ?? true,
+      quizzesEnabled: raw.quizzesEnabled ?? false,
       blockedDomains: raw.blockedDomains ?? [],
       domainDecisions: raw.domainDecisions ?? {},
     }
@@ -71,6 +77,14 @@ export async function completeOnboarding(level: OnboardingLevel): Promise<void> 
 
 export function getDensity(): number {
   return settings.density
+}
+
+export function areReplacementsEnabled(): boolean {
+  return settings.replacementsEnabled
+}
+
+export function areQuizzesEnabled(): boolean {
+  return settings.quizzesEnabled
 }
 
 // Update the stored density and persist immediately.

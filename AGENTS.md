@@ -192,7 +192,7 @@ grammatically wrong output that teaches incorrect patterns.
    - What you are going to build or change and why
    - Which files will be created or modified
    - Any risks, tradeoffs, or open questions
-4. Wait for explicit approval before writing any code
+4. Do not wait for explicit approval before writing code unless Jason specifically asks for a plan-only pass or the change is destructive/high-risk
 
 ### After Making Changes
 1. Verify the change works as intended before declaring it complete
@@ -350,6 +350,10 @@ All four implementation phases complete. Extension is feature-complete for v1.
 - Replacement density should be user-controlled by a slider that ranges from very few words to almost all/all eligible words where technically reasonable.
 - Brand and UI direction should be minimalist and academic, not playful or heavy.
 - Jason is open to a translation API or hybrid approach because hand-built/downloaded dictionaries may not scale well across target languages.
+- For large language-pack word generation, Jason prefers using ChatGPT outside Codex and then pasting/validating the JSON locally to conserve Codex rate-limit tokens.
+- Jason does not want Codex to pause for approval before ordinary code or data edits; proceed directly after explaining the intended change unless the edit is destructive or unusually risky.
+- Do not show an initial calibration quiz during onboarding unless Jason explicitly asks to bring it back.
+- Keep non-core learning features easy to disable from the popup. Quizzes should default off; text replacement should be separately pausable.
 
 ## 2026-05 Spanish-First Refactor Direction
 

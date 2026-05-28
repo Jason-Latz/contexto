@@ -73,6 +73,43 @@
       color: #3a7bd5;
     }
 
+    .toggle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .toggle-label {
+      font-weight: 600;
+      color: #263746;
+    }
+
+    .toggle-button {
+      min-width: 48px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 5px 10px;
+      background: #f8fafc;
+      color: #475569;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .toggle-button.is-on {
+      border-color: #2a5c82;
+      background: #2a5c82;
+      color: #fff;
+    }
+
     .known-filter {
       display: flex;
       gap: 6px;

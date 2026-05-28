@@ -3,7 +3,13 @@ import { collectTextNodes } from './domWalker.js'
 import { injectReplacements, extractPageCandidates } from './injector.js'
 import { setupHoverHandler } from './hoverHandler.js'
 import { loadLexicon, getLexiconForStorage, isDirty, clearDirty } from '../store/lexiconStore.js'
-import { getTargetLanguage, isOnboarded, loadSettings } from '../store/settingsStore.js'
+import {
+  areQuizzesEnabled,
+  areReplacementsEnabled,
+  getTargetLanguage,
+  isOnboarded,
+  loadSettings,
+} from '../store/settingsStore.js'
 import { initSession, getSessionForStorage } from '../store/sessionStore.js'
 import { computeDensity } from '../engine/proficiencyModel.js'
 import { selectTokens } from '../engine/wordSelector.js'
@@ -44,15 +50,22 @@ async function main(): Promise<void> {
     })
   }
 
-  const wordCount = countPageWords()
-
-  // Silently exit on pages with too little content — no readable immersion possible
-  if (wordCount < MIN_PAGE_WORD_COUNT) return
-
-  // Load persisted state before making any decisions that depend on it.
-  // loadSettings must come first — isOnboarded() reads from it.
+  // Load persisted feature flags before doing language-pack or DOM work.
   try {
     await loadSettings()
+  } catch (err) {
+    console.warn('[Contexto] Settings load failed, extension inactive:', err)
+    return
+  }
+
+  if (!areReplacementsEnabled()) return
+
+  // Silently exit on pages with too little content — no readable immersion possible
+  const wordCount = countPageWords()
+  if (wordCount < MIN_PAGE_WORD_COUNT) return
+
+  // Load runtime data only after the user-facing replacement toggle is enabled.
+  try {
     await loadLanguagePack(getTargetLanguage())
     await loadLexicon()
   } catch (err) {
@@ -64,8 +77,8 @@ async function main(): Promise<void> {
   initSession()
 
   // If the user has not completed onboarding, show the level picker overlay
-  // and wait for it to finish before proceeding. The picker saves the level,
-  // pre-populates the lexicon, and runs the calibration quiz.
+  // and wait for it to finish before proceeding. The picker saves the level
+  // and pre-populates the lexicon.
   if (!isOnboarded()) {
     await showLevelPicker()
   }
@@ -100,9 +113,11 @@ async function main(): Promise<void> {
   // initial pass (route transitions, infinite scroll, dynamic widgets).
   setupMutationObserver(approvedLemmas)
 
-  // Start the active-reading timer. Pass the page candidate count so the quiz
-  // banner can forward it to adjustDensityAfterQuiz after the session completes.
-  startQuizTimer(pageCandidates.length)
+  if (areQuizzesEnabled()) {
+    // Start the active-reading timer. Pass the page candidate count so the quiz
+    // banner can forward it to adjustDensityAfterQuiz after the session completes.
+    startQuizTimer(pageCandidates.length)
+  }
 
   // --- Storage write strategy ---
   // Primary: flush on visibilitychange (tab hidden / user navigates away).
