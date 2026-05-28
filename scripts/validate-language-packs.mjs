@@ -18,6 +18,29 @@ function requireString(value, label) {
   }
 }
 
+function assertNoDuplicateEntryKeys(raw, language) {
+  const entryKeyPattern = /^\s*"([^"]+)"\s*:\s*\{/gm
+  const seen = new Map()
+  const duplicates = []
+  let match
+
+  while ((match = entryKeyPattern.exec(raw)) !== null) {
+    const key = match[1]
+    if (key === 'entries') continue
+
+    const line = raw.slice(0, match.index).split('\n').length
+    if (seen.has(key)) {
+      duplicates.push(`${key} (lines ${seen.get(key)} and ${line})`)
+    } else {
+      seen.set(key, line)
+    }
+  }
+
+  if (duplicates.length > 0) {
+    fail(`${language}: duplicate entries found: ${duplicates.join(', ')}`)
+  }
+}
+
 function validateEntry(key, entry, targetLanguage) {
   if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
     fail(`${key} must be an object`)
@@ -53,7 +76,10 @@ function validateEntry(key, entry, targetLanguage) {
 
 async function validatePack(language) {
   const file = join(ROOT, 'public', 'language-packs', `${language}.json`)
-  const pack = JSON.parse(await readFile(file, 'utf8'))
+  const raw = await readFile(file, 'utf8')
+  assertNoDuplicateEntryKeys(raw, language)
+
+  const pack = JSON.parse(raw)
 
   if (pack.sourceLanguage !== 'en') fail(`${language}: sourceLanguage must be en`)
   if (pack.targetLanguage !== language) fail(`${language}: targetLanguage mismatch`)
