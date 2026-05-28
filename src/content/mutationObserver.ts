@@ -77,7 +77,7 @@ function flush(approvedLemmas: ReadonlySet<string>): void {
  *   - characterData processing is gated on the parent carrying data-contexto,
  *     so routine text edits on the page are never processed
  */
-export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): void {
+export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): MutationObserver {
   const observer = new MutationObserver((mutations) => {
     // Drop mutations that originated from our own injection pass.
     if (isInjecting) return
@@ -118,4 +118,6 @@ export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): void
     subtree: true,
     characterData: true,
   })
+
+  return observer
 }

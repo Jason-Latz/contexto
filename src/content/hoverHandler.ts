@@ -44,6 +44,7 @@ const KNOWN_SPAN_STYLE = [
 // ---------------------------------------------------------------------------
 
 let tooltip: HTMLElement | null = null
+let isHoverHandlerSetup = false
 
 function getOrCreateTooltip(): HTMLElement {
   if (tooltip) return tooltip
@@ -197,6 +198,9 @@ function handleSpanClick(target: HTMLElement): void {
 // ---------------------------------------------------------------------------
 
 export function setupHoverHandler(): void {
+  if (isHoverHandlerSetup) return
+  isHoverHandlerSetup = true
+
   document.body.addEventListener('mouseover', (event: MouseEvent) => {
     const target = event.target as HTMLElement
     if (!target.hasAttribute(CONTEXTO_ATTR)) return
@@ -228,6 +232,11 @@ export function setupHoverHandler(): void {
     if (!target.hasAttribute(CONTEXTO_ATTR)) return
     handleSpanClick(target)
   })
+}
+
+export function removeHoverUI(): void {
+  tooltip?.remove()
+  tooltip = null
 }
 
 // Exported for use by the popup's KnownWordsList to display the session count.

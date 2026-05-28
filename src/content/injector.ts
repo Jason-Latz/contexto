@@ -377,3 +377,12 @@ export function injectReplacements(node: Text, approvedLemmas: ReadonlySet<strin
 
   replaceTextNode(node, replacements)
 }
+
+export function restoreReplacements(root: ParentNode = document): void {
+  const spans = [...root.querySelectorAll<HTMLElement>('[data-contexto="true"]')]
+
+  for (const span of spans) {
+    const source = span.getAttribute('data-source') ?? span.textContent ?? ''
+    span.replaceWith(document.createTextNode(source))
+  }
+}
