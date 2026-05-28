@@ -2,7 +2,6 @@ import { completeOnboarding, getLevelDensity } from '../store/settingsStore.js'
 import { prepopulate } from '../store/lexiconStore.js'
 import { getTopNLemmas } from '../language/loader.js'
 import type { OnboardingLevel } from '../types/index.js'
-import { showCalibrationQuiz } from './CalibrationQuiz.js'
 
 // Number of top-frequency lemmas to pre-populate per level.
 // Pre-population seeds the lexicon with assumed prior exposure so the
@@ -14,7 +13,7 @@ const PREPOPULATE_COUNT: Record<OnboardingLevel, number> = {
 }
 
 // Inject the level picker overlay into the current page and resolve once
-// the user has completed onboarding (level chosen + calibration quiz done).
+// the user has completed onboarding.
 export function showLevelPicker(): Promise<void> {
   return new Promise(resolve => {
     const overlay = buildOverlay(resolve)
@@ -110,9 +109,6 @@ async function handleLevelChosen(level: OnboardingLevel, onDone: () => void): Pr
   prepopulate(lemmas)
 
   await completeOnboarding(level)
-
-  // Show the calibration quiz to let the user fine-tune the pre-population.
-  await showCalibrationQuiz()
 
   onDone()
 }

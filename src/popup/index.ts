@@ -11,15 +11,23 @@ interface SessionStore {
   wordsSeen?: Array<{ englishLemma: string }>
 }
 
+interface PopupSettings {
+  replacementsEnabled?: boolean
+  quizzesEnabled?: boolean
+  blockedDomains?: string[]
+  [key: string]: unknown
+}
+
 async function init(): Promise<void> {
   const root = document.getElementById('root')!
 
   const stored = await chrome.storage.local.get([LEXICON_KEY, SESSION_KEY, SETTINGS_KEY])
   const lexicon  = (stored[LEXICON_KEY]  ?? {}) as Record<string, LexiconEntry>
   const session  = (stored[SESSION_KEY]  ?? {}) as SessionStore
-  const settings = stored[SETTINGS_KEY] ?? {}
+  const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
 
   renderLanguagePanel(root)
+  renderFeatureToggles(root, settings)
 
   // Stats — session word count, known words, learning queue size.
   renderStatsPanel(root, lexicon, session)
@@ -55,7 +63,92 @@ function renderLanguagePanel(container: HTMLElement): void {
   container.appendChild(section)
 }
 
-function renderBlockedDomains(container: HTMLElement, settings: any): void {
+async function updateSettings(patch: Partial<PopupSettings>): Promise<void> {
+  const stored = await chrome.storage.local.get(SETTINGS_KEY)
+  const current = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
+  await chrome.storage.local.set({
+    [SETTINGS_KEY]: { ...current, ...patch },
+  })
+}
+
+function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSettings): void {
+  const settings: Required<Pick<PopupSettings, 'replacementsEnabled' | 'quizzesEnabled'>> = {
+    replacementsEnabled: initialSettings.replacementsEnabled ?? true,
+    quizzesEnabled: initialSettings.quizzesEnabled ?? false,
+  }
+
+  const section = document.createElement('div')
+  section.className = 'section'
+
+  const title = document.createElement('div')
+  title.className = 'section-title'
+  title.textContent = 'Features'
+
+  const rows = document.createElement('div')
+  rows.className = 'toggle-list'
+
+  const replacementToggle = buildToggleRow(
+    'Text Replacement',
+    settings.replacementsEnabled,
+    async enabled => {
+      settings.replacementsEnabled = enabled
+      await updateSettings({ replacementsEnabled: enabled })
+    },
+  )
+
+  const quizToggle = buildToggleRow(
+    'Quizzes',
+    settings.quizzesEnabled,
+    async enabled => {
+      settings.quizzesEnabled = enabled
+      await updateSettings({ quizzesEnabled: enabled })
+    },
+  )
+
+  rows.appendChild(replacementToggle)
+  rows.appendChild(quizToggle)
+  section.appendChild(title)
+  section.appendChild(rows)
+  container.appendChild(section)
+}
+
+function buildToggleRow(
+  labelText: string,
+  initialEnabled: boolean,
+  onChange: (enabled: boolean) => Promise<void>,
+): HTMLDivElement {
+  let enabled = initialEnabled
+
+  const row = document.createElement('div')
+  row.className = 'toggle-row'
+
+  const label = document.createElement('span')
+  label.className = 'toggle-label'
+  label.textContent = labelText
+
+  const button = document.createElement('button')
+  button.type = 'button'
+  button.className = 'toggle-button'
+
+  function render(): void {
+    button.textContent = enabled ? 'On' : 'Off'
+    button.setAttribute('aria-pressed', String(enabled))
+    button.classList.toggle('is-on', enabled)
+  }
+
+  button.addEventListener('click', () => {
+    enabled = !enabled
+    render()
+    void onChange(enabled)
+  })
+
+  render()
+  row.appendChild(label)
+  row.appendChild(button)
+  return row
+}
+
+function renderBlockedDomains(container: HTMLElement, settings: PopupSettings): void {
   const blockedDomains = Array.isArray(settings.blockedDomains)
     ? settings.blockedDomains as string[]
     : []
@@ -101,9 +194,7 @@ function renderBlockedDomains(container: HTMLElement, settings: any): void {
       row.addEventListener('click', () => {
         const index = blockedDomains.indexOf(domain)
         if (index >= 0) blockedDomains.splice(index, 1)
-        void chrome.storage.local.set({
-          [SETTINGS_KEY]: { ...settings, blockedDomains },
-        })
+        void updateSettings({ blockedDomains })
         renderList()
       })
       list.appendChild(row)
@@ -117,9 +208,7 @@ function renderBlockedDomains(container: HTMLElement, settings: any): void {
     blockedDomains.push(domain)
     blockedDomains.sort()
     input.value = ''
-    void chrome.storage.local.set({
-      [SETTINGS_KEY]: { ...settings, blockedDomains },
-    })
+    void updateSettings({ blockedDomains })
     renderList()
   })
 

@@ -53,8 +53,11 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   // every pixel of slider drag.
   slider.addEventListener('change', () => {
     const newDensity = parseInt(slider.value, 10) / 100
-    void chrome.storage.local.set({
-      [SETTINGS_KEY]: { ...settings, density: newDensity },
+    void chrome.storage.local.get(SETTINGS_KEY).then(latest => {
+      const latestSettings = latest[SETTINGS_KEY] ?? settings
+      return chrome.storage.local.set({
+        [SETTINGS_KEY]: { ...latestSettings, density: newDensity },
+      })
     })
   })
 
