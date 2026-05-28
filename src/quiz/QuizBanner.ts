@@ -44,6 +44,8 @@ const SESSION_SEEN_THRESHOLD = 2              // min session appearances for Rev
 let activeStartMs  = Date.now()  // when the current visible period started
 let totalActiveMs  = 0           // accumulated visible milliseconds
 let hasShownBanner = false       // only one banner per page load
+let activeTimer: ReturnType<typeof setInterval> | null = null
+let activeWrapper: HTMLElement | null = null
 
 function accumulateActiveTime(): void {
   if (document.visibilityState === 'hidden') {
@@ -248,6 +250,7 @@ function showBanner(eligibleCount: number): void {
   const wrapper = document.createElement('div')
   wrapper.style.cssText = WRAPPER_STYLE
   wrapper.setAttribute('data-contexto-quiz', 'true')
+  activeWrapper = wrapper
 
   // --- Panel (actual visible banner, pointer-events: auto) ---
   const panel = document.createElement('div')
@@ -285,6 +288,7 @@ function showBanner(eligibleCount: number): void {
 
   function dismiss(): void {
     wrapper.remove()
+    if (activeWrapper === wrapper) activeWrapper = null
   }
 
   function showNext(): void {
@@ -329,17 +333,33 @@ function showBanner(eligibleCount: number): void {
  * adjustDensityAfterQuiz has the observation window it needs.
  */
 export function startQuizTimer(eligibleCount: number): void {
+  if (activeTimer !== null || hasShownBanner) return
+
+  activeStartMs = Date.now()
+  totalActiveMs = 0
+
   // Track visible vs hidden time so the clock doesn't run while the tab is hidden.
   document.addEventListener('visibilitychange', accumulateActiveTime)
 
-  const checkInterval = setInterval(() => {
+  activeTimer = setInterval(() => {
     if (hasShownBanner) {
-      clearInterval(checkInterval)
+      stopQuizTimer()
       return
     }
     if (getActiveMs() >= QUIZ_TRIGGER_MS) {
-      clearInterval(checkInterval)
+      stopQuizTimer()
       showBanner(eligibleCount)
     }
   }, CHECK_INTERVAL_MS)
+}
+
+export function stopQuizTimer(): void {
+  if (activeTimer !== null) {
+    clearInterval(activeTimer)
+    activeTimer = null
+  }
+
+  activeWrapper?.remove()
+  activeWrapper = null
+  document.removeEventListener('visibilitychange', accumulateActiveTime)
 }
