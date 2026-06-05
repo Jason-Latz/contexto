@@ -1,11 +1,17 @@
 // Minimum and maximum density values the user can set via the slider.
 // These match the proficiency model's clamping range.
-const MIN_DENSITY = 0.01  // 1%
+const MIN_DENSITY = 0.00  // 0%
 const MAX_DENSITY = 1.00  // 100%
+const STORAGE_WRITE_THROTTLE_MS = 150
 
 // Density is stored as a 0–1 fraction; display as percentage (e.g. 0.20 → "20%").
 function toPercent(density: number): string {
   return `${Math.round(density * 100)}%`
+}
+
+interface PopupSettings {
+  density?: number
+  [key: string]: unknown
 }
 
 /**
@@ -18,10 +24,57 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   const SETTINGS_KEY = 'contexto_settings'
 
   const stored = await chrome.storage.local.get(SETTINGS_KEY)
-  const settings = stored[SETTINGS_KEY] ?? {}
+  const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
   const currentDensity: number = typeof settings.density === 'number'
     ? settings.density
     : 0.20
+  let lastPersistedDensity = currentDensity
+  let queuedDensity = currentDensity
+  let lastWriteAt = 0
+  let throttleTimer: ReturnType<typeof setTimeout> | null = null
+  let writeChain: Promise<void> = Promise.resolve()
+
+  async function persistDensity(density: number): Promise<void> {
+    if (density === lastPersistedDensity) return
+
+    lastPersistedDensity = density
+    lastWriteAt = Date.now()
+    writeChain = writeChain
+      .catch(() => undefined)
+      .then(async () => {
+        const latest = await chrome.storage.local.get(SETTINGS_KEY)
+        const latestSettings = (latest[SETTINGS_KEY] ?? {}) as PopupSettings
+        await chrome.storage.local.set({
+          [SETTINGS_KEY]: { ...latestSettings, density },
+        })
+      })
+    await writeChain
+  }
+
+  function flushQueuedDensity(): void {
+    if (throttleTimer !== null) {
+      clearTimeout(throttleTimer)
+      throttleTimer = null
+    }
+    void persistDensity(queuedDensity)
+  }
+
+  function requestDensityWrite(density: number): void {
+    queuedDensity = density
+
+    const elapsed = Date.now() - lastWriteAt
+    if (elapsed >= STORAGE_WRITE_THROTTLE_MS) {
+      flushQueuedDensity()
+      return
+    }
+
+    if (throttleTimer === null) {
+      throttleTimer = setTimeout(() => {
+        throttleTimer = null
+        void persistDensity(queuedDensity)
+      }, STORAGE_WRITE_THROTTLE_MS - elapsed)
+    }
+  }
 
   const section = document.createElement('div')
   section.className = 'section'
@@ -47,19 +100,11 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
 
   slider.addEventListener('input', () => {
     label.textContent = `${slider.value}%`
+    requestDensityWrite(parseInt(slider.value, 10) / 100)
   })
 
-  // Write the new density on mouseup/touchend so we don't hammer storage on
-  // every pixel of slider drag.
-  slider.addEventListener('change', () => {
-    const newDensity = parseInt(slider.value, 10) / 100
-    void chrome.storage.local.get(SETTINGS_KEY).then(latest => {
-      const latestSettings = latest[SETTINGS_KEY] ?? settings
-      return chrome.storage.local.set({
-        [SETTINGS_KEY]: { ...latestSettings, density: newDensity },
-      })
-    })
-  })
+  // Ensure the final slider position is persisted immediately on release/commit.
+  slider.addEventListener('change', flushQueuedDensity)
 
   sliderRow.appendChild(slider)
   sliderRow.appendChild(label)

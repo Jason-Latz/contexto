@@ -24,7 +24,7 @@ const MAX_REVEAL_RATE = 0.40
 const MAX_DENSITY_DELTA = 0.02
 
 // Density is bounded between these values at all times.
-const MIN_DENSITY = 0.01
+const MIN_DENSITY = 0.00
 const MAX_DENSITY = 1.00
 
 // Compute the density to use for the current page.
