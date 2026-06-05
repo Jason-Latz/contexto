@@ -348,6 +348,7 @@ All four implementation phases complete. Extension is feature-complete for v1.
 - Keep v1 minimal: remove or defer notification/nudge features unless Jason explicitly re-adds them.
 - The end goal is Chrome Web Store distribution, so release work should account for store policy, privacy copy, icons, packaging, and permission minimization.
 - Replacement density should be user-controlled by a slider that ranges from very few words to almost all/all eligible words where technically reasonable.
+- Density changes from the popup should apply live to the active page, including moving to or from 0%, without requiring a page reload.
 - Brand and UI direction should be minimalist and academic, not playful or heavy.
 - Jason is open to a translation API or hybrid approach because hand-built/downloaded dictionaries may not scale well across target languages.
 - For large language-pack word generation, Jason prefers using ChatGPT outside Codex and then pasting/validating the JSON locally to conserve Codex rate-limit tokens.

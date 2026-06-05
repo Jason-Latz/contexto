@@ -6,6 +6,10 @@ import type { CandidateToken, ExpressionMatch, TranslationEntry, WordSeen } from
 import { recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
 
+interface InjectionOptions {
+  shouldRecordExposure?: (lemma: string) => boolean
+}
+
 // Text nodes that have already been processed by this content script run.
 // WeakSet is used (not DOM attributes) because Text nodes have no dataset.
 // Entries are garbage-collected automatically when nodes leave the DOM.
@@ -121,6 +125,10 @@ function buildSpan(
   span.setAttribute('data-gloss', entry.sourceGloss)
   span.setAttribute('style', SPAN_BASE_STYLE)
   return span
+}
+
+function shouldRecordExposure(options: InjectionOptions, lemma: string): boolean {
+  return options.shouldRecordExposure?.(lemma) ?? true
 }
 
 // ---------- Token extraction ----------
@@ -293,7 +301,11 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
 //
 // This guarantees every occurrence of a selected lemma is replaced, regardless
 // of which text node it appears in or how many other words surround it.
-export function injectReplacements(node: Text, approvedLemmas: ReadonlySet<string>): void {
+export function injectReplacements(
+  node: Text,
+  approvedLemmas: ReadonlySet<string>,
+  options: InjectionOptions = {},
+): void {
   if (processedNodes.has(node)) return
 
   const text = node.nodeValue ?? ''
@@ -316,15 +328,17 @@ export function injectReplacements(node: Text, approvedLemmas: ReadonlySet<strin
     replacements.push({ start: match.start, end: match.end, span })
     occupiedRanges.push([match.start, match.end])
 
-    recordSeen(lemma)
-    recordWordSeen({
-      englishLemma: lemma,
-      surfaceForm: match.original,
-      targetWord: match.entry.target,
-      sourceGloss: match.entry.sourceGloss,
-      sentenceContext: extractSentenceContext(text, match.start),
-      seenAt: Date.now(),
-    })
+    if (shouldRecordExposure(options, lemma)) {
+      recordSeen(lemma)
+      recordWordSeen({
+        englishLemma: lemma,
+        surfaceForm: match.original,
+        targetWord: match.entry.target,
+        sourceGloss: match.entry.sourceGloss,
+        sentenceContext: extractSentenceContext(text, match.start),
+        seenAt: Date.now(),
+      })
+    }
   }
 
   // --- Pass 2: unigram nouns and adverbs ---
@@ -360,16 +374,18 @@ export function injectReplacements(node: Text, approvedLemmas: ReadonlySet<strin
     // Record the replacement in the lexicon and session stores so Phase 3
     // can schedule quizzes and the proficiency model can track the reveal rate.
     const targetDisplayed = span.textContent ?? entry.target
-    recordSeen(token.lemma)
-    const wordSeen: WordSeen = {
-      englishLemma:    token.lemma,
-      surfaceForm:     token.word,   // exact surface form for contextual quiz blanking
-      targetWord:      targetDisplayed,
-      sourceGloss:     entry.sourceGloss,
-      sentenceContext: extractSentenceContext(text, token.start),
-      seenAt:          Date.now(),
+    if (shouldRecordExposure(options, token.lemma)) {
+      recordSeen(token.lemma)
+      const wordSeen: WordSeen = {
+        englishLemma:    token.lemma,
+        surfaceForm:     token.word,   // exact surface form for contextual quiz blanking
+        targetWord:      targetDisplayed,
+        sourceGloss:     entry.sourceGloss,
+        sentenceContext: extractSentenceContext(text, token.start),
+        seenAt:          Date.now(),
+      }
+      recordWordSeen(wordSeen)
     }
-    recordWordSeen(wordSeen)
   }
 
   // Sort replacements by position before building the fragment
@@ -380,9 +396,18 @@ export function injectReplacements(node: Text, approvedLemmas: ReadonlySet<strin
 
 export function restoreReplacements(root: ParentNode = document): void {
   const spans = [...root.querySelectorAll<HTMLElement>('[data-contexto="true"]')]
+  const affectedParents = new Set<Node>()
 
   for (const span of spans) {
     const source = span.getAttribute('data-source') ?? span.textContent ?? ''
+    const parent = span.parentNode
+    if (parent) affectedParents.add(parent)
     span.replaceWith(document.createTextNode(source))
+  }
+
+  // Rejoining adjacent text nodes preserves sentence context for the next NLP
+  // pass after a live density re-render.
+  for (const parent of affectedParents) {
+    parent.normalize()
   }
 }

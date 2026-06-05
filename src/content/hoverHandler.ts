@@ -44,6 +44,7 @@ const KNOWN_SPAN_STYLE = [
 // ---------------------------------------------------------------------------
 
 let tooltip: HTMLElement | null = null
+let activeSpan: HTMLElement | null = null
 let isHoverHandlerSetup = false
 
 function getOrCreateTooltip(): HTMLElement {
@@ -81,9 +82,31 @@ function positionTooltip(tip: HTMLElement, event: MouseEvent): void {
   tip.style.top = `${y}px`
 }
 
+function findContextoSpan(target: EventTarget | null): HTMLElement | null {
+  if (!(target instanceof Element)) return null
+  const span = target.closest(`[${CONTEXTO_ATTR}="true"]`)
+  return span instanceof HTMLElement ? span : null
+}
+
+function applyHoverState(target: HTMLElement): void {
+  // Known words use a muted style with no hover highlight — the base style
+  // applied at mark time is already visually distinct.
+  if (target.getAttribute('data-contexto-known') !== 'true') {
+    target.style.backgroundColor = 'rgba(42, 92, 130, 0.14)'
+  }
+}
+
+function clearHoverState(target: HTMLElement): void {
+  target.style.backgroundColor = ''
+}
+
 function showTooltip(target: HTMLElement, event: MouseEvent): void {
   const tip = getOrCreateTooltip()
   const isKnown = target.getAttribute('data-contexto-known') === 'true'
+  if (activeSpan && activeSpan !== target) {
+    clearHoverState(activeSpan)
+  }
+  activeSpan = target
 
   if (isKnown) {
     tip.textContent = 'Known - click to undo'
@@ -101,6 +124,10 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
 }
 
 function hideTooltip(): void {
+  if (activeSpan) {
+    clearHoverState(activeSpan)
+    activeSpan = null
+  }
   if (tooltip) tooltip.style.display = 'none'
 }
 
@@ -202,41 +229,60 @@ export function setupHoverHandler(): void {
   isHoverHandlerSetup = true
 
   document.body.addEventListener('mouseover', (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-    if (!target.hasAttribute(CONTEXTO_ATTR)) return
+    const target = findContextoSpan(event.target)
+    if (!target) return
 
-    // Known words use a muted style with no hover highlight — the base style
-    // applied at mark time is already visually distinct.
-    if (target.getAttribute('data-contexto-known') !== 'true') {
-      target.style.backgroundColor = 'rgba(42, 92, 130, 0.14)'
-    }
+    applyHoverState(target)
     showTooltip(target, event)
   })
 
   document.body.addEventListener('mouseout', (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-    if (!target.hasAttribute(CONTEXTO_ATTR)) return
-    target.style.backgroundColor = ''
-    hideTooltip()
+    const target = findContextoSpan(event.target)
+    if (!target) return
+
+    const nextTarget = findContextoSpan(event.relatedTarget)
+    if (nextTarget === target) return
+
+    if (activeSpan === target) {
+      hideTooltip()
+    } else {
+      clearHoverState(target)
+    }
   })
 
   document.body.addEventListener('mousemove', (event: MouseEvent) => {
     if (tooltip && tooltip.style.display !== 'none') {
+      if (!activeSpan || !activeSpan.isConnected || findContextoSpan(event.target) !== activeSpan) {
+        hideTooltip()
+        return
+      }
       positionTooltip(tooltip, event)
     }
   })
 
   // Self-mark: delegated click on all Contexto spans.
   document.body.addEventListener('click', (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-    if (!target.hasAttribute(CONTEXTO_ATTR)) return
+    const target = findContextoSpan(event.target)
+    if (!target) {
+      hideTooltip()
+      return
+    }
     handleSpanClick(target)
+  })
+
+  // Dynamic sites can remove or recycle the hovered span without dispatching a
+  // useful mouseout event. These page-level exits keep the tooltip from sticking.
+  document.addEventListener('scroll', hideTooltip, true)
+  window.addEventListener('blur', hideTooltip)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') hideTooltip()
   })
 }
 
 export function removeHoverUI(): void {
   tooltip?.remove()
   tooltip = null
+  activeSpan = null
 }
 
 // Exported for use by the popup's KnownWordsList to display the session count.

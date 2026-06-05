@@ -16,6 +16,7 @@ import { selectTokens } from '../engine/wordSelector.js'
 import { showLevelPicker } from '../onboarding/LevelPicker.js'
 import { startQuizTimer, stopQuizTimer } from '../quiz/QuizBanner.js'
 import { setupMutationObserver } from './mutationObserver.js'
+import type { CandidateToken } from '../types/index.js'
 
 // Pages with fewer words than this are too short for meaningful immersion
 // (e.g. error pages, blank tabs, single-widget dashboards).
@@ -28,6 +29,7 @@ const FLUSH_INTERVAL_MS = 3 * 60 * 1000  // 3 minutes
 const SETTINGS_KEY = 'contexto_settings'
 
 interface RuntimeSettings {
+  density?: number
   replacementsEnabled?: boolean
   quizzesEnabled?: boolean
 }
@@ -35,7 +37,12 @@ interface RuntimeSettings {
 let mutationObserver: MutationObserver | null = null
 let isReplacementPipelineActive = false
 let isReplacementPipelineRunning = false
+let pendingReplacementRefresh = false
 let lastEligibleCount = 0
+let activeApprovedLemmas: ReadonlySet<string> = new Set()
+let recordedApprovedLemmas = new Set<string>()
+let rankedPageLemmas: string[] = []
+let replacementPipelineRunVersion = 0
 
 function countPageWords(): number {
   return (document.body.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
@@ -52,57 +59,85 @@ async function flushStorage(): Promise<void> {
   clearDirty()
 }
 
-async function startReplacementPipeline(): Promise<void> {
-  if (isReplacementPipelineActive || isReplacementPipelineRunning) return
-  isReplacementPipelineRunning = true
-
-  try {
-    await loadSettings()
-  } catch (err) {
-    console.warn('[Contexto] Settings load failed, extension inactive:', err)
-    isReplacementPipelineRunning = false
-    return
+function syncQuizTimer(quizzesEnabled: boolean): void {
+  if (quizzesEnabled) {
+    startQuizTimer(lastEligibleCount)
+  } else {
+    stopQuizTimer()
   }
+}
 
-  if (!areReplacementsEnabled()) {
-    isReplacementPipelineRunning = false
-    return
+function runQueuedReplacementRefresh(): void {
+  if (!pendingReplacementRefresh || isReplacementPipelineRunning) return
+
+  pendingReplacementRefresh = false
+  if (isReplacementPipelineActive) {
+    void refreshReplacementPipeline()
+  } else {
+    void startReplacementPipeline()
   }
+}
 
-  // Silently exit on pages with too little content — no readable immersion possible
-  const wordCount = countPageWords()
-  if (wordCount < MIN_PAGE_WORD_COUNT) {
-    isReplacementPipelineRunning = false
-    return
+function requestReplacementRefresh(): void {
+  pendingReplacementRefresh = true
+  runQueuedReplacementRefresh()
+}
+
+function beginReplacementPipelineRun(): number {
+  replacementPipelineRunVersion++
+  return replacementPipelineRunVersion
+}
+
+function isCurrentReplacementPipelineRun(runVersion: number): boolean {
+  return runVersion === replacementPipelineRunVersion
+}
+
+function deactivateReplacementPipeline(restoreDom: boolean): void {
+  stopQuizTimer()
+  mutationObserver?.disconnect()
+  mutationObserver = null
+  if (restoreDom) restoreReplacements(document)
+  removeHoverUI()
+  activeApprovedLemmas = new Set()
+  recordedApprovedLemmas = new Set()
+  rankedPageLemmas = []
+  isReplacementPipelineActive = false
+  lastEligibleCount = 0
+  void flushStorage()
+}
+
+function rememberRecordedLemmas(lemmas: ReadonlySet<string>): void {
+  for (const lemma of lemmas) {
+    recordedApprovedLemmas.add(lemma)
   }
+}
 
-  // Load runtime data only after the user-facing replacement toggle is enabled.
-  try {
-    await loadLanguagePack(getTargetLanguage())
-    await loadLexicon()
-  } catch (err) {
-    console.warn('[Contexto] Startup failed, extension inactive:', err)
-    isReplacementPipelineRunning = false
-    return
-  }
+function updateRankedPageLemmas(pageCandidates: CandidateToken[]): string[] {
+  const candidateLemmas = new Set(pageCandidates.map(candidate => candidate.lemma))
+  const retainedRankedLemmas = rankedPageLemmas.filter(lemma => candidateLemmas.has(lemma))
+  const retained = new Set(retainedRankedLemmas)
 
-  // Reset the in-memory session for this page load.
-  initSession()
+  // Existing lemmas keep their page rank so density changes feel additive:
+  // increasing the slider adds more words instead of reshuffling the page.
+  const newCandidates = pageCandidates.filter(candidate => !retained.has(candidate.lemma))
+  const newRankedLemmas = selectTokens(newCandidates, newCandidates.length)
+    .map(token => token.lemma)
 
-  // If the user has not completed onboarding, show the level picker overlay
-  // and wait for it to finish before proceeding. The picker saves the level
-  // and pre-populates the lexicon.
-  if (!isOnboarded()) {
-    await showLevelPicker()
-  }
+  rankedPageLemmas = [...retainedRankedLemmas, ...newRankedLemmas]
+  return rankedPageLemmas
+}
 
-  // Set up hover handler BEFORE injecting spans so that even the first span
-  // is already covered by the delegated listener when it appears in the DOM.
+async function renderReplacementPass(
+  shouldRecordExposure?: (lemma: string) => boolean,
+  isCurrentRun: () => boolean = () => true,
+): Promise<boolean> {
+  // Set up hover handling before injection so the first rendered span is covered.
   setupHoverHandler()
 
   // Walk and process all text nodes. collectTextNodes() may return [] if the
   // user chose Keep Paused on the high-stakes domain banner.
   const textNodes = await collectTextNodes(document.body)
+  if (!isCurrentRun()) return false
 
   // --- Pass A: page-level word selection ---
   // Collect one representative candidate per unique eligible lemma across all
@@ -113,45 +148,144 @@ async function startReplacementPipeline(): Promise<void> {
   lastEligibleCount = pageCandidates.length
   const density = computeDensity(pageCandidates.length)
   const maxReplacements = Math.floor(density * pageCandidates.length)
-  const selectedTokens = selectTokens(pageCandidates, maxReplacements)
-  const approvedLemmas = new Set(selectedTokens.map(t => t.lemma))
+  const rankedLemmas = updateRankedPageLemmas(pageCandidates)
+  const approvedLemmas = new Set(rankedLemmas.slice(0, maxReplacements))
 
   // --- Pass B: replacement ---
   // Replace every occurrence of every approved lemma across all text nodes.
   for (const node of textNodes) {
-    injectReplacements(node, approvedLemmas)
+    injectReplacements(node, approvedLemmas, { shouldRecordExposure })
   }
+  if (!isCurrentRun()) return false
 
   // Attach the SPA-safe MutationObserver now that approvedLemmas is settled.
   // It will apply the same replacement set to any DOM nodes added after the
-  // initial pass (route transitions, infinite scroll, dynamic widgets).
+  // current pass (route transitions, infinite scroll, dynamic widgets).
   mutationObserver = setupMutationObserver(approvedLemmas)
-  isReplacementPipelineActive = true
-  isReplacementPipelineRunning = false
+  activeApprovedLemmas = approvedLemmas
+  return true
+}
 
-  if (areQuizzesEnabled()) {
-    // Start the active-reading timer. Pass the page candidate count so the quiz
-    // banner can forward it to adjustDensityAfterQuiz after the session completes.
-    startQuizTimer(pageCandidates.length)
+async function startReplacementPipeline(): Promise<void> {
+  if (isReplacementPipelineActive) return
+  if (isReplacementPipelineRunning) {
+    pendingReplacementRefresh = true
+    return
   }
 
+  const runVersion = beginReplacementPipelineRun()
+  isReplacementPipelineRunning = true
+
+  try {
+    await loadSettings()
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    if (!areReplacementsEnabled()) return
+
+    // Silently exit on pages with too little content — no readable immersion possible.
+    if (countPageWords() < MIN_PAGE_WORD_COUNT) return
+
+    // Load runtime data only after the user-facing replacement toggle is enabled.
+    await loadLanguagePack(getTargetLanguage())
+    await loadLexicon()
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    // Reset the in-memory session for this page load.
+    initSession()
+    recordedApprovedLemmas = new Set()
+    rankedPageLemmas = []
+
+    // If the user has not completed onboarding, show the level picker overlay
+    // and wait for it to finish before proceeding. The picker saves the level
+    // and pre-populates the lexicon.
+    if (!isOnboarded()) {
+      await showLevelPicker()
+      if (!isCurrentReplacementPipelineRun(runVersion)) return
+    }
+
+    const rendered = await renderReplacementPass(
+      undefined,
+      () => isCurrentReplacementPipelineRun(runVersion),
+    )
+    if (!rendered) return
+
+    rememberRecordedLemmas(activeApprovedLemmas)
+    isReplacementPipelineActive = true
+    syncQuizTimer(areQuizzesEnabled())
+  } catch (err) {
+    console.warn('[Contexto] Startup failed, extension inactive:', err)
+    deactivateReplacementPipeline(true)
+  } finally {
+    isReplacementPipelineRunning = false
+    runQueuedReplacementRefresh()
+  }
+}
+
+async function refreshReplacementPipeline(): Promise<void> {
+  if (!isReplacementPipelineActive) {
+    await startReplacementPipeline()
+    return
+  }
+  if (isReplacementPipelineRunning) {
+    pendingReplacementRefresh = true
+    return
+  }
+
+  const runVersion = beginReplacementPipelineRun()
+  isReplacementPipelineRunning = true
+
+  try {
+    await loadSettings()
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    if (!areReplacementsEnabled()) {
+      deactivateReplacementPipeline(true)
+      return
+    }
+
+    mutationObserver?.disconnect()
+    mutationObserver = null
+
+    restoreReplacements(document)
+
+    // Dynamic pages can shrink below the readable-content threshold; after a
+    // live restore, stop cleanly instead of leaving a no-op observer attached.
+    if (countPageWords() < MIN_PAGE_WORD_COUNT) {
+      deactivateReplacementPipeline(false)
+      return
+    }
+
+    const rendered = await renderReplacementPass(
+      lemma => !recordedApprovedLemmas.has(lemma),
+      () => isCurrentReplacementPipelineRun(runVersion),
+    )
+    if (!rendered) return
+
+    rememberRecordedLemmas(activeApprovedLemmas)
+    isReplacementPipelineActive = true
+    syncQuizTimer(areQuizzesEnabled())
+  } catch (err) {
+    console.warn('[Contexto] Live density refresh failed, extension inactive:', err)
+    deactivateReplacementPipeline(true)
+  } finally {
+    isReplacementPipelineRunning = false
+    runQueuedReplacementRefresh()
+  }
 }
 
 function stopReplacementPipeline(): void {
-  stopQuizTimer()
-  mutationObserver?.disconnect()
-  mutationObserver = null
-  restoreReplacements(document)
-  removeHoverUI()
-  isReplacementPipelineActive = false
+  pendingReplacementRefresh = false
+  replacementPipelineRunVersion++
+  deactivateReplacementPipeline(true)
   isReplacementPipelineRunning = false
-  lastEligibleCount = 0
-  void flushStorage()
 }
 
-function handleSettingsChange(settings: RuntimeSettings): void {
+function handleSettingsChange(settings: RuntimeSettings, previousSettings: RuntimeSettings): void {
   const replacementsEnabled = settings.replacementsEnabled ?? true
   const quizzesEnabled = settings.quizzesEnabled ?? false
+  const densityChanged =
+    typeof settings.density === 'number' &&
+    settings.density !== previousSettings.density
 
   if (!replacementsEnabled) {
     stopReplacementPipeline()
@@ -161,6 +295,10 @@ function handleSettingsChange(settings: RuntimeSettings): void {
   if (!isReplacementPipelineActive) {
     void startReplacementPipeline()
     return
+  }
+
+  if (densityChanged) {
+    requestReplacementRefresh()
   }
 
   if (quizzesEnabled) {
@@ -181,7 +319,10 @@ async function main(): Promise<void> {
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== 'local' || !changes[SETTINGS_KEY]) return
-    handleSettingsChange((changes[SETTINGS_KEY].newValue ?? {}) as RuntimeSettings)
+    handleSettingsChange(
+      (changes[SETTINGS_KEY].newValue ?? {}) as RuntimeSettings,
+      (changes[SETTINGS_KEY].oldValue ?? {}) as RuntimeSettings,
+    )
   })
 
   // --- Storage write strategy ---
