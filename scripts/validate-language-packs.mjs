@@ -74,6 +74,23 @@ function validateEntry(key, entry, targetLanguage) {
   }
 }
 
+function assertUniqueFrequencyRanks(entries, language) {
+  const seen = new Map()
+  const duplicates = []
+
+  for (const [key, entry] of Object.entries(entries)) {
+    if (seen.has(entry.frequencyRank)) {
+      duplicates.push(`${entry.frequencyRank}: ${seen.get(entry.frequencyRank)} and ${key}`)
+    } else {
+      seen.set(entry.frequencyRank, key)
+    }
+  }
+
+  if (duplicates.length > 0) {
+    fail(`${language}: duplicate frequencyRank values found: ${duplicates.join(', ')}`)
+  }
+}
+
 async function validatePack(language) {
   const file = join(ROOT, 'public', 'language-packs', `${language}.json`)
   const raw = await readFile(file, 'utf8')
@@ -93,6 +110,8 @@ async function validatePack(language) {
   for (const [key, entry] of Object.entries(pack.entries)) {
     validateEntry(key, entry, language)
   }
+
+  assertUniqueFrequencyRanks(pack.entries, language)
 
   console.log(`OK ${language}: ${Object.keys(pack.entries).length} entries`)
 }
