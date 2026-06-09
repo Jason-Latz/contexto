@@ -1,8 +1,9 @@
 {
   "name": "contexto",
-  "version": "0.1.0",
+  "version": "0.0.9",
   "type": "module",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "node node_modules/vite/bin/vite.js build && node node_modules/vite/bin/vite.js build --config vite.popup.config.ts",
     "dev": "node node_modules/vite/bin/vite.js build --watch",
