@@ -1,0 +1,4992 @@
+{
+  "entries": {
+    "law": {
+      "source": "law",
+      "target": "ley",
+      "plural": "leyes",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "binding legal rule",
+      "frequencyRank": 3001,
+      "confidence": "high"
+    },
+    "legal system": {
+      "source": "legal system",
+      "target": "sistema jurídico",
+      "plural": "sistemas jurídicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "organized body of law",
+      "frequencyRank": 3002,
+      "confidence": "high"
+    },
+    "rule of law": {
+      "source": "rule of law",
+      "target": "estado de derecho",
+      "plural": "estados de derecho",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "principle of legal supremacy",
+      "frequencyRank": 3003,
+      "confidence": "high"
+    },
+    "jurisdiction": {
+      "source": "jurisdiction",
+      "target": "jurisdicción",
+      "plural": "jurisdicciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal authority area",
+      "frequencyRank": 3004,
+      "confidence": "high"
+    },
+    "statute": {
+      "source": "statute",
+      "target": "estatuto",
+      "plural": "estatutos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written legislative law",
+      "frequencyRank": 3005,
+      "confidence": "high"
+    },
+    "code": {
+      "source": "code",
+      "target": "código",
+      "plural": "códigos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "compiled set of laws",
+      "frequencyRank": 3006,
+      "confidence": "high"
+    },
+    "civil code": {
+      "source": "civil code",
+      "target": "código civil",
+      "plural": "códigos civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "codified private law",
+      "frequencyRank": 3007,
+      "confidence": "high"
+    },
+    "penal code": {
+      "source": "penal code",
+      "target": "código penal",
+      "plural": "códigos penales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "codified criminal law",
+      "frequencyRank": 3008,
+      "confidence": "high"
+    },
+    "constitution": {
+      "source": "constitution",
+      "target": "constitución",
+      "plural": "constituciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fundamental governing document",
+      "frequencyRank": 3009,
+      "confidence": "high"
+    },
+    "charter": {
+      "source": "charter",
+      "target": "carta constitutiva",
+      "plural": "cartas constitutivas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "founding legal document",
+      "frequencyRank": 3010,
+      "confidence": "high"
+    },
+    "ordinance": {
+      "source": "ordinance",
+      "target": "ordenanza",
+      "plural": "ordenanzas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local government regulation",
+      "frequencyRank": 3011,
+      "confidence": "high"
+    },
+    "regulation": {
+      "source": "regulation",
+      "target": "regulación",
+      "plural": "regulaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "administrative legal rule",
+      "frequencyRank": 3012,
+      "confidence": "high"
+    },
+    "bylaw": {
+      "source": "bylaw",
+      "target": "reglamento interno",
+      "plural": "reglamentos internos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "internal governing rule",
+      "frequencyRank": 3013,
+      "confidence": "high"
+    },
+    "decree": {
+      "source": "decree",
+      "target": "decreto",
+      "plural": "decretos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official executive order",
+      "frequencyRank": 3014,
+      "confidence": "high"
+    },
+    "edict": {
+      "source": "edict",
+      "target": "edicto",
+      "plural": "edictos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official public proclamation",
+      "frequencyRank": 3015,
+      "confidence": "high"
+    },
+    "mandate": {
+      "source": "mandate",
+      "target": "mandato",
+      "plural": "mandatos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official legal command",
+      "frequencyRank": 3016,
+      "confidence": "high"
+    },
+    "authority": {
+      "source": "authority",
+      "target": "autoridad",
+      "plural": "autoridades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal governing power",
+      "frequencyRank": 3017,
+      "confidence": "high"
+    },
+    "sovereignty": {
+      "source": "sovereignty",
+      "target": "soberanía",
+      "plural": "soberanías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "supreme state authority",
+      "frequencyRank": 3018,
+      "confidence": "high"
+    },
+    "legality": {
+      "source": "legality",
+      "target": "legalidad",
+      "plural": "legalidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "quality of legal validity",
+      "frequencyRank": 3019,
+      "confidence": "high"
+    },
+    "validity": {
+      "source": "validity",
+      "target": "validez",
+      "plural": "valideces",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal enforceability status",
+      "frequencyRank": 3020,
+      "confidence": "high"
+    },
+    "nullity": {
+      "source": "nullity",
+      "target": "nulidad",
+      "plural": "nulidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal invalidity status",
+      "frequencyRank": 3021,
+      "confidence": "high"
+    },
+    "liability": {
+      "source": "liability",
+      "target": "responsabilidad legal",
+      "plural": "responsabilidades legales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal responsibility for harm",
+      "frequencyRank": 3022,
+      "confidence": "high"
+    },
+    "immunity": {
+      "source": "immunity",
+      "target": "inmunidad",
+      "plural": "inmunidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "protection from legal liability",
+      "frequencyRank": 3023,
+      "confidence": "high"
+    },
+    "privilege": {
+      "source": "privilege",
+      "target": "privilegio",
+      "plural": "privilegios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "protected legal right",
+      "frequencyRank": 3024,
+      "confidence": "high"
+    },
+    "right": {
+      "source": "right",
+      "target": "derecho",
+      "plural": "derechos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally protected entitlement",
+      "frequencyRank": 3025,
+      "confidence": "high"
+    },
+    "duty": {
+      "source": "duty",
+      "target": "deber legal",
+      "plural": "deberes legales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally required obligation",
+      "frequencyRank": 3026,
+      "confidence": "high"
+    },
+    "obligation": {
+      "source": "obligation",
+      "target": "obligación",
+      "plural": "obligaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "binding legal duty",
+      "frequencyRank": 3027,
+      "confidence": "high"
+    },
+    "remedy": {
+      "source": "remedy",
+      "target": "recurso legal",
+      "plural": "recursos legales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal means of relief",
+      "frequencyRank": 3028,
+      "confidence": "high"
+    },
+    "sanction": {
+      "source": "sanction",
+      "target": "sanción",
+      "plural": "sanciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal penalty or measure",
+      "frequencyRank": 3029,
+      "confidence": "high"
+    },
+    "penalty": {
+      "source": "penalty",
+      "target": "pena",
+      "plural": "penas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "punishment imposed by law",
+      "frequencyRank": 3030,
+      "confidence": "high"
+    },
+    "fine": {
+      "source": "fine",
+      "target": "multa",
+      "plural": "multas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "monetary legal penalty",
+      "frequencyRank": 3031,
+      "confidence": "high"
+    },
+    "damages": {
+      "source": "damages",
+      "target": "indemnización",
+      "plural": "indemnizaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "monetary compensation award",
+      "frequencyRank": 3032,
+      "confidence": "high"
+    },
+    "injunction": {
+      "source": "injunction",
+      "target": "mandato judicial",
+      "plural": "mandatos judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court order to act",
+      "frequencyRank": 3033,
+      "confidence": "high"
+    },
+    "writ": {
+      "source": "writ",
+      "target": "orden judicial",
+      "plural": "órdenes judiciales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal court command",
+      "frequencyRank": 3034,
+      "confidence": "high"
+    },
+    "subpoena": {
+      "source": "subpoena",
+      "target": "citatorio",
+      "plural": "citatorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "order to appear",
+      "frequencyRank": 3035,
+      "confidence": "high"
+    },
+    "summons": {
+      "source": "summons",
+      "target": "emplazamiento",
+      "plural": "emplazamientos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal court notice",
+      "frequencyRank": 3036,
+      "confidence": "high"
+    },
+    "notice": {
+      "source": "notice",
+      "target": "notificación",
+      "plural": "notificaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal legal communication",
+      "frequencyRank": 3037,
+      "confidence": "high"
+    },
+    "service of process": {
+      "source": "service of process",
+      "target": "notificación procesal",
+      "plural": "notificaciones procesales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal delivery of papers",
+      "frequencyRank": 3038,
+      "confidence": "high"
+    },
+    "affidavit": {
+      "source": "affidavit",
+      "target": "declaración jurada",
+      "plural": "declaraciones juradas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sworn written statement",
+      "frequencyRank": 3039,
+      "confidence": "high"
+    },
+    "oath": {
+      "source": "oath",
+      "target": "juramento",
+      "plural": "juramentos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "solemn legal promise",
+      "frequencyRank": 3040,
+      "confidence": "high"
+    },
+    "testimony": {
+      "source": "testimony",
+      "target": "testimonio",
+      "plural": "testimonios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sworn evidence in court",
+      "frequencyRank": 3041,
+      "confidence": "high"
+    },
+    "evidence": {
+      "source": "evidence",
+      "target": "prueba",
+      "plural": "pruebas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "information proving legal facts",
+      "frequencyRank": 3042,
+      "confidence": "high"
+    },
+    "proof": {
+      "source": "proof",
+      "target": "prueba",
+      "plural": "pruebas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "evidence establishing a fact",
+      "frequencyRank": 3043,
+      "confidence": "high"
+    },
+    "burden of proof": {
+      "source": "burden of proof",
+      "target": "carga de la prueba",
+      "plural": "cargas de la prueba",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "duty to prove claims",
+      "frequencyRank": 3044,
+      "confidence": "high"
+    },
+    "standard of proof": {
+      "source": "standard of proof",
+      "target": "estándar probatorio",
+      "plural": "estándares probatorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "required level of proof",
+      "frequencyRank": 3045,
+      "confidence": "high"
+    },
+    "presumption": {
+      "source": "presumption",
+      "target": "presunción",
+      "plural": "presunciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "assumed legal fact",
+      "frequencyRank": 3046,
+      "confidence": "high"
+    },
+    "inference": {
+      "source": "inference",
+      "target": "inferencia",
+      "plural": "inferencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal factual conclusion",
+      "frequencyRank": 3047,
+      "confidence": "high"
+    },
+    "precedent": {
+      "source": "precedent",
+      "target": "precedente",
+      "plural": "precedentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prior controlling decision",
+      "frequencyRank": 3048,
+      "confidence": "high"
+    },
+    "case law": {
+      "source": "case law",
+      "target": "jurisprudencia",
+      "plural": "jurisprudencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law from judicial decisions",
+      "frequencyRank": 3049,
+      "confidence": "high"
+    },
+    "common law": {
+      "source": "common law",
+      "target": "derecho anglosajón",
+      "plural": "derechos anglosajones",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "judge-made legal system",
+      "frequencyRank": 3050,
+      "confidence": "high"
+    },
+    "civil law": {
+      "source": "civil law",
+      "target": "derecho civil",
+      "plural": "derechos civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "private-law legal system",
+      "frequencyRank": 3051,
+      "confidence": "high"
+    },
+    "public law": {
+      "source": "public law",
+      "target": "derecho público",
+      "plural": "derechos públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing state power",
+      "frequencyRank": 3052,
+      "confidence": "high"
+    },
+    "private law": {
+      "source": "private law",
+      "target": "derecho privado",
+      "plural": "derechos privados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law between private parties",
+      "frequencyRank": 3053,
+      "confidence": "high"
+    },
+    "procedural law": {
+      "source": "procedural law",
+      "target": "derecho procesal",
+      "plural": "derechos procesales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rules for legal proceedings",
+      "frequencyRank": 3054,
+      "confidence": "high"
+    },
+    "substantive law": {
+      "source": "substantive law",
+      "target": "derecho sustantivo",
+      "plural": "derechos sustantivos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law defining rights duties",
+      "frequencyRank": 3055,
+      "confidence": "high"
+    },
+    "administrative law": {
+      "source": "administrative law",
+      "target": "derecho administrativo",
+      "plural": "derechos administrativos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing agencies",
+      "frequencyRank": 3056,
+      "confidence": "high"
+    },
+    "constitutional law": {
+      "source": "constitutional law",
+      "target": "derecho constitucional",
+      "plural": "derechos constitucionales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law of constitutional rules",
+      "frequencyRank": 3057,
+      "confidence": "high"
+    },
+    "criminal law": {
+      "source": "criminal law",
+      "target": "derecho penal",
+      "plural": "derechos penales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law defining crimes",
+      "frequencyRank": 3058,
+      "confidence": "high"
+    },
+    "tort law": {
+      "source": "tort law",
+      "target": "derecho de daños",
+      "plural": "derechos de daños",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law of civil wrongs",
+      "frequencyRank": 3059,
+      "confidence": "high"
+    },
+    "contract law": {
+      "source": "contract law",
+      "target": "derecho contractual",
+      "plural": "derechos contractuales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing agreements",
+      "frequencyRank": 3060,
+      "confidence": "high"
+    },
+    "property law": {
+      "source": "property law",
+      "target": "derecho de propiedad",
+      "plural": "derechos de propiedad",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing ownership",
+      "frequencyRank": 3061,
+      "confidence": "high"
+    },
+    "family law": {
+      "source": "family law",
+      "target": "derecho de familia",
+      "plural": "derechos de familia",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing family matters",
+      "frequencyRank": 3062,
+      "confidence": "high"
+    },
+    "labor law": {
+      "source": "labor law",
+      "target": "derecho laboral",
+      "plural": "derechos laborales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing employment",
+      "frequencyRank": 3063,
+      "confidence": "high"
+    },
+    "tax law": {
+      "source": "tax law",
+      "target": "derecho tributario",
+      "plural": "derechos tributarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing taxation",
+      "frequencyRank": 3064,
+      "confidence": "high"
+    },
+    "immigration law": {
+      "source": "immigration law",
+      "target": "derecho migratorio",
+      "plural": "derechos migratorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing migration status",
+      "frequencyRank": 3065,
+      "confidence": "high"
+    },
+    "international law": {
+      "source": "international law",
+      "target": "derecho internacional",
+      "plural": "derechos internacionales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law between states",
+      "frequencyRank": 3066,
+      "confidence": "high"
+    },
+    "human rights law": {
+      "source": "human rights law",
+      "target": "derecho de derechos humanos",
+      "plural": "derechos de derechos humanos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law protecting human rights",
+      "frequencyRank": 3067,
+      "confidence": "high"
+    },
+    "treaty law": {
+      "source": "treaty law",
+      "target": "derecho de tratados",
+      "plural": "derechos de tratados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law governing treaties",
+      "frequencyRank": 3068,
+      "confidence": "high"
+    },
+    "legal doctrine": {
+      "source": "legal doctrine",
+      "target": "doctrina jurídica",
+      "plural": "doctrinas jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "accepted legal principle",
+      "frequencyRank": 3069,
+      "confidence": "high"
+    },
+    "legal theory": {
+      "source": "legal theory",
+      "target": "teoría jurídica",
+      "plural": "teorías jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "theory about law",
+      "frequencyRank": 3070,
+      "confidence": "high"
+    },
+    "legal opinion": {
+      "source": "legal opinion",
+      "target": "dictamen jurídico",
+      "plural": "dictámenes jurídicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal legal assessment",
+      "frequencyRank": 3071,
+      "confidence": "high"
+    },
+    "court": {
+      "source": "court",
+      "target": "tribunal",
+      "plural": "tribunales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "institution deciding legal disputes",
+      "frequencyRank": 3072,
+      "confidence": "high"
+    },
+    "trial court": {
+      "source": "trial court",
+      "target": "tribunal de primera instancia",
+      "plural": "tribunales de primera instancia",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court of initial hearing",
+      "frequencyRank": 3073,
+      "confidence": "high"
+    },
+    "appellate court": {
+      "source": "appellate court",
+      "target": "tribunal de apelación",
+      "plural": "tribunales de apelación",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court reviewing judgments",
+      "frequencyRank": 3074,
+      "confidence": "high"
+    },
+    "supreme court": {
+      "source": "supreme court",
+      "target": "corte suprema",
+      "plural": "cortes supremas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "highest appellate court",
+      "frequencyRank": 3075,
+      "confidence": "high"
+    },
+    "constitutional court": {
+      "source": "constitutional court",
+      "target": "tribunal constitucional",
+      "plural": "tribunales constitucionales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for constitutional issues",
+      "frequencyRank": 3076,
+      "confidence": "high"
+    },
+    "family court": {
+      "source": "family court",
+      "target": "tribunal de familia",
+      "plural": "tribunales de familia",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for family matters",
+      "frequencyRank": 3077,
+      "confidence": "high"
+    },
+    "probate court": {
+      "source": "probate court",
+      "target": "tribunal sucesorio",
+      "plural": "tribunales sucesorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for estates",
+      "frequencyRank": 3078,
+      "confidence": "high"
+    },
+    "small claims court": {
+      "source": "small claims court",
+      "target": "tribunal de reclamos menores",
+      "plural": "tribunales de reclamos menores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for minor claims",
+      "frequencyRank": 3079,
+      "confidence": "high"
+    },
+    "bankruptcy court": {
+      "source": "bankruptcy court",
+      "target": "tribunal de quiebras",
+      "plural": "tribunales de quiebras",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for insolvency cases",
+      "frequencyRank": 3080,
+      "confidence": "high"
+    },
+    "juvenile court": {
+      "source": "juvenile court",
+      "target": "tribunal de menores",
+      "plural": "tribunales de menores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for youth cases",
+      "frequencyRank": 3081,
+      "confidence": "high"
+    },
+    "immigration court": {
+      "source": "immigration court",
+      "target": "tribunal migratorio",
+      "plural": "tribunales migratorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court for immigration cases",
+      "frequencyRank": 3082,
+      "confidence": "high"
+    },
+    "courtroom": {
+      "source": "courtroom",
+      "target": "sala de audiencias",
+      "plural": "salas de audiencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "room for court proceedings",
+      "frequencyRank": 3083,
+      "confidence": "high"
+    },
+    "bench": {
+      "source": "bench",
+      "target": "estrado",
+      "plural": "estrados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "judge's court seat",
+      "frequencyRank": 3084,
+      "confidence": "high"
+    },
+    "docket": {
+      "source": "docket",
+      "target": "lista de causas",
+      "plural": "listas de causas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court case schedule",
+      "frequencyRank": 3085,
+      "confidence": "high"
+    },
+    "calendar": {
+      "source": "calendar",
+      "target": "calendario judicial",
+      "plural": "calendarios judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court schedule of cases",
+      "frequencyRank": 3086,
+      "confidence": "high"
+    },
+    "clerk": {
+      "source": "clerk",
+      "target": "secretario judicial",
+      "plural": "secretarios judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court administrative officer",
+      "frequencyRank": 3087,
+      "confidence": "high"
+    },
+    "judge": {
+      "source": "judge",
+      "target": "juez",
+      "plural": "jueces",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official who decides cases",
+      "frequencyRank": 3088,
+      "confidence": "high"
+    },
+    "justice": {
+      "source": "justice",
+      "target": "magistrado",
+      "plural": "magistrados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "high court judge",
+      "frequencyRank": 3089,
+      "confidence": "high"
+    },
+    "magistrate": {
+      "source": "magistrate",
+      "target": "magistrado",
+      "plural": "magistrados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lower judicial officer",
+      "frequencyRank": 3090,
+      "confidence": "high"
+    },
+    "chancellor": {
+      "source": "chancellor",
+      "target": "canciller judicial",
+      "plural": "cancilleres judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "equity court judge",
+      "frequencyRank": 3091,
+      "confidence": "high"
+    },
+    "arbitrator": {
+      "source": "arbitrator",
+      "target": "árbitro",
+      "plural": "árbitros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "private dispute decision-maker",
+      "frequencyRank": 3092,
+      "confidence": "high"
+    },
+    "mediator": {
+      "source": "mediator",
+      "target": "mediador",
+      "plural": "mediadores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "neutral settlement facilitator",
+      "frequencyRank": 3093,
+      "confidence": "high"
+    },
+    "attorney": {
+      "source": "attorney",
+      "target": "abogado",
+      "plural": "abogados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "professional legal representative",
+      "frequencyRank": 3094,
+      "confidence": "high"
+    },
+    "lawyer": {
+      "source": "lawyer",
+      "target": "abogado",
+      "plural": "abogados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "licensed legal professional",
+      "frequencyRank": 3095,
+      "confidence": "high"
+    },
+    "counsel": {
+      "source": "counsel",
+      "target": "asesor legal",
+      "plural": "asesores legales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal representative or adviser",
+      "frequencyRank": 3096,
+      "confidence": "high"
+    },
+    "public defender": {
+      "source": "public defender",
+      "target": "defensor público",
+      "plural": "defensores públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "state-appointed defense lawyer",
+      "frequencyRank": 3097,
+      "confidence": "high"
+    },
+    "prosecutor": {
+      "source": "prosecutor",
+      "target": "fiscal",
+      "plural": "fiscales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official criminal accuser",
+      "frequencyRank": 3098,
+      "confidence": "high"
+    },
+    "district attorney": {
+      "source": "district attorney",
+      "target": "fiscal de distrito",
+      "plural": "fiscales de distrito",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local criminal prosecutor",
+      "frequencyRank": 3099,
+      "confidence": "high"
+    },
+    "solicitor general": {
+      "source": "solicitor general",
+      "target": "procurador general",
+      "plural": "procuradores generales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government appellate advocate",
+      "frequencyRank": 3100,
+      "confidence": "high"
+    },
+    "barrister": {
+      "source": "barrister",
+      "target": "abogado litigante",
+      "plural": "abogados litigantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "courtroom advocacy lawyer",
+      "frequencyRank": 3101,
+      "confidence": "high"
+    },
+    "paralegal": {
+      "source": "paralegal",
+      "target": "asistente legal",
+      "plural": "asistentes legales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "trained legal assistant",
+      "frequencyRank": 3102,
+      "confidence": "high"
+    },
+    "litigant": {
+      "source": "litigant",
+      "target": "litigante",
+      "plural": "litigantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party in lawsuit",
+      "frequencyRank": 3103,
+      "confidence": "high"
+    },
+    "plaintiff": {
+      "source": "plaintiff",
+      "target": "demandante",
+      "plural": "demandantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party bringing civil case",
+      "frequencyRank": 3104,
+      "confidence": "high"
+    },
+    "defendant": {
+      "source": "defendant",
+      "target": "demandado",
+      "plural": "demandados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party being sued",
+      "frequencyRank": 3105,
+      "confidence": "high"
+    },
+    "petitioner": {
+      "source": "petitioner",
+      "target": "peticionario",
+      "plural": "peticionarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party filing petition",
+      "frequencyRank": 3106,
+      "confidence": "high"
+    },
+    "respondent": {
+      "source": "respondent",
+      "target": "parte recurrida",
+      "plural": "partes recurridas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party answering an appeal",
+      "frequencyRank": 3107,
+      "confidence": "medium"
+    },
+    "appellant": {
+      "source": "appellant",
+      "target": "apelante",
+      "plural": "apelantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party seeking appeal",
+      "frequencyRank": 3108,
+      "confidence": "high"
+    },
+    "appellee": {
+      "source": "appellee",
+      "target": "apelado",
+      "plural": "apelados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party defending appeal",
+      "frequencyRank": 3109,
+      "confidence": "high"
+    },
+    "complainant": {
+      "source": "complainant",
+      "target": "denunciante",
+      "plural": "denunciantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person filing complaint",
+      "frequencyRank": 3110,
+      "confidence": "high"
+    },
+    "witness": {
+      "source": "witness",
+      "target": "testigo",
+      "plural": "testigos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person giving testimony",
+      "frequencyRank": 3111,
+      "confidence": "high"
+    },
+    "expert witness": {
+      "source": "expert witness",
+      "target": "perito",
+      "plural": "peritos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "specialized testimony witness",
+      "frequencyRank": 3112,
+      "confidence": "high"
+    },
+    "jury": {
+      "source": "jury",
+      "target": "jurado",
+      "plural": "jurados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "citizens deciding facts",
+      "frequencyRank": 3113,
+      "confidence": "high"
+    },
+    "juror": {
+      "source": "juror",
+      "target": "miembro del jurado",
+      "plural": "miembros del jurado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "member of a jury",
+      "frequencyRank": 3114,
+      "confidence": "high"
+    },
+    "grand jury": {
+      "source": "grand jury",
+      "target": "gran jurado",
+      "plural": "grandes jurados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "jury reviewing indictments",
+      "frequencyRank": 3115,
+      "confidence": "high"
+    },
+    "bailiff": {
+      "source": "bailiff",
+      "target": "alguacil",
+      "plural": "alguaciles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court security officer",
+      "frequencyRank": 3116,
+      "confidence": "high"
+    },
+    "court reporter": {
+      "source": "court reporter",
+      "target": "estenógrafo judicial",
+      "plural": "estenógrafos judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official transcript preparer",
+      "frequencyRank": 3117,
+      "confidence": "high"
+    },
+    "interpreter": {
+      "source": "interpreter",
+      "target": "intérprete judicial",
+      "plural": "intérpretes judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court language translator",
+      "frequencyRank": 3118,
+      "confidence": "high"
+    },
+    "transcript": {
+      "source": "transcript",
+      "target": "transcripción judicial",
+      "plural": "transcripciones judiciales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written record of proceedings",
+      "frequencyRank": 3119,
+      "confidence": "high"
+    },
+    "record": {
+      "source": "record",
+      "target": "expediente",
+      "plural": "expedientes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official case file",
+      "frequencyRank": 3120,
+      "confidence": "high"
+    },
+    "case file": {
+      "source": "case file",
+      "target": "expediente judicial",
+      "plural": "expedientes judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court documents collection",
+      "frequencyRank": 3121,
+      "confidence": "high"
+    },
+    "pleading": {
+      "source": "pleading",
+      "target": "escrito procesal",
+      "plural": "escritos procesales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal court filing",
+      "frequencyRank": 3122,
+      "confidence": "high"
+    },
+    "complaint": {
+      "source": "complaint",
+      "target": "demanda",
+      "plural": "demandas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "initial civil pleading",
+      "frequencyRank": 3123,
+      "confidence": "high"
+    },
+    "petition": {
+      "source": "petition",
+      "target": "petición",
+      "plural": "peticiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal legal request",
+      "frequencyRank": 3124,
+      "confidence": "high"
+    },
+    "motion": {
+      "source": "motion",
+      "target": "moción",
+      "plural": "mociones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "request for court order",
+      "frequencyRank": 3125,
+      "confidence": "high"
+    },
+    "brief": {
+      "source": "brief",
+      "target": "escrito jurídico",
+      "plural": "escritos jurídicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal argument document",
+      "frequencyRank": 3126,
+      "confidence": "high"
+    },
+    "memorandum": {
+      "source": "memorandum",
+      "target": "memorando jurídico",
+      "plural": "memorandos jurídicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written legal analysis",
+      "frequencyRank": 3127,
+      "confidence": "high"
+    },
+    "answer": {
+      "source": "answer",
+      "target": "contestación",
+      "plural": "contestaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal response to complaint",
+      "frequencyRank": 3128,
+      "confidence": "high"
+    },
+    "counterclaim": {
+      "source": "counterclaim",
+      "target": "contrademanda",
+      "plural": "contrademandas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "claim against plaintiff",
+      "frequencyRank": 3129,
+      "confidence": "high"
+    },
+    "cross-claim": {
+      "source": "cross-claim",
+      "target": "demanda cruzada",
+      "plural": "demandas cruzadas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "claim among coparties",
+      "frequencyRank": 3130,
+      "confidence": "high"
+    },
+    "third-party complaint": {
+      "source": "third-party complaint",
+      "target": "demanda contra tercero",
+      "plural": "demandas contra terceros",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "claim against additional party",
+      "frequencyRank": 3131,
+      "confidence": "high"
+    },
+    "joinder": {
+      "source": "joinder",
+      "target": "acumulación procesal",
+      "plural": "acumulaciones procesales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "joining parties or claims",
+      "frequencyRank": 3132,
+      "confidence": "high"
+    },
+    "intervention": {
+      "source": "intervention",
+      "target": "intervención",
+      "plural": "intervenciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "entry into pending case",
+      "frequencyRank": 3133,
+      "confidence": "high"
+    },
+    "standing": {
+      "source": "standing",
+      "target": "legitimación procesal",
+      "plural": "legitimaciones procesales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "right to bring case",
+      "frequencyRank": 3134,
+      "confidence": "high"
+    },
+    "venue": {
+      "source": "venue",
+      "target": "competencia territorial",
+      "plural": "competencias territoriales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "proper geographic forum",
+      "frequencyRank": 3135,
+      "confidence": "high"
+    },
+    "forum": {
+      "source": "forum",
+      "target": "foro",
+      "plural": "foros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "place for legal hearing",
+      "frequencyRank": 3136,
+      "confidence": "high"
+    },
+    "cause of action": {
+      "source": "cause of action",
+      "target": "causa de acción",
+      "plural": "causas de acción",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal basis for claim",
+      "frequencyRank": 3137,
+      "confidence": "high"
+    },
+    "claim": {
+      "source": "claim",
+      "target": "reclamación",
+      "plural": "reclamaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "asserted legal demand",
+      "frequencyRank": 3138,
+      "confidence": "high"
+    },
+    "allegation": {
+      "source": "allegation",
+      "target": "alegación",
+      "plural": "alegaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "asserted fact in pleading",
+      "frequencyRank": 3139,
+      "confidence": "high"
+    },
+    "count": {
+      "source": "count",
+      "target": "cargo civil",
+      "plural": "cargos civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "separate claim in pleading",
+      "frequencyRank": 3140,
+      "confidence": "high"
+    },
+    "hearing": {
+      "source": "hearing",
+      "target": "audiencia",
+      "plural": "audiencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal court session",
+      "frequencyRank": 3141,
+      "confidence": "high"
+    },
+    "trial": {
+      "source": "trial",
+      "target": "juicio",
+      "plural": "juicios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal adjudicative proceeding",
+      "frequencyRank": 3142,
+      "confidence": "high"
+    },
+    "bench trial": {
+      "source": "bench trial",
+      "target": "juicio sin jurado",
+      "plural": "juicios sin jurado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "trial decided by judge",
+      "frequencyRank": 3143,
+      "confidence": "high"
+    },
+    "jury trial": {
+      "source": "jury trial",
+      "target": "juicio con jurado",
+      "plural": "juicios con jurado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "trial decided by jury",
+      "frequencyRank": 3144,
+      "confidence": "high"
+    },
+    "arraignment": {
+      "source": "arraignment",
+      "target": "lectura de cargos",
+      "plural": "lecturas de cargos",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "initial criminal court appearance",
+      "frequencyRank": 3145,
+      "confidence": "high"
+    },
+    "deposition": {
+      "source": "deposition",
+      "target": "deposición",
+      "plural": "deposiciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sworn pretrial testimony",
+      "frequencyRank": 3146,
+      "confidence": "high"
+    },
+    "discovery": {
+      "source": "discovery",
+      "target": "descubrimiento de pruebas",
+      "plural": "descubrimientos de pruebas",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pretrial evidence exchange",
+      "frequencyRank": 3147,
+      "confidence": "high"
+    },
+    "interrogatory": {
+      "source": "interrogatory",
+      "target": "interrogatorio escrito",
+      "plural": "interrogatorios escritos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written discovery question",
+      "frequencyRank": 3148,
+      "confidence": "high"
+    },
+    "request for production": {
+      "source": "request for production",
+      "target": "solicitud de producción",
+      "plural": "solicitudes de producción",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "request for documents",
+      "frequencyRank": 3149,
+      "confidence": "high"
+    },
+    "request for admission": {
+      "source": "request for admission",
+      "target": "solicitud de admisión",
+      "plural": "solicitudes de admisión",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "request to admit facts",
+      "frequencyRank": 3150,
+      "confidence": "high"
+    },
+    "evidentiary hearing": {
+      "source": "evidentiary hearing",
+      "target": "audiencia probatoria",
+      "plural": "audiencias probatorias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hearing on evidence",
+      "frequencyRank": 3151,
+      "confidence": "high"
+    },
+    "pretrial conference": {
+      "source": "pretrial conference",
+      "target": "conferencia previa al juicio",
+      "plural": "conferencias previas al juicio",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "meeting before trial",
+      "frequencyRank": 3152,
+      "confidence": "high"
+    },
+    "settlement conference": {
+      "source": "settlement conference",
+      "target": "conferencia de conciliación",
+      "plural": "conferencias de conciliación",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "meeting to resolve case",
+      "frequencyRank": 3153,
+      "confidence": "high"
+    },
+    "voir dire": {
+      "source": "voir dire",
+      "target": "selección del jurado",
+      "plural": "selecciones del jurado",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "jury questioning process",
+      "frequencyRank": 3154,
+      "confidence": "high"
+    },
+    "opening statement": {
+      "source": "opening statement",
+      "target": "alegato de apertura",
+      "plural": "alegatos de apertura",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "initial trial statement",
+      "frequencyRank": 3155,
+      "confidence": "high"
+    },
+    "closing argument": {
+      "source": "closing argument",
+      "target": "alegato de clausura",
+      "plural": "alegatos de clausura",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "final trial argument",
+      "frequencyRank": 3156,
+      "confidence": "high"
+    },
+    "verdict": {
+      "source": "verdict",
+      "target": "veredicto",
+      "plural": "veredictos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "jury's formal decision",
+      "frequencyRank": 3157,
+      "confidence": "high"
+    },
+    "judgment": {
+      "source": "judgment",
+      "target": "sentencia",
+      "plural": "sentencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court's final decision",
+      "frequencyRank": 3158,
+      "confidence": "high"
+    },
+    "order": {
+      "source": "order",
+      "target": "orden judicial",
+      "plural": "órdenes judiciales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal court directive",
+      "frequencyRank": 3159,
+      "confidence": "high"
+    },
+    "ruling": {
+      "source": "ruling",
+      "target": "fallo",
+      "plural": "fallos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "judicial decision on issue",
+      "frequencyRank": 3160,
+      "confidence": "high"
+    },
+    "opinion": {
+      "source": "opinion",
+      "target": "opinión judicial",
+      "plural": "opiniones judiciales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written judicial reasoning",
+      "frequencyRank": 3161,
+      "confidence": "high"
+    },
+    "majority opinion": {
+      "source": "majority opinion",
+      "target": "opinión mayoritaria",
+      "plural": "opiniones mayoritarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "opinion joined by majority",
+      "frequencyRank": 3162,
+      "confidence": "high"
+    },
+    "dissent": {
+      "source": "dissent",
+      "target": "voto disidente",
+      "plural": "votos disidentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "opinion disagreeing with result",
+      "frequencyRank": 3163,
+      "confidence": "high"
+    },
+    "concurrence": {
+      "source": "concurrence",
+      "target": "voto concurrente",
+      "plural": "votos concurrentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "opinion agreeing separately",
+      "frequencyRank": 3164,
+      "confidence": "high"
+    },
+    "appeal": {
+      "source": "appeal",
+      "target": "apelación",
+      "plural": "apelaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "request for higher review",
+      "frequencyRank": 3165,
+      "confidence": "high"
+    },
+    "remand": {
+      "source": "remand",
+      "target": "devolución al tribunal inferior",
+      "plural": "devoluciones al tribunal inferior",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "return to lower court",
+      "frequencyRank": 3166,
+      "confidence": "high"
+    },
+    "reversal": {
+      "source": "reversal",
+      "target": "revocación",
+      "plural": "revocaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "overturning of decision",
+      "frequencyRank": 3167,
+      "confidence": "high"
+    },
+    "affirmance": {
+      "source": "affirmance",
+      "target": "confirmación",
+      "plural": "confirmaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "upholding of decision",
+      "frequencyRank": 3168,
+      "confidence": "high"
+    },
+    "vacatur": {
+      "source": "vacatur",
+      "target": "anulación",
+      "plural": "anulaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "setting aside judgment",
+      "frequencyRank": 3169,
+      "confidence": "high"
+    },
+    "certiorari": {
+      "source": "certiorari",
+      "target": "certiorari",
+      "plural": "certioraris",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "higher court review writ",
+      "frequencyRank": 3170,
+      "confidence": "high"
+    },
+    "habeas corpus": {
+      "source": "habeas corpus",
+      "target": "hábeas corpus",
+      "plural": "hábeas corpus",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "challenge to unlawful detention",
+      "frequencyRank": 3171,
+      "confidence": "high"
+    },
+    "crime": {
+      "source": "crime",
+      "target": "delito",
+      "plural": "delitos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "act punishable by law",
+      "frequencyRank": 3172,
+      "confidence": "high"
+    },
+    "offense": {
+      "source": "offense",
+      "target": "infracción penal",
+      "plural": "infracciones penales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "violation of criminal law",
+      "frequencyRank": 3173,
+      "confidence": "high"
+    },
+    "felony": {
+      "source": "felony",
+      "target": "delito grave",
+      "plural": "delitos graves",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "serious criminal offense",
+      "frequencyRank": 3174,
+      "confidence": "high"
+    },
+    "misdemeanor": {
+      "source": "misdemeanor",
+      "target": "delito menor",
+      "plural": "delitos menores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lesser criminal offense",
+      "frequencyRank": 3175,
+      "confidence": "high"
+    },
+    "infraction": {
+      "source": "infraction",
+      "target": "infracción",
+      "plural": "infracciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "minor legal violation",
+      "frequencyRank": 3176,
+      "confidence": "high"
+    },
+    "charge": {
+      "source": "charge",
+      "target": "cargo",
+      "plural": "cargos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal criminal accusation",
+      "frequencyRank": 3177,
+      "confidence": "high"
+    },
+    "indictment": {
+      "source": "indictment",
+      "target": "acusación formal",
+      "plural": "acusaciones formales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "grand jury criminal charge",
+      "frequencyRank": 3178,
+      "confidence": "high"
+    },
+    "information": {
+      "source": "information",
+      "target": "acusación fiscal",
+      "plural": "acusaciones fiscales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prosecutor's formal charge",
+      "frequencyRank": 3179,
+      "confidence": "high"
+    },
+    "arrest": {
+      "source": "arrest",
+      "target": "arresto",
+      "plural": "arrestos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "taking suspect into custody",
+      "frequencyRank": 3180,
+      "confidence": "high"
+    },
+    "custody": {
+      "source": "custody",
+      "target": "custodia",
+      "plural": "custodias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal physical detention",
+      "frequencyRank": 3181,
+      "confidence": "high"
+    },
+    "detention": {
+      "source": "detention",
+      "target": "detención",
+      "plural": "detenciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "holding by authorities",
+      "frequencyRank": 3182,
+      "confidence": "high"
+    },
+    "booking": {
+      "source": "booking",
+      "target": "registro policial",
+      "plural": "registros policiales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "post-arrest administrative process",
+      "frequencyRank": 3183,
+      "confidence": "high"
+    },
+    "bail": {
+      "source": "bail",
+      "target": "fianza",
+      "plural": "fianzas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "security for release",
+      "frequencyRank": 3184,
+      "confidence": "high"
+    },
+    "bond": {
+      "source": "bond",
+      "target": "caución",
+      "plural": "cauciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "guarantee for court appearance",
+      "frequencyRank": 3185,
+      "confidence": "high"
+    },
+    "release": {
+      "source": "release",
+      "target": "libertad provisional",
+      "plural": "libertades provisionales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "temporary legal release",
+      "frequencyRank": 3186,
+      "confidence": "high"
+    },
+    "probable cause": {
+      "source": "probable cause",
+      "target": "causa probable",
+      "plural": "causas probables",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "basis for arrest search",
+      "frequencyRank": 3187,
+      "confidence": "high"
+    },
+    "reasonable suspicion": {
+      "source": "reasonable suspicion",
+      "target": "sospecha razonable",
+      "plural": "sospechas razonables",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "basis for brief stop",
+      "frequencyRank": 3188,
+      "confidence": "high"
+    },
+    "search warrant": {
+      "source": "search warrant",
+      "target": "orden de allanamiento",
+      "plural": "órdenes de allanamiento",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court authorization to search",
+      "frequencyRank": 3189,
+      "confidence": "high"
+    },
+    "arrest warrant": {
+      "source": "arrest warrant",
+      "target": "orden de arresto",
+      "plural": "órdenes de arresto",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court authorization to arrest",
+      "frequencyRank": 3190,
+      "confidence": "high"
+    },
+    "bench warrant": {
+      "source": "bench warrant",
+      "target": "orden de comparecencia",
+      "plural": "órdenes de comparecencia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "judge's arrest order",
+      "frequencyRank": 3191,
+      "confidence": "high"
+    },
+    "search": {
+      "source": "search",
+      "target": "registro",
+      "plural": "registros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official inspection for evidence",
+      "frequencyRank": 3192,
+      "confidence": "high"
+    },
+    "seizure": {
+      "source": "seizure",
+      "target": "incautación",
+      "plural": "incautaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official taking of property",
+      "frequencyRank": 3193,
+      "confidence": "high"
+    },
+    "contraband": {
+      "source": "contraband",
+      "target": "contrabando",
+      "plural": "contrabandos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "illegally possessed goods",
+      "frequencyRank": 3194,
+      "confidence": "high"
+    },
+    "probation": {
+      "source": "probation",
+      "target": "libertad condicional",
+      "plural": "libertades condicionales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "community supervision sentence",
+      "frequencyRank": 3195,
+      "confidence": "high"
+    },
+    "parole": {
+      "source": "parole",
+      "target": "libertad bajo palabra",
+      "plural": "libertades bajo palabra",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "conditional prison release",
+      "frequencyRank": 3196,
+      "confidence": "high"
+    },
+    "sentence": {
+      "source": "sentence",
+      "target": "condena",
+      "plural": "condenas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "punishment imposed by court",
+      "frequencyRank": 3197,
+      "confidence": "high"
+    },
+    "sentencing": {
+      "source": "sentencing",
+      "target": "imposición de pena",
+      "plural": "imposiciones de pena",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "process of assigning punishment",
+      "frequencyRank": 3198,
+      "confidence": "high"
+    },
+    "prison": {
+      "source": "prison",
+      "target": "prisión",
+      "plural": "prisiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "facility for incarceration",
+      "frequencyRank": 3199,
+      "confidence": "high"
+    },
+    "jail": {
+      "source": "jail",
+      "target": "cárcel",
+      "plural": "cárceles",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local detention facility",
+      "frequencyRank": 3200,
+      "confidence": "high"
+    },
+    "incarceration": {
+      "source": "incarceration",
+      "target": "encarcelamiento",
+      "plural": "encarcelamientos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "confinement as punishment",
+      "frequencyRank": 3201,
+      "confidence": "high"
+    },
+    "imprisonment": {
+      "source": "imprisonment",
+      "target": "prisión",
+      "plural": "prisiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "confinement under sentence",
+      "frequencyRank": 3202,
+      "confidence": "high"
+    },
+    "capital punishment": {
+      "source": "capital punishment",
+      "target": "pena capital",
+      "plural": "penas capitales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "death penalty punishment",
+      "frequencyRank": 3203,
+      "confidence": "high"
+    },
+    "death penalty": {
+      "source": "death penalty",
+      "target": "pena de muerte",
+      "plural": "penas de muerte",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "execution as punishment",
+      "frequencyRank": 3204,
+      "confidence": "high"
+    },
+    "restitution": {
+      "source": "restitution",
+      "target": "restitución",
+      "plural": "restituciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "payment to crime victim",
+      "frequencyRank": 3205,
+      "confidence": "high"
+    },
+    "community service": {
+      "source": "community service",
+      "target": "servicio comunitario",
+      "plural": "servicios comunitarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "work imposed as sentence",
+      "frequencyRank": 3206,
+      "confidence": "high"
+    },
+    "plea": {
+      "source": "plea",
+      "target": "declaración de culpabilidad",
+      "plural": "declaraciones de culpabilidad",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "defendant's formal response",
+      "frequencyRank": 3207,
+      "confidence": "high"
+    },
+    "guilty plea": {
+      "source": "guilty plea",
+      "target": "declaración de culpabilidad",
+      "plural": "declaraciones de culpabilidad",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "admission of criminal guilt",
+      "frequencyRank": 3208,
+      "confidence": "high"
+    },
+    "not guilty plea": {
+      "source": "not guilty plea",
+      "target": "declaración de inocencia",
+      "plural": "declaraciones de inocencia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "denial of criminal guilt",
+      "frequencyRank": 3209,
+      "confidence": "high"
+    },
+    "plea bargain": {
+      "source": "plea bargain",
+      "target": "acuerdo de culpabilidad",
+      "plural": "acuerdos de culpabilidad",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "negotiated criminal resolution",
+      "frequencyRank": 3210,
+      "confidence": "high"
+    },
+    "acquittal": {
+      "source": "acquittal",
+      "target": "absolución",
+      "plural": "absoluciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "finding of not guilty",
+      "frequencyRank": 3211,
+      "confidence": "high"
+    },
+    "conviction": {
+      "source": "conviction",
+      "target": "condena",
+      "plural": "condenas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "finding of criminal guilt",
+      "frequencyRank": 3212,
+      "confidence": "high"
+    },
+    "expungement": {
+      "source": "expungement",
+      "target": "eliminación de antecedentes",
+      "plural": "eliminaciones de antecedentes",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "removal of criminal record",
+      "frequencyRank": 3213,
+      "confidence": "high"
+    },
+    "pardon": {
+      "source": "pardon",
+      "target": "indulto",
+      "plural": "indultos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "executive forgiveness of offense",
+      "frequencyRank": 3214,
+      "confidence": "high"
+    },
+    "commutation": {
+      "source": "commutation",
+      "target": "conmutación",
+      "plural": "conmutaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "reduction of criminal sentence",
+      "frequencyRank": 3215,
+      "confidence": "high"
+    },
+    "clemency": {
+      "source": "clemency",
+      "target": "clemencia",
+      "plural": "clemencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "executive mercy in punishment",
+      "frequencyRank": 3216,
+      "confidence": "high"
+    },
+    "recidivism": {
+      "source": "recidivism",
+      "target": "reincidencia",
+      "plural": "reincidencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "repeat criminal offending",
+      "frequencyRank": 3217,
+      "confidence": "high"
+    },
+    "mens rea": {
+      "source": "mens rea",
+      "target": "mens rea",
+      "plural": "mens reas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "criminal mental state",
+      "frequencyRank": 3218,
+      "confidence": "high"
+    },
+    "actus reus": {
+      "source": "actus reus",
+      "target": "acto culpable",
+      "plural": "actos culpables",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "criminal physical act",
+      "frequencyRank": 3219,
+      "confidence": "high"
+    },
+    "intent": {
+      "source": "intent",
+      "target": "intención",
+      "plural": "intenciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "purposeful mental state",
+      "frequencyRank": 3220,
+      "confidence": "high"
+    },
+    "malice": {
+      "source": "malice",
+      "target": "malicia",
+      "plural": "malicias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "wrongful criminal intent",
+      "frequencyRank": 3221,
+      "confidence": "high"
+    },
+    "negligence": {
+      "source": "negligence",
+      "target": "negligencia",
+      "plural": "negligencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "failure to exercise care",
+      "frequencyRank": 3222,
+      "confidence": "high"
+    },
+    "recklessness": {
+      "source": "recklessness",
+      "target": "imprudencia temeraria",
+      "plural": "imprudencias temerarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "conscious disregard of risk",
+      "frequencyRank": 3223,
+      "confidence": "high"
+    },
+    "self-defense": {
+      "source": "self-defense",
+      "target": "legítima defensa",
+      "plural": "legítimas defensas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "defense against unlawful force",
+      "frequencyRank": 3224,
+      "confidence": "high"
+    },
+    "duress": {
+      "source": "duress",
+      "target": "coacción",
+      "plural": "coacciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful pressure defense",
+      "frequencyRank": 3225,
+      "confidence": "high"
+    },
+    "necessity": {
+      "source": "necessity",
+      "target": "estado de necesidad",
+      "plural": "estados de necesidad",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "defense based on emergency",
+      "frequencyRank": 3226,
+      "confidence": "high"
+    },
+    "insanity defense": {
+      "source": "insanity defense",
+      "target": "defensa por demencia",
+      "plural": "defensas por demencia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mental illness defense",
+      "frequencyRank": 3227,
+      "confidence": "high"
+    },
+    "entrapment": {
+      "source": "entrapment",
+      "target": "inducción al delito",
+      "plural": "inducciones al delito",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "improper government inducement",
+      "frequencyRank": 3228,
+      "confidence": "high"
+    },
+    "conspiracy": {
+      "source": "conspiracy",
+      "target": "conspiración",
+      "plural": "conspiraciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "agreement to commit crime",
+      "frequencyRank": 3229,
+      "confidence": "high"
+    },
+    "attempt": {
+      "source": "attempt",
+      "target": "tentativa",
+      "plural": "tentativas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "incomplete criminal effort",
+      "frequencyRank": 3230,
+      "confidence": "high"
+    },
+    "solicitation": {
+      "source": "solicitation",
+      "target": "instigación",
+      "plural": "instigaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "encouraging criminal conduct",
+      "frequencyRank": 3231,
+      "confidence": "high"
+    },
+    "accessory": {
+      "source": "accessory",
+      "target": "cómplice accesorio",
+      "plural": "cómplices accesorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "helper after crime",
+      "frequencyRank": 3232,
+      "confidence": "high"
+    },
+    "accomplice": {
+      "source": "accomplice",
+      "target": "cómplice",
+      "plural": "cómplices",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "participant in crime",
+      "frequencyRank": 3233,
+      "confidence": "high"
+    },
+    "principal": {
+      "source": "principal",
+      "target": "autor principal",
+      "plural": "autores principales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "main perpetrator of crime",
+      "frequencyRank": 3234,
+      "confidence": "high"
+    },
+    "homicide": {
+      "source": "homicide",
+      "target": "homicidio",
+      "plural": "homicidios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful killing of person",
+      "frequencyRank": 3235,
+      "confidence": "high"
+    },
+    "murder": {
+      "source": "murder",
+      "target": "asesinato",
+      "plural": "asesinatos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "intentional unlawful killing",
+      "frequencyRank": 3236,
+      "confidence": "high"
+    },
+    "manslaughter": {
+      "source": "manslaughter",
+      "target": "homicidio involuntario",
+      "plural": "homicidios involuntarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful killing without malice",
+      "frequencyRank": 3237,
+      "confidence": "high"
+    },
+    "assault": {
+      "source": "assault",
+      "target": "agresión",
+      "plural": "agresiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "threat or attempt of violence",
+      "frequencyRank": 3238,
+      "confidence": "high"
+    },
+    "battery": {
+      "source": "battery",
+      "target": "lesión",
+      "plural": "lesiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful physical contact",
+      "frequencyRank": 3239,
+      "confidence": "high"
+    },
+    "kidnapping": {
+      "source": "kidnapping",
+      "target": "secuestro",
+      "plural": "secuestros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful taking of person",
+      "frequencyRank": 3240,
+      "confidence": "high"
+    },
+    "robbery": {
+      "source": "robbery",
+      "target": "robo con violencia",
+      "plural": "robos con violencia",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "theft using force",
+      "frequencyRank": 3241,
+      "confidence": "high"
+    },
+    "burglary": {
+      "source": "burglary",
+      "target": "allanamiento con intención delictiva",
+      "plural": "allanamientos con intención delictiva",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful entry for crime",
+      "frequencyRank": 3242,
+      "confidence": "high"
+    },
+    "theft": {
+      "source": "theft",
+      "target": "hurto",
+      "plural": "hurtos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unlawful taking of property",
+      "frequencyRank": 3243,
+      "confidence": "high"
+    },
+    "larceny": {
+      "source": "larceny",
+      "target": "hurto",
+      "plural": "hurtos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "theft of personal property",
+      "frequencyRank": 3244,
+      "confidence": "high"
+    },
+    "embezzlement": {
+      "source": "embezzlement",
+      "target": "malversación",
+      "plural": "malversaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fraudulent appropriation of property",
+      "frequencyRank": 3245,
+      "confidence": "high"
+    },
+    "fraud": {
+      "source": "fraud",
+      "target": "fraude",
+      "plural": "fraudes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "deception for unlawful gain",
+      "frequencyRank": 3246,
+      "confidence": "high"
+    },
+    "forgery": {
+      "source": "forgery",
+      "target": "falsificación",
+      "plural": "falsificaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "false making of document",
+      "frequencyRank": 3247,
+      "confidence": "high"
+    },
+    "perjury": {
+      "source": "perjury",
+      "target": "perjurio",
+      "plural": "perjurios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lying under oath",
+      "frequencyRank": 3248,
+      "confidence": "high"
+    },
+    "obstruction of justice": {
+      "source": "obstruction of justice",
+      "target": "obstrucción de la justicia",
+      "plural": "obstrucciones de la justicia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "interference with legal process",
+      "frequencyRank": 3249,
+      "confidence": "high"
+    },
+    "contempt of court": {
+      "source": "contempt of court",
+      "target": "desacato al tribunal",
+      "plural": "desacatos al tribunal",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "disobedience of court authority",
+      "frequencyRank": 3250,
+      "confidence": "high"
+    },
+    "money laundering": {
+      "source": "money laundering",
+      "target": "lavado de dinero",
+      "plural": "lavados de dinero",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "concealing illicit funds",
+      "frequencyRank": 3251,
+      "confidence": "high"
+    },
+    "racketeering": {
+      "source": "racketeering",
+      "target": "crimen organizado",
+      "plural": "crímenes organizados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "organized criminal enterprise activity",
+      "frequencyRank": 3252,
+      "confidence": "high"
+    },
+    "lawsuit": {
+      "source": "lawsuit",
+      "target": "demanda judicial",
+      "plural": "demandas judiciales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "civil court action",
+      "frequencyRank": 3253,
+      "confidence": "high"
+    },
+    "litigation": {
+      "source": "litigation",
+      "target": "litigio",
+      "plural": "litigios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "process of legal dispute",
+      "frequencyRank": 3254,
+      "confidence": "high"
+    },
+    "dispute": {
+      "source": "dispute",
+      "target": "controversia jurídica",
+      "plural": "controversias jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal conflict between parties",
+      "frequencyRank": 3255,
+      "confidence": "high"
+    },
+    "settlement": {
+      "source": "settlement",
+      "target": "acuerdo transaccional",
+      "plural": "acuerdos transaccionales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "resolution without trial",
+      "frequencyRank": 3256,
+      "confidence": "high"
+    },
+    "settlement agreement": {
+      "source": "settlement agreement",
+      "target": "acuerdo de conciliación",
+      "plural": "acuerdos de conciliación",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "written dispute resolution",
+      "frequencyRank": 3257,
+      "confidence": "high"
+    },
+    "arbitration": {
+      "source": "arbitration",
+      "target": "arbitraje",
+      "plural": "arbitrajes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "private binding dispute process",
+      "frequencyRank": 3258,
+      "confidence": "high"
+    },
+    "mediation": {
+      "source": "mediation",
+      "target": "mediación",
+      "plural": "mediaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "facilitated settlement process",
+      "frequencyRank": 3259,
+      "confidence": "high"
+    },
+    "conciliation": {
+      "source": "conciliation",
+      "target": "conciliación",
+      "plural": "conciliaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "assisted dispute resolution",
+      "frequencyRank": 3260,
+      "confidence": "high"
+    },
+    "tort": {
+      "source": "tort",
+      "target": "agravio civil",
+      "plural": "agravios civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "civil wrong causing harm",
+      "frequencyRank": 3261,
+      "confidence": "high"
+    },
+    "negligence claim": {
+      "source": "negligence claim",
+      "target": "reclamación por negligencia",
+      "plural": "reclamaciones por negligencia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "claim for careless harm",
+      "frequencyRank": 3262,
+      "confidence": "high"
+    },
+    "duty of care": {
+      "source": "duty of care",
+      "target": "deber de cuidado",
+      "plural": "deberes de cuidado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal obligation of care",
+      "frequencyRank": 3263,
+      "confidence": "high"
+    },
+    "breach": {
+      "source": "breach",
+      "target": "incumplimiento",
+      "plural": "incumplimientos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "failure to meet duty",
+      "frequencyRank": 3264,
+      "confidence": "high"
+    },
+    "causation": {
+      "source": "causation",
+      "target": "causalidad",
+      "plural": "causalidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal link to harm",
+      "frequencyRank": 3265,
+      "confidence": "high"
+    },
+    "proximate cause": {
+      "source": "proximate cause",
+      "target": "causa próxima",
+      "plural": "causas próximas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally sufficient cause",
+      "frequencyRank": 3266,
+      "confidence": "high"
+    },
+    "injury": {
+      "source": "injury",
+      "target": "lesión jurídica",
+      "plural": "lesiones jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "harm recognized by law",
+      "frequencyRank": 3267,
+      "confidence": "high"
+    },
+    "harm": {
+      "source": "harm",
+      "target": "daño",
+      "plural": "daños",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally recognized loss",
+      "frequencyRank": 3268,
+      "confidence": "high"
+    },
+    "defamation": {
+      "source": "defamation",
+      "target": "difamación",
+      "plural": "difamaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "false reputational harm",
+      "frequencyRank": 3269,
+      "confidence": "high"
+    },
+    "libel": {
+      "source": "libel",
+      "target": "difamación escrita",
+      "plural": "difamaciones escritas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "defamation in writing",
+      "frequencyRank": 3270,
+      "confidence": "high"
+    },
+    "slander": {
+      "source": "slander",
+      "target": "difamación oral",
+      "plural": "difamaciones orales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "spoken defamatory statement",
+      "frequencyRank": 3271,
+      "confidence": "high"
+    },
+    "malpractice": {
+      "source": "malpractice",
+      "target": "mala praxis",
+      "plural": "malas praxis",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "professional negligence claim",
+      "frequencyRank": 3272,
+      "confidence": "high"
+    },
+    "product liability": {
+      "source": "product liability",
+      "target": "responsabilidad por productos",
+      "plural": "responsabilidades por productos",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "liability for defective goods",
+      "frequencyRank": 3273,
+      "confidence": "high"
+    },
+    "strict liability": {
+      "source": "strict liability",
+      "target": "responsabilidad objetiva",
+      "plural": "responsabilidades objetivas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "liability without fault",
+      "frequencyRank": 3274,
+      "confidence": "high"
+    },
+    "nuisance": {
+      "source": "nuisance",
+      "target": "molestia legal",
+      "plural": "molestias legales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unreasonable property interference",
+      "frequencyRank": 3275,
+      "confidence": "high"
+    },
+    "trespass": {
+      "source": "trespass",
+      "target": "allanamiento civil",
+      "plural": "allanamientos civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unauthorized entry onto property",
+      "frequencyRank": 3276,
+      "confidence": "high"
+    },
+    "conversion": {
+      "source": "conversion",
+      "target": "apropiación indebida",
+      "plural": "apropiaciones indebidas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "wrongful control of property",
+      "frequencyRank": 3277,
+      "confidence": "high"
+    },
+    "contract": {
+      "source": "contract",
+      "target": "contrato",
+      "plural": "contratos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally enforceable agreement",
+      "frequencyRank": 3278,
+      "confidence": "high"
+    },
+    "agreement": {
+      "source": "agreement",
+      "target": "acuerdo",
+      "plural": "acuerdos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mutual legal understanding",
+      "frequencyRank": 3279,
+      "confidence": "high"
+    },
+    "offer": {
+      "source": "offer",
+      "target": "oferta",
+      "plural": "ofertas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "proposal to contract",
+      "frequencyRank": 3280,
+      "confidence": "high"
+    },
+    "acceptance": {
+      "source": "acceptance",
+      "target": "aceptación",
+      "plural": "aceptaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "assent to contract terms",
+      "frequencyRank": 3281,
+      "confidence": "high"
+    },
+    "consideration": {
+      "source": "consideration",
+      "target": "contraprestación",
+      "plural": "contraprestaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "value exchanged in contract",
+      "frequencyRank": 3282,
+      "confidence": "high"
+    },
+    "capacity": {
+      "source": "capacity",
+      "target": "capacidad jurídica",
+      "plural": "capacidades jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ability to enter contract",
+      "frequencyRank": 3283,
+      "confidence": "high"
+    },
+    "breach of contract": {
+      "source": "breach of contract",
+      "target": "incumplimiento contractual",
+      "plural": "incumplimientos contractuales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "failure to perform contract",
+      "frequencyRank": 3284,
+      "confidence": "high"
+    },
+    "performance": {
+      "source": "performance",
+      "target": "cumplimiento contractual",
+      "plural": "cumplimientos contractuales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "execution of contract duties",
+      "frequencyRank": 3285,
+      "confidence": "high"
+    },
+    "specific performance": {
+      "source": "specific performance",
+      "target": "cumplimiento específico",
+      "plural": "cumplimientos específicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court-ordered contractual performance",
+      "frequencyRank": 3286,
+      "confidence": "high"
+    },
+    "rescission": {
+      "source": "rescission",
+      "target": "rescisión",
+      "plural": "rescisiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cancellation of contract",
+      "frequencyRank": 3287,
+      "confidence": "high"
+    },
+    "reformation": {
+      "source": "reformation",
+      "target": "reforma contractual",
+      "plural": "reformas contractuales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court correction of contract",
+      "frequencyRank": 3288,
+      "confidence": "high"
+    },
+    "indemnity": {
+      "source": "indemnity",
+      "target": "indemnidad",
+      "plural": "indemnidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "protection from legal loss",
+      "frequencyRank": 3289,
+      "confidence": "high"
+    },
+    "warranty": {
+      "source": "warranty",
+      "target": "garantía",
+      "plural": "garantías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal assurance in transaction",
+      "frequencyRank": 3290,
+      "confidence": "high"
+    },
+    "guaranty": {
+      "source": "guaranty",
+      "target": "fianza contractual",
+      "plural": "fianzas contractuales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "promise to answer debt",
+      "frequencyRank": 3291,
+      "confidence": "high"
+    },
+    "lease": {
+      "source": "lease",
+      "target": "arrendamiento",
+      "plural": "arrendamientos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "contract for property use",
+      "frequencyRank": 3292,
+      "confidence": "high"
+    },
+    "tenant": {
+      "source": "tenant",
+      "target": "inquilino",
+      "plural": "inquilinos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person renting property",
+      "frequencyRank": 3293,
+      "confidence": "high"
+    },
+    "landlord": {
+      "source": "landlord",
+      "target": "arrendador",
+      "plural": "arrendadores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "owner leasing property",
+      "frequencyRank": 3294,
+      "confidence": "high"
+    },
+    "eviction": {
+      "source": "eviction",
+      "target": "desalojo",
+      "plural": "desalojos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal removal of tenant",
+      "frequencyRank": 3295,
+      "confidence": "high"
+    },
+    "property": {
+      "source": "property",
+      "target": "propiedad",
+      "plural": "propiedades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legally owned thing",
+      "frequencyRank": 3296,
+      "confidence": "high"
+    },
+    "real property": {
+      "source": "real property",
+      "target": "bien inmueble",
+      "plural": "bienes inmuebles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "land and attached property",
+      "frequencyRank": 3297,
+      "confidence": "high"
+    },
+    "personal property": {
+      "source": "personal property",
+      "target": "bien mueble",
+      "plural": "bienes muebles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "movable owned property",
+      "frequencyRank": 3298,
+      "confidence": "high"
+    },
+    "title": {
+      "source": "title",
+      "target": "título de propiedad",
+      "plural": "títulos de propiedad",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal ownership document",
+      "frequencyRank": 3299,
+      "confidence": "high"
+    },
+    "deed": {
+      "source": "deed",
+      "target": "escritura",
+      "plural": "escrituras",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "document transferring property",
+      "frequencyRank": 3300,
+      "confidence": "high"
+    },
+    "easement": {
+      "source": "easement",
+      "target": "servidumbre",
+      "plural": "servidumbres",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "right to use land",
+      "frequencyRank": 3301,
+      "confidence": "high"
+    },
+    "lien": {
+      "source": "lien",
+      "target": "gravamen",
+      "plural": "gravámenes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal claim on property",
+      "frequencyRank": 3302,
+      "confidence": "high"
+    },
+    "mortgage": {
+      "source": "mortgage",
+      "target": "hipoteca",
+      "plural": "hipotecas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "security interest in property",
+      "frequencyRank": 3303,
+      "confidence": "high"
+    },
+    "foreclosure": {
+      "source": "foreclosure",
+      "target": "ejecución hipotecaria",
+      "plural": "ejecuciones hipotecarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal seizure after default",
+      "frequencyRank": 3304,
+      "confidence": "high"
+    },
+    "zoning": {
+      "source": "zoning",
+      "target": "zonificación",
+      "plural": "zonificaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "land-use regulation system",
+      "frequencyRank": 3305,
+      "confidence": "high"
+    },
+    "eminent domain": {
+      "source": "eminent domain",
+      "target": "expropiación",
+      "plural": "expropiaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government taking of property",
+      "frequencyRank": 3306,
+      "confidence": "high"
+    },
+    "estate": {
+      "source": "estate",
+      "target": "patrimonio sucesorio",
+      "plural": "patrimonios sucesorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "property of deceased person",
+      "frequencyRank": 3307,
+      "confidence": "high"
+    },
+    "will": {
+      "source": "will",
+      "target": "testamento",
+      "plural": "testamentos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "document disposing property after death",
+      "frequencyRank": 3308,
+      "confidence": "high"
+    },
+    "trust": {
+      "source": "trust",
+      "target": "fideicomiso",
+      "plural": "fideicomisos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "property held for beneficiary",
+      "frequencyRank": 3309,
+      "confidence": "high"
+    },
+    "trustee": {
+      "source": "trustee",
+      "target": "fiduciario",
+      "plural": "fiduciarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person managing trust property",
+      "frequencyRank": 3310,
+      "confidence": "high"
+    },
+    "beneficiary": {
+      "source": "beneficiary",
+      "target": "beneficiario",
+      "plural": "beneficiarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person receiving legal benefit",
+      "frequencyRank": 3311,
+      "confidence": "high"
+    },
+    "heir": {
+      "source": "heir",
+      "target": "heredero",
+      "plural": "herederos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person inheriting property",
+      "frequencyRank": 3312,
+      "confidence": "high"
+    },
+    "executor": {
+      "source": "executor",
+      "target": "albacea",
+      "plural": "albaceas",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person administering estate",
+      "frequencyRank": 3313,
+      "confidence": "high"
+    },
+    "administrator": {
+      "source": "administrator",
+      "target": "administrador sucesorio",
+      "plural": "administradores sucesorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court-appointed estate manager",
+      "frequencyRank": 3314,
+      "confidence": "high"
+    },
+    "probate": {
+      "source": "probate",
+      "target": "sucesión testamentaria",
+      "plural": "sucesiones testamentarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court process for estate",
+      "frequencyRank": 3315,
+      "confidence": "high"
+    },
+    "inheritance": {
+      "source": "inheritance",
+      "target": "herencia",
+      "plural": "herencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "property received from estate",
+      "frequencyRank": 3316,
+      "confidence": "high"
+    },
+    "bequest": {
+      "source": "bequest",
+      "target": "legado",
+      "plural": "legados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gift by will",
+      "frequencyRank": 3317,
+      "confidence": "high"
+    },
+    "guardianship": {
+      "source": "guardianship",
+      "target": "tutela",
+      "plural": "tutelas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal protection of person",
+      "frequencyRank": 3318,
+      "confidence": "high"
+    },
+    "conservatorship": {
+      "source": "conservatorship",
+      "target": "curatela",
+      "plural": "curatelas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court management of affairs",
+      "frequencyRank": 3319,
+      "confidence": "high"
+    },
+    "power of attorney": {
+      "source": "power of attorney",
+      "target": "poder notarial",
+      "plural": "poderes notariales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "authorization to act legally",
+      "frequencyRank": 3320,
+      "confidence": "high"
+    },
+    "notary": {
+      "source": "notary",
+      "target": "notario",
+      "plural": "notarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official certifying documents",
+      "frequencyRank": 3321,
+      "confidence": "high"
+    },
+    "marriage license": {
+      "source": "marriage license",
+      "target": "licencia matrimonial",
+      "plural": "licencias matrimoniales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "permission to marry",
+      "frequencyRank": 3322,
+      "confidence": "high"
+    },
+    "divorce": {
+      "source": "divorce",
+      "target": "divorcio",
+      "plural": "divorcios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal dissolution of marriage",
+      "frequencyRank": 3323,
+      "confidence": "high"
+    },
+    "annulment": {
+      "source": "annulment",
+      "target": "anulación matrimonial",
+      "plural": "anulaciones matrimoniales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal invalidation of marriage",
+      "frequencyRank": 3324,
+      "confidence": "high"
+    },
+    "custody order": {
+      "source": "custody order",
+      "target": "orden de custodia",
+      "plural": "órdenes de custodia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court order for child custody",
+      "frequencyRank": 3325,
+      "confidence": "high"
+    },
+    "child custody": {
+      "source": "child custody",
+      "target": "custodia de menores",
+      "plural": "custodias de menores",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal care of children",
+      "frequencyRank": 3326,
+      "confidence": "high"
+    },
+    "visitation": {
+      "source": "visitation",
+      "target": "régimen de visitas",
+      "plural": "regímenes de visitas",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "schedule for seeing child",
+      "frequencyRank": 3327,
+      "confidence": "high"
+    },
+    "child support": {
+      "source": "child support",
+      "target": "manutención infantil",
+      "plural": "manutenciones infantiles",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "financial support for child",
+      "frequencyRank": 3328,
+      "confidence": "high"
+    },
+    "alimony": {
+      "source": "alimony",
+      "target": "pensión alimenticia",
+      "plural": "pensiones alimenticias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "spousal support payment",
+      "frequencyRank": 3329,
+      "confidence": "high"
+    },
+    "adoption": {
+      "source": "adoption",
+      "target": "adopción",
+      "plural": "adopciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal creation of parenthood",
+      "frequencyRank": 3330,
+      "confidence": "high"
+    },
+    "paternity": {
+      "source": "paternity",
+      "target": "paternidad",
+      "plural": "paternidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal fatherhood status",
+      "frequencyRank": 3331,
+      "confidence": "high"
+    },
+    "domestic violence order": {
+      "source": "domestic violence order",
+      "target": "orden de protección",
+      "plural": "órdenes de protección",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "court order against abuse",
+      "frequencyRank": 3332,
+      "confidence": "high"
+    },
+    "restraining order": {
+      "source": "restraining order",
+      "target": "orden de restricción",
+      "plural": "órdenes de restricción",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "order limiting contact",
+      "frequencyRank": 3333,
+      "confidence": "high"
+    },
+    "bankruptcy": {
+      "source": "bankruptcy",
+      "target": "quiebra",
+      "plural": "quiebras",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal insolvency process",
+      "frequencyRank": 3334,
+      "confidence": "high"
+    },
+    "debtor": {
+      "source": "debtor",
+      "target": "deudor",
+      "plural": "deudores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person owing a debt",
+      "frequencyRank": 3335,
+      "confidence": "high"
+    },
+    "creditor": {
+      "source": "creditor",
+      "target": "acreedor",
+      "plural": "acreedores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person owed a debt",
+      "frequencyRank": 3336,
+      "confidence": "high"
+    },
+    "insolvency": {
+      "source": "insolvency",
+      "target": "insolvencia",
+      "plural": "insolvencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "inability to pay debts",
+      "frequencyRank": 3337,
+      "confidence": "high"
+    },
+    "liquidation": {
+      "source": "liquidation",
+      "target": "liquidación",
+      "plural": "liquidaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sale of assets for debts",
+      "frequencyRank": 3338,
+      "confidence": "high"
+    },
+    "reorganization": {
+      "source": "reorganization",
+      "target": "reorganización",
+      "plural": "reorganizaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bankruptcy restructuring plan",
+      "frequencyRank": 3339,
+      "confidence": "high"
+    },
+    "estate plan": {
+      "source": "estate plan",
+      "target": "plan sucesorio",
+      "plural": "planes sucesorios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "arrangement for property transfer",
+      "frequencyRank": 3340,
+      "confidence": "high"
+    },
+    "fiduciary duty": {
+      "source": "fiduciary duty",
+      "target": "deber fiduciario",
+      "plural": "deberes fiduciarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "duty of loyal care",
+      "frequencyRank": 3341,
+      "confidence": "high"
+    },
+    "equity": {
+      "source": "equity",
+      "target": "equidad",
+      "plural": "equidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fairness-based legal principles",
+      "frequencyRank": 3342,
+      "confidence": "high"
+    },
+    "equitable relief": {
+      "source": "equitable relief",
+      "target": "reparación equitativa",
+      "plural": "reparaciones equitativas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "nonmonetary court remedy",
+      "frequencyRank": 3343,
+      "confidence": "high"
+    },
+    "class action": {
+      "source": "class action",
+      "target": "acción colectiva",
+      "plural": "acciones colectivas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lawsuit by representative group",
+      "frequencyRank": 3344,
+      "confidence": "high"
+    },
+    "mass tort": {
+      "source": "mass tort",
+      "target": "agravio masivo",
+      "plural": "agravios masivos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "civil wrong affecting many",
+      "frequencyRank": 3345,
+      "confidence": "high"
+    },
+    "legal aid": {
+      "source": "legal aid",
+      "target": "asistencia jurídica",
+      "plural": "asistencias jurídicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal help for needy",
+      "frequencyRank": 3346,
+      "confidence": "high"
+    },
+    "pro bono": {
+      "source": "pro bono",
+      "target": "servicio pro bono",
+      "plural": "servicios pro bono",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "free legal service",
+      "frequencyRank": 3347,
+      "confidence": "high"
+    },
+    "retainer": {
+      "source": "retainer",
+      "target": "anticipo de honorarios",
+      "plural": "anticipos de honorarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "advance fee for lawyer",
+      "frequencyRank": 3348,
+      "confidence": "high"
+    },
+    "attorney fee": {
+      "source": "attorney fee",
+      "target": "honorario de abogado",
+      "plural": "honorarios de abogado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "payment to legal counsel",
+      "frequencyRank": 3349,
+      "confidence": "high"
+    },
+    "government": {
+      "source": "government",
+      "target": "gobierno",
+      "plural": "gobiernos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "institutions exercising public authority",
+      "frequencyRank": 3350,
+      "confidence": "high"
+    },
+    "state": {
+      "source": "state",
+      "target": "estado",
+      "plural": "estados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "organized political authority",
+      "frequencyRank": 3351,
+      "confidence": "high"
+    },
+    "nation-state": {
+      "source": "nation-state",
+      "target": "estado nación",
+      "plural": "estados nación",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sovereign political state",
+      "frequencyRank": 3352,
+      "confidence": "high"
+    },
+    "republic": {
+      "source": "republic",
+      "target": "república",
+      "plural": "repúblicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "representative form of government",
+      "frequencyRank": 3353,
+      "confidence": "high"
+    },
+    "democracy": {
+      "source": "democracy",
+      "target": "democracia",
+      "plural": "democracias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government by popular rule",
+      "frequencyRank": 3354,
+      "confidence": "high"
+    },
+    "monarchy": {
+      "source": "monarchy",
+      "target": "monarquía",
+      "plural": "monarquías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government by monarch",
+      "frequencyRank": 3355,
+      "confidence": "high"
+    },
+    "federation": {
+      "source": "federation",
+      "target": "federación",
+      "plural": "federaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "union of self-governing units",
+      "frequencyRank": 3356,
+      "confidence": "high"
+    },
+    "confederation": {
+      "source": "confederation",
+      "target": "confederación",
+      "plural": "confederaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "loose union of states",
+      "frequencyRank": 3357,
+      "confidence": "high"
+    },
+    "federalism": {
+      "source": "federalism",
+      "target": "federalismo",
+      "plural": "federalismos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "division of government powers",
+      "frequencyRank": 3358,
+      "confidence": "high"
+    },
+    "unitary state": {
+      "source": "unitary state",
+      "target": "estado unitario",
+      "plural": "estados unitarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "centralized government structure",
+      "frequencyRank": 3359,
+      "confidence": "high"
+    },
+    "separation of powers": {
+      "source": "separation of powers",
+      "target": "separación de poderes",
+      "plural": "separaciones de poderes",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "division among government branches",
+      "frequencyRank": 3360,
+      "confidence": "high"
+    },
+    "checks and balances": {
+      "source": "checks and balances",
+      "target": "pesos y contrapesos",
+      "partOfSpeech": "expression",
+      "sourceGloss": "mutual limits on powers",
+      "frequencyRank": 3361,
+      "confidence": "high"
+    },
+    "executive branch": {
+      "source": "executive branch",
+      "target": "poder ejecutivo",
+      "plural": "poderes ejecutivos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "branch enforcing laws",
+      "frequencyRank": 3362,
+      "confidence": "high"
+    },
+    "legislative branch": {
+      "source": "legislative branch",
+      "target": "poder legislativo",
+      "plural": "poderes legislativos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "branch making laws",
+      "frequencyRank": 3363,
+      "confidence": "high"
+    },
+    "judicial branch": {
+      "source": "judicial branch",
+      "target": "poder judicial",
+      "plural": "poderes judiciales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "branch interpreting laws",
+      "frequencyRank": 3364,
+      "confidence": "high"
+    },
+    "bureaucracy": {
+      "source": "bureaucracy",
+      "target": "burocracia",
+      "plural": "burocracias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "administrative government apparatus",
+      "frequencyRank": 3365,
+      "confidence": "high"
+    },
+    "civil service": {
+      "source": "civil service",
+      "target": "servicio civil",
+      "plural": "servicios civiles",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "professional public administration",
+      "frequencyRank": 3366,
+      "confidence": "high"
+    },
+    "public administration": {
+      "source": "public administration",
+      "target": "administración pública",
+      "plural": "administraciones públicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "management of government operations",
+      "frequencyRank": 3367,
+      "confidence": "high"
+    },
+    "agency": {
+      "source": "agency",
+      "target": "agencia gubernamental",
+      "plural": "agencias gubernamentales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government administrative body",
+      "frequencyRank": 3368,
+      "confidence": "high"
+    },
+    "department": {
+      "source": "department",
+      "target": "departamento gubernamental",
+      "plural": "departamentos gubernamentales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "major government division",
+      "frequencyRank": 3369,
+      "confidence": "high"
+    },
+    "ministry": {
+      "source": "ministry",
+      "target": "ministerio",
+      "plural": "ministerios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "national executive department",
+      "frequencyRank": 3370,
+      "confidence": "high"
+    },
+    "cabinet": {
+      "source": "cabinet",
+      "target": "gabinete",
+      "plural": "gabinetes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "top executive advisers",
+      "frequencyRank": 3371,
+      "confidence": "high"
+    },
+    "secretariat": {
+      "source": "secretariat",
+      "target": "secretaría",
+      "plural": "secretarías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government administrative office",
+      "frequencyRank": 3372,
+      "confidence": "high"
+    },
+    "commission": {
+      "source": "commission",
+      "target": "comisión",
+      "plural": "comisiones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official regulatory body",
+      "frequencyRank": 3373,
+      "confidence": "high"
+    },
+    "authority agency": {
+      "source": "authority agency",
+      "target": "autoridad administrativa",
+      "plural": "autoridades administrativas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government authority body",
+      "frequencyRank": 3374,
+      "confidence": "high"
+    },
+    "regulator": {
+      "source": "regulator",
+      "target": "regulador",
+      "plural": "reguladores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official oversight body",
+      "frequencyRank": 3375,
+      "confidence": "high"
+    },
+    "ombudsman": {
+      "source": "ombudsman",
+      "target": "defensor del pueblo",
+      "plural": "defensores del pueblo",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official complaint investigator",
+      "frequencyRank": 3376,
+      "confidence": "high"
+    },
+    "inspector general": {
+      "source": "inspector general",
+      "target": "inspector general",
+      "plural": "inspectores generales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official oversight investigator",
+      "frequencyRank": 3377,
+      "confidence": "high"
+    },
+    "auditor general": {
+      "source": "auditor general",
+      "target": "auditor general",
+      "plural": "auditores generales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "public accounts inspector",
+      "frequencyRank": 3378,
+      "confidence": "high"
+    },
+    "public prosecutor": {
+      "source": "public prosecutor",
+      "target": "ministerio público",
+      "plural": "ministerios públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "public prosecution institution",
+      "frequencyRank": 3379,
+      "confidence": "high"
+    },
+    "head of state": {
+      "source": "head of state",
+      "target": "jefe de estado",
+      "plural": "jefes de estado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "state's formal representative",
+      "frequencyRank": 3380,
+      "confidence": "high"
+    },
+    "head of government": {
+      "source": "head of government",
+      "target": "jefe de gobierno",
+      "plural": "jefes de gobierno",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chief executive leader",
+      "frequencyRank": 3381,
+      "confidence": "high"
+    },
+    "president": {
+      "source": "president",
+      "target": "presidente",
+      "plural": "presidentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "elected executive head",
+      "frequencyRank": 3382,
+      "confidence": "high"
+    },
+    "vice president": {
+      "source": "vice president",
+      "target": "vicepresidente",
+      "plural": "vicepresidentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "deputy executive head",
+      "frequencyRank": 3383,
+      "confidence": "high"
+    },
+    "governor": {
+      "source": "governor",
+      "target": "gobernador",
+      "plural": "gobernadores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "state executive official",
+      "frequencyRank": 3384,
+      "confidence": "high"
+    },
+    "mayor": {
+      "source": "mayor",
+      "target": "alcalde",
+      "plural": "alcaldes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "municipal executive official",
+      "frequencyRank": 3385,
+      "confidence": "high"
+    },
+    "minister": {
+      "source": "minister",
+      "target": "ministro",
+      "plural": "ministros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "head of ministry",
+      "frequencyRank": 3386,
+      "confidence": "high"
+    },
+    "secretary": {
+      "source": "secretary",
+      "target": "secretario",
+      "plural": "secretarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "executive department head",
+      "frequencyRank": 3387,
+      "confidence": "high"
+    },
+    "ambassador": {
+      "source": "ambassador",
+      "target": "embajador",
+      "plural": "embajadores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "diplomatic state representative",
+      "frequencyRank": 3388,
+      "confidence": "high"
+    },
+    "consul": {
+      "source": "consul",
+      "target": "cónsul",
+      "plural": "cónsules",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official assisting citizens abroad",
+      "frequencyRank": 3389,
+      "confidence": "high"
+    },
+    "diplomat": {
+      "source": "diplomat",
+      "target": "diplomático",
+      "plural": "diplomáticos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "representative in foreign relations",
+      "frequencyRank": 3390,
+      "confidence": "high"
+    },
+    "legislature": {
+      "source": "legislature",
+      "target": "legislatura",
+      "plural": "legislaturas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "law-making assembly",
+      "frequencyRank": 3391,
+      "confidence": "high"
+    },
+    "parliament": {
+      "source": "parliament",
+      "target": "parlamento",
+      "plural": "parlamentos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "national legislative body",
+      "frequencyRank": 3392,
+      "confidence": "high"
+    },
+    "congress": {
+      "source": "congress",
+      "target": "congreso",
+      "plural": "congresos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "national legislative assembly",
+      "frequencyRank": 3393,
+      "confidence": "high"
+    },
+    "senate": {
+      "source": "senate",
+      "target": "senado",
+      "plural": "senados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "upper legislative chamber",
+      "frequencyRank": 3394,
+      "confidence": "high"
+    },
+    "house of representatives": {
+      "source": "house of representatives",
+      "target": "cámara de representantes",
+      "plural": "cámaras de representantes",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lower legislative chamber",
+      "frequencyRank": 3395,
+      "confidence": "high"
+    },
+    "lower house": {
+      "source": "lower house",
+      "target": "cámara baja",
+      "plural": "cámaras bajas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lower legislative chamber",
+      "frequencyRank": 3396,
+      "confidence": "high"
+    },
+    "upper house": {
+      "source": "upper house",
+      "target": "cámara alta",
+      "plural": "cámaras altas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "upper legislative chamber",
+      "frequencyRank": 3397,
+      "confidence": "high"
+    },
+    "assembly": {
+      "source": "assembly",
+      "target": "asamblea",
+      "plural": "asambleas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "deliberative governing body",
+      "frequencyRank": 3398,
+      "confidence": "high"
+    },
+    "council": {
+      "source": "council",
+      "target": "consejo",
+      "plural": "consejos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local deliberative body",
+      "frequencyRank": 3399,
+      "confidence": "high"
+    },
+    "city council": {
+      "source": "city council",
+      "target": "concejo municipal",
+      "plural": "concejos municipales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "municipal legislative body",
+      "frequencyRank": 3400,
+      "confidence": "high"
+    },
+    "county board": {
+      "source": "county board",
+      "target": "junta del condado",
+      "plural": "juntas del condado",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "county governing board",
+      "frequencyRank": 3401,
+      "confidence": "high"
+    },
+    "committee": {
+      "source": "committee",
+      "target": "comité",
+      "plural": "comités",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legislative working group",
+      "frequencyRank": 3402,
+      "confidence": "high"
+    },
+    "subcommittee": {
+      "source": "subcommittee",
+      "target": "subcomité",
+      "plural": "subcomités",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "smaller committee division",
+      "frequencyRank": 3403,
+      "confidence": "high"
+    },
+    "caucus": {
+      "source": "caucus",
+      "target": "bancada",
+      "plural": "bancadas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legislative party group",
+      "frequencyRank": 3404,
+      "confidence": "high"
+    },
+    "floor": {
+      "source": "floor",
+      "target": "pleno",
+      "plural": "plenos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legislative chamber session",
+      "frequencyRank": 3405,
+      "confidence": "high"
+    },
+    "quorum": {
+      "source": "quorum",
+      "target": "quórum",
+      "plural": "quórums",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "minimum members present",
+      "frequencyRank": 3406,
+      "confidence": "high"
+    },
+    "speaker": {
+      "source": "speaker",
+      "target": "presidente de la cámara",
+      "plural": "presidentes de la cámara",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "presiding legislative officer",
+      "frequencyRank": 3407,
+      "confidence": "high"
+    },
+    "whip": {
+      "source": "whip",
+      "target": "coordinador parlamentario",
+      "plural": "coordinadores parlamentarios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party discipline official",
+      "frequencyRank": 3408,
+      "confidence": "high"
+    },
+    "majority leader": {
+      "source": "majority leader",
+      "target": "líder de la mayoría",
+      "plural": "líderes de la mayoría",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "leader of majority bloc",
+      "frequencyRank": 3409,
+      "confidence": "high"
+    },
+    "minority leader": {
+      "source": "minority leader",
+      "target": "líder de la minoría",
+      "plural": "líderes de la minoría",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "leader of minority bloc",
+      "frequencyRank": 3410,
+      "confidence": "high"
+    },
+    "legislator": {
+      "source": "legislator",
+      "target": "legislador",
+      "plural": "legisladores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person who makes laws",
+      "frequencyRank": 3411,
+      "confidence": "high"
+    },
+    "senator": {
+      "source": "senator",
+      "target": "senador",
+      "plural": "senadores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "member of senate",
+      "frequencyRank": 3412,
+      "confidence": "high"
+    },
+    "representative": {
+      "source": "representative",
+      "target": "representante",
+      "plural": "representantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "elected legislative member",
+      "frequencyRank": 3413,
+      "confidence": "high"
+    },
+    "delegate": {
+      "source": "delegate",
+      "target": "delegado",
+      "plural": "delegados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "representative sent to body",
+      "frequencyRank": 3414,
+      "confidence": "high"
+    },
+    "bill": {
+      "source": "bill",
+      "target": "proyecto de ley",
+      "plural": "proyectos de ley",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "proposed legislative law",
+      "frequencyRank": 3415,
+      "confidence": "high"
+    },
+    "resolution": {
+      "source": "resolution",
+      "target": "resolución",
+      "plural": "resoluciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal legislative statement",
+      "frequencyRank": 3416,
+      "confidence": "high"
+    },
+    "joint resolution": {
+      "source": "joint resolution",
+      "target": "resolución conjunta",
+      "plural": "resoluciones conjuntas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "resolution by two chambers",
+      "frequencyRank": 3417,
+      "confidence": "high"
+    },
+    "amendment": {
+      "source": "amendment",
+      "target": "enmienda",
+      "plural": "enmiendas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal change to measure",
+      "frequencyRank": 3418,
+      "confidence": "high"
+    },
+    "rider": {
+      "source": "rider",
+      "target": "cláusula adicional",
+      "plural": "cláusulas adicionales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "extra provision in bill",
+      "frequencyRank": 3419,
+      "confidence": "high"
+    },
+    "preamble": {
+      "source": "preamble",
+      "target": "preámbulo",
+      "plural": "preámbulos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "introductory legal statement",
+      "frequencyRank": 3420,
+      "confidence": "high"
+    },
+    "clause": {
+      "source": "clause",
+      "target": "cláusula",
+      "plural": "cláusulas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "specific legal provision",
+      "frequencyRank": 3421,
+      "confidence": "high"
+    },
+    "provision": {
+      "source": "provision",
+      "target": "disposición",
+      "plural": "disposiciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "specific legal requirement",
+      "frequencyRank": 3422,
+      "confidence": "high"
+    },
+    "enactment": {
+      "source": "enactment",
+      "target": "promulgación",
+      "plural": "promulgaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal making of law",
+      "frequencyRank": 3423,
+      "confidence": "high"
+    },
+    "promulgation": {
+      "source": "promulgation",
+      "target": "promulgación",
+      "plural": "promulgaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official publication of law",
+      "frequencyRank": 3424,
+      "confidence": "high"
+    },
+    "veto": {
+      "source": "veto",
+      "target": "veto",
+      "plural": "vetos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "executive rejection of bill",
+      "frequencyRank": 3425,
+      "confidence": "high"
+    },
+    "override": {
+      "source": "override",
+      "target": "anulación del veto",
+      "plural": "anulaciones del veto",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legislative reversal of veto",
+      "frequencyRank": 3426,
+      "confidence": "high"
+    },
+    "filibuster": {
+      "source": "filibuster",
+      "target": "filibusterismo",
+      "plural": "filibusterismos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "delaying legislative tactic",
+      "frequencyRank": 3427,
+      "confidence": "medium"
+    },
+    "cloture": {
+      "source": "cloture",
+      "target": "cierre del debate",
+      "plural": "cierres del debate",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "procedure ending debate",
+      "frequencyRank": 3428,
+      "confidence": "medium"
+    },
+    "roll call": {
+      "source": "roll call",
+      "target": "votación nominal",
+      "plural": "votaciones nominales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "recorded legislative vote",
+      "frequencyRank": 3429,
+      "confidence": "high"
+    },
+    "voice vote": {
+      "source": "voice vote",
+      "target": "votación oral",
+      "plural": "votaciones orales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vote by spoken response",
+      "frequencyRank": 3430,
+      "confidence": "high"
+    },
+    "appropriation": {
+      "source": "appropriation",
+      "target": "asignación presupuestaria",
+      "plural": "asignaciones presupuestarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "authorized public spending",
+      "frequencyRank": 3431,
+      "confidence": "high"
+    },
+    "budget": {
+      "source": "budget",
+      "target": "presupuesto público",
+      "plural": "presupuestos públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government spending plan",
+      "frequencyRank": 3432,
+      "confidence": "high"
+    },
+    "public finance": {
+      "source": "public finance",
+      "target": "finanza pública",
+      "plural": "finanzas públicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government revenue and spending",
+      "frequencyRank": 3433,
+      "confidence": "high"
+    },
+    "taxation": {
+      "source": "taxation",
+      "target": "tributación",
+      "plural": "tributaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "system of imposing taxes",
+      "frequencyRank": 3434,
+      "confidence": "high"
+    },
+    "taxpayer": {
+      "source": "taxpayer",
+      "target": "contribuyente",
+      "plural": "contribuyentes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person owing public taxes",
+      "frequencyRank": 3435,
+      "confidence": "high"
+    },
+    "public debt": {
+      "source": "public debt",
+      "target": "deuda pública",
+      "plural": "deudas públicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government borrowing obligation",
+      "frequencyRank": 3436,
+      "confidence": "high"
+    },
+    "treasury": {
+      "source": "treasury",
+      "target": "tesorería",
+      "plural": "tesorerías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "public funds office",
+      "frequencyRank": 3437,
+      "confidence": "high"
+    },
+    "comptroller": {
+      "source": "comptroller",
+      "target": "contralor",
+      "plural": "contralores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "financial oversight official",
+      "frequencyRank": 3438,
+      "confidence": "high"
+    },
+    "public procurement": {
+      "source": "public procurement",
+      "target": "contratación pública",
+      "plural": "contrataciones públicas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government acquisition process",
+      "frequencyRank": 3439,
+      "confidence": "high"
+    },
+    "public contract": {
+      "source": "public contract",
+      "target": "contrato público",
+      "plural": "contratos públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government procurement agreement",
+      "frequencyRank": 3440,
+      "confidence": "high"
+    },
+    "tender": {
+      "source": "tender",
+      "target": "licitación",
+      "plural": "licitaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "competitive public bidding",
+      "frequencyRank": 3441,
+      "confidence": "high"
+    },
+    "grant": {
+      "source": "grant",
+      "target": "subvención",
+      "plural": "subvenciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "public funding award",
+      "frequencyRank": 3442,
+      "confidence": "high"
+    },
+    "subsidy": {
+      "source": "subsidy",
+      "target": "subsidio",
+      "plural": "subsidios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government financial support",
+      "frequencyRank": 3443,
+      "confidence": "high"
+    },
+    "permit": {
+      "source": "permit",
+      "target": "permiso",
+      "plural": "permisos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official authorization document",
+      "frequencyRank": 3444,
+      "confidence": "high"
+    },
+    "license": {
+      "source": "license",
+      "target": "licencia",
+      "plural": "licencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government permission document",
+      "frequencyRank": 3445,
+      "confidence": "high"
+    },
+    "registration": {
+      "source": "registration",
+      "target": "registro",
+      "plural": "registros",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official enrollment record",
+      "frequencyRank": 3446,
+      "confidence": "high"
+    },
+    "certificate": {
+      "source": "certificate",
+      "target": "certificado",
+      "plural": "certificados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official confirming document",
+      "frequencyRank": 3447,
+      "confidence": "high"
+    },
+    "public record": {
+      "source": "public record",
+      "target": "registro público",
+      "plural": "registros públicos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official publicly available record",
+      "frequencyRank": 3448,
+      "confidence": "high"
+    },
+    "census": {
+      "source": "census",
+      "target": "censo",
+      "plural": "censos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official population count",
+      "frequencyRank": 3449,
+      "confidence": "high"
+    },
+    "municipality": {
+      "source": "municipality",
+      "target": "municipio",
+      "plural": "municipios",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local government unit",
+      "frequencyRank": 3450,
+      "confidence": "high"
+    },
+    "county": {
+      "source": "county",
+      "target": "condado",
+      "plural": "condados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "regional government unit",
+      "frequencyRank": 3451,
+      "confidence": "high"
+    },
+    "province": {
+      "source": "province",
+      "target": "provincia",
+      "plural": "provincias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "regional government division",
+      "frequencyRank": 3452,
+      "confidence": "high"
+    },
+    "district": {
+      "source": "district",
+      "target": "distrito",
+      "plural": "distritos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "administrative electoral area",
+      "frequencyRank": 3453,
+      "confidence": "high"
+    },
+    "constituency": {
+      "source": "constituency",
+      "target": "circunscripción",
+      "plural": "circunscripciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "electoral representation area",
+      "frequencyRank": 3454,
+      "confidence": "high"
+    },
+    "precinct": {
+      "source": "precinct",
+      "target": "precinto electoral",
+      "plural": "precintos electorales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "small voting district",
+      "frequencyRank": 3455,
+      "confidence": "high"
+    },
+    "ward": {
+      "source": "ward",
+      "target": "distrito municipal",
+      "plural": "distritos municipales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "local electoral district",
+      "frequencyRank": 3456,
+      "confidence": "high"
+    },
+    "capital": {
+      "source": "capital",
+      "target": "capital",
+      "plural": "capitales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "seat of government",
+      "frequencyRank": 3457,
+      "confidence": "high"
+    },
+    "city hall": {
+      "source": "city hall",
+      "target": "alcaldía",
+      "plural": "alcaldías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "municipal government office",
+      "frequencyRank": 3458,
+      "confidence": "high"
+    },
+    "courthouse": {
+      "source": "courthouse",
+      "target": "palacio de justicia",
+      "plural": "palacios de justicia",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "building housing courts",
+      "frequencyRank": 3459,
+      "confidence": "high"
+    },
+    "embassy": {
+      "source": "embassy",
+      "target": "embajada",
+      "plural": "embajadas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "diplomatic mission abroad",
+      "frequencyRank": 3460,
+      "confidence": "high"
+    },
+    "consulate": {
+      "source": "consulate",
+      "target": "consulado",
+      "plural": "consulados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "office for consular services",
+      "frequencyRank": 3461,
+      "confidence": "high"
+    },
+    "treaty": {
+      "source": "treaty",
+      "target": "tratado",
+      "plural": "tratados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal agreement between states",
+      "frequencyRank": 3462,
+      "confidence": "high"
+    },
+    "convention": {
+      "source": "convention",
+      "target": "convención",
+      "plural": "convenciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal international agreement",
+      "frequencyRank": 3463,
+      "confidence": "high"
+    },
+    "protocol": {
+      "source": "protocol",
+      "target": "protocolo",
+      "plural": "protocolos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "supplementary diplomatic agreement",
+      "frequencyRank": 3464,
+      "confidence": "high"
+    },
+    "accord": {
+      "source": "accord",
+      "target": "acuerdo",
+      "plural": "acuerdos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal governmental agreement",
+      "frequencyRank": 3465,
+      "confidence": "high"
+    },
+    "alliance": {
+      "source": "alliance",
+      "target": "alianza",
+      "plural": "alianzas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal pact among states",
+      "frequencyRank": 3466,
+      "confidence": "high"
+    },
+    "sanctions regime": {
+      "source": "sanctions regime",
+      "target": "régimen de sanciones",
+      "plural": "regímenes de sanciones",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "system of official penalties",
+      "frequencyRank": 3467,
+      "confidence": "high"
+    },
+    "extradition": {
+      "source": "extradition",
+      "target": "extradición",
+      "plural": "extradiciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "transfer of accused person",
+      "frequencyRank": 3468,
+      "confidence": "high"
+    },
+    "asylum": {
+      "source": "asylum",
+      "target": "asilo",
+      "plural": "asilos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "protection from persecution",
+      "frequencyRank": 3469,
+      "confidence": "high"
+    },
+    "refugee status": {
+      "source": "refugee status",
+      "target": "estatus de refugiado",
+      "plural": "estatus de refugiado",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal protection classification",
+      "frequencyRank": 3470,
+      "confidence": "high"
+    },
+    "visa": {
+      "source": "visa",
+      "target": "visa",
+      "plural": "visas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "entry authorization document",
+      "frequencyRank": 3471,
+      "confidence": "high"
+    },
+    "passport": {
+      "source": "passport",
+      "target": "pasaporte",
+      "plural": "pasaportes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official travel identity document",
+      "frequencyRank": 3472,
+      "confidence": "high"
+    },
+    "citizenship": {
+      "source": "citizenship",
+      "target": "ciudadanía",
+      "plural": "ciudadanías",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal membership in state",
+      "frequencyRank": 3473,
+      "confidence": "high"
+    },
+    "nationality": {
+      "source": "nationality",
+      "target": "nacionalidad",
+      "plural": "nacionalidades",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal national affiliation",
+      "frequencyRank": 3474,
+      "confidence": "high"
+    },
+    "naturalization": {
+      "source": "naturalization",
+      "target": "naturalización",
+      "plural": "naturalizaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "process of becoming citizen",
+      "frequencyRank": 3475,
+      "confidence": "high"
+    },
+    "residency": {
+      "source": "residency",
+      "target": "residencia",
+      "plural": "residencias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "legal living status",
+      "frequencyRank": 3476,
+      "confidence": "high"
+    },
+    "green card": {
+      "source": "green card",
+      "target": "tarjeta de residencia",
+      "plural": "tarjetas de residencia",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "permanent residency document",
+      "frequencyRank": 3477,
+      "confidence": "high"
+    },
+    "deportation": {
+      "source": "deportation",
+      "target": "deportación",
+      "plural": "deportaciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "removal from country",
+      "frequencyRank": 3478,
+      "confidence": "high"
+    },
+    "removal proceeding": {
+      "source": "removal proceeding",
+      "target": "proceso de deportación",
+      "plural": "procesos de deportación",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "immigration removal case",
+      "frequencyRank": 3479,
+      "confidence": "high"
+    },
+    "border control": {
+      "source": "border control",
+      "target": "control fronterizo",
+      "plural": "controles fronterizos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "government border regulation",
+      "frequencyRank": 3480,
+      "confidence": "high"
+    },
+    "election": {
+      "source": "election",
+      "target": "elección",
+      "plural": "elecciones",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "formal selection by voters",
+      "frequencyRank": 3481,
+      "confidence": "high"
+    },
+    "ballot": {
+      "source": "ballot",
+      "target": "boleta electoral",
+      "plural": "boletas electorales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paper or electronic vote",
+      "frequencyRank": 3482,
+      "confidence": "high"
+    },
+    "polling place": {
+      "source": "polling place",
+      "target": "centro de votación",
+      "plural": "centros de votación",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "official voting location",
+      "frequencyRank": 3483,
+      "confidence": "high"
+    },
+    "voter": {
+      "source": "voter",
+      "target": "votante",
+      "plural": "votantes",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person casting a vote",
+      "frequencyRank": 3484,
+      "confidence": "high"
+    },
+    "elector": {
+      "source": "elector",
+      "target": "elector",
+      "plural": "electores",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "qualified voting person",
+      "frequencyRank": 3485,
+      "confidence": "high"
+    },
+    "electorate": {
+      "source": "electorate",
+      "target": "electorado",
+      "plural": "electorados",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "body of eligible voters",
+      "frequencyRank": 3486,
+      "confidence": "high"
+    },
+    "candidate": {
+      "source": "candidate",
+      "target": "candidato",
+      "plural": "candidatos",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "person seeking elected office",
+      "frequencyRank": 3487,
+      "confidence": "high"
+    },
+    "campaign": {
+      "source": "campaign",
+      "target": "campaña electoral",
+      "plural": "campañas electorales",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "organized effort for election",
+      "frequencyRank": 3488,
+      "confidence": "high"
+    },
+    "referendum": {
+      "source": "referendum",
+      "target": "referéndum",
+      "plural": "referéndums",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "popular vote on issue",
+      "frequencyRank": 3489,
+      "confidence": "high"
+    },
+    "initiative": {
+      "source": "initiative",
+      "target": "iniciativa popular",
+      "plural": "iniciativas populares",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "citizen-proposed ballot measure",
+      "frequencyRank": 3490,
+      "confidence": "high"
+    },
+    "recall": {
+      "source": "recall",
+      "target": "revocación de mandato",
+      "plural": "revocaciones de mandato",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vote to remove official",
+      "frequencyRank": 3491,
+      "confidence": "high"
+    },
+    "runoff": {
+      "source": "runoff",
+      "target": "segunda vuelta",
+      "plural": "segundas vueltas",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "follow-up deciding election",
+      "frequencyRank": 3492,
+      "confidence": "high"
+    },
+    "primary election": {
+      "source": "primary election",
+      "target": "elección primaria",
+      "plural": "elecciones primarias",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "party candidate selection election",
+      "frequencyRank": 3493,
+      "confidence": "high"
+    },
+    "absentee ballot": {
+      "source": "absentee ballot",
+      "target": "boleta de voto ausente",
+      "plural": "boletas de voto ausente",
+      "gender": "feminine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ballot cast remotely",
+      "frequencyRank": 3494,
+      "confidence": "high"
+    },
+    "voter registration": {
+      "source": "voter registration",
+      "target": "registro electoral",
+      "plural": "registros electorales",
+      "gender": "masculine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "enrollment to vote",
+      "frequencyRank": 3495,
+      "confidence": "high"
+    },
+    "hereby": {
+      "source": "hereby",
+      "target": "por la presente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "formal legal declaration adverb",
+      "frequencyRank": 3496,
+      "confidence": "high"
+    },
+    "therein": {
+      "source": "therein",
+      "target": "en ello",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "within that legal document",
+      "frequencyRank": 3497,
+      "confidence": "medium"
+    },
+    "thereof": {
+      "source": "thereof",
+      "target": "de ello",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "of that legal matter",
+      "frequencyRank": 3498,
+      "confidence": "medium"
+    },
+    "beyond a reasonable doubt": {
+      "source": "beyond a reasonable doubt",
+      "target": "más allá de toda duda razonable",
+      "partOfSpeech": "expression",
+      "sourceGloss": "criminal proof standard",
+      "frequencyRank": 3499,
+      "confidence": "high"
+    },
+    "under penalty of perjury": {
+      "source": "under penalty of perjury",
+      "target": "bajo pena de perjurio",
+      "partOfSpeech": "expression",
+      "sourceGloss": "sworn statement warning",
+      "frequencyRank": 3500,
+      "confidence": "high"
+    }
+  }
+}
