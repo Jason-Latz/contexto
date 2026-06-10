@@ -1,5 +1,6 @@
 import type {
   EntryConfidence,
+  ExpressionTranslationEntry,
   LanguagePack,
   TargetLanguage,
   TranslationEntry,
@@ -10,6 +11,7 @@ const MIN_CONFIDENCE: EntryConfidence[] = ['high', 'medium']
 
 let activePack: LanguagePack | null = null
 let entries: Map<string, TranslationEntry> | null = null
+let expressionEntries: Array<[string, ExpressionTranslationEntry]> | null = null
 
 function isUsableEntry(entry: TranslationEntry): boolean {
   if (!MIN_CONFIDENCE.includes(entry.confidence)) return false
@@ -46,6 +48,7 @@ export async function loadLanguagePack(
       .filter(([, entry]) => isUsableEntry(entry))
       .map(([key, entry]) => [key.toLowerCase(), entry]),
   )
+  expressionEntries = null
 }
 
 export function getActiveLanguagePack(): LanguagePack | null {
@@ -57,13 +60,20 @@ export function lookup(englishLemma: string): TranslationEntry | null {
 }
 
 export function getExpressionKeys(): string[] {
-  if (!entries) return []
+  return getExpressionEntries().map(([key]) => key)
+}
 
-  const keys: string[] = []
+export function getExpressionEntries(): Array<[string, ExpressionTranslationEntry]> {
+  if (!entries) return []
+  if (expressionEntries) return expressionEntries
+
+  expressionEntries = []
   for (const [key, entry] of entries) {
-    if (entry.partOfSpeech === 'expression') keys.push(key)
+    if (entry.partOfSpeech === 'expression') {
+      expressionEntries.push([key, entry])
+    }
   }
-  return keys
+  return expressionEntries
 }
 
 export function sampleLemmas(n: number, exclude: ReadonlySet<string>): string[] {
