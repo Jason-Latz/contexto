@@ -237,6 +237,10 @@ function extractTokens(text: string): CandidateToken[] {
       const isVerb = tags.includes('Verb') || tags.includes('Infinitive') || tags.includes('Gerund')
       const lowerSurface = surface.toLowerCase()
 
+      if (tags.includes('Hyphenated')) {
+        continue
+      }
+
       const exactEntry = lookup(lowerSurface)
       if (exactEntry?.partOfSpeech === 'function') {
         tokens.push({

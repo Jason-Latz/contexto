@@ -67,3 +67,16 @@ test('expanded runtime loads non-noun imported entries', async () => {
   assert.equal(abandon?.partOfSpeech, 'verb')
   assert.equal(about?.partOfSpeech, 'function')
 })
+
+test('hyphenated compounds are not replaced as partial fragments', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const { extractPageCandidates } = await import('../src/content/injector.js')
+  const candidates = extractPageCandidates([
+    { nodeValue: 'The well-developed system is useful.' } as Text,
+  ])
+  const lemmas = new Set(candidates.map((candidate) => candidate.lemma))
+
+  assert.equal(lemmas.has('well'), false)
+  assert.equal(lemmas.has('developed'), false)
+})
