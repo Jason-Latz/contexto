@@ -4,9 +4,11 @@ import { fileURLToPath } from 'node:url'
 
 const PACKS = ['es']
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
-const VALID_POS = new Set(['noun', 'adverb', 'expression'])
+const VALID_POS = new Set(['noun', 'adverb', 'adjective', 'verb', 'expression', 'function'])
 const VALID_CONFIDENCE = new Set(['high', 'medium', 'low'])
 const VALID_SPANISH_GENDER = new Set(['masculine', 'feminine'])
+const VALID_FUNCTION_SUBTYPE = new Set(['preposition', 'conjunction', 'determiner', 'pronoun'])
+const SIZE_WARNING_GZIP_BYTES = 10 * 1024 * 1024
 
 function fail(message) {
   throw new Error(message)
@@ -23,12 +25,16 @@ function assertNoDuplicateEntryKeys(raw, language) {
   const seen = new Map()
   const duplicates = []
   let match
+  let line = 1
+  let lastIndex = 0
 
   while ((match = entryKeyPattern.exec(raw)) !== null) {
     const key = match[1]
+    line += raw.slice(lastIndex, match.index).split('\n').length - 1
+    lastIndex = match.index
+
     if (key === 'entries') continue
 
-    const line = raw.slice(0, match.index).split('\n').length
     if (seen.has(key)) {
       duplicates.push(`${key} (lines ${seen.get(key)} and ${line})`)
     } else {
@@ -66,11 +72,31 @@ function validateEntry(key, entry, targetLanguage) {
     fail(`${key}.frequencyRank must be a positive integer`)
   }
 
+  if (!Array.isArray(entry.sourceIds) || entry.sourceIds.length === 0) {
+    fail(`${key}.sourceIds must be a non-empty array`)
+  }
+  for (const [index, sourceId] of entry.sourceIds.entries()) {
+    requireString(sourceId, `${key}.sourceIds[${index}]`)
+  }
+
   if (targetLanguage === 'es' && entry.partOfSpeech === 'noun') {
     if (!VALID_SPANISH_GENDER.has(entry.gender)) {
       fail(`${key}.gender must be masculine or feminine`)
     }
     requireString(entry.plural, `${key}.plural`)
+  }
+
+  if (entry.partOfSpeech !== 'noun') {
+    if ('gender' in entry) fail(`${key} non-noun must not include gender`)
+    if ('plural' in entry) fail(`${key} non-noun must not include plural`)
+  }
+
+  if (entry.partOfSpeech === 'function') {
+    if (!VALID_FUNCTION_SUBTYPE.has(entry.functionSubtype)) {
+      fail(`${key}.functionSubtype is invalid`)
+    }
+  } else if ('functionSubtype' in entry) {
+    fail(`${key} non-function must not include functionSubtype`)
   }
 }
 
@@ -103,6 +129,15 @@ async function validatePack(language) {
   requireString(pack.version, `${language}.version`)
   requireString(pack.displayName, `${language}.displayName`)
 
+  if (!pack.sources || typeof pack.sources !== 'object' || Array.isArray(pack.sources)) {
+    fail(`${language}: sources must be an object`)
+  }
+  for (const [sourceId, source] of Object.entries(pack.sources)) {
+    requireString(source.name, `${language}.sources.${sourceId}.name`)
+    requireString(source.url, `${language}.sources.${sourceId}.url`)
+    requireString(source.license, `${language}.sources.${sourceId}.license`)
+  }
+
   if (!pack.entries || typeof pack.entries !== 'object' || Array.isArray(pack.entries)) {
     fail(`${language}: entries must be an object`)
   }
@@ -113,7 +148,13 @@ async function validatePack(language) {
 
   assertUniqueFrequencyRanks(pack.entries, language)
 
-  console.log(`OK ${language}: ${Object.keys(pack.entries).length} entries`)
+  const rawBytes = Buffer.byteLength(raw)
+  const gzipBytes = (await import('node:zlib')).gzipSync(raw).byteLength
+  if (gzipBytes > SIZE_WARNING_GZIP_BYTES) {
+    console.warn(`WARN ${language}: gzip size ${gzipBytes} bytes exceeds ${SIZE_WARNING_GZIP_BYTES}`)
+  }
+
+  console.log(`OK ${language}: ${Object.keys(pack.entries).length} entries (${rawBytes} bytes raw, ${gzipBytes} bytes gzip)`)
 }
 
 for (const language of PACKS) {

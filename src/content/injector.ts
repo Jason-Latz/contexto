@@ -37,6 +37,33 @@ const PRONOUN_BLOCKLIST = new Set([
   'somebody', 'anybody', 'nothing', 'something', 'anything', 'everything',
 ])
 
+const IRREGULAR_VERB_LEMMAS: Record<string, string> = {
+  am: 'be',
+  are: 'be',
+  is: 'be',
+  was: 'be',
+  were: 'be',
+  been: 'be',
+  being: 'be',
+  did: 'do',
+  does: 'do',
+  done: 'do',
+  had: 'have',
+  has: 'have',
+  having: 'have',
+  went: 'go',
+  gone: 'go',
+  made: 'make',
+  said: 'say',
+  saw: 'see',
+  seen: 'see',
+  took: 'take',
+  taken: 'take',
+  thought: 'think',
+  knew: 'know',
+  known: 'know',
+}
+
 // Inline styles for the injected replacement spans. Keeping styles here (rather
 // than a stylesheet) avoids a separate CSS asset and keeps the content script
 // fully self-contained in Phase 1. Phase 4 popup will allow customisation.
@@ -69,6 +96,48 @@ function singularize(word: string): string {
   if (w.endsWith('s') && w.length > 3) return w.slice(0, -1)
 
   return w
+}
+
+function lemmatizeVerb(word: string): string {
+  const lower = word.toLowerCase()
+  if (IRREGULAR_VERB_LEMMAS[lower]) return IRREGULAR_VERB_LEMMAS[lower]
+
+  const infinitive = nlp(word).verbs().toInfinitive().text()
+  if (infinitive) return infinitive.toLowerCase()
+
+  if (lower.endsWith('ies') && lower.length > 4) return lower.slice(0, -3) + 'y'
+  if (lower.endsWith('ing') && lower.length > 5) {
+    const stem = lower.slice(0, -3)
+    return stem.endsWith(stem.slice(-1).repeat(2)) ? stem.slice(0, -1) : stem
+  }
+  if (lower.endsWith('ed') && lower.length > 4) return lower.slice(0, -2)
+  if (lower.endsWith('s') && lower.length > 3) return lower.slice(0, -1)
+  return lower
+}
+
+function matchCapitalization(source: string, replacement: string): string {
+  if (!source || !replacement) return replacement
+
+  const firstLetterIndex = replacement.search(/\p{L}/u)
+  if (firstLetterIndex === -1) return replacement
+
+  const sourceLetters = source.match(/\p{L}/gu) ?? []
+  if (sourceLetters.length === 0) return replacement
+
+  if (sourceLetters.every((letter) => letter === letter.toUpperCase())) {
+    return replacement.toUpperCase()
+  }
+
+  const sourceFirstLetter = sourceLetters[0]!
+  if (sourceFirstLetter !== sourceFirstLetter.toUpperCase()) {
+    return replacement
+  }
+
+  return (
+    replacement.slice(0, firstLetterIndex) +
+    replacement[firstLetterIndex].toUpperCase() +
+    replacement.slice(firstLetterIndex + 1)
+  )
 }
 
 // ---------- Sentence context extraction ----------
@@ -133,7 +202,9 @@ function shouldRecordExposure(options: InjectionOptions, lemma: string): boolean
 
 // ---------- Token extraction ----------
 
-// POS-tag the full text node content with compromise.js and extract noun/adverb tokens.
+// POS-tag the full text node content and extract tokens that have supported
+// language-pack entries. Exact-match function words use the pack directly so
+// common short words are not lost when compromise tags them inconsistently.
 // The full text is passed in one call (not word-by-word) for accurate sentence-context tagging.
 // Positions are recovered by scanning forward through the original string, which handles
 // repeated words correctly without relying on offsets that compromise doesn't expose.
@@ -162,10 +233,25 @@ function extractTokens(text: string): CandidateToken[] {
 
       const isNoun = tags.includes('Noun') || tags.includes('Singular') || tags.includes('Plural')
       const isAdverb = tags.includes('Adverb')
+      const isAdjective = tags.includes('Adjective')
+      const isVerb = tags.includes('Verb') || tags.includes('Infinitive') || tags.includes('Gerund')
+      const lowerSurface = surface.toLowerCase()
+
+      const exactEntry = lookup(lowerSurface)
+      if (exactEntry?.partOfSpeech === 'function') {
+        tokens.push({
+          word: surface,
+          lemma: lowerSurface,
+          start: idx,
+          end: idx + surface.length,
+          partOfSpeech: 'function',
+          isPlural: false,
+        })
+        continue
+      }
 
       if (isNoun) {
         const lemma = singularize(surface)
-        const lowerSurface = surface.toLowerCase()
 
         // Filter out pronouns — compromise tags them as nouns
         if (PRONOUN_BLOCKLIST.has(lemma) || PRONOUN_BLOCKLIST.has(lowerSurface)) continue
@@ -181,6 +267,24 @@ function extractTokens(text: string): CandidateToken[] {
           end: idx + surface.length,
           partOfSpeech: 'noun',
           isPlural: tags.includes('Plural'),
+        })
+      } else if (isVerb) {
+        tokens.push({
+          word: surface,
+          lemma: lemmatizeVerb(surface),
+          start: idx,
+          end: idx + surface.length,
+          partOfSpeech: 'verb',
+          isPlural: false,
+        })
+      } else if (isAdjective) {
+        tokens.push({
+          word: surface,
+          lemma: lowerSurface,
+          start: idx,
+          end: idx + surface.length,
+          partOfSpeech: 'adjective',
+          isPlural: false,
         })
       } else if (isAdverb) {
         tokens.push({
@@ -362,7 +466,8 @@ export function injectReplacements(
 
     const replacement = buildSpanishReplacement(entry, text, token.start, token.isPlural)
     const originalEnglish = text.slice(replacement.replacementStart, token.end)
-    const span = buildSpan(replacement.displayText, originalEnglish, entry)
+    const displayText = matchCapitalization(originalEnglish, replacement.displayText)
+    const span = buildSpan(displayText, originalEnglish, entry)
 
     // data-lemma stores the English lemma (e.g. "dog") so the hover handler
     // can call setKnown with the correct lexicon key.

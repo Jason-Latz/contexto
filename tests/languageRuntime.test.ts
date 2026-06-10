@@ -56,3 +56,14 @@ test('tooltip text includes source, gloss, and Spanish target', () => {
   assert.match(text, /a domesticated animal/)
   assert.match(text, /Spanish: el perro/)
 })
+
+test('expanded runtime loads non-noun imported entries', async () => {
+  await loadLanguagePack('es')
+  const accurate = lookup('accurate')
+  const abandon = lookup('abandon')
+  const about = lookup('about')
+
+  assert.equal(accurate?.partOfSpeech, 'adjective')
+  assert.equal(abandon?.partOfSpeech, 'verb')
+  assert.equal(about?.partOfSpeech, 'function')
+})

@@ -12,6 +12,7 @@ const dog: NounTranslationEntry = {
   sourceGloss: 'a domesticated animal',
   frequencyRank: 1,
   confidence: 'high',
+  sourceIds: ['test'],
 }
 
 const city: NounTranslationEntry = {
@@ -23,6 +24,7 @@ const city: NounTranslationEntry = {
   sourceGloss: 'a large town',
   frequencyRank: 2,
   confidence: 'high',
+  sourceIds: ['test'],
 }
 
 test('Spanish adapter handles definite masculine nouns', () => {

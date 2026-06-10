@@ -2,9 +2,19 @@
 
 export type SourceLanguage = 'en'
 export type TargetLanguage = 'es'
-export type PartOfSpeech = 'noun' | 'adverb' | 'expression'
+export type PartOfSpeech = 'noun' | 'adverb' | 'adjective' | 'verb' | 'expression' | 'function'
 export type EntryConfidence = 'high' | 'medium' | 'low'
 export type SpanishGender = 'masculine' | 'feminine'
+export type FunctionSubtype = 'preposition' | 'conjunction' | 'determiner' | 'pronoun'
+
+export interface LanguagePackSource {
+  name: string
+  url: string
+  license: string
+  version?: string
+  fetchedAt?: string
+  notes?: string
+}
 
 interface BaseTranslationEntry {
   source: string
@@ -13,6 +23,7 @@ interface BaseTranslationEntry {
   sourceGloss: string
   frequencyRank: number
   confidence: EntryConfidence
+  sourceIds: string[]
 }
 
 export interface NounTranslationEntry extends BaseTranslationEntry {
@@ -25,20 +36,37 @@ export interface AdverbTranslationEntry extends BaseTranslationEntry {
   partOfSpeech: 'adverb'
 }
 
+export interface AdjectiveTranslationEntry extends BaseTranslationEntry {
+  partOfSpeech: 'adjective'
+}
+
+export interface VerbTranslationEntry extends BaseTranslationEntry {
+  partOfSpeech: 'verb'
+}
+
 export interface ExpressionTranslationEntry extends BaseTranslationEntry {
   partOfSpeech: 'expression'
+}
+
+export interface FunctionTranslationEntry extends BaseTranslationEntry {
+  partOfSpeech: 'function'
+  functionSubtype: FunctionSubtype
 }
 
 export type TranslationEntry =
   | NounTranslationEntry
   | AdverbTranslationEntry
+  | AdjectiveTranslationEntry
+  | VerbTranslationEntry
   | ExpressionTranslationEntry
+  | FunctionTranslationEntry
 
 export interface LanguagePack {
   version: string
   sourceLanguage: SourceLanguage
   targetLanguage: TargetLanguage
   displayName: string
+  sources?: Record<string, LanguagePackSource>
   entries: Record<string, TranslationEntry>
 }
 

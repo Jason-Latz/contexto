@@ -2,9 +2,10 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { cwd } from 'node:process'
 
-const VALID_POS = new Set(['noun', 'adverb', 'expression'])
+const VALID_POS = new Set(['noun', 'adverb', 'adjective', 'verb', 'expression', 'function'])
 const VALID_CONFIDENCE = new Set(['high', 'medium', 'low'])
 const VALID_SPANISH_GENDER = new Set(['masculine', 'feminine'])
+const VALID_FUNCTION_SUBTYPE = new Set(['preposition', 'conjunction', 'determiner', 'pronoun'])
 
 function fail(message) {
   throw new Error(message)
@@ -41,6 +42,10 @@ function validateEntry(key, entry, targetLanguage, label) {
     fail(`${label}:${key}.frequencyRank must be a positive integer`)
   }
 
+  if (!Array.isArray(entry.sourceIds) || entry.sourceIds.length === 0) {
+    fail(`${label}:${key}.sourceIds must be a non-empty array`)
+  }
+
   if (targetLanguage === 'es' && entry.partOfSpeech === 'noun') {
     if (!VALID_SPANISH_GENDER.has(entry.gender)) {
       fail(`${label}:${key}.gender must be masculine or feminine`)
@@ -51,6 +56,14 @@ function validateEntry(key, entry, targetLanguage, label) {
   if (entry.partOfSpeech !== 'noun') {
     if ('gender' in entry) fail(`${label}:${key} non-noun must not include gender`)
     if ('plural' in entry) fail(`${label}:${key} non-noun must not include plural`)
+  }
+
+  if (entry.partOfSpeech === 'function') {
+    if (!VALID_FUNCTION_SUBTYPE.has(entry.functionSubtype)) {
+      fail(`${label}:${key}.functionSubtype is invalid`)
+    }
+  } else if ('functionSubtype' in entry) {
+    fail(`${label}:${key} non-function must not include functionSubtype`)
   }
 }
 
