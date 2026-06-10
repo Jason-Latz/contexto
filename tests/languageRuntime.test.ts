@@ -113,3 +113,42 @@ test('hyphenated compounds are not replaced as partial fragments', async () => {
   assert.equal(lemmas.has('well'), false)
   assert.equal(lemmas.has('developed'), false)
 })
+
+test('candidate extraction reuses parsed text node cache', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const {
+    extractPageCandidates,
+    getParseCacheDiagnostics,
+    resetParseCacheDiagnostics,
+  } = await import('../src/content/injector.js')
+  const node = {
+    nodeValue: 'The numbers are useful, and of course context matters.',
+  } as Text
+
+  resetParseCacheDiagnostics()
+  extractPageCandidates([node])
+  extractPageCandidates([node])
+
+  assert.deepEqual(getParseCacheDiagnostics(), { hits: 1, misses: 1 })
+})
+
+test('parsed text node cache invalidates when node text changes', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const {
+    extractPageCandidates,
+    getParseCacheDiagnostics,
+    resetParseCacheDiagnostics,
+  } = await import('../src/content/injector.js')
+  const node = {
+    nodeValue: 'The numbers are useful, and of course context matters.',
+  } as Text
+
+  resetParseCacheDiagnostics()
+  extractPageCandidates([node])
+  node.nodeValue = 'The cities are useful, and of course context matters.'
+  extractPageCandidates([node])
+
+  assert.deepEqual(getParseCacheDiagnostics(), { hits: 0, misses: 2 })
+})

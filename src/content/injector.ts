@@ -21,6 +21,8 @@ interface ParsedTextNode {
 // Entries are garbage-collected automatically when nodes leave the DOM.
 const processedNodes = new WeakSet<Text>()
 const parsedNodeCache = new WeakMap<Text, ParsedTextNode>()
+let parsedNodeCacheHits = 0
+let parsedNodeCacheMisses = 0
 
 // Minimum word count for a text node to receive any replacements.
 // Very short nodes (single navigation labels, button text) give compromise.js
@@ -220,7 +222,10 @@ function parseTextNode(node: Text): ParsedTextNode | null {
   if (!hasEnoughWords(text)) return null
 
   const cached = parsedNodeCache.get(node)
-  if (cached?.text === text) return cached
+  if (cached?.text === text) {
+    parsedNodeCacheHits++
+    return cached
+  }
 
   const parsed = {
     text,
@@ -228,7 +233,20 @@ function parseTextNode(node: Text): ParsedTextNode | null {
     tokens: extractTokens(text),
   }
   parsedNodeCache.set(node, parsed)
+  parsedNodeCacheMisses++
   return parsed
+}
+
+export function resetParseCacheDiagnostics(): void {
+  parsedNodeCacheHits = 0
+  parsedNodeCacheMisses = 0
+}
+
+export function getParseCacheDiagnostics(): { hits: number; misses: number } {
+  return {
+    hits: parsedNodeCacheHits,
+    misses: parsedNodeCacheMisses,
+  }
 }
 
 // ---------- Token extraction ----------
