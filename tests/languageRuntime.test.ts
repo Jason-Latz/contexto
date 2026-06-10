@@ -38,6 +38,20 @@ test('fixed expressions are discovered from the active pack', async () => {
   assert.equal(matches[0]?.entry.target, 'por supuesto')
 })
 
+test('expression scanner prefers the longest match at the same start', async () => {
+  await loadLanguagePack('es')
+  const matches = scanExpressions('The alternating series test is useful.')
+
+  assert.equal(matches[0]?.entry.source, 'alternating series test')
+})
+
+test('expression scanner requires whitespace inside phrase matches', async () => {
+  await loadLanguagePack('es')
+  const matches = scanExpressions('Of, course, this should not match the phrase.')
+
+  assert.equal(matches.some((match) => match.entry.source === 'of course'), false)
+})
+
 test('selector honors the eligible-word density cap', async () => {
   await loadLanguagePack('es')
   const candidates: CandidateToken[] = [
