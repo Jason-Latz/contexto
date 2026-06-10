@@ -10,10 +10,17 @@ interface InjectionOptions {
   shouldRecordExposure?: (lemma: string) => boolean
 }
 
+interface ParsedTextNode {
+  text: string
+  expressionMatches: ExpressionMatch[]
+  tokens: CandidateToken[]
+}
+
 // Text nodes that have already been processed by this content script run.
 // WeakSet is used (not DOM attributes) because Text nodes have no dataset.
 // Entries are garbage-collected automatically when nodes leave the DOM.
 const processedNodes = new WeakSet<Text>()
+const parsedNodeCache = new WeakMap<Text, ParsedTextNode>()
 
 // Minimum word count for a text node to receive any replacements.
 // Very short nodes (single navigation labels, button text) give compromise.js
@@ -204,6 +211,26 @@ function isCompatibleEntry(entry: TranslationEntry, token: CandidateToken): bool
   return entry.partOfSpeech === token.partOfSpeech
 }
 
+function hasEnoughWords(text: string): boolean {
+  return text.trim().split(/\s+/).length >= MIN_WORD_COUNT
+}
+
+function parseTextNode(node: Text): ParsedTextNode | null {
+  const text = node.nodeValue ?? ''
+  if (!hasEnoughWords(text)) return null
+
+  const cached = parsedNodeCache.get(node)
+  if (cached?.text === text) return cached
+
+  const parsed = {
+    text,
+    expressionMatches: scanExpressions(text),
+    tokens: extractTokens(text),
+  }
+  parsedNodeCache.set(node, parsed)
+  return parsed
+}
+
 // ---------- Token extraction ----------
 
 // POS-tag the full text node content and extract tokens that have supported
@@ -361,15 +388,14 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
   for (const node of nodes) {
     if (processedNodes.has(node)) continue
 
-    const text = node.nodeValue ?? ''
-    if (text.trim().split(/\s+/).length < MIN_WORD_COUNT) continue
+    const parsed = parseTextNode(node)
+    if (!parsed) continue
 
     // Expression ranges must be excluded so we don't offer a lemma that will
     // be covered by a multi-word expression span in the replacement pass.
-    const expressionMatches = scanExpressions(text)
     const occupiedRanges: Array<[number, number]> = []
 
-    for (const match of expressionMatches) {
+    for (const match of parsed.expressionMatches) {
       const lemma = match.entry.source.toLowerCase()
       if (seenLemmas.has(lemma)) continue
       seenLemmas.add(lemma)
@@ -384,7 +410,7 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
       })
     }
 
-    for (const token of extractTokens(text)) {
+    for (const token of parsed.tokens) {
       if (seenLemmas.has(token.lemma)) continue
 
       const overlaps = occupiedRanges.some(([s, e]) => token.start < e && token.end > s)
@@ -421,8 +447,10 @@ export function injectReplacements(
 ): void {
   if (processedNodes.has(node)) return
 
-  const text = node.nodeValue ?? ''
-  if (text.trim().split(/\s+/).length < MIN_WORD_COUNT) return
+  const parsed = parseTextNode(node)
+  if (!parsed) return
+
+  const { text } = parsed
 
   const replacements: Array<{ start: number; end: number; span: HTMLSpanElement }> = []
   // Track occupied character ranges so the unigram pass skips expression-covered words
@@ -431,8 +459,7 @@ export function injectReplacements(
   // --- Pass 1: expression scan (bigrams and trigrams) ---
   // Must run first so multi-word expressions are claimed before their constituent
   // words are considered individually by the unigram pass below.
-  const expressionMatches: ExpressionMatch[] = scanExpressions(text)
-  for (const match of expressionMatches) {
+  for (const match of parsed.expressionMatches) {
     const lemma = match.entry.source.toLowerCase()
     if (!approvedLemmas.has(lemma)) continue
 
@@ -456,9 +483,7 @@ export function injectReplacements(
 
   // --- Pass 2: unigram nouns and adverbs ---
   // Replace every token whose lemma was approved at the page level.
-  const allTokens = extractTokens(text)
-
-  for (const token of allTokens) {
+  for (const token of parsed.tokens) {
     // Only replace lemmas approved by the page-level word selector
     if (!approvedLemmas.has(token.lemma)) continue
 
