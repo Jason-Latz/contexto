@@ -60,12 +60,31 @@ test('tooltip text includes source, gloss, and Spanish target', () => {
 test('expanded runtime loads non-noun imported entries', async () => {
   await loadLanguagePack('es')
   const accurate = lookup('accurate')
-  const abandon = lookup('abandon')
-  const about = lookup('about')
+  const accelerate = lookup('accelerate')
+  const without = lookup('without')
 
   assert.equal(accurate?.partOfSpeech, 'adjective')
-  assert.equal(abandon?.partOfSpeech, 'verb')
-  assert.equal(about?.partOfSpeech, 'function')
+  assert.equal(accelerate?.partOfSpeech, 'verb')
+  assert.equal(without?.partOfSpeech, 'function')
+})
+
+test('duplicate imported headwords keep noun sense for plural noun contexts', async () => {
+  await loadLanguagePack('es')
+  const number = lookup('number')
+
+  assert.equal(number?.partOfSpeech, 'noun')
+  assert.equal(number?.target, 'número')
+  if (number?.partOfSpeech === 'noun') {
+    assert.equal(number.plural, 'números')
+  }
+})
+
+test('duplicate imported headwords keep adverb sense for well', async () => {
+  await loadLanguagePack('es')
+  const well = lookup('well')
+
+  assert.equal(well?.partOfSpeech, 'adverb')
+  assert.equal(well?.target, 'bien')
 })
 
 test('hyphenated compounds are not replaced as partial fragments', async () => {

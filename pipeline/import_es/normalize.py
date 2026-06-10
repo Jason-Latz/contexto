@@ -40,12 +40,12 @@ FUNCTION_SUBTYPE: dict[str, str] = {
 }
 
 POS_PRIORITY = {
-    "function": 0,
-    "adverb": 1,
-    "verb": 2,
-    "adjective": 3,
-    "noun": 4,
-    "expression": 5,
+    "adverb": 0,
+    "noun": 1,
+    "adjective": 2,
+    "expression": 3,
+    "verb": 4,
+    "function": 5,
 }
 
 SOURCE_RE = re.compile(r"^[a-z][a-z' -]{0,58}[a-z]$")

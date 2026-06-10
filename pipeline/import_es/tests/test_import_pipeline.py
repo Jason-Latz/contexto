@@ -9,6 +9,7 @@ from pathlib import Path
 from pipeline.import_es.build import CURATED_SOURCE_ID, build, strip_previous_generated_entries
 from pipeline.import_es.enrich import OptionalEnrichment
 from pipeline.import_es.freedict import FREEDICT_SOURCE_ID, parse_freedict_tei
+from pipeline.import_es.models import RawFreeDictEntry
 from pipeline.import_es.normalize import normalize_entries
 
 
@@ -67,6 +68,58 @@ class ImportPipelineTest(unittest.TestCase):
         self.assertEqual(by_source["dog"].plural, "perros")
         self.assertEqual(by_source["about"].function_subtype, "preposition")
         self.assertEqual(by_source["accurate"].part_of_speech, "adjective")
+
+    def test_duplicate_headwords_prefer_content_noun_sense(self) -> None:
+        normalized = normalize_entries([
+            RawFreeDictEntry(
+                source="number",
+                raw_pos="v",
+                translations=("numerar",),
+                definitions=("To label items with numbers.",),
+                source_order=1,
+            ),
+            RawFreeDictEntry(
+                source="number",
+                raw_pos="n",
+                translations=("número",),
+                definitions=("An abstract entity used to describe quantity.",),
+                source_order=2,
+            ),
+        ], OptionalEnrichment())
+
+        self.assertEqual(len(normalized), 1)
+        self.assertEqual(normalized[0].part_of_speech, "noun")
+        self.assertEqual(normalized[0].target, "número")
+        self.assertEqual(normalized[0].plural, "números")
+
+    def test_duplicate_headwords_prefer_adverb_well_over_interjection(self) -> None:
+        normalized = normalize_entries([
+            RawFreeDictEntry(
+                source="well",
+                raw_pos="interjection",
+                translations=("pues",),
+                definitions=("An exclamation of surprise.",),
+                source_order=1,
+            ),
+            RawFreeDictEntry(
+                source="well",
+                raw_pos="n",
+                translations=("pozo",),
+                definitions=("A hole sunk into the ground as a source of water.",),
+                source_order=2,
+            ),
+            RawFreeDictEntry(
+                source="well",
+                raw_pos="adv",
+                translations=("bien",),
+                definitions=("Accurately, competently, or satisfactorily.",),
+                source_order=3,
+            ),
+        ], OptionalEnrichment())
+
+        self.assertEqual(len(normalized), 1)
+        self.assertEqual(normalized[0].part_of_speech, "adverb")
+        self.assertEqual(normalized[0].target, "bien")
 
     def test_strip_previous_generated_entries_keeps_curated_entries(self) -> None:
         pack = {

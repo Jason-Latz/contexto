@@ -200,6 +200,10 @@ function shouldRecordExposure(options: InjectionOptions, lemma: string): boolean
   return options.shouldRecordExposure?.(lemma) ?? true
 }
 
+function isCompatibleEntry(entry: TranslationEntry, token: CandidateToken): boolean {
+  return entry.partOfSpeech === token.partOfSpeech
+}
+
 // ---------- Token extraction ----------
 
 // POS-tag the full text node content and extract tokens that have supported
@@ -386,7 +390,8 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
       const overlaps = occupiedRanges.some(([s, e]) => token.start < e && token.end > s)
       if (overlaps) continue
 
-      if (!lookup(token.lemma)) continue
+      const entry = lookup(token.lemma)
+      if (!entry || !isCompatibleEntry(entry, token)) continue
 
       seenLemmas.add(token.lemma)
       candidates.push(token)
@@ -464,7 +469,7 @@ export function injectReplacements(
     const entry = lookup(token.lemma)
     if (!entry) continue
 
-    if (entry.partOfSpeech === 'expression') {
+    if (entry.partOfSpeech === 'expression' || !isCompatibleEntry(entry, token)) {
       continue
     }
 

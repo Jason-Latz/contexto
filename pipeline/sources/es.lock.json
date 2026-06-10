@@ -1,7 +1,7 @@
 {
   "targetLanguage": "es",
   "targetCount": 50000,
-  "generatedAt": "2026-06-09T19:48:17+00:00",
+  "generatedAt": "2026-06-10T03:24:34+00:00",
   "sources": {
     "freedict-eng-spa-2025.11.23": {
       "url": "https://download.freedict.org/dictionaries/eng-spa/2025.11.23/freedict-eng-spa-2025.11.23.src.tar.xz",
@@ -43,8 +43,8 @@
     }
   },
   "size": {
-    "rawBytes": 18603451,
-    "gzipBytes": 2739458,
+    "rawBytes": 18777115,
+    "gzipBytes": 2778128,
     "gzipWarning": false
   }
 }
