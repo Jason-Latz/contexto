@@ -20,6 +20,15 @@ function requireString(value, label) {
   }
 }
 
+function requireStandaloneTarget(value, label) {
+  requireString(value, label)
+
+  const trimmed = value.trim()
+  if (trimmed.startsWith('-') || trimmed.endsWith('-')) {
+    fail(`${label} must be a standalone replacement, not a prefix/suffix marker`)
+  }
+}
+
 function assertNoDuplicateEntryKeys(raw, language) {
   const entryKeyPattern = /^\s*"([^"]+)"\s*:\s*\{/gm
   const seen = new Map()
@@ -53,7 +62,7 @@ function validateEntry(key, entry, targetLanguage) {
   }
 
   requireString(entry.source, `${key}.source`)
-  requireString(entry.target, `${key}.target`)
+  requireStandaloneTarget(entry.target, `${key}.target`)
   requireString(entry.sourceGloss, `${key}.sourceGloss`)
 
   if (key !== entry.source.toLowerCase()) {
@@ -83,7 +92,7 @@ function validateEntry(key, entry, targetLanguage) {
     if (!VALID_SPANISH_GENDER.has(entry.gender)) {
       fail(`${key}.gender must be masculine or feminine`)
     }
-    requireString(entry.plural, `${key}.plural`)
+    requireStandaloneTarget(entry.plural, `${key}.plural`)
   }
 
   if (entry.partOfSpeech !== 'noun') {

@@ -75,6 +75,8 @@ def clean_target(value: str) -> str | None:
     target = clean_text(value)
     if not target or len(target) > 60:
         return None
+    if target.startswith("-") or target.endswith("-"):
+        return None
     if BAD_TARGET_RE.search(target):
         return None
     if not TARGET_RE.fullmatch(target):

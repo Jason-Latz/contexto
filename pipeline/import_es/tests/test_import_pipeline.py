@@ -32,6 +32,16 @@ TEI_FIXTURE = """<?xml version="1.0" encoding="UTF-8"?>
       <sense><cit type="trans" xml:lang="es"><quote>sobre</quote></cit><sense><def>concerning something</def></sense></sense>
     </entry>
     <entry>
+      <form><orth>to</orth></form>
+      <gramGrp><pos>particle</pos></gramGrp>
+      <sense><cit type="trans" xml:lang="es"><quote>-ar</quote></cit><sense><def>infinitive marker</def></sense></sense>
+    </entry>
+    <entry>
+      <form><orth>apian</orth></form>
+      <gramGrp><pos>adj</pos></gramGrp>
+      <sense><cit type="trans" xml:lang="es"><quote>api-</quote></cit><sense><def>relating to bees</def></sense></sense>
+    </entry>
+    <entry>
       <form><orth>bad/unsafe</orth></form>
       <gramGrp><pos>n</pos></gramGrp>
       <sense><cit type="trans" xml:lang="es"><quote>malo</quote></cit><sense><def>unsafe source key</def></sense></sense>
@@ -49,7 +59,7 @@ class ImportPipelineTest(unittest.TestCase):
 
             entries = parse_freedict_tei(tei)
 
-        self.assertEqual(len(entries), 4)
+        self.assertEqual(len(entries), 6)
         self.assertEqual(entries[0].source, "dog")
         self.assertEqual(entries[0].translations, ("perro",))
 
@@ -64,6 +74,8 @@ class ImportPipelineTest(unittest.TestCase):
 
         self.assertIn("dog", by_source)
         self.assertNotIn("bad/unsafe", by_source)
+        self.assertNotIn("to", by_source)
+        self.assertNotIn("apian", by_source)
         self.assertEqual(by_source["dog"].gender, "masculine")
         self.assertEqual(by_source["dog"].plural, "perros")
         self.assertEqual(by_source["about"].function_subtype, "preposition")

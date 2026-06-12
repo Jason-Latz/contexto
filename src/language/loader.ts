@@ -13,11 +13,17 @@ let activePack: LanguagePack | null = null
 let entries: Map<string, TranslationEntry> | null = null
 let expressionEntries: Array<[string, ExpressionTranslationEntry]> | null = null
 
+function isStandaloneTarget(target: string): boolean {
+  const trimmed = target.trim()
+  return !trimmed.startsWith('-') && !trimmed.endsWith('-')
+}
+
 function isUsableEntry(entry: TranslationEntry): boolean {
   if (!MIN_CONFIDENCE.includes(entry.confidence)) return false
+  if (!isStandaloneTarget(entry.target)) return false
 
   if (entry.partOfSpeech === 'noun') {
-    return Boolean(entry.target && entry.plural && entry.gender)
+    return Boolean(entry.target && entry.plural && entry.gender && isStandaloneTarget(entry.plural))
   }
 
   return Boolean(entry.target)

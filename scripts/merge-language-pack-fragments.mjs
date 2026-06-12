@@ -17,13 +17,22 @@ function requireString(value, label) {
   }
 }
 
+function requireStandaloneTarget(value, label) {
+  requireString(value, label)
+
+  const trimmed = value.trim()
+  if (trimmed.startsWith('-') || trimmed.endsWith('-')) {
+    fail(`${label} must be a standalone replacement, not a prefix/suffix marker`)
+  }
+}
+
 function validateEntry(key, entry, targetLanguage, label) {
   if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
     fail(`${label}:${key} must be an object`)
   }
 
   requireString(entry.source, `${label}:${key}.source`)
-  requireString(entry.target, `${label}:${key}.target`)
+  requireStandaloneTarget(entry.target, `${label}:${key}.target`)
   requireString(entry.sourceGloss, `${label}:${key}.sourceGloss`)
 
   if (key !== entry.source.toLowerCase()) {
@@ -50,7 +59,7 @@ function validateEntry(key, entry, targetLanguage, label) {
     if (!VALID_SPANISH_GENDER.has(entry.gender)) {
       fail(`${label}:${key}.gender must be masculine or feminine`)
     }
-    requireString(entry.plural, `${label}:${key}.plural`)
+    requireStandaloneTarget(entry.plural, `${label}:${key}.plural`)
   }
 
   if (entry.partOfSpeech !== 'noun') {

@@ -1572,11 +1572,11 @@
     },
     "judgment": {
       "source": "judgment",
-      "target": "sentencia",
-      "plural": "sentencias",
-      "gender": "feminine",
+      "target": "juicio",
+      "plural": "juicios",
+      "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "court's final decision",
+      "sourceGloss": "act or faculty of judging",
       "frequencyRank": 3158,
       "confidence": "high"
     },

@@ -52,6 +52,14 @@ test('expression scanner requires whitespace inside phrase matches', async () =>
   assert.equal(matches.some((match) => match.entry.source === 'of course'), false)
 })
 
+test('reported criterion phrase prefers phrase replacement over misleading parts', async () => {
+  await loadLanguagePack('es')
+  const matches = scanExpressions('It acts as a standard of judgment to measure skills.')
+
+  assert.equal(matches[0]?.entry.source, 'a standard of judgment')
+  assert.equal(matches[0]?.entry.target, 'un criterio')
+})
+
 test('selector honors the eligible-word density cap', async () => {
   await loadLanguagePack('es')
   const candidates: CandidateToken[] = [
@@ -80,6 +88,13 @@ test('expanded runtime loads non-noun imported entries', async () => {
   assert.equal(accurate?.partOfSpeech, 'adjective')
   assert.equal(accelerate?.partOfSpeech, 'verb')
   assert.equal(without?.partOfSpeech, 'function')
+})
+
+test('runtime does not load prefix or suffix marker targets', async () => {
+  await loadLanguagePack('es')
+
+  assert.equal(lookup('to'), null)
+  assert.equal(lookup('apian'), null)
 })
 
 test('duplicate imported headwords keep noun sense for plural noun contexts', async () => {
