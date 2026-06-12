@@ -7,7 +7,7 @@ interface SessionStore {
 
 interface Stats {
   replacedThisSession: number
-  knownWords: number
+  unknownWords: number
   totalLearning: number
 }
 
@@ -17,20 +17,26 @@ function computeStats(
 ): Stats {
   const seenLemmas = new Set((session.wordsSeen ?? []).map(w => w.englishLemma))
 
-  let knownWords = 0
+  let unknownWords = 0
   let totalLearning = 0
 
   for (const entry of Object.values(lexicon)) {
-    if (entry.selfMarkedKnown || entry.lifecycleState === WordLifecycleState.Graduated) {
-      knownWords++
-    } else if (entry.lifecycleState !== WordLifecycleState.Unseen) {
+    if (entry.selfMarkedUnknown) {
+      unknownWords++
+    }
+
+    if (
+      !entry.selfMarkedKnown &&
+      entry.lifecycleState !== WordLifecycleState.Unseen &&
+      entry.lifecycleState !== WordLifecycleState.Graduated
+    ) {
       totalLearning++
     }
   }
 
   return {
     replacedThisSession: seenLemmas.size,
-    knownWords,
+    unknownWords,
     totalLearning,
   }
 }
@@ -52,7 +58,7 @@ export function renderStatsPanel(
 
   const rows: [string, string | number][] = [
     ['Replaced this session', stats.replacedThisSession],
-    ['Known / graduated', stats.knownWords],
+    ['Saved unknown', stats.unknownWords],
     ['In learning queue', stats.totalLearning],
   ]
 

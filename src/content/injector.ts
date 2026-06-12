@@ -2,8 +2,9 @@ import nlp from 'compromise'
 import { lookup } from '../language/loader.js'
 import { scanExpressions } from './expressionScanner.js'
 import { buildSpanishReplacement } from '../language/spanishAdapter.js'
+import { BASE_SPAN_STYLE, UNKNOWN_SPAN_STYLE } from './spanStyles.js'
 import type { CandidateToken, ExpressionMatch, TranslationEntry, WordSeen } from '../types/index.js'
-import { recordSeen } from '../store/lexiconStore.js'
+import { getEntry, recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
 
 interface InjectionOptions {
@@ -14,6 +15,17 @@ interface ParsedTextNode {
   text: string
   expressionMatches: ExpressionMatch[]
   tokens: CandidateToken[]
+}
+
+interface ReplacementRange {
+  start: number
+  end: number
+  priority?: number
+}
+
+interface ReplacementCandidate extends ReplacementRange {
+  span: HTMLSpanElement
+  recordExposure?: () => void
 }
 
 // Text nodes that have already been processed by this content script run.
@@ -72,18 +84,6 @@ const IRREGULAR_VERB_LEMMAS: Record<string, string> = {
   knew: 'know',
   known: 'know',
 }
-
-// Inline styles for the injected replacement spans. Keeping styles here (rather
-// than a stylesheet) avoids a separate CSS asset and keeps the content script
-// fully self-contained in Phase 1. Phase 4 popup will allow customisation.
-const SPAN_BASE_STYLE = [
-  'border-bottom: 1px solid rgba(42, 92, 130, 0.55)',
-  'background: rgba(42, 92, 130, 0.07)',
-  'border-radius: 2px',
-  'cursor: help',
-  'color: inherit',
-  'font-style: inherit',
-].join('; ')
 
 // ---------- Singularisation helpers ----------
 
@@ -201,8 +201,17 @@ function buildSpan(
   span.setAttribute('data-target', displayText)
   span.setAttribute('data-base-target', entry.target)
   span.setAttribute('data-gloss', entry.sourceGloss)
-  span.setAttribute('style', SPAN_BASE_STYLE)
+  span.setAttribute('style', BASE_SPAN_STYLE)
   return span
+}
+
+function attachLemma(span: HTMLSpanElement, lemma: string): void {
+  span.setAttribute('data-lemma', lemma)
+
+  if (getEntry(lemma).selfMarkedUnknown) {
+    span.setAttribute('data-contexto-unknown', 'true')
+    span.setAttribute('style', UNKNOWN_SPAN_STYLE)
+  }
 }
 
 function shouldRecordExposure(options: InjectionOptions, lemma: string): boolean {
@@ -213,8 +222,43 @@ function isCompatibleEntry(entry: TranslationEntry, token: CandidateToken): bool
   return entry.partOfSpeech === token.partOfSpeech
 }
 
+function isStandaloneFunctionReplacement(entry: TranslationEntry): boolean {
+  return entry.partOfSpeech === 'function' && entry.functionSubtype !== 'determiner'
+}
+
 function hasEnoughWords(text: string): boolean {
   return text.trim().split(/\s+/).length >= MIN_WORD_COUNT
+}
+
+function rangesOverlap(a: ReplacementRange, b: ReplacementRange): boolean {
+  return a.start < b.end && a.end > b.start
+}
+
+function rangeLength(range: ReplacementRange): number {
+  return range.end - range.start
+}
+
+export function selectNonOverlappingReplacementRanges<T extends ReplacementRange>(
+  candidates: T[],
+): T[] {
+  const selected: T[] = []
+  const occupiedRanges: ReplacementRange[] = []
+  const ordered = [...candidates].sort((a, b) =>
+    (b.priority ?? 0) - (a.priority ?? 0) ||
+    a.start - b.start ||
+    rangeLength(b) - rangeLength(a) ||
+    a.end - b.end,
+  )
+
+  for (const candidate of ordered) {
+    if (candidate.end <= candidate.start) continue
+    if (occupiedRanges.some(range => rangesOverlap(range, candidate))) continue
+
+    selected.push(candidate)
+    occupiedRanges.push(candidate)
+  }
+
+  return selected.sort((a, b) => a.start - b.start || a.end - b.end)
 }
 
 function parseTextNode(node: Text): ParsedTextNode | null {
@@ -291,7 +335,7 @@ function extractTokens(text: string): CandidateToken[] {
       }
 
       const exactEntry = lookup(lowerSurface)
-      if (exactEntry?.partOfSpeech === 'function') {
+      if (exactEntry && isStandaloneFunctionReplacement(exactEntry)) {
         tokens.push({
           word: surface,
           lemma: lowerSurface,
@@ -470,9 +514,7 @@ export function injectReplacements(
 
   const { text } = parsed
 
-  const replacements: Array<{ start: number; end: number; span: HTMLSpanElement }> = []
-  // Track occupied character ranges so the unigram pass skips expression-covered words
-  const occupiedRanges: Array<[number, number]> = []
+  const candidates: ReplacementCandidate[] = []
 
   // --- Pass 1: expression scan (bigrams and trigrams) ---
   // Must run first so multi-word expressions are claimed before their constituent
@@ -482,21 +524,26 @@ export function injectReplacements(
     if (!approvedLemmas.has(lemma)) continue
 
     const span = buildSpan(match.entry.target, match.original, match.entry)
-    span.setAttribute('data-lemma', lemma)
-    replacements.push({ start: match.start, end: match.end, span })
-    occupiedRanges.push([match.start, match.end])
-
-    if (shouldRecordExposure(options, lemma)) {
-      recordSeen(lemma)
-      recordWordSeen({
-        englishLemma: lemma,
-        surfaceForm: match.original,
-        targetWord: match.entry.target,
-        sourceGloss: match.entry.sourceGloss,
-        sentenceContext: extractSentenceContext(text, match.start),
-        seenAt: Date.now(),
-      })
-    }
+    attachLemma(span, lemma)
+    candidates.push({
+      start: match.start,
+      end: match.end,
+      priority: 2,
+      span,
+      recordExposure: shouldRecordExposure(options, lemma)
+        ? () => {
+            recordSeen(lemma)
+            recordWordSeen({
+              englishLemma: lemma,
+              surfaceForm: match.original,
+              targetWord: match.entry.target,
+              sourceGloss: match.entry.sourceGloss,
+              sentenceContext: extractSentenceContext(text, match.start),
+              seenAt: Date.now(),
+            })
+          }
+        : undefined,
+    })
   }
 
   // --- Pass 2: unigram nouns and adverbs ---
@@ -504,10 +551,6 @@ export function injectReplacements(
   for (const token of parsed.tokens) {
     // Only replace lemmas approved by the page-level word selector
     if (!approvedLemmas.has(token.lemma)) continue
-
-    // Skip tokens that overlap with a reserved expression span
-    const overlaps = occupiedRanges.some(([s, e]) => token.start < e && token.end > s)
-    if (overlaps) continue
 
     const entry = lookup(token.lemma)
     if (!entry) continue
@@ -522,31 +565,38 @@ export function injectReplacements(
     const span = buildSpan(displayText, originalEnglish, entry)
 
     // data-lemma stores the English lemma (e.g. "dog") so the hover handler
-    // can call setKnown with the correct lexicon key.
-    span.setAttribute('data-lemma', token.lemma)
+    // can save the correct lexicon key for unknown-word review.
+    attachLemma(span, token.lemma)
 
-    replacements.push({ start: replacement.replacementStart, end: token.end, span })
-    occupiedRanges.push([replacement.replacementStart, token.end])
-
-    // Record the replacement in the lexicon and session stores so Phase 3
-    // can schedule quizzes and the proficiency model can track the reveal rate.
     const targetDisplayed = span.textContent ?? entry.target
-    if (shouldRecordExposure(options, token.lemma)) {
-      recordSeen(token.lemma)
-      const wordSeen: WordSeen = {
-        englishLemma:    token.lemma,
-        surfaceForm:     token.word,   // exact surface form for contextual quiz blanking
-        targetWord:      targetDisplayed,
-        sourceGloss:     entry.sourceGloss,
-        sentenceContext: extractSentenceContext(text, token.start),
-        seenAt:          Date.now(),
-      }
-      recordWordSeen(wordSeen)
-    }
+    candidates.push({
+      start: replacement.replacementStart,
+      end: token.end,
+      priority: 1,
+      span,
+      recordExposure: shouldRecordExposure(options, token.lemma)
+        ? () => {
+            // Record only replacements that survive overlap filtering so stats
+            // match what the reader actually saw on the page.
+            recordSeen(token.lemma)
+            const wordSeen: WordSeen = {
+              englishLemma:    token.lemma,
+              surfaceForm:     token.word,   // exact surface form for contextual quiz blanking
+              targetWord:      targetDisplayed,
+              sourceGloss:     entry.sourceGloss,
+              sentenceContext: extractSentenceContext(text, token.start),
+              seenAt:          Date.now(),
+            }
+            recordWordSeen(wordSeen)
+          }
+        : undefined,
+    })
   }
 
-  // Sort replacements by position before building the fragment
-  replacements.sort((a, b) => a.start - b.start)
+  const replacements = selectNonOverlappingReplacementRanges(candidates)
+  for (const replacement of replacements) {
+    replacement.recordExposure?.()
+  }
 
   replaceTextNode(node, replacements)
 }

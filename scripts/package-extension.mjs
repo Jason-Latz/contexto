@@ -1,5 +1,5 @@
 import { createWriteStream } from 'node:fs'
-import { mkdir, rm } from 'node:fs/promises'
+import { mkdir, readFile, rm } from 'node:fs/promises'
 import { basename, join } from 'node:path'
 import { argv, cwd } from 'node:process'
 import { Readable } from 'node:stream'
@@ -8,7 +8,9 @@ import { ZipArchive } from './zip-archive.mjs'
 
 const root = cwd()
 const outDir = join(root, 'release')
-const zipPath = join(outDir, argv[2] ?? 'contexto-extension.zip')
+const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
+const defaultFilename = `contexto-extension-v${packageJson.version}.zip`
+const zipPath = join(outDir, argv[2] ?? defaultFilename)
 
 await mkdir(outDir, { recursive: true })
 await rm(zipPath, { force: true })

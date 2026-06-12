@@ -1,7 +1,7 @@
 import type { LexiconEntry } from '../types/index.js'
 import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
-import { renderKnownWordsList } from './KnownWordsList.js'
+import { renderUnknownWordsList } from './UnknownWordsList.js'
 
 const LEXICON_KEY  = 'contexto_lexicon'
 const SESSION_KEY  = 'contexto_session'
@@ -29,7 +29,7 @@ async function init(): Promise<void> {
   renderLanguagePanel(root)
   renderFeatureToggles(root, settings)
 
-  // Stats — session word count, known words, learning queue size.
+  // Stats — session word count, unknown words, learning queue size.
   renderStatsPanel(root, lexicon, session)
 
   // Density slider — reads and writes chrome.storage.local directly.
@@ -37,11 +37,11 @@ async function init(): Promise<void> {
 
   renderBlockedDomains(root, settings)
 
-  // Known words list — all / session filter.
+  // Unknown words list — all / session filter with local exports.
   const sessionLemmas = new Set(
     (session.wordsSeen ?? []).map(w => w.englishLemma),
   )
-  renderKnownWordsList(root, lexicon, sessionLemmas)
+  await renderUnknownWordsList(root, lexicon, sessionLemmas)
 }
 
 init()

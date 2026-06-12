@@ -3,20 +3,21 @@
  *
  * Drives the progression: unseen → learning → reviewing → mature → graduated
  *
- * Two graduation paths:
- *   Self-marked: user explicitly marks a word as known — immediate, reversible,
- *     full removal from replacement rotation. Lifecycle state is unchanged;
- *     the selfMarkedKnown flag alone gates the word selector.
- *   Quiz-earned: srsInterval ≥ 21 days AND recall ≥ 0.85 over the last 3 quizzes.
+ * Quiz-earned graduation:
+ *   srsInterval ≥ 21 days AND recall ≥ 0.85 over the last 3 quizzes.
  *     Drops to 10% maintenance frequency (enforced in wordSelector). Demoted back
  *     to Reviewing on next incorrect quiz answer (SM-2 resets interval to 1 day).
+ *
+ * Manual user markings:
+ *   Known words remain supported as legacy state and are excluded by the selector.
+ *   Unknown words stay in replacement rotation and are saved for review/export.
  *
  * This module owns all quiz result application. Quiz UI components call
  * applyQuizResult() — they never reach into sm2.ts or lexiconStore directly.
  */
 
 import { scheduleSM2 } from './sm2.js'
-import { getEntry, updateEntry, markKnown } from '../store/lexiconStore.js'
+import { getEntry, updateEntry, markKnown, markUnknown } from '../store/lexiconStore.js'
 import { WordLifecycleState } from '../types/index.js'
 import type { LexiconEntry } from '../types/index.js'
 
@@ -115,4 +116,14 @@ export function applyQuizResult(englishLemma: string, correct: boolean): void {
  */
 export function setKnown(englishLemma: string, known: boolean): void {
   markKnown(englishLemma, known)
+}
+
+/**
+ * Mark or unmark a word as user-unknown.
+ *
+ * Unknown words are intentionally not excluded from replacement. The mark is a
+ * collection/review signal for the popup and export flow, not a removal signal.
+ */
+export function setUnknown(englishLemma: string, unknown: boolean): void {
+  markUnknown(englishLemma, unknown)
 }

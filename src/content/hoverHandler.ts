@@ -1,43 +1,27 @@
-import { setKnown } from '../engine/wordLifecycle.js'
+import { setUnknown } from '../engine/wordLifecycle.js'
+import {
+  clearDirty,
+  getLexiconForStorage,
+  isDirty,
+} from '../store/lexiconStore.js'
+import { getSessionForStorage } from '../store/sessionStore.js'
+import {
+  isExtensionContextAvailable,
+  isExtensionContextInvalidatedError,
+} from '../utils/extensionContext.js'
+import { BASE_SPAN_STYLE, UNKNOWN_SPAN_STYLE } from './spanStyles.js'
 
 // The data attribute written by injector.ts to identify Contexto-managed spans.
 const CONTEXTO_ATTR = 'data-contexto'
 
-// Threshold for the informational self-mark warning toast.
-// Not a hard cap — the user may mark as many words as they like.
-const SELF_MARK_WARNING_AT = 10
-
 // Session-scoped counter. Resets with the page — no cross-session tracking.
-let sessionSelfMarkCount = 0
-
-// Tracks whether the 10-mark warning has already been shown this session
-// so it only fires once even if the user continues marking.
-let warningShown = false
+let sessionUnknownMarkCount = 0
 
 // ---------------------------------------------------------------------------
 // Span visual states
 // ---------------------------------------------------------------------------
 
-// Applied by injector.ts — reproduced here so we can restore it on unmark.
-const BASE_SPAN_STYLE = [
-  'border-bottom: 1px solid rgba(42, 92, 130, 0.55)',
-  'background: rgba(42, 92, 130, 0.07)',
-  'border-radius: 2px',
-  'cursor: help',
-  'color: inherit',
-  'font-style: inherit',
-].join('; ')
-
-// Applied when the user marks a word as known. Muted to signal it is no longer
-// active in the replacement rotation, but left in place so the user can see
-// which words they have marked on this page.
-const KNOWN_SPAN_STYLE = [
-  'border-bottom: 1px dashed #c8c8c8',
-  'cursor: default',
-  'color: #aaa',
-  'font-style: normal',
-  'opacity: 0.6',
-].join('; ')
+const UNKNOWN_ATTR = 'data-contexto-unknown'
 
 // ---------------------------------------------------------------------------
 // Tooltip
@@ -89,11 +73,10 @@ function findContextoSpan(target: EventTarget | null): HTMLElement | null {
 }
 
 function applyHoverState(target: HTMLElement): void {
-  // Known words use a muted style with no hover highlight — the base style
-  // applied at mark time is already visually distinct.
-  if (target.getAttribute('data-contexto-known') !== 'true') {
-    target.style.backgroundColor = 'rgba(42, 92, 130, 0.14)'
-  }
+  const hoverColor = target.getAttribute(UNKNOWN_ATTR) === 'true'
+    ? 'rgba(132, 86, 22, 0.2)'
+    : 'rgba(42, 92, 130, 0.14)'
+  target.style.backgroundColor = hoverColor
 }
 
 function clearHoverState(target: HTMLElement): void {
@@ -102,14 +85,19 @@ function clearHoverState(target: HTMLElement): void {
 
 function showTooltip(target: HTMLElement, event: MouseEvent): void {
   const tip = getOrCreateTooltip()
-  const isKnown = target.getAttribute('data-contexto-known') === 'true'
+  const isUnknown = target.getAttribute(UNKNOWN_ATTR) === 'true'
   if (activeSpan && activeSpan !== target) {
     clearHoverState(activeSpan)
   }
   activeSpan = target
 
-  if (isKnown) {
-    tip.textContent = 'Known - click to undo'
+  if (isUnknown) {
+    const source = target.getAttribute('data-source') ?? ''
+    const lemma = target.getAttribute('data-lemma') ?? source
+    const translated = target.getAttribute('data-target') ?? ''
+    const gloss = target.getAttribute('data-gloss') ?? ''
+    tip.textContent = formatSavedUnknownTooltipText(source, lemma, translated, gloss)
+    tip.style.whiteSpace = 'pre-line'
   } else {
     const source = target.getAttribute('data-source') ?? ''
     const lemma = target.getAttribute('data-lemma') ?? source
@@ -132,63 +120,39 @@ function hideTooltip(): void {
 }
 
 // ---------------------------------------------------------------------------
-// Self-mark warning toast
+// Unknown-word interaction
 // ---------------------------------------------------------------------------
 
-function showSelfMarkWarning(): void {
-  if (warningShown) return
-  warningShown = true
+function applyUnknownStateToLemma(lemma: string, unknown: boolean): void {
+  const spans = document.querySelectorAll<HTMLElement>(`[${CONTEXTO_ATTR}="true"]`)
+  for (const span of spans) {
+    if (span.getAttribute('data-lemma') !== lemma) continue
 
-  const toast = document.createElement('div')
-  toast.setAttribute('style', [
-    'position: fixed',
-    'bottom: 16px',
-    'left: 16px',
-    'z-index: 2147483647',
-    'max-width: 320px',
-    'background: #1e2a3a',
-    'color: #e8edf2',
-    'font-size: 13px',
-    'font-family: system-ui, -apple-system, sans-serif',
-    'border-radius: 8px',
-    'padding: 10px 14px',
-    'box-shadow: 0 4px 16px rgba(0,0,0,0.25)',
-    'display: flex',
-    'align-items: flex-start',
-    'gap: 10px',
-    'line-height: 1.45',
-  ].join('; '))
-
-  const msg = document.createElement('span')
-  msg.textContent =
-    "You've marked many words as known this session — make sure you're being honest with yourself."
-
-  const closeBtn = document.createElement('button')
-  closeBtn.setAttribute('style', [
-    'background: none',
-    'border: none',
-    'color: #8fa8c0',
-    'font-size: 16px',
-    'cursor: pointer',
-    'padding: 0',
-    'line-height: 1',
-    'flex-shrink: 0',
-  ].join('; '))
-  closeBtn.textContent = '×'
-  closeBtn.setAttribute('aria-label', 'Dismiss')
-  closeBtn.addEventListener('click', () => toast.remove())
-
-  toast.appendChild(msg)
-  toast.appendChild(closeBtn)
-  document.body.appendChild(toast)
-
-  // Auto-dismiss after 8 seconds so it doesn't persist indefinitely.
-  setTimeout(() => toast.remove(), 8_000)
+    if (unknown) {
+      span.setAttribute(UNKNOWN_ATTR, 'true')
+      span.setAttribute('style', UNKNOWN_SPAN_STYLE)
+    } else {
+      span.removeAttribute(UNKNOWN_ATTR)
+      span.setAttribute('style', BASE_SPAN_STYLE)
+    }
+  }
 }
 
-// ---------------------------------------------------------------------------
-// Self-mark interaction
-// ---------------------------------------------------------------------------
+async function flushUserMark(): Promise<void> {
+  if (!isDirty()) return
+  if (!isExtensionContextAvailable()) return
+
+  try {
+    await chrome.storage.local.set({
+      contexto_lexicon: getLexiconForStorage(),
+      contexto_session: getSessionForStorage(),
+    })
+    clearDirty()
+  } catch (err) {
+    if (isExtensionContextInvalidatedError(err)) return
+    console.warn('[Contexto] Failed to save unknown-word mark:', err)
+  }
+}
 
 function handleSpanClick(target: HTMLElement): void {
   // data-lemma is set by injector.ts to token.lemma (e.g. "dog") — the key
@@ -196,24 +160,18 @@ function handleSpanClick(target: HTMLElement): void {
   const englishLemma = target.getAttribute('data-lemma')
   if (!englishLemma) return
 
-  const isKnown = target.getAttribute('data-contexto-known') === 'true'
+  const isUnknown = target.getAttribute(UNKNOWN_ATTR) === 'true'
 
-  if (isKnown) {
-    // Second click — undo the mark.
-    setKnown(englishLemma, false)
-    target.removeAttribute('data-contexto-known')
-    target.setAttribute('style', BASE_SPAN_STYLE)
+  if (isUnknown) {
+    setUnknown(englishLemma, false)
+    applyUnknownStateToLemma(englishLemma, false)
   } else {
-    // First click — mark as known.
-    setKnown(englishLemma, true)
-    target.setAttribute('data-contexto-known', 'true')
-    target.setAttribute('style', KNOWN_SPAN_STYLE)
-
-    sessionSelfMarkCount++
-    if (sessionSelfMarkCount >= SELF_MARK_WARNING_AT) {
-      showSelfMarkWarning()
-    }
+    setUnknown(englishLemma, true)
+    applyUnknownStateToLemma(englishLemma, true)
+    sessionUnknownMarkCount++
   }
+
+  void flushUserMark()
 
   // Hide the tooltip immediately after a click — the word's state has changed
   // and the stale tooltip text should not linger.
@@ -260,13 +218,15 @@ export function setupHoverHandler(): void {
     }
   })
 
-  // Self-mark: delegated click on all Contexto spans.
+  // Unknown-word save: delegated click on all Contexto spans.
   document.body.addEventListener('click', (event: MouseEvent) => {
     const target = findContextoSpan(event.target)
     if (!target) {
       hideTooltip()
       return
     }
+    event.preventDefault()
+    event.stopPropagation()
     handleSpanClick(target)
   })
 
@@ -285,9 +245,8 @@ export function removeHoverUI(): void {
   activeSpan = null
 }
 
-// Exported for use by the popup's KnownWordsList to display the session count.
-export function getSessionSelfMarkCount(): number {
-  return sessionSelfMarkCount
+export function getSessionUnknownMarkCount(): number {
+  return sessionUnknownMarkCount
 }
 
 export function formatTooltipText(
@@ -296,5 +255,14 @@ export function formatTooltipText(
   translated: string,
   gloss: string,
 ): string {
-  return `${source} (${lemma})\n${gloss}\nSpanish: ${translated}\nClick to mark known`
+  return `${source} (${lemma})\n${gloss}\nSpanish: ${translated}\nClick to save as unknown`
+}
+
+export function formatSavedUnknownTooltipText(
+  source: string,
+  lemma: string,
+  translated: string,
+  gloss: string,
+): string {
+  return `${source} (${lemma})\n${gloss}\nSpanish: ${translated}\nSaved as unknown - click to remove`
 }

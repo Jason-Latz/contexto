@@ -5,6 +5,7 @@ import type {
   TargetLanguage,
   TranslationEntry,
 } from '../types/index.js'
+import { assertExtensionContextAvailable } from '../utils/extensionContext.js'
 
 const DEFAULT_TARGET_LANGUAGE: TargetLanguage = 'es'
 const MIN_CONFIDENCE: EntryConfidence[] = ['high', 'medium']
@@ -34,9 +35,7 @@ export async function loadLanguagePack(
 ): Promise<void> {
   if (activePack?.targetLanguage === targetLanguage && entries !== null) return
 
-  if (!chrome.runtime?.id || chrome.runtime.id === 'invalid') {
-    throw new Error('[Contexto] Extension context invalidated; refresh the page to restore it')
-  }
+  assertExtensionContextAvailable()
 
   const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
   if (!response.ok) {

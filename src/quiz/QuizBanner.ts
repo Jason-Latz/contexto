@@ -24,6 +24,7 @@ import { getDensity, setDensity } from '../store/settingsStore.js'
 import { renderMeaningRecall }  from './MeaningRecall.js'
 import { renderReverseRecall }  from './ReverseRecall.js'
 import { renderContextualQuiz } from './ContextualQuiz.js'
+import { isExtensionContextInvalidatedError } from '../utils/extensionContext.js'
 import type { WordSeen } from '../types/index.js'
 
 // ---------------------------------------------------------------------------
@@ -311,6 +312,11 @@ function showBanner(eligibleCount: number): void {
       if (currentIndex >= words.length) {
         const accuracy = quizResults.filter(Boolean).length / quizResults.length
         void setDensity(adjustDensityAfterQuiz(getDensity(), accuracy, eligibleCount))
+          .catch((err) => {
+            if (!isExtensionContextInvalidatedError(err)) {
+              console.warn('[Contexto] Quiz density update failed:', err)
+            }
+          })
       }
 
       showNext()

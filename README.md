@@ -7,9 +7,9 @@ Contexto is a Chrome extension for passive language immersion. It replaces a use
 - Target language: Spanish
 - Runtime translation source: bundled local language pack
 - Runtime network calls: none
-- Supported replacements: nouns, adverbs, and fixed expressions
-- User controls: density slider, known-word marking, blocked domains
-- Deferred: live translation APIs, notifications, nudges, verbs, adjectives
+- Supported replacements: nouns, adjectives, verbs, adverbs, selected function words, and fixed expressions
+- User controls: density slider, unknown-word saving/export, blocked domains
+- Deferred: live translation APIs, notifications, nudges, and full morphology-aware inflection
 
 ## Development
 
@@ -39,7 +39,7 @@ Use `fixtures/spanish-article.html` for a local smoke test.
 npm run package
 ```
 
-This creates `release/contexto-extension.zip` from `dist/`.
+This creates `release/contexto-extension-v<version>.zip` from `dist/`.
 
 ## Language Packs
 

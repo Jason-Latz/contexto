@@ -16,6 +16,10 @@ import { selectTokens } from '../engine/wordSelector.js'
 import { showLevelPicker } from '../onboarding/LevelPicker.js'
 import { startQuizTimer, stopQuizTimer } from '../quiz/QuizBanner.js'
 import { setupMutationObserver } from './mutationObserver.js'
+import {
+  isExtensionContextAvailable,
+  isExtensionContextInvalidatedError,
+} from '../utils/extensionContext.js'
 import type { CandidateToken } from '../types/index.js'
 
 // Pages with fewer words than this are too short for meaningful immersion
@@ -43,6 +47,8 @@ let activeApprovedLemmas: ReadonlySet<string> = new Set()
 let recordedApprovedLemmas = new Set<string>()
 let rankedPageLemmas: string[] = []
 let replacementPipelineRunVersion = 0
+let extensionContextInvalidated = false
+let storageFlushInterval: ReturnType<typeof setInterval> | null = null
 
 function countPageWords(): number {
   return (document.body.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
@@ -51,12 +57,25 @@ function countPageWords(): number {
 // Write the lexicon and session stores together in one storage call.
 // No-op when the lexicon has no unsaved changes.
 async function flushStorage(): Promise<void> {
+  if (extensionContextInvalidated) return
+  if (!isExtensionContextAvailable()) {
+    shutdownInvalidatedContext(true)
+    return
+  }
   if (!isDirty()) return
-  await chrome.storage.local.set({
-    contexto_lexicon: getLexiconForStorage(),
-    contexto_session: getSessionForStorage(),
-  })
-  clearDirty()
+  try {
+    await chrome.storage.local.set({
+      contexto_lexicon: getLexiconForStorage(),
+      contexto_session: getSessionForStorage(),
+    })
+    clearDirty()
+  } catch (err) {
+    if (isExtensionContextInvalidatedError(err)) {
+      shutdownInvalidatedContext(true)
+      return
+    }
+    console.warn('[Contexto] Storage flush failed:', err)
+  }
 }
 
 function syncQuizTimer(quizzesEnabled: boolean): void {
@@ -89,10 +108,10 @@ function beginReplacementPipelineRun(): number {
 }
 
 function isCurrentReplacementPipelineRun(runVersion: number): boolean {
-  return runVersion === replacementPipelineRunVersion
+  return !extensionContextInvalidated && runVersion === replacementPipelineRunVersion
 }
 
-function deactivateReplacementPipeline(restoreDom: boolean): void {
+function deactivateReplacementPipeline(restoreDom: boolean, flush = true): void {
   stopQuizTimer()
   mutationObserver?.disconnect()
   mutationObserver = null
@@ -103,7 +122,23 @@ function deactivateReplacementPipeline(restoreDom: boolean): void {
   rankedPageLemmas = []
   isReplacementPipelineActive = false
   lastEligibleCount = 0
-  void flushStorage()
+  if (flush) void flushStorage()
+}
+
+function shutdownInvalidatedContext(restoreDom: boolean): void {
+  if (extensionContextInvalidated) return
+
+  extensionContextInvalidated = true
+  pendingReplacementRefresh = false
+  isReplacementPipelineRunning = false
+  replacementPipelineRunVersion++
+
+  if (storageFlushInterval !== null) {
+    clearInterval(storageFlushInterval)
+    storageFlushInterval = null
+  }
+
+  deactivateReplacementPipeline(restoreDom, false)
 }
 
 function rememberRecordedLemmas(lemmas: ReadonlySet<string>): void {
@@ -167,6 +202,11 @@ async function renderReplacementPass(
 }
 
 async function startReplacementPipeline(): Promise<void> {
+  if (extensionContextInvalidated) return
+  if (!isExtensionContextAvailable()) {
+    shutdownInvalidatedContext(true)
+    return
+  }
   if (isReplacementPipelineActive) return
   if (isReplacementPipelineRunning) {
     pendingReplacementRefresh = true
@@ -213,15 +253,24 @@ async function startReplacementPipeline(): Promise<void> {
     isReplacementPipelineActive = true
     syncQuizTimer(areQuizzesEnabled())
   } catch (err) {
+    if (isExtensionContextInvalidatedError(err)) {
+      shutdownInvalidatedContext(true)
+      return
+    }
     console.warn('[Contexto] Startup failed, extension inactive:', err)
     deactivateReplacementPipeline(true)
   } finally {
     isReplacementPipelineRunning = false
-    runQueuedReplacementRefresh()
+    if (!extensionContextInvalidated) runQueuedReplacementRefresh()
   }
 }
 
 async function refreshReplacementPipeline(): Promise<void> {
+  if (extensionContextInvalidated) return
+  if (!isExtensionContextAvailable()) {
+    shutdownInvalidatedContext(true)
+    return
+  }
   if (!isReplacementPipelineActive) {
     await startReplacementPipeline()
     return
@@ -265,11 +314,15 @@ async function refreshReplacementPipeline(): Promise<void> {
     isReplacementPipelineActive = true
     syncQuizTimer(areQuizzesEnabled())
   } catch (err) {
+    if (isExtensionContextInvalidatedError(err)) {
+      shutdownInvalidatedContext(true)
+      return
+    }
     console.warn('[Contexto] Live density refresh failed, extension inactive:', err)
     deactivateReplacementPipeline(true)
   } finally {
     isReplacementPipelineRunning = false
-    runQueuedReplacementRefresh()
+    if (!extensionContextInvalidated) runQueuedReplacementRefresh()
   }
 }
 
@@ -281,6 +334,8 @@ function stopReplacementPipeline(): void {
 }
 
 function handleSettingsChange(settings: RuntimeSettings, previousSettings: RuntimeSettings): void {
+  if (extensionContextInvalidated) return
+
   const replacementsEnabled = settings.replacementsEnabled ?? true
   const quizzesEnabled = settings.quizzesEnabled ?? false
   const densityChanged =
@@ -317,6 +372,8 @@ async function main(): Promise<void> {
     })
   }
 
+  if (!isExtensionContextAvailable()) return
+
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== 'local' || !changes[SETTINGS_KEY]) return
     handleSettingsChange(
@@ -334,9 +391,16 @@ async function main(): Promise<void> {
   })
 
   // Fallback: flush every 3 minutes so data isn't lost on crash or hard close.
-  setInterval(() => { void flushStorage() }, FLUSH_INTERVAL_MS)
+  storageFlushInterval = setInterval(() => { void flushStorage() }, FLUSH_INTERVAL_MS)
 
   await startReplacementPipeline()
 }
 
-main()
+main().catch((err) => {
+  if (isExtensionContextInvalidatedError(err)) {
+    shutdownInvalidatedContext(true)
+    return
+  }
+  console.warn('[Contexto] Startup failed, extension inactive:', err)
+  deactivateReplacementPipeline(true)
+})

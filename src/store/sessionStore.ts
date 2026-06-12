@@ -13,9 +13,13 @@ interface Session {
 
 let session: Session = makeSession()
 
+function getCurrentPageUrl(): string {
+  return typeof window === 'undefined' ? '' : window.location.href
+}
+
 function makeSession(): Session {
   return {
-    pageUrl: window.location.href,
+    pageUrl: getCurrentPageUrl(),
     startedAt: Date.now(),
     wordsSeen: [],
     revealCount: 0,

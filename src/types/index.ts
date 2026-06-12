@@ -109,7 +109,9 @@ export interface LexiconEntry {
   srsRepetitions: number;      // SM-2 consecutive correct repetitions (determines interval schedule)
   recallHistory: boolean[];    // quiz outcomes, most recent last (capped at last 10 for graduation check)
   lifecycleState: WordLifecycleState;
-  selfMarkedKnown: boolean;    // user explicitly marked this word as known
+  selfMarkedKnown: boolean;    // legacy/user-known removal flag
+  selfMarkedUnknown: boolean;  // user explicitly saved this word for review/export
+  selfMarkedUnknownAt: number; // Unix timestamp ms; 0 if not saved as unknown
 }
 
 // ---------- Session store ----------

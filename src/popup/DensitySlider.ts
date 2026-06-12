@@ -3,6 +3,8 @@
 const MIN_DENSITY = 0.00  // 0%
 const MAX_DENSITY = 1.00  // 100%
 const STORAGE_WRITE_THROTTLE_MS = 150
+const DENSITY_TOOLTIP =
+  'Not every word can be replaced: some words change meaning in context, and the current language-pack dictionary is intentionally limited.'
 
 // Density is stored as a 0–1 fraction; display as percentage (e.g. 0.20 → "20%").
 function toPercent(density: number): string {
@@ -80,8 +82,27 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   section.className = 'section'
 
   const title = document.createElement('div')
-  title.className = 'section-title'
-  title.textContent = 'Eligible Word Density'
+  title.className = 'section-title section-title-with-info'
+
+  const titleText = document.createElement('span')
+  titleText.textContent = 'Eligible Word Density'
+
+  const infoIcon = document.createElement('button')
+  infoIcon.type = 'button'
+  infoIcon.className = 'info-icon'
+  infoIcon.setAttribute('aria-label', 'Why every word may not be replaced')
+  infoIcon.setAttribute('aria-describedby', 'density-tooltip')
+  infoIcon.textContent = 'i'
+
+  const tooltip = document.createElement('span')
+  tooltip.id = 'density-tooltip'
+  tooltip.className = 'info-tooltip'
+  tooltip.setAttribute('role', 'tooltip')
+  tooltip.textContent = DENSITY_TOOLTIP
+
+  infoIcon.appendChild(tooltip)
+  title.appendChild(titleText)
+  title.appendChild(infoIcon)
   section.appendChild(title)
 
   const sliderRow = document.createElement('div')

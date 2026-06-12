@@ -68,8 +68,9 @@ function srsOverdueScore(entry: LexiconEntry): number {
 
 // Score a single candidate token using the weighted formula:
 //   score = α×freqScore + β×noveltyScore + γ×srsScore
-// Returns 0 for tokens whose dictionary entry is missing or whose
+// Returns 0 for tokens whose dictionary entry is missing or whose legacy
 // selfMarkedKnown flag is set (they must never appear in the output).
+// selfMarkedUnknown is deliberately not excluded — it is a review/export mark.
 // Graduated words are scaled down to GRADUATED_MAINTENANCE_RATE of their
 // computed score so they appear only occasionally as passive maintenance.
 function scoreToken(token: CandidateToken): number {

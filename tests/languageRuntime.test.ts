@@ -6,6 +6,7 @@ import { scanExpressions } from '../src/content/expressionScanner.js'
 import { formatTooltipText } from '../src/content/hoverHandler.js'
 import { loadLanguagePack, lookup } from '../src/language/loader.js'
 import { selectTokens } from '../src/engine/wordSelector.js'
+import { selectNonOverlappingReplacementRanges } from '../src/content/injector.js'
 import type { CandidateToken } from '../src/types/index.js'
 
 const root = pathToFileURL(process.cwd() + '/public/').href
@@ -72,11 +73,31 @@ test('selector honors the eligible-word density cap', async () => {
   assert.equal(selectTokens(candidates, 2).length, 2)
 })
 
+test('replacement range selection prefers noun phrase replacement over article fragments', () => {
+  const selected = selectNonOverlappingReplacementRanges([
+    { id: 'an', start: 0, end: 2 },
+    { id: 'opportunity', start: 0, end: 14 },
+    { id: 'next', start: 15, end: 19 },
+  ])
+
+  assert.deepEqual(selected.map((range) => range.id), ['opportunity', 'next'])
+})
+
+test('replacement range selection keeps expression priority over article-consuming nouns', () => {
+  const selected = selectNonOverlappingReplacementRanges([
+    { id: 'noun-with-article', start: 0, end: 12, priority: 1 },
+    { id: 'expression', start: 4, end: 24, priority: 2 },
+  ])
+
+  assert.deepEqual(selected.map((range) => range.id), ['expression'])
+})
+
 test('tooltip text includes source, gloss, and Spanish target', () => {
   const text = formatTooltipText('the dog', 'dog', 'el perro', 'a domesticated animal')
   assert.match(text, /the dog/)
   assert.match(text, /a domesticated animal/)
   assert.match(text, /Spanish: el perro/)
+  assert.match(text, /Click to save as unknown/)
 })
 
 test('expanded runtime loads non-noun imported entries', async () => {
@@ -95,6 +116,19 @@ test('runtime does not load prefix or suffix marker targets', async () => {
 
   assert.equal(lookup('to'), null)
   assert.equal(lookup('apian'), null)
+})
+
+test('candidate extraction skips standalone determiners', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const { extractPageCandidates } = await import('../src/content/injector.js')
+  const candidates = extractPageCandidates([
+    { nodeValue: 'The company and they agreed to funding.' } as Text,
+  ])
+  const lemmas = new Set(candidates.map((candidate) => candidate.lemma))
+
+  assert.equal(lemmas.has('the'), false)
+  assert.equal(lemmas.has('company'), true)
 })
 
 test('duplicate imported headwords keep noun sense for plural noun contexts', async () => {
