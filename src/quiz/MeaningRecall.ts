@@ -52,8 +52,18 @@ function buildOptions(correctLemma: string): string[] {
     distractors = [...distractors, ...fallback]
   }
 
-  // Shuffle all four options so the correct answer isn't always in the same slot.
-  const options = [correctLemma, ...distractors]
+  // Dedupe so the same string can't appear in two option slots (which would
+  // otherwise let a distractor equal the correct answer and double-mark).
+  const uniqueOptions: string[] = []
+  const optionSeen = new Set<string>()
+  for (const option of [correctLemma, ...distractors]) {
+    if (optionSeen.has(option)) continue
+    optionSeen.add(option)
+    uniqueOptions.push(option)
+  }
+
+  // Shuffle all options so the correct answer isn't always in the same slot.
+  const options = uniqueOptions
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[options[i], options[j]] = [options[j], options[i]]
@@ -68,14 +78,14 @@ function buildOptions(correctLemma: string): string[] {
 const STYLES = {
   prompt: `
     font-size: 13px;
-    color: #888;
+    color: #475569;
     margin-bottom: 6px;
     font-family: system-ui, sans-serif;
   `,
   targetWord: `
     font-size: 22px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1b2733;
     margin-bottom: 16px;
     font-family: system-ui, sans-serif;
   `,
@@ -86,25 +96,25 @@ const STYLES = {
   `,
   optionBase: `
     padding: 8px 12px;
-    border: 1.5px solid #d1d5db;
+    border: 1px solid #dce3ea;
     border-radius: 6px;
     background: #fff;
     cursor: pointer;
     font-size: 14px;
     font-family: system-ui, sans-serif;
-    color: #1a1a1a;
+    color: #1b2733;
     text-align: left;
     transition: background 0.15s, border-color 0.15s;
   `,
   correct: `
-    background: #dcfce7 !important;
-    border-color: #16a34a !important;
-    color: #15803d !important;
+    background: #e8f1ea !important;
+    border-color: #3f7d55 !important;
+    color: #2f5d40 !important;
   `,
   incorrect: `
-    background: #fee2e2 !important;
-    border-color: #dc2626 !important;
-    color: #b91c1c !important;
+    background: #f6e7e5 !important;
+    border-color: #a8443a !important;
+    color: #7e3128 !important;
   `,
   muted: `
     opacity: 0.45;
@@ -143,19 +153,26 @@ export function renderMeaningRecall(
   const grid = document.createElement('div')
   grid.style.cssText = STYLES.grid
 
+  // The exact button element that represents the correct answer. Captured by
+  // identity (not text) so feedback marks only one button even if two options
+  // happen to share a string.
+  let correctBtn: HTMLButtonElement | null = null
+
   const buttons: HTMLButtonElement[] = options.map(lemma => {
     const btn = document.createElement('button')
     btn.style.cssText = STYLES.optionBase
     btn.textContent = lemma
+    if (lemma === englishLemma) correctBtn = btn
     btn.addEventListener('click', () => {
       if (answered) return
       answered = true
 
-      const correct = lemma === englishLemma
+      const correct = btn === correctBtn
 
-      // Apply feedback colours to all buttons.
+      // Apply feedback colours to all buttons, locating the correct one by
+      // reference so a duplicate string can't get marked too.
       buttons.forEach(b => {
-        if (b.textContent === englishLemma) {
+        if (b === correctBtn) {
           b.style.cssText = STYLES.optionBase + STYLES.correct
         } else if (b === btn && !correct) {
           b.style.cssText = STYLES.optionBase + STYLES.incorrect

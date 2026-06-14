@@ -28,7 +28,7 @@ function buildOverlay(onDone: () => void): HTMLDivElement {
     'position: fixed',
     'inset: 0',
     'z-index: 2147483646',
-    'background: rgba(0,0,0,0.55)',
+    'background: rgba(20,28,38,0.55)',
     'display: flex',
     'align-items: center',
     'justify-content: center',
@@ -42,23 +42,24 @@ function buildOverlay(onDone: () => void): HTMLDivElement {
     'padding: 32px 36px',
     'max-width: 440px',
     'width: 90%',
-    'box-shadow: 0 8px 32px rgba(0,0,0,0.25)',
+    'box-shadow: 0 6px 24px rgba(27,39,51,0.16)',
+    'border: 1px solid #dce3ea',
     'text-align: center',
   ].join('; '))
 
   const title = document.createElement('h2')
   title.textContent = 'Welcome to Contexto'
-  title.setAttribute('style', 'margin: 0 0 8px; font-size: 1.4rem; color: #1a1a2e;')
+  title.setAttribute('style', 'margin: 0 0 8px; font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; color: #1b2733;')
 
   const subtitle = document.createElement('p')
   subtitle.textContent = 'Choose your starting level. Contexto will replace English words with Spanish as you browse.'
-  subtitle.setAttribute('style', 'margin: 0 0 24px; font-size: 0.95rem; color: #555; line-height: 1.5;')
+  subtitle.setAttribute('style', 'margin: 0 0 24px; font-size: 0.95rem; color: #475569; line-height: 1.5;')
 
   const levels: OnboardingLevel[] = ['beginner', 'intermediate', 'advanced']
   const levelLabels: Record<OnboardingLevel, string> = {
     beginner:     'Beginner — ~300 common words',
-    intermediate: 'Intermediate — ~1 500 words',
-    advanced:     'Advanced — ~3 000 words',
+    intermediate: 'Intermediate — ~1,500 words',
+    advanced:     'Advanced — ~3,000 words',
   }
 
   const buttonGroup = document.createElement('div')
@@ -67,23 +68,29 @@ function buildOverlay(onDone: () => void): HTMLDivElement {
   for (const level of levels) {
     const density = Math.round(getLevelDensity(level) * 100)
     const btn = document.createElement('button')
-    btn.textContent = `${levelLabels[level]}  (${density}% replacement density)`
+    btn.textContent = `${levelLabels[level]}  `
+    const suffix = document.createElement('span')
+    suffix.textContent = `(starts at ${density}% of words replaced)`
+    suffix.setAttribute('style', 'color: #8a98a8;')
+    btn.appendChild(suffix)
     btn.setAttribute('style', [
       'padding: 12px 16px',
-      'border: 2px solid #7a9cc8',
+      'border: 1px solid #dce3ea',
       'border-radius: 8px',
-      'background: #f4f8ff',
-      'color: #1a1a2e',
+      'background: #fff',
+      'color: #1b2733',
       'font-size: 0.95rem',
       'cursor: pointer',
-      'transition: background 0.15s',
+      'transition: background 0.15s, border-color 0.15s',
     ].join('; '))
 
     btn.addEventListener('mouseenter', () => {
-      btn.style.background = '#ddeeff'
+      btn.style.background = '#f4f6f9'
+      btn.style.borderColor = '#2f5d80'
     })
     btn.addEventListener('mouseleave', () => {
-      btn.style.background = '#f4f8ff'
+      btn.style.background = '#fff'
+      btn.style.borderColor = '#dce3ea'
     })
 
     btn.addEventListener('click', () => {

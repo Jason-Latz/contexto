@@ -44,7 +44,16 @@ async function init(): Promise<void> {
   await renderUnknownWordsList(root, lexicon, sessionLemmas)
 }
 
-init()
+init().catch((err) => {
+  console.warn('[Contexto] Popup failed to initialise:', err)
+  const root = document.getElementById('root')
+  if (root && !root.querySelector('.section')) {
+    const notice = document.createElement('div')
+    notice.className = 'section'
+    notice.textContent = 'Could not load extension data. Try reopening the popup.'
+    root.appendChild(notice)
+  }
+})
 
 function renderLanguagePanel(container: HTMLElement): void {
   const section = document.createElement('div')

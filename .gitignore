@@ -3,5 +3,7 @@ dist/
 release/
 .test-build/
 pipeline/data/
+__pycache__/
+*.pyc
 .DS_Store
 npm-debug.log*

@@ -131,6 +131,24 @@ test('candidate extraction skips standalone determiners', async () => {
   assert.equal(lemmas.has('company'), true)
 })
 
+test('quality gate shows verified + rare words and hides the common medium band', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const { extractPageCandidates } = await import('../src/content/injector.js')
+  // 'world' = hand-verified (high) common word → shown. 'snack' = rare medium
+  // word → shown (this rare/long-tail vocabulary is the product's value).
+  // 'number' = common medium word, where the import's dominant sense is
+  // unreliable → gated out. (No onboarding level set in tests → no known-word floor.)
+  const candidates = extractPageCandidates([
+    { nodeValue: 'The world offers a healthy snack and a large number of options.' } as Text,
+  ])
+  const lemmas = new Set(candidates.map((candidate) => candidate.lemma))
+
+  assert.equal(lemmas.has('world'), true)
+  assert.equal(lemmas.has('snack'), true)
+  assert.equal(lemmas.has('number'), false)
+})
+
 test('duplicate imported headwords keep noun sense for plural noun contexts', async () => {
   await loadLanguagePack('es')
   const number = lookup('number')

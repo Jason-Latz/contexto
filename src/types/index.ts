@@ -24,6 +24,12 @@ interface BaseTranslationEntry {
   frequencyRank: number
   confidence: EntryConfidence
   sourceIds: string[]
+  // Quality/eligibility signals written offline by scripts/qa_language_pack.py.
+  // `eligible`: content part-of-speech and not a polysemy quarantine — may render.
+  // `enZipf`: English-frequency (Zipf 0–8) of the source word; drives the
+  // skip-what-you-know level floor and the common-band quality gate.
+  eligible?: boolean
+  enZipf?: number
 }
 
 export interface NounTranslationEntry extends BaseTranslationEntry {

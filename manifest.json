@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Contexto",
   "version": "0.0.10",
-  "description": "Passive language immersion through in-page word replacement",
+  "description": "Learn Spanish while you read — Contexto swaps select English words for their Spanish equivalents on any page. Fully offline.",
 
   "permissions": [
     "storage"

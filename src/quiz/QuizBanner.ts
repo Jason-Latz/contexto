@@ -193,11 +193,12 @@ const PANEL_STYLE = `
   width: 400px;
   max-width: calc(100vw - 32px);
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  border: 1px solid #dce3ea;
+  box-shadow: 0 6px 24px rgba(27,39,51,0.16);
   padding: 18px 20px 16px;
   pointer-events: auto;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   box-sizing: border-box;
 `
 
@@ -209,10 +210,10 @@ const HEADER_STYLE = `
 `
 
 const LABEL_STYLE = `
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #6b7280;
+  letter-spacing: 0.09em;
+  color: #64748b;
   text-transform: uppercase;
 `
 
@@ -228,9 +229,10 @@ const CLOSE_BTN_STYLE = `
 
 const PROGRESS_STYLE = `
   font-size: 11px;
-  color: #9ca3af;
+  color: #8a98a8;
   text-align: right;
   margin-top: 12px;
+  font-variant-numeric: tabular-nums;
 `
 
 // ---------------------------------------------------------------------------

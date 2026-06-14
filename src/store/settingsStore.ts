@@ -56,10 +56,21 @@ export async function loadSettings(): Promise<void> {
   }
 }
 
-// Persist current in-memory settings to chrome.storage.local.
-// Called after any mutation (onboarding completion, domain decision).
-async function saveSettings(): Promise<void> {
-  await chrome.storage.local.set({ [STORAGE_KEY]: settings })
+// Read the latest persisted settings without disturbing in-memory state.
+async function readStoredSettings(): Promise<Partial<Settings>> {
+  const result = await chrome.storage.local.get(STORAGE_KEY)
+  return (result[STORAGE_KEY] ?? {}) as Partial<Settings>
+}
+
+// Persist a partial patch by merging it onto the LATEST stored settings rather
+// than our (possibly stale) in-memory copy. The content script and the popup
+// both write contexto_settings; writing the whole in-memory object would clobber
+// fields the popup changed since this tab last loaded (last-writer-wins race).
+async function persistSettings(patch: Partial<Settings>): Promise<void> {
+  const stored = await readStoredSettings()
+  const merged: Settings = { ...makeDefaultSettings(), ...stored, ...patch }
+  settings = merged
+  await chrome.storage.local.set({ [STORAGE_KEY]: merged })
 }
 
 export function isOnboarded(): boolean {
@@ -69,14 +80,21 @@ export function isOnboarded(): boolean {
 // Mark onboarding complete for the given level.
 // Sets density to the level default and persists immediately.
 export async function completeOnboarding(level: OnboardingLevel): Promise<void> {
-  settings.onboarded = true
-  settings.level = level
-  settings.density = LEVEL_DENSITY[level]
-  await saveSettings()
+  await persistSettings({
+    onboarded: true,
+    level,
+    density: LEVEL_DENSITY[level],
+  })
 }
 
 export function getDensity(): number {
   return settings.density
+}
+
+// The learner's onboarding level, or null before onboarding. Drives the
+// skip-what-you-know frequency floor in candidate selection.
+export function getLevel(): OnboardingLevel | null {
+  return settings.level
 }
 
 export function areReplacementsEnabled(): boolean {
@@ -91,8 +109,7 @@ export function areQuizzesEnabled(): boolean {
 // Called by QuizBanner (post-quiz adjustment) and the popup DensitySlider
 // (manual override). Value is expected to already be clamped by the caller.
 export async function setDensity(density: number): Promise<void> {
-  settings.density = density
-  await saveSettings()
+  await persistSettings({ density })
 }
 
 // Return the configured density for a specific level, regardless of current state.
@@ -118,15 +135,14 @@ export function isDomainBlocked(hostname: string): boolean {
 export async function addBlockedDomain(hostname: string): Promise<void> {
   const clean = hostname.trim().toLowerCase().replace(/^www\./, '')
   if (!clean) return
-  if (!settings.blockedDomains.includes(clean)) {
-    settings.blockedDomains = [...settings.blockedDomains, clean].sort()
-    await saveSettings()
-  }
+  const current = (await readStoredSettings()).blockedDomains ?? settings.blockedDomains
+  if (current.includes(clean)) return
+  await persistSettings({ blockedDomains: [...current, clean].sort() })
 }
 
 export async function removeBlockedDomain(hostname: string): Promise<void> {
-  settings.blockedDomains = settings.blockedDomains.filter(domain => domain !== hostname)
-  await saveSettings()
+  const current = (await readStoredSettings()).blockedDomains ?? settings.blockedDomains
+  await persistSettings({ blockedDomains: current.filter(domain => domain !== hostname) })
 }
 
 // Return the stored high-stakes banner decision for a hostname, or null if
@@ -140,6 +156,8 @@ export function getDomainDecision(hostname: string): boolean | null {
 // allowed=true: replacements enabled for this domain.
 // allowed=false: replacements paused for this domain.
 export async function setDomainDecision(hostname: string, allowed: boolean): Promise<void> {
-  settings.domainDecisions[hostname] = allowed
-  await saveSettings()
+  const storedDecisions = (await readStoredSettings()).domainDecisions ?? {}
+  await persistSettings({
+    domainDecisions: { ...storedDecisions, [hostname]: allowed },
+  })
 }

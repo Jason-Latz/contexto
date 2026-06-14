@@ -23,7 +23,13 @@ export async function renderUnknownWordsList(
   lexicon: Record<string, LexiconEntry>,
   sessionLemmas: ReadonlySet<string>,
 ): Promise<void> {
-  await loadLanguagePack('es')
+  // The pack is only needed to enrich exports with the Spanish target/gloss; a
+  // load failure must not blank the user's saved-words list or the popup.
+  try {
+    await loadLanguagePack('es')
+  } catch (err) {
+    console.warn('[Contexto] Language pack unavailable in popup; showing saved words without Spanish enrichment:', err)
+  }
 
   const allUnknown = collectUnknownWords(lexicon)
   const sessionUnknown = allUnknown.filter(word => sessionLemmas.has(word.lemma))
@@ -40,10 +46,12 @@ export async function renderUnknownWordsList(
   filterBar.className = 'word-filter'
 
   const allBtn = document.createElement('button')
+  allBtn.type = 'button'
   allBtn.className = 'filter-btn active'
   allBtn.textContent = `All (${allUnknown.length})`
 
   const sessionBtn = document.createElement('button')
+  sessionBtn.type = 'button'
   sessionBtn.className = 'filter-btn'
   sessionBtn.textContent = `This session (${sessionUnknown.length})`
 

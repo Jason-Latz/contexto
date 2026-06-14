@@ -22,6 +22,18 @@ const copyStaticAssetsPlugin = () => ({
       resolve(__dirname, 'dist'),
       { recursive: true },
     )
+    // Ship the license + third-party notices inside the loaded extension and the
+    // release zip (built from dist/). compromise.js is MIT and the bundled
+    // Spanish pack derives from FreeDict (CC-BY-SA 3.0); both require their
+    // notices to accompany the distributed copy.
+    copyFileSync(
+      resolve(__dirname, 'LICENSE'),
+      resolve(__dirname, 'dist/LICENSE'),
+    )
+    copyFileSync(
+      resolve(__dirname, 'THIRD_PARTY_NOTICES.md'),
+      resolve(__dirname, 'dist/THIRD_PARTY_NOTICES.md'),
+    )
   },
 })
 

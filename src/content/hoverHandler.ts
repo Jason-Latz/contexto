@@ -9,7 +9,7 @@ import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
-import { BASE_SPAN_STYLE, UNKNOWN_SPAN_STYLE } from './spanStyles.js'
+import { baseSpanStyle, unknownSpanStyle, spanHoverFill } from './spanStyles.js'
 
 // The data attribute written by injector.ts to identify Contexto-managed spans.
 const CONTEXTO_ATTR = 'data-contexto'
@@ -28,8 +28,25 @@ const UNKNOWN_ATTR = 'data-contexto-unknown'
 // ---------------------------------------------------------------------------
 
 let tooltip: HTMLElement | null = null
+let tipSourceEl: HTMLElement | null = null
+let tipGlossEl: HTMLElement | null = null
+let tipTargetEl: HTMLElement | null = null
+let tipHintEl: HTMLElement | null = null
 let activeSpan: HTMLElement | null = null
 let isHoverHandlerSetup = false
+
+// Brand ink surface (matches the popup tooltip tokens) with a light accent tint
+// for the Spanish line so the dark tooltip echoes the brand without shouting.
+const TIP_ACCENT = '#9ec3e0'   // light slate tint — system replacement
+const TIP_MARK   = '#d8b483'   // warm tan tint — your saved marks
+const TIP_MUTED  = '#aab6c2'
+const TIP_HINT   = '#7f8d9b'
+
+function makeTipLine(style: string): HTMLElement {
+  const el = document.createElement('div')
+  el.setAttribute('style', style)
+  return el
+}
 
 function getOrCreateTooltip(): HTMLElement {
   if (tooltip) return tooltip
@@ -37,21 +54,34 @@ function getOrCreateTooltip(): HTMLElement {
   tooltip = document.createElement('div')
   tooltip.setAttribute('id', 'contexto-tooltip')
   tooltip.setAttribute('data-contexto-ui', 'true')
+  tooltip.setAttribute('role', 'tooltip')
   tooltip.setAttribute('style', [
     'position: absolute',
     'z-index: 2147483647',
-    'padding: 8px 10px',
-    'background: #17202a',
-    'color: #f4f7fa',
-    'font-size: 13px',
-    'font-family: system-ui, -apple-system, sans-serif',
-    'border-radius: 4px',
+    'padding: 9px 11px',
+    'background: #1b2733',
+    'color: #eef2f6',
+    'font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+    'border-radius: 6px',
     'pointer-events: none',
     'max-width: 280px',
-    'box-shadow: 0 2px 8px rgba(0,0,0,0.35)',
+    'box-shadow: 0 6px 24px rgba(0,0,0,0.30)',
     'display: none',
-    'line-height: 1.4',
   ].join('; '))
+
+  // Structured hierarchy: English source (lead) · gloss (muted) · Spanish (accent) · hint (eyebrow).
+  tipSourceEl = makeTipLine('font-size: 13px; font-weight: 600; color: #eef2f6;')
+  tipGlossEl  = makeTipLine('font-size: 12px; color: ' + TIP_MUTED + '; margin-top: 2px;')
+  tipTargetEl = makeTipLine('font-size: 13px; font-weight: 600; margin-top: 6px; color: ' + TIP_ACCENT + ';')
+  tipHintEl   = makeTipLine(
+    'font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: ' + TIP_HINT +
+    '; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08);',
+  )
+
+  tooltip.appendChild(tipSourceEl)
+  tooltip.appendChild(tipGlossEl)
+  tooltip.appendChild(tipTargetEl)
+  tooltip.appendChild(tipHintEl)
 
   document.body.appendChild(tooltip)
   return tooltip
@@ -59,10 +89,26 @@ function getOrCreateTooltip(): HTMLElement {
 
 function positionTooltip(tip: HTMLElement, event: MouseEvent): void {
   const OFFSET = 12
-  const x = event.pageX + OFFSET
-  const y = event.pageY + OFFSET
-  const maxX = window.scrollX + window.innerWidth - tip.offsetWidth - OFFSET
-  tip.style.left = `${Math.min(x, maxX)}px`
+  const w = tip.offsetWidth
+  const h = tip.offsetHeight
+
+  // Horizontal: keep inside the viewport on both edges.
+  const minX = window.scrollX + OFFSET
+  const maxX = window.scrollX + window.innerWidth - w - OFFSET
+  const x = Math.max(minX, Math.min(event.pageX + OFFSET, maxX))
+
+  // Vertical: place below the cursor, but flip above when it would overflow the
+  // bottom of the viewport (constant on long articles), then clamp to be safe.
+  const spaceBelow = window.innerHeight - (event.clientY + OFFSET)
+  let y = event.pageY + OFFSET
+  if (h + OFFSET > spaceBelow && event.clientY > h + OFFSET) {
+    y = event.pageY - h - OFFSET
+  }
+  const minY = window.scrollY + OFFSET
+  const maxY = window.scrollY + window.innerHeight - h - OFFSET
+  y = Math.max(minY, Math.min(y, maxY))
+
+  tip.style.left = `${x}px`
   tip.style.top = `${y}px`
 }
 
@@ -72,11 +118,19 @@ function findContextoSpan(target: EventTarget | null): HTMLElement | null {
   return span instanceof HTMLElement ? span : null
 }
 
+// Clickable host elements whose click must never be swallowed by the unknown-word
+// toggle. A managed span is a plain <span>, so a closest() match is always a
+// genuine interactive ancestor (link, button, menu item, etc.).
+const INTERACTIVE_ANCESTOR_SELECTOR =
+  'a[href], button, summary, label, select, [role="button"], [role="link"], ' +
+  '[role="menuitem"], [role="tab"], [role="option"], [contenteditable], [onclick]'
+
+function isInsideInteractive(span: HTMLElement): boolean {
+  return span.closest(INTERACTIVE_ANCESTOR_SELECTOR) !== null
+}
+
 function applyHoverState(target: HTMLElement): void {
-  const hoverColor = target.getAttribute(UNKNOWN_ATTR) === 'true'
-    ? 'rgba(132, 86, 22, 0.2)'
-    : 'rgba(42, 92, 130, 0.14)'
-  target.style.backgroundColor = hoverColor
+  target.style.backgroundColor = spanHoverFill(target.getAttribute(UNKNOWN_ATTR) === 'true')
 }
 
 function clearHoverState(target: HTMLElement): void {
@@ -91,20 +145,24 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
   }
   activeSpan = target
 
-  if (isUnknown) {
-    const source = target.getAttribute('data-source') ?? ''
-    const lemma = target.getAttribute('data-lemma') ?? source
-    const translated = target.getAttribute('data-target') ?? ''
-    const gloss = target.getAttribute('data-gloss') ?? ''
-    tip.textContent = formatSavedUnknownTooltipText(source, lemma, translated, gloss)
-    tip.style.whiteSpace = 'pre-line'
-  } else {
-    const source = target.getAttribute('data-source') ?? ''
-    const lemma = target.getAttribute('data-lemma') ?? source
-    const translated = target.getAttribute('data-target') ?? ''
-    const gloss = target.getAttribute('data-gloss') ?? ''
-    tip.textContent = formatTooltipText(source, lemma, translated, gloss)
-    tip.style.whiteSpace = 'pre-line'
+  const source = target.getAttribute('data-source') ?? ''
+  const translated = target.getAttribute('data-target') ?? ''
+  const gloss = target.getAttribute('data-gloss') ?? ''
+
+  if (tipSourceEl) tipSourceEl.textContent = source
+  if (tipGlossEl) {
+    tipGlossEl.textContent = gloss
+    tipGlossEl.style.display = gloss ? 'block' : 'none'
+  }
+  if (tipTargetEl) {
+    tipTargetEl.textContent = translated ? `Spanish · ${translated}` : ''
+    tipTargetEl.style.display = translated ? 'block' : 'none'
+    tipTargetEl.style.color = isUnknown ? TIP_MARK : TIP_ACCENT
+  }
+  if (tipHintEl) {
+    tipHintEl.textContent = isUnknown
+      ? 'Saved as unknown · click to remove'
+      : 'Click to save as unknown'
   }
 
   tip.style.display = 'block'
@@ -130,10 +188,10 @@ function applyUnknownStateToLemma(lemma: string, unknown: boolean): void {
 
     if (unknown) {
       span.setAttribute(UNKNOWN_ATTR, 'true')
-      span.setAttribute('style', UNKNOWN_SPAN_STYLE)
+      span.setAttribute('style', unknownSpanStyle())
     } else {
       span.removeAttribute(UNKNOWN_ATTR)
-      span.setAttribute('style', BASE_SPAN_STYLE)
+      span.setAttribute('style', baseSpanStyle())
     }
   }
 }
@@ -225,6 +283,14 @@ export function setupHoverHandler(): void {
       hideTooltip()
       return
     }
+    // If the replaced word sits inside a link, button, or other interactive
+    // element, let the host handle the click — swallowing it would break the
+    // page's navigation. The word stays revealable on hover; save-as-unknown is
+    // only offered for words in ordinary, non-interactive text.
+    if (isInsideInteractive(target)) {
+      hideTooltip()
+      return
+    }
     event.preventDefault()
     event.stopPropagation()
     handleSpanClick(target)
@@ -249,20 +315,25 @@ export function getSessionUnknownMarkCount(): number {
   return sessionUnknownMarkCount
 }
 
+// Plain-text representation of the tooltip contents. The on-screen tooltip is
+// built as structured DOM (see showTooltip); these helpers produce the same
+// information as a single string for tests and assistive/plain-text contexts.
+// `lemma` is accepted for signature stability but no longer shown — the source
+// surface form already conveys the word, so the duplicated "(lemma)" was dropped.
 export function formatTooltipText(
   source: string,
-  lemma: string,
+  _lemma: string,
   translated: string,
   gloss: string,
 ): string {
-  return `${source} (${lemma})\n${gloss}\nSpanish: ${translated}\nClick to save as unknown`
+  return `${source}\n${gloss}\nSpanish: ${translated}\nClick to save as unknown`
 }
 
 export function formatSavedUnknownTooltipText(
   source: string,
-  lemma: string,
+  _lemma: string,
   translated: string,
   gloss: string,
 ): string {
-  return `${source} (${lemma})\n${gloss}\nSpanish: ${translated}\nSaved as unknown - click to remove`
+  return `${source}\n${gloss}\nSpanish: ${translated}\nSaved as unknown · click to remove`
 }

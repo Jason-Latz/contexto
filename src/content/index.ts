@@ -15,7 +15,7 @@ import { computeDensity } from '../engine/proficiencyModel.js'
 import { selectTokens } from '../engine/wordSelector.js'
 import { showLevelPicker } from '../onboarding/LevelPicker.js'
 import { startQuizTimer, stopQuizTimer } from '../quiz/QuizBanner.js'
-import { setupMutationObserver } from './mutationObserver.js'
+import { setupMutationObserver, type MutationObserverHandle } from './mutationObserver.js'
 import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
@@ -36,9 +36,10 @@ interface RuntimeSettings {
   density?: number
   replacementsEnabled?: boolean
   quizzesEnabled?: boolean
+  blockedDomains?: string[]
 }
 
-let mutationObserver: MutationObserver | null = null
+let mutationObserver: MutationObserverHandle | null = null
 let isReplacementPipelineActive = false
 let isReplacementPipelineRunning = false
 let pendingReplacementRefresh = false
@@ -181,7 +182,7 @@ async function renderReplacementPass(
   // the first node where it happened to beat the per-node density cap.
   const pageCandidates = extractPageCandidates(textNodes)
   lastEligibleCount = pageCandidates.length
-  const density = computeDensity(pageCandidates.length)
+  const density = computeDensity()
   const maxReplacements = Math.floor(density * pageCandidates.length)
   const rankedLemmas = updateRankedPageLemmas(pageCandidates)
   const approvedLemmas = new Set(rankedLemmas.slice(0, maxReplacements))
@@ -341,6 +342,9 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
   const densityChanged =
     typeof settings.density === 'number' &&
     settings.density !== previousSettings.density
+  const blockedDomainsChanged =
+    JSON.stringify(settings.blockedDomains ?? []) !==
+    JSON.stringify(previousSettings.blockedDomains ?? [])
 
   if (!replacementsEnabled) {
     stopReplacementPipeline()
@@ -352,7 +356,10 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
     return
   }
 
-  if (densityChanged) {
+  // A blocked/unblocked domain must take effect on the open tab immediately, the
+  // same way a density change does — the refresh re-runs the domain check, so a
+  // newly blocked current page is cleared and an unblocked one is re-rendered.
+  if (densityChanged || blockedDomainsChanged) {
     requestReplacementRefresh()
   }
 

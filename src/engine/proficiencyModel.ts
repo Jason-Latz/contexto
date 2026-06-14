@@ -27,31 +27,15 @@ const MAX_DENSITY_DELTA = 0.02
 const MIN_DENSITY = 0.00
 const MAX_DENSITY = 1.00
 
-// Compute the density to use for the current page.
+// Density to use for the current page: the user's stored value, unchanged.
 //
-// `eligibleCount` — total number of candidate tokens that could be replaced
-//   (after dictionary lookup, before density cap is applied).
-//
-// For Phase 2, this simply returns the stored density unchanged. The proficiency
-// model's adjustment logic fires at session end (Phase 3 wires quiz accuracy).
-// The reveal-rate brake is enforced here to prevent density from being increased
-// when the current session is already too dense.
-export function computeDensity(eligibleCount: number): number {
-  // Not enough data yet — return stored density as-is.
-  if (eligibleCount < MIN_OBSERVATION_WINDOW) {
-    return getDensity()
-  }
-
-  const currentDensity = getDensity()
-  const revealRate = getRevealCount() / eligibleCount
-
-  // Safety brake: if the reveal rate already exceeds the ceiling, cap density
-  // at the current stored value (do not allow it to grow further this session).
-  if (revealRate > MAX_REVEAL_RATE) {
-    return currentDensity
-  }
-
-  return currentDensity
+// Density is only ever moved by an explicit action — the popup slider or the
+// post-quiz adjustment in adjustDensityAfterQuiz (where the reveal-rate brake
+// actually applies). Page render itself never changes density, so this is a thin
+// accessor. (It previously branched on a reveal-rate check whose every path
+// returned the same value — dead code that has been removed.)
+export function computeDensity(): number {
+  return getDensity()
 }
 
 // Clamp a density value to the permitted range.

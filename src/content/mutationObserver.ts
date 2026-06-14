@@ -8,62 +8,12 @@ const CONTEXTO_ATTR = 'data-contexto'
 // bursts (virtual scroll recycling, SPA route transitions) into a single pass.
 const DEBOUNCE_MS = 500
 
-// Guard flag: prevents the observer's own DOM writes (span insertion) from
-// triggering a re-entrant processing cycle.
-let isInjecting = false
-
-let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-// Queued subtree roots collected during the debounce window.
-// Processing the root of each added subtree (not individual text nodes) lets
-// us batch-walk the full subtree once rather than walking each added node separately.
-const pendingRoots = new Set<Element>()
-
-// Whether any characterData mutations arrived during the debounce window.
-// These are rare (virtual scroll recyclers that reuse DOM nodes with fresh text)
-// and are handled by re-walking the parent element.
-const pendingCharacterDataParents = new Set<Element>()
-
-function scheduleFlush(approvedLemmas: ReadonlySet<string>): void {
-  if (debounceTimer !== null) clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    debounceTimer = null
-    flush(approvedLemmas)
-  }, DEBOUNCE_MS)
-}
-
-function flush(approvedLemmas: ReadonlySet<string>): void {
-  if (isInjecting) return
-  isInjecting = true
-
-  try {
-    // Process childList roots first — these are new subtrees added to the DOM.
-    for (const root of pendingRoots) {
-      // Skip if this root was removed before the debounce fired (e.g. a transient
-      // loading spinner that appeared and disappeared within the debounce window).
-      if (!document.contains(root)) continue
-
-      const nodes = collectTextNodesSync(root)
-      for (const node of nodes) {
-        injectReplacements(node, approvedLemmas)
-      }
-    }
-    pendingRoots.clear()
-
-    // Process characterData parents — text content of an existing node changed.
-    // Only arrives when the parent carries data-contexto (a Contexto-managed span whose
-    // text was recycled). Re-inject so the replacement stays active after recycling.
-    for (const parent of pendingCharacterDataParents) {
-      if (!document.contains(parent)) continue
-      const nodes = collectTextNodesSync(parent)
-      for (const node of nodes) {
-        injectReplacements(node, approvedLemmas)
-      }
-    }
-    pendingCharacterDataParents.clear()
-  } finally {
-    isInjecting = false
-  }
+// A teardown handle. disconnect() must FULLY stop the observer: detach it AND
+// cancel any pending debounced flush, otherwise a stale flush fires ~500 ms after
+// teardown and re-injects the previous approvedLemmas onto a DOM that was just
+// restored for a live density change.
+export interface MutationObserverHandle {
+  disconnect(): void
 }
 
 /**
@@ -71,13 +21,76 @@ function flush(approvedLemmas: ReadonlySet<string>): void {
  * newly added subtrees. Call this once from index.ts after the initial injection
  * pass has completed and approvedLemmas is settled for the page.
  *
+ * All mutable state lives in this closure (not module scope) so each pipeline run
+ * gets an isolated observer; tearing one down can never leak a pending flush into
+ * the next run.
+ *
  * The observer is SPA-safe:
  *   - 500 ms debounce absorbs rapid bursts (route transitions, infinite scroll)
  *   - isInjecting guard prevents re-entrant cycles from span insertions
  *   - characterData processing is gated on the parent carrying data-contexto,
  *     so routine text edits on the page are never processed
  */
-export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): MutationObserver {
+export function setupMutationObserver(
+  approvedLemmas: ReadonlySet<string>,
+): MutationObserverHandle {
+  // Guard flag: prevents the observer's own DOM writes (span insertion) from
+  // triggering a re-entrant processing cycle.
+  let isInjecting = false
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+  // Queued subtree roots collected during the debounce window. Processing the
+  // root of each added subtree (not individual text nodes) lets us batch-walk the
+  // full subtree once rather than walking each added node separately.
+  const pendingRoots = new Set<Element>()
+
+  // Whether any characterData mutations arrived during the debounce window.
+  // These are rare (virtual scroll recyclers that reuse DOM nodes with fresh text)
+  // and are handled by re-walking the parent element.
+  const pendingCharacterDataParents = new Set<Element>()
+
+  function scheduleFlush(): void {
+    if (debounceTimer !== null) clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+      debounceTimer = null
+      flush()
+    }, DEBOUNCE_MS)
+  }
+
+  function flush(): void {
+    if (isInjecting) return
+    isInjecting = true
+
+    try {
+      // Process childList roots first — these are new subtrees added to the DOM.
+      for (const root of pendingRoots) {
+        // Skip if this root was removed before the debounce fired (e.g. a transient
+        // loading spinner that appeared and disappeared within the debounce window).
+        if (!document.contains(root)) continue
+
+        const nodes = collectTextNodesSync(root)
+        for (const node of nodes) {
+          injectReplacements(node, approvedLemmas)
+        }
+      }
+      pendingRoots.clear()
+
+      // Process characterData parents — text content of an existing node changed.
+      // Only arrives when the parent carries data-contexto (a Contexto-managed span
+      // whose text was recycled). Re-inject so the replacement stays active.
+      for (const parent of pendingCharacterDataParents) {
+        if (!document.contains(parent)) continue
+        const nodes = collectTextNodesSync(parent)
+        for (const node of nodes) {
+          injectReplacements(node, approvedLemmas)
+        }
+      }
+      pendingCharacterDataParents.clear()
+    } finally {
+      isInjecting = false
+    }
+  }
+
   const observer = new MutationObserver((mutations) => {
     // Drop mutations that originated from our own injection pass.
     if (isInjecting) return
@@ -110,7 +123,7 @@ export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): Muta
       }
     }
 
-    if (hasWork) scheduleFlush(approvedLemmas)
+    if (hasWork) scheduleFlush()
   })
 
   observer.observe(document.body, {
@@ -119,5 +132,15 @@ export function setupMutationObserver(approvedLemmas: ReadonlySet<string>): Muta
     characterData: true,
   })
 
-  return observer
+  return {
+    disconnect(): void {
+      observer.disconnect()
+      if (debounceTimer !== null) {
+        clearTimeout(debounceTimer)
+        debounceTimer = null
+      }
+      pendingRoots.clear()
+      pendingCharacterDataParents.clear()
+    },
+  }
 }

@@ -5,38 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contexto</title>
   <style>
+    /* ---------------------------------------------------------------------
+       Contexto design tokens — one academic-minimalist system.
+       slate accent = system replacement · warm tan = your own marks.
+    --------------------------------------------------------------------- */
+    :root {
+      --ctx-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --ctx-font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+
+      --ctx-ink: #1b2733;
+      --ctx-ink-2: #475569;
+      --ctx-ink-3: #8a98a8;
+      --ctx-eyebrow: #64748b;
+
+      --ctx-accent: #2f5d80;
+      --ctx-accent-strong: #244b69;
+      --ctx-accent-wash: rgba(47, 93, 128, 0.07);
+      --ctx-accent-wash-hover: rgba(47, 93, 128, 0.14);
+      --ctx-accent-line: rgba(47, 93, 128, 0.55);
+
+      --ctx-mark-chip-bg: #f8f2e8;
+      --ctx-mark-chip-border: #ead9bd;
+      --ctx-mark-chip-ink: #5a3a10;
+
+      --ctx-surface: #ffffff;
+      --ctx-canvas: #f4f6f9;
+      --ctx-canvas-2: #f7f9fb;
+      --ctx-border: #dce3ea;
+      --ctx-border-strong: #c3cdd7;
+
+      --ctx-shadow-card: 0 1px 2px rgba(27, 39, 51, 0.06), 0 1px 1px rgba(27, 39, 51, 0.04);
+      --ctx-shadow-pop: 0 6px 24px rgba(27, 39, 51, 0.16);
+
+      --ctx-radius: 9px;
+      --ctx-radius-sm: 6px;
+      --ctx-radius-pill: 999px;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      width: 320px;
+      width: 340px;
       min-height: 200px;
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 14px;
-      color: #1a2533;
-      background: #f5f7fa;
+      font-family: var(--ctx-font);
+      font-size: 13px;
+      color: var(--ctx-ink);
+      background: var(--ctx-canvas);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Brand header --- */
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 16px 0;
+    }
+
+    /* Inverted eñe — matches the toolbar icon: paper tile, slate ring + glyph. */
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #f6f2ea;
+      border: 1.5px solid var(--ctx-accent);
+      color: var(--ctx-accent);
+      font-family: var(--ctx-font-display);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      flex: none;
+      box-shadow: var(--ctx-shadow-card);
+    }
+    .brand-mark span { transform: translateY(-0.5px); }
+
+    .brand-text { display: flex; flex-direction: column; gap: 1px; }
+    .brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--ctx-ink);
+      line-height: 1.1;
+    }
+    .brand-tagline {
+      font-size: 11px;
+      color: var(--ctx-ink-3);
+      letter-spacing: 0.01em;
     }
 
     #root {
-      padding: 16px;
+      padding: 14px 16px 8px;
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
     .section {
-      background: #fff;
-      border-radius: 10px;
+      background: var(--ctx-surface);
+      border: 1px solid var(--ctx-border);
+      border-radius: var(--ctx-radius);
       padding: 14px 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      box-shadow: var(--ctx-shadow-card);
     }
 
     .section-title {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      color: #6b7280;
-      margin-bottom: 10px;
+      color: var(--ctx-eyebrow);
+      margin-bottom: 11px;
     }
 
     .section-title-with-info {
@@ -50,16 +131,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 16px;
-      height: 16px;
-      border: 1px solid #94a3b8;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--ctx-border-strong);
       border-radius: 50%;
       padding: 0;
-      background: #fff;
-      color: #64748b;
+      background: var(--ctx-surface);
+      color: var(--ctx-ink-3);
       cursor: help;
       font: inherit;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       line-height: 1;
       text-transform: none;
@@ -68,23 +149,24 @@
 
     .info-tooltip {
       position: absolute;
-      left: 50%;
+      right: -6px;
+      left: auto;
       bottom: calc(100% + 8px);
       z-index: 10;
-      width: 230px;
-      padding: 8px 10px;
-      border: 1px solid #d8e2ea;
-      border-radius: 6px;
-      background: #fff;
-      box-shadow: 0 4px 14px rgba(15,23,42,0.16);
-      color: #263746;
+      width: 232px;
+      padding: 9px 11px;
+      border: 1px solid var(--ctx-border);
+      border-radius: var(--ctx-radius-sm);
+      background: var(--ctx-surface);
+      box-shadow: var(--ctx-shadow-pop);
+      color: var(--ctx-ink-2);
       font-size: 12px;
-      font-weight: 500;
-      line-height: 1.35;
+      font-weight: 400;
+      line-height: 1.4;
       letter-spacing: 0;
       text-align: left;
       text-transform: none;
-      transform: translateX(-50%) translateY(2px);
+      transform: translateY(2px);
       opacity: 0;
       pointer-events: none;
       transition: opacity 120ms ease, transform 120ms ease;
@@ -93,7 +175,7 @@
     .info-icon:hover .info-tooltip,
     .info-icon:focus-visible .info-tooltip {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
     }
 
     .stat-row {
@@ -101,12 +183,13 @@
       justify-content: space-between;
       align-items: center;
       padding: 3px 0;
-      color: #374151;
+      color: var(--ctx-ink-2);
     }
 
     .stat-value {
       font-weight: 600;
-      color: #1a2533;
+      color: var(--ctx-ink);
+      font-variant-numeric: tabular-nums;
     }
 
     .slider-row {
@@ -117,7 +200,7 @@
 
     input[type="range"] {
       flex: 1;
-      accent-color: #3a7bd5;
+      accent-color: var(--ctx-accent);
       height: 4px;
       cursor: pointer;
     }
@@ -125,9 +208,10 @@
     .slider-label {
       font-size: 13px;
       font-weight: 600;
-      min-width: 32px;
+      min-width: 34px;
       text-align: right;
-      color: #3a7bd5;
+      color: var(--ctx-accent);
+      font-variant-numeric: tabular-nums;
     }
 
     .toggle-list {
@@ -145,25 +229,28 @@
 
     .toggle-label {
       font-weight: 600;
-      color: #263746;
+      color: var(--ctx-ink);
     }
 
     .toggle-button {
       min-width: 48px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border: 1px solid var(--ctx-border);
+      border-radius: var(--ctx-radius-sm);
       padding: 5px 10px;
-      background: #f8fafc;
-      color: #475569;
+      background: var(--ctx-canvas-2);
+      color: var(--ctx-ink-2);
       cursor: pointer;
       font: inherit;
       font-size: 12px;
       font-weight: 700;
+      transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
     }
 
+    .toggle-button:hover:not(.is-on) { border-color: var(--ctx-border-strong); }
+
     .toggle-button.is-on {
-      border-color: #2a5c82;
-      background: #2a5c82;
+      border-color: var(--ctx-accent);
+      background: var(--ctx-accent);
       color: #fff;
     }
 
@@ -174,18 +261,21 @@
     }
 
     .filter-btn {
-      padding: 3px 10px;
-      border-radius: 12px;
-      border: 1px solid #d1d5db;
-      background: #fff;
+      padding: 3px 11px;
+      border-radius: var(--ctx-radius-pill);
+      border: 1px solid var(--ctx-border);
+      background: var(--ctx-surface);
       font-size: 12px;
       cursor: pointer;
-      color: #4b5563;
+      color: var(--ctx-ink-2);
+      transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
     }
 
+    .filter-btn:hover { border-color: var(--ctx-border-strong); }
+
     .filter-btn.active {
-      background: #3a7bd5;
-      border-color: #3a7bd5;
+      background: var(--ctx-accent);
+      border-color: var(--ctx-accent);
       color: #fff;
     }
 
@@ -196,16 +286,19 @@
     }
 
     .export-button {
-      border: 1px solid #c8d3df;
-      border-radius: 6px;
+      border: 1px solid var(--ctx-border);
+      border-radius: var(--ctx-radius-sm);
       padding: 5px 9px;
-      background: #f8fafc;
-      color: #263746;
+      background: var(--ctx-canvas-2);
+      color: var(--ctx-ink);
       cursor: pointer;
       font: inherit;
       font-size: 12px;
       font-weight: 600;
+      transition: background 120ms ease, border-color 120ms ease;
     }
+
+    .export-button:hover:not(:disabled) { border-color: var(--ctx-border-strong); }
 
     .export-button:disabled {
       cursor: default;
@@ -222,16 +315,16 @@
 
     .word-chip {
       padding: 2px 10px;
-      border-radius: 10px;
-      background: #f8f2e8;
+      border-radius: var(--ctx-radius-pill);
+      background: var(--ctx-mark-chip-bg);
       font-size: 12px;
-      color: #4f3210;
-      border: 1px solid #ead9bd;
+      color: var(--ctx-mark-chip-ink);
+      border: 1px solid var(--ctx-mark-chip-border);
     }
 
     .empty-msg {
       font-size: 12px;
-      color: #9ca3af;
+      color: var(--ctx-ink-3);
       font-style: italic;
     }
 
@@ -244,23 +337,35 @@
     .domain-input {
       flex: 1;
       min-width: 0;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
+      border: 1px solid var(--ctx-border);
+      border-radius: var(--ctx-radius-sm);
       padding: 7px 9px;
       font: inherit;
-      color: #1a2533;
-      background: #fff;
+      color: var(--ctx-ink);
+      background: var(--ctx-surface);
+    }
+
+    .domain-input:focus {
+      border-color: var(--ctx-accent);
+      outline: none;
     }
 
     .domain-button {
-      border: 1px solid #2a5c82;
-      border-radius: 6px;
-      padding: 7px 10px;
-      background: #2a5c82;
+      border: 1px solid var(--ctx-accent);
+      border-radius: var(--ctx-radius-sm);
+      padding: 7px 12px;
+      background: var(--ctx-accent);
       color: #fff;
       cursor: pointer;
       font: inherit;
       font-size: 12px;
+      font-weight: 600;
+      transition: background 120ms ease, border-color 120ms ease;
+    }
+
+    .domain-button:hover {
+      background: var(--ctx-accent-strong);
+      border-color: var(--ctx-accent-strong);
     }
 
     .domain-list {
@@ -271,17 +376,82 @@
 
     .domain-chip {
       padding: 2px 9px;
-      border-radius: 10px;
-      background: #eef3f7;
+      border-radius: var(--ctx-radius-pill);
+      background: var(--ctx-canvas-2);
       font-size: 12px;
-      color: #263746;
-      border: 1px solid #d8e2ea;
+      color: var(--ctx-ink-2);
+      border: 1px solid var(--ctx-border);
       cursor: pointer;
+      transition: border-color 120ms ease, color 120ms ease;
+    }
+
+    .domain-chip:hover { border-color: var(--ctx-border-strong); color: var(--ctx-ink); }
+
+    .domain-hint {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--ctx-ink-3);
+      line-height: 1.4;
+    }
+
+    /* --- Colophon / credit footer --- */
+    .ctx-credit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 0 14px;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: var(--ctx-ink-3);
+    }
+    .ctx-credit > span:first-child {
+      font-weight: 600;
+      color: var(--ctx-ink-2);
+      letter-spacing: 0.04em;
+    }
+    .ctx-credit-dot { color: var(--ctx-border-strong); }
+    .ctx-credit a {
+      color: var(--ctx-ink-3);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+    .ctx-credit a:hover {
+      color: var(--ctx-accent);
+      border-bottom-color: var(--ctx-accent-line);
+    }
+    .ctx-credit a:focus-visible {
+      outline: 2px solid var(--ctx-accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* --- Keyboard accessibility --- */
+    button:focus-visible,
+    input[type="range"]:focus-visible {
+      outline: 2px solid var(--ctx-accent);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
+  <header class="app-header">
+    <span class="brand-mark" aria-hidden="true"><span>ñ</span></span>
+    <span class="brand-text">
+      <span class="brand-name">Contexto</span>
+      <span class="brand-tagline">Passive Spanish immersion</span>
+    </span>
+  </header>
+
   <div id="root"></div>
+
+  <footer class="ctx-credit">
+    <span>Contexto</span>
+    <span class="ctx-credit-dot" aria-hidden="true">·</span>
+    <a href="https://jasonlatz.com" target="_blank" rel="noopener noreferrer">jasonlatz.com</a>
+  </footer>
+
   <script type="module" src="../src/popup/index.ts"></script>
 </body>
 </html>

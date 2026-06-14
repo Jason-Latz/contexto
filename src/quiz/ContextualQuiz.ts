@@ -15,7 +15,7 @@
  */
 
 import { getWordsSeen } from '../store/sessionStore.js'
-import { lookup, sampleLemmas } from '../language/loader.js'
+import { getActiveLanguagePack, lookup, sampleLemmas } from '../language/loader.js'
 
 const FEEDBACK_DELAY_MS = 900
 const DISTRACTOR_COUNT  = 3
@@ -80,7 +80,17 @@ function buildOptions(englishLemma: string): { options: string[]; correctTarget:
     }
   }
 
-  const options = [correctTarget, ...distractors]
+  // Dedupe so the same target string can't fill two option slots (which would
+  // otherwise double-mark when a distractor equals the correct answer).
+  const uniqueOptions: string[] = []
+  const optionSeen = new Set<string>()
+  for (const option of [correctTarget, ...distractors]) {
+    if (optionSeen.has(option)) continue
+    optionSeen.add(option)
+    uniqueOptions.push(option)
+  }
+
+  const options = uniqueOptions
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[options[i], options[j]] = [options[j], options[i]]
@@ -96,20 +106,20 @@ function buildOptions(englishLemma: string): { options: string[]; correctTarget:
 const STYLES = {
   prompt: `
     font-size: 13px;
-    color: #888;
+    color: #475569;
     margin-bottom: 8px;
     font-family: system-ui, sans-serif;
   `,
   sentence: `
     font-size: 14px;
-    color: #374151;
+    color: #475569;
     line-height: 1.55;
     margin-bottom: 16px;
     font-family: system-ui, sans-serif;
   `,
   blank: `
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1b2733;
     letter-spacing: 0.05em;
   `,
   grid: `
@@ -119,25 +129,25 @@ const STYLES = {
   `,
   optionBase: `
     padding: 8px 12px;
-    border: 1.5px solid #d1d5db;
+    border: 1px solid #dce3ea;
     border-radius: 6px;
     background: #fff;
     cursor: pointer;
     font-size: 14px;
     font-family: system-ui, sans-serif;
-    color: #1a1a1a;
+    color: #1b2733;
     text-align: left;
     transition: background 0.15s, border-color 0.15s;
   `,
   correct: `
-    background: #dcfce7 !important;
-    border-color: #16a34a !important;
-    color: #15803d !important;
+    background: #e8f1ea !important;
+    border-color: #3f7d55 !important;
+    color: #2f5d40 !important;
   `,
   incorrect: `
-    background: #fee2e2 !important;
-    border-color: #dc2626 !important;
-    color: #b91c1c !important;
+    background: #f6e7e5 !important;
+    border-color: #a8443a !important;
+    color: #7e3128 !important;
   `,
   muted: `
     opacity: 0.45;
@@ -180,9 +190,10 @@ export function renderContextualQuiz(
   let answered = false
 
   // Prompt
+  const langName = getActiveLanguagePack()?.displayName ?? 'Spanish'
   const prompt = document.createElement('p')
   prompt.style.cssText = STYLES.prompt
-  prompt.textContent = 'Fill in the blank with the Spanish translation:'
+  prompt.textContent = `Fill in the blank with the ${langName} translation:`
 
   // Sentence with blank — built from DOM text nodes, not innerHTML.
   // Split on "___" and render the blank as a styled <span> between the halves.
@@ -211,21 +222,26 @@ export function renderContextualQuiz(
   const grid = document.createElement('div')
   grid.style.cssText = STYLES.grid
 
+  // The exact button representing the correct answer, captured by identity so a
+  // duplicate target string can't cause two buttons to be marked correct.
+  let correctBtn: HTMLButtonElement | null = null
+
   const buttons: HTMLButtonElement[] = options.map(target => {
     const btn = document.createElement('button')
     btn.style.cssText = STYLES.optionBase
     btn.textContent = target
+    if (target === correctTarget) correctBtn = btn
     btn.addEventListener('click', () => {
       if (answered) return
       answered = true
 
-      const correct = target === correctTarget
+      const correct = btn === correctBtn
 
       // Replace blank with the correct translated word to show the full answer.
       blankSpan.textContent = correctTarget
 
       buttons.forEach(b => {
-        if (b.textContent === correctTarget) {
+        if (b === correctBtn) {
           b.style.cssText = STYLES.optionBase + STYLES.correct
         } else if (b === btn && !correct) {
           b.style.cssText = STYLES.optionBase + STYLES.incorrect

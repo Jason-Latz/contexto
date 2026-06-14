@@ -2,10 +2,12 @@ import nlp from 'compromise'
 import { lookup } from '../language/loader.js'
 import { scanExpressions } from './expressionScanner.js'
 import { buildSpanishReplacement } from '../language/spanishAdapter.js'
-import { BASE_SPAN_STYLE, UNKNOWN_SPAN_STYLE } from './spanStyles.js'
+import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
 import type { CandidateToken, ExpressionMatch, TranslationEntry, WordSeen } from '../types/index.js'
 import { getEntry, recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
+import { getLevel } from '../store/settingsStore.js'
+import type { OnboardingLevel } from '../types/index.js'
 
 interface InjectionOptions {
   shouldRecordExposure?: (lemma: string) => boolean
@@ -201,7 +203,7 @@ function buildSpan(
   span.setAttribute('data-target', displayText)
   span.setAttribute('data-base-target', entry.target)
   span.setAttribute('data-gloss', entry.sourceGloss)
-  span.setAttribute('style', BASE_SPAN_STYLE)
+  span.setAttribute('style', baseSpanStyle())
   return span
 }
 
@@ -210,7 +212,7 @@ function attachLemma(span: HTMLSpanElement, lemma: string): void {
 
   if (getEntry(lemma).selfMarkedUnknown) {
     span.setAttribute('data-contexto-unknown', 'true')
-    span.setAttribute('style', UNKNOWN_SPAN_STYLE)
+    span.setAttribute('style', unknownSpanStyle())
   }
 }
 
@@ -220,6 +222,43 @@ function shouldRecordExposure(options: InjectionOptions, lemma: string): boolean
 
 function isCompatibleEntry(entry: TranslationEntry, token: CandidateToken): boolean {
   return entry.partOfSpeech === token.partOfSpeech
+}
+
+// Common English words are exactly where the imported ("medium") tier picks the
+// wrong dominant sense, so a medium entry only renders once it is RARER than the
+// common band; hand-verified ("high") entries render at any frequency. Kept in
+// sync with COMMON_BAND_ZIPF in scripts/qa_language_pack.py.
+const MEDIUM_OK_ZIPF = 5.0
+
+// Skip-what-you-know floor: a learner already knows the most common words, so
+// words at/above the level's English-frequency (Zipf) floor are not replaced —
+// the tool spends its replacements on rarer vocabulary worth learning. No level
+// set (e.g. before onboarding, or in tests) means no floor. Starting values;
+// tune to taste.
+const LEVEL_FLOOR: Record<OnboardingLevel, number> = {
+  beginner: 7.5,
+  intermediate: 6.0,
+  advanced: 5.0,
+}
+
+// An entry may render on the page when it is QA-eligible (content word, not a
+// polysemy quarantine) AND either verified or rare enough to trust. See the
+// QUALITY GATE note on extractPageCandidates.
+function isReplaceable(entry: TranslationEntry): boolean {
+  if (entry.eligible !== true) return false
+  if (entry.confidence === 'high') return true
+  return (entry.enZipf ?? 0) < MEDIUM_OK_ZIPF
+}
+
+// The English-frequency ceiling above which words are assumed already known and
+// are skipped, based on the current onboarding level.
+function knownWordCeiling(): number {
+  const level = getLevel()
+  return level ? LEVEL_FLOOR[level] : Infinity
+}
+
+function isAboveKnownCeiling(entry: TranslationEntry, ceiling: number): boolean {
+  return (entry.enZipf ?? 0) >= ceiling
 }
 
 function isStandaloneFunctionReplacement(entry: TranslationEntry): boolean {
@@ -443,9 +482,24 @@ function replaceTextNode(
 //
 // Tokens that overlap with expression spans or have no dictionary entry are
 // excluded here so selectTokens only scores genuinely replaceable candidates.
+//
+// QUALITY GATE + SKIP-WHAT-YOU-KNOW. Two filters decide what becomes a candidate
+// (offline signals `eligible` / `enZipf` come from scripts/qa_language_pack.py):
+//   1. isReplaceable — content word, not a polysemy quarantine, and either
+//      hand-verified ("high") or rarer than the common band. The imported
+//      ("medium") tier gets the dominant sense wrong precisely for COMMON words
+//      (it→"tecnología de la información"), so medium entries only render once
+//      they are rare enough that a single dominant sense is reliable. This keeps
+//      the valuable rare/long-tail vocabulary while suppressing the broken head.
+//   2. isAboveKnownCeiling — words a learner at the current level already knows
+//      (too frequent in English) are skipped, so replacements teach new words.
+// Gating here (not at load) keeps the full pack available for hover/export and
+// for promotion. Expanding coverage is additive: verify a common word and mark
+// it "high" (see imports/.../common-words-to-verify.json) — no code change.
 export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
   const seenLemmas = new Set<string>()
   const candidates: CandidateToken[] = []
+  const ceiling = knownWordCeiling()
 
   for (const node of nodes) {
     if (processedNodes.has(node)) continue
@@ -460,6 +514,8 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
     for (const match of parsed.expressionMatches) {
       const lemma = match.entry.source.toLowerCase()
       if (seenLemmas.has(lemma)) continue
+      if (!isReplaceable(match.entry)) continue
+      if (isAboveKnownCeiling(match.entry, ceiling)) continue
       seenLemmas.add(lemma)
       occupiedRanges.push([match.start, match.end])
       candidates.push({
@@ -480,6 +536,8 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
 
       const entry = lookup(token.lemma)
       if (!entry || !isCompatibleEntry(entry, token)) continue
+      if (!isReplaceable(entry)) continue
+      if (isAboveKnownCeiling(entry, ceiling)) continue
 
       seenLemmas.add(token.lemma)
       candidates.push(token)
