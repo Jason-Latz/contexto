@@ -1,0 +1,1353 @@
+[
+  {
+    "source": "house",
+    "kind": "hand",
+    "acceptable": [
+      "casa"
+    ]
+  },
+  {
+    "source": "dog",
+    "kind": "hand",
+    "acceptable": [
+      "perro"
+    ]
+  },
+  {
+    "source": "cat",
+    "kind": "hand",
+    "acceptable": [
+      "gato"
+    ]
+  },
+  {
+    "source": "water",
+    "kind": "hand",
+    "acceptable": [
+      "agua"
+    ]
+  },
+  {
+    "source": "book",
+    "kind": "hand",
+    "acceptable": [
+      "libro"
+    ]
+  },
+  {
+    "source": "city",
+    "kind": "hand",
+    "acceptable": [
+      "ciudad"
+    ]
+  },
+  {
+    "source": "man",
+    "kind": "hand",
+    "acceptable": [
+      "hombre"
+    ]
+  },
+  {
+    "source": "woman",
+    "kind": "hand",
+    "acceptable": [
+      "mujer"
+    ]
+  },
+  {
+    "source": "day",
+    "kind": "hand",
+    "acceptable": [
+      "día"
+    ]
+  },
+  {
+    "source": "night",
+    "kind": "hand",
+    "acceptable": [
+      "noche"
+    ]
+  },
+  {
+    "source": "food",
+    "kind": "hand",
+    "acceptable": [
+      "comida"
+    ]
+  },
+  {
+    "source": "friend",
+    "kind": "hand",
+    "acceptable": [
+      "amigo"
+    ]
+  },
+  {
+    "source": "school",
+    "kind": "hand",
+    "acceptable": [
+      "escuela",
+      "colegio"
+    ]
+  },
+  {
+    "source": "tree",
+    "kind": "hand",
+    "acceptable": [
+      "árbol"
+    ]
+  },
+  {
+    "source": "street",
+    "kind": "hand",
+    "acceptable": [
+      "calle"
+    ]
+  },
+  {
+    "source": "world",
+    "kind": "hand",
+    "acceptable": [
+      "mundo"
+    ]
+  },
+  {
+    "source": "year",
+    "kind": "hand",
+    "acceptable": [
+      "año"
+    ]
+  },
+  {
+    "source": "hand",
+    "kind": "hand",
+    "acceptable": [
+      "mano"
+    ]
+  },
+  {
+    "source": "eye",
+    "kind": "hand",
+    "acceptable": [
+      "ojo"
+    ]
+  },
+  {
+    "source": "door",
+    "kind": "hand",
+    "acceptable": [
+      "puerta"
+    ]
+  },
+  {
+    "source": "table",
+    "kind": "hand",
+    "acceptable": [
+      "mesa"
+    ]
+  },
+  {
+    "source": "name",
+    "kind": "hand",
+    "acceptable": [
+      "nombre"
+    ]
+  },
+  {
+    "source": "river",
+    "kind": "hand",
+    "acceptable": [
+      "río"
+    ]
+  },
+  {
+    "source": "country",
+    "kind": "hand",
+    "acceptable": [
+      "país"
+    ]
+  },
+  {
+    "source": "money",
+    "kind": "hand",
+    "acceptable": [
+      "dinero"
+    ]
+  },
+  {
+    "source": "child",
+    "kind": "hand",
+    "acceptable": [
+      "niño"
+    ]
+  },
+  {
+    "source": "mother",
+    "kind": "hand",
+    "acceptable": [
+      "madre"
+    ]
+  },
+  {
+    "source": "father",
+    "kind": "hand",
+    "acceptable": [
+      "padre"
+    ]
+  },
+  {
+    "source": "head",
+    "kind": "hand",
+    "acceptable": [
+      "cabeza"
+    ]
+  },
+  {
+    "source": "heart",
+    "kind": "hand",
+    "acceptable": [
+      "corazón"
+    ]
+  },
+  {
+    "source": "word",
+    "kind": "hand",
+    "acceptable": [
+      "palabra"
+    ]
+  },
+  {
+    "source": "eat",
+    "kind": "hand",
+    "acceptable": [
+      "comer"
+    ]
+  },
+  {
+    "source": "drink",
+    "kind": "hand",
+    "acceptable": [
+      "beber"
+    ]
+  },
+  {
+    "source": "run",
+    "kind": "hand",
+    "acceptable": [
+      "correr"
+    ]
+  },
+  {
+    "source": "read",
+    "kind": "hand",
+    "acceptable": [
+      "leer"
+    ]
+  },
+  {
+    "source": "write",
+    "kind": "hand",
+    "acceptable": [
+      "escribir"
+    ]
+  },
+  {
+    "source": "speak",
+    "kind": "hand",
+    "acceptable": [
+      "hablar"
+    ]
+  },
+  {
+    "source": "walk",
+    "kind": "hand",
+    "acceptable": [
+      "caminar",
+      "andar"
+    ]
+  },
+  {
+    "source": "sleep",
+    "kind": "hand",
+    "acceptable": [
+      "dormir"
+    ]
+  },
+  {
+    "source": "buy",
+    "kind": "hand",
+    "acceptable": [
+      "comprar"
+    ]
+  },
+  {
+    "source": "sell",
+    "kind": "hand",
+    "acceptable": [
+      "vender"
+    ]
+  },
+  {
+    "source": "live",
+    "kind": "hand",
+    "acceptable": [
+      "vivir"
+    ]
+  },
+  {
+    "source": "open",
+    "kind": "hand",
+    "acceptable": [
+      "abrir"
+    ]
+  },
+  {
+    "source": "close",
+    "kind": "hand",
+    "acceptable": [
+      "cerrar"
+    ]
+  },
+  {
+    "source": "learn",
+    "kind": "hand",
+    "acceptable": [
+      "aprender"
+    ]
+  },
+  {
+    "source": "teach",
+    "kind": "hand",
+    "acceptable": [
+      "enseñar"
+    ]
+  },
+  {
+    "source": "big",
+    "kind": "hand",
+    "acceptable": [
+      "grande"
+    ]
+  },
+  {
+    "source": "small",
+    "kind": "hand",
+    "acceptable": [
+      "pequeño"
+    ]
+  },
+  {
+    "source": "good",
+    "kind": "hand",
+    "acceptable": [
+      "bueno"
+    ]
+  },
+  {
+    "source": "bad",
+    "kind": "hand",
+    "acceptable": [
+      "malo"
+    ]
+  },
+  {
+    "source": "new",
+    "kind": "hand",
+    "acceptable": [
+      "nuevo"
+    ]
+  },
+  {
+    "source": "old",
+    "kind": "hand",
+    "acceptable": [
+      "viejo"
+    ]
+  },
+  {
+    "source": "happy",
+    "kind": "hand",
+    "acceptable": [
+      "feliz",
+      "contento"
+    ]
+  },
+  {
+    "source": "cold",
+    "kind": "hand",
+    "acceptable": [
+      "frío"
+    ]
+  },
+  {
+    "source": "easy",
+    "kind": "hand",
+    "acceptable": [
+      "fácil"
+    ]
+  },
+  {
+    "source": "difficult",
+    "kind": "hand",
+    "acceptable": [
+      "difícil"
+    ]
+  },
+  {
+    "source": "strong",
+    "kind": "hand",
+    "acceptable": [
+      "fuerte"
+    ]
+  },
+  {
+    "source": "library",
+    "kind": "hand",
+    "acceptable": [
+      "biblioteca"
+    ]
+  },
+  {
+    "source": "embarrassed",
+    "kind": "hand",
+    "acceptable": [
+      "avergonzado"
+    ]
+  },
+  {
+    "source": "carpet",
+    "kind": "hand",
+    "acceptable": [
+      "alfombra"
+    ]
+  },
+  {
+    "source": "angle",
+    "kind": "hand",
+    "acceptable": [
+      "ángulo"
+    ]
+  },
+  {
+    "source": "actually",
+    "kind": "hand",
+    "acceptable": [
+      "en realidad",
+      "realmente",
+      "de hecho"
+    ]
+  },
+  {
+    "source": "exit",
+    "kind": "hand",
+    "acceptable": [
+      "salida"
+    ]
+  },
+  {
+    "source": "success",
+    "kind": "hand",
+    "acceptable": [
+      "éxito"
+    ]
+  },
+  {
+    "source": "support",
+    "kind": "hand",
+    "acceptable": [
+      "apoyo",
+      "apoyar",
+      "soporte"
+    ]
+  },
+  {
+    "source": "fabric",
+    "kind": "hand",
+    "acceptable": [
+      "tela",
+      "tejido"
+    ]
+  },
+  {
+    "source": "sensible",
+    "kind": "hand",
+    "acceptable": [
+      "sensato",
+      "razonable"
+    ]
+  },
+  {
+    "source": "rope",
+    "kind": "hand",
+    "acceptable": [
+      "cuerda",
+      "soga"
+    ]
+  },
+  {
+    "source": "soup",
+    "kind": "hand",
+    "acceptable": [
+      "sopa"
+    ]
+  },
+  {
+    "source": "bridge",
+    "kind": "hand",
+    "acceptable": [
+      "puente"
+    ]
+  },
+  {
+    "source": "key",
+    "kind": "hand",
+    "acceptable": [
+      "llave",
+      "clave",
+      "tecla"
+    ]
+  },
+  {
+    "source": "fish",
+    "kind": "hand",
+    "acceptable": [
+      "pez",
+      "pescado"
+    ]
+  },
+  {
+    "source": "public limited company",
+    "kind": "snapshot",
+    "target": "sociedad anónima",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "media survey",
+    "kind": "snapshot",
+    "target": "encuesta de medios",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "encuestas de medios"
+  },
+  {
+    "source": "total",
+    "kind": "snapshot",
+    "target": "total",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "field study",
+    "kind": "snapshot",
+    "target": "estudio de campo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "estudios de campo"
+  },
+  {
+    "source": "wear",
+    "kind": "snapshot",
+    "target": "ropa",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "ropas"
+  },
+  {
+    "source": "software",
+    "kind": "snapshot",
+    "target": "software",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "software"
+  },
+  {
+    "source": "cell line",
+    "kind": "snapshot",
+    "target": "línea celular",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "white light",
+    "kind": "snapshot",
+    "target": "luz blanca",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "luces blancas"
+  },
+  {
+    "source": "well and truly",
+    "kind": "snapshot",
+    "target": "completamente",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "age of majority",
+    "kind": "snapshot",
+    "target": "mayoría de edad",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "carry on",
+    "kind": "snapshot",
+    "target": "llevar como equipaje de mano",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "tax return",
+    "kind": "snapshot",
+    "target": "declaración de impuestos",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "consider",
+    "kind": "snapshot",
+    "target": "considerar",
+    "partOfSpeech": "verb"
+  },
+  {
+    "source": "government guide",
+    "kind": "snapshot",
+    "target": "guía del gobierno",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "guías del gobierno"
+  },
+  {
+    "source": "career article",
+    "kind": "snapshot",
+    "target": "artículo profesional",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "artículos profesionales"
+  },
+  {
+    "source": "community guide",
+    "kind": "snapshot",
+    "target": "guía comunitaria",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "guías comunitarias"
+  },
+  {
+    "source": "tour guide",
+    "kind": "snapshot",
+    "target": "guía turístico",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "political",
+    "kind": "snapshot",
+    "target": "político",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "co-sister-in-law",
+    "kind": "snapshot",
+    "target": "concuñada",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "concuñadas"
+  },
+  {
+    "source": "as usual",
+    "kind": "snapshot",
+    "target": "como de costumbre",
+    "partOfSpeech": "adverb"
+  },
+  {
+    "source": "non-negative",
+    "kind": "snapshot",
+    "target": "no negativo",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "planned",
+    "kind": "snapshot",
+    "target": "planeado",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "speed",
+    "kind": "snapshot",
+    "target": "velocidad",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "velocidades"
+  },
+  {
+    "source": "continued",
+    "kind": "snapshot",
+    "target": "continuo",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "northern",
+    "kind": "snapshot",
+    "target": "septentrional",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "building",
+    "kind": "snapshot",
+    "target": "edificio",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "edificios"
+  },
+  {
+    "source": "goal average",
+    "kind": "snapshot",
+    "target": "promedio de goles",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "fashion house",
+    "kind": "snapshot",
+    "target": "casa de moda",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "personal protective equipment",
+    "kind": "snapshot",
+    "target": "equipo de protección personal",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "equipos de protección personal"
+  },
+  {
+    "source": "e-mail address",
+    "kind": "snapshot",
+    "target": "dirección de correo electrónico",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "direcciones de correo electrónico"
+  },
+  {
+    "source": "delivery article",
+    "kind": "snapshot",
+    "target": "artículo de entrega",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "artículos de entrega"
+  },
+  {
+    "source": "discharge",
+    "kind": "snapshot",
+    "target": "alta médica",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "altas médicas"
+  },
+  {
+    "source": "mixed methods",
+    "kind": "snapshot",
+    "target": "métodos mixtos",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "refrigerator",
+    "kind": "snapshot",
+    "target": "refrigerador",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "refrigeradores"
+  },
+  {
+    "source": "seating chart",
+    "kind": "snapshot",
+    "target": "plano de asientos",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "planos de asientos"
+  },
+  {
+    "source": "commentary",
+    "kind": "snapshot",
+    "target": "comentario académico",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "comentarios académicos"
+  },
+  {
+    "source": "construct validity",
+    "kind": "snapshot",
+    "target": "validez de constructo",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "valideces de constructo"
+  },
+  {
+    "source": "post-soviet",
+    "kind": "snapshot",
+    "target": "postsoviético",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "insanity defense",
+    "kind": "snapshot",
+    "target": "defensa por demencia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "defensas por demencia"
+  },
+  {
+    "source": "line editing",
+    "kind": "snapshot",
+    "target": "edición línea por línea",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "ediciones línea por línea"
+  },
+  {
+    "source": "workplace platform",
+    "kind": "snapshot",
+    "target": "plataforma laboral",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "plataformas laborales"
+  },
+  {
+    "source": "maintenance list",
+    "kind": "snapshot",
+    "target": "lista de mantenimiento",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "listas de mantenimiento"
+  },
+  {
+    "source": "limitation",
+    "kind": "snapshot",
+    "target": "limitación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "limitaciones"
+  },
+  {
+    "source": "chocolate",
+    "kind": "snapshot",
+    "target": "achocolatado",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "insulin",
+    "kind": "snapshot",
+    "target": "insulina",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "insulinas"
+  },
+  {
+    "source": "indictment",
+    "kind": "snapshot",
+    "target": "acusación formal",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "acusaciones formales"
+  },
+  {
+    "source": "cold turkey",
+    "kind": "snapshot",
+    "target": "en seco",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "city document",
+    "kind": "snapshot",
+    "target": "documento de ciudad",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "documentos de ciudad"
+  },
+  {
+    "source": "formal",
+    "kind": "snapshot",
+    "target": "formal",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "av setup",
+    "kind": "snapshot",
+    "target": "configuración audiovisual",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "configuraciones audiovisuales"
+  },
+  {
+    "source": "citation style",
+    "kind": "snapshot",
+    "target": "estilo de citación",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "estilos de citación"
+  },
+  {
+    "source": "liver enzyme",
+    "kind": "snapshot",
+    "target": "enzima hepática",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "enzimas hepáticas"
+  },
+  {
+    "source": "dentist",
+    "kind": "snapshot",
+    "target": "dentista",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "dentistas"
+  },
+  {
+    "source": "cloud",
+    "kind": "snapshot",
+    "target": "nube",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "nubes"
+  },
+  {
+    "source": "split pin",
+    "kind": "snapshot",
+    "target": "chaveta",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "epidemic",
+    "kind": "snapshot",
+    "target": "epidemia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "epidemias"
+  },
+  {
+    "source": "psychotherapy",
+    "kind": "snapshot",
+    "target": "psicoterapia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "psicoterapias"
+  },
+  {
+    "source": "decease",
+    "kind": "snapshot",
+    "target": "deceso",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "decesos"
+  },
+  {
+    "source": "flashcard",
+    "kind": "snapshot",
+    "target": "tarjeta de estudio",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "tarjetas de estudio"
+  },
+  {
+    "source": "radiologist",
+    "kind": "snapshot",
+    "target": "radiólogo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "radiólogos"
+  },
+  {
+    "source": "dataset",
+    "kind": "snapshot",
+    "target": "conjunto de datos",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "conjuntos de datos"
+  },
+  {
+    "source": "inferential statistic",
+    "kind": "snapshot",
+    "target": "estadístico inferencial",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "estadísticos inferenciales"
+  },
+  {
+    "source": "sakhalin",
+    "kind": "snapshot",
+    "target": "Sajalín",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "Sajalines"
+  },
+  {
+    "source": "phenomenology",
+    "kind": "snapshot",
+    "target": "fenomenología",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "fenomenologías"
+  },
+  {
+    "source": "pap smear",
+    "kind": "snapshot",
+    "target": "papanicolaou",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "papanicolaus"
+  },
+  {
+    "source": "obstetrician",
+    "kind": "snapshot",
+    "target": "obstetra",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "obstetras"
+  },
+  {
+    "source": "pharmacist",
+    "kind": "snapshot",
+    "target": "farmacéutico",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "farmacéuticos"
+  },
+  {
+    "source": "nameplate",
+    "kind": "snapshot",
+    "target": "placa de nombre",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "placas de nombre"
+  },
+  {
+    "source": "cadence",
+    "kind": "snapshot",
+    "target": "cadencia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "cadencias"
+  },
+  {
+    "source": "eminent domain",
+    "kind": "snapshot",
+    "target": "expropiación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "expropiaciones"
+  },
+  {
+    "source": "indus",
+    "kind": "snapshot",
+    "target": "Indo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "Indos"
+  },
+  {
+    "source": "millstone",
+    "kind": "snapshot",
+    "target": "muela",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "muelas"
+  },
+  {
+    "source": "standardization",
+    "kind": "snapshot",
+    "target": "estandarización",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "estandarizaciones"
+  },
+  {
+    "source": "corrective action",
+    "kind": "snapshot",
+    "target": "acción correctiva",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "acciones correctivas"
+  },
+  {
+    "source": "thesaurus",
+    "kind": "snapshot",
+    "target": "tesauro",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "tesauros"
+  },
+  {
+    "source": "reorder point",
+    "kind": "snapshot",
+    "target": "punto de reorden",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "puntos de reorden"
+  },
+  {
+    "source": "contingency plan",
+    "kind": "snapshot",
+    "target": "plan de contingencia",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "planes de contingencia"
+  },
+  {
+    "source": "punic",
+    "kind": "snapshot",
+    "target": "púnico",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "púnicos"
+  },
+  {
+    "source": "sledgehammer",
+    "kind": "snapshot",
+    "target": "almádena",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "almádenas"
+  },
+  {
+    "source": "infraction",
+    "kind": "snapshot",
+    "target": "infracción",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "infracciones"
+  },
+  {
+    "source": "edict",
+    "kind": "snapshot",
+    "target": "edicto",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "edictos"
+  },
+  {
+    "source": "meeting cadence",
+    "kind": "snapshot",
+    "target": "cadencia de reuniones",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "cadencias de reuniones"
+  },
+  {
+    "source": "inseparable",
+    "kind": "snapshot",
+    "target": "inseparable",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "invoice processing",
+    "kind": "snapshot",
+    "target": "procesamiento de facturas",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "procesamientos de facturas"
+  },
+  {
+    "source": "runbook",
+    "kind": "snapshot",
+    "target": "guía operativa",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "guías operativas"
+  },
+  {
+    "source": "ursine",
+    "kind": "snapshot",
+    "target": "osuno",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "fieldnote",
+    "kind": "snapshot",
+    "target": "nota de campo",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "notas de campo"
+  },
+  {
+    "source": "vinous",
+    "kind": "snapshot",
+    "target": "vinoso",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "workplan",
+    "kind": "snapshot",
+    "target": "plan de trabajo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "planes de trabajo"
+  },
+  {
+    "source": "paralipsis",
+    "kind": "snapshot",
+    "target": "paralipsis",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "paralipsis"
+  },
+  {
+    "source": "covariate",
+    "kind": "snapshot",
+    "target": "covariable",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "covariables"
+  },
+  {
+    "source": "okr",
+    "kind": "snapshot",
+    "target": "objetivo y resultado clave",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "objetivos y resultados clave"
+  },
+  {
+    "source": "bronchoscopy",
+    "kind": "snapshot",
+    "target": "broncoscopia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "broncoscopias"
+  },
+  {
+    "source": "adenylate cyclase",
+    "kind": "snapshot",
+    "target": "adenilato ciclasa",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "mucosity",
+    "kind": "snapshot",
+    "target": "mucosidad",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "mucosidades"
+  },
+  {
+    "source": "generalizability",
+    "kind": "snapshot",
+    "target": "generalización",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "generalizaciones"
+  },
+  {
+    "source": "effeminacy",
+    "kind": "snapshot",
+    "target": "afeminación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "afeminaciones"
+  },
+  {
+    "source": "ultramodern",
+    "kind": "snapshot",
+    "target": "ultramoderno",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "affectable",
+    "kind": "snapshot",
+    "target": "afectable",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "anamorphosis",
+    "kind": "snapshot",
+    "target": "anamorfosis",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "anamorfosis"
+  },
+  {
+    "source": "anthological",
+    "kind": "snapshot",
+    "target": "antológico",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "arabisation",
+    "kind": "snapshot",
+    "target": "arabización",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "arabizaciones"
+  },
+  {
+    "source": "stockout",
+    "kind": "snapshot",
+    "target": "falta de inventario",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "faltas de inventario"
+  },
+  {
+    "source": "sinicization",
+    "kind": "snapshot",
+    "target": "sinificación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "sinificaciones"
+  },
+  {
+    "source": "savageness",
+    "kind": "snapshot",
+    "target": "salvajismo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "salvajismos"
+  },
+  {
+    "source": "cronbach's alpha",
+    "kind": "snapshot",
+    "target": "alfa de Cronbach",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "alfas de Cronbach"
+  },
+  {
+    "source": "beechnut",
+    "kind": "snapshot",
+    "target": "hayuco",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "hayucos"
+  },
+  {
+    "source": "orthopedist",
+    "kind": "snapshot",
+    "target": "ortopedista",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "ortopedistas"
+  },
+  {
+    "source": "anticapitalist",
+    "kind": "snapshot",
+    "target": "anticapitalista",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "anticapitalistas"
+  },
+  {
+    "source": "phytotomy",
+    "kind": "snapshot",
+    "target": "fitotomía",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "fitotomías"
+  },
+  {
+    "source": "pleasantness",
+    "kind": "snapshot",
+    "target": "agradabilidad",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "agradabilidades"
+  },
+  {
+    "source": "onomastic",
+    "kind": "snapshot",
+    "target": "onomástico",
+    "partOfSpeech": "adjective"
+  }
+]
