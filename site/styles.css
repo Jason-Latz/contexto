@@ -1,0 +1,888 @@
+/* =========================================================================
+   Contexto — landing site
+   Academic, literary, restrained. Slate = system-translated word.
+   Tan = a word you saved. All design tokens pulled from the product.
+   ========================================================================= */
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  --ink: #1b2733;
+  --ink-2: #475569;
+  --ink-3: #8a98a8;
+  --eyebrow: #64748b;
+
+  --accent: #2f5d80;
+  --accent-strong: #244b69;
+  --accent-wash: rgba(47, 93, 128, 0.07);
+  --accent-line: rgba(47, 93, 128, 0.55);
+
+  --mark-bg: #f8f2e8;
+  --mark-border: #ead9bd;
+  --mark-ink: #5a3a10;
+  --mark-line: rgba(132, 86, 22, 0.82);
+  --mark-wash: rgba(132, 86, 22, 0.07);
+
+  --surface: #ffffff;
+  --canvas: #f4f6f9;
+  --canvas-2: #f7f9fb;
+  --border: #dce3ea;
+  --border-strong: #c3cdd7;
+
+  --radius: 9px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(27, 39, 51, 0.06);
+
+  --measure: 640px;
+  --gutter: clamp(20px, 5vw, 40px);
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--canvas);
+  line-height: 1.6;
+  font-size: clamp(16px, 1.05vw + 14px, 18px);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Visible focus rings everywhere. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.prose {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+/* =========================================================================
+   The shared product visual language: a translated / saved word.
+   ========================================================================= */
+
+/* A system-translated word: inherited text + slate underline + faint wash. */
+.tr {
+  color: var(--accent);
+  background: var(--accent-wash);
+  border-bottom: 1px solid var(--accent-line);
+  border-radius: 2px;
+  padding: 0 1px;
+  cursor: help;
+}
+
+/* A word you saved: 2px tan underline + tan wash + warm ink. */
+.saved {
+  color: var(--mark-ink);
+  background: var(--mark-wash);
+  border-bottom: 2px solid var(--mark-line);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* =========================================================================
+   Header
+   ========================================================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(244, 246, 249, 0.86);
+  -webkit-backdrop-filter: saturate(1.4) blur(8px);
+  backdrop-filter: saturate(1.4) blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+/* The eñe brand mark: rounded paper tile, slate ring + slate glyph. */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #f6f2ea;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  flex: none;
+  box-shadow: var(--shadow-card);
+}
+
+.brand-mark span {
+  transform: translateY(-0.5px);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--accent-strong);
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* =========================================================================
+   Section rhythm
+   ========================================================================= */
+
+main {
+  display: block;
+}
+
+section {
+  padding-block: clamp(56px, 9vw, 96px);
+}
+
+.eyebrow {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
+  margin-bottom: 18px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  line-height: 1.18;
+}
+
+.section-head {
+  max-width: var(--measure);
+  margin: 0 auto clamp(32px, 5vw, 48px);
+}
+
+.section-head h2 {
+  font-size: clamp(26px, 3.4vw, 34px);
+}
+
+.section-head p {
+  color: var(--ink-2);
+  margin-top: 12px;
+}
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+
+.hero {
+  padding-top: clamp(48px, 8vw, 84px);
+  padding-bottom: clamp(40px, 6vw, 64px);
+}
+
+/* ---- Act one: the reveal ---- */
+.reveal {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+.reveal-lines {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 3.1vw, 29px);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: clamp(28px, 4vw, 40px);
+}
+
+.reveal-lines .line {
+  margin: 0;
+}
+
+.reveal-lines .line + .line {
+  margin-top: 0.45em;
+}
+
+/* Stagger-fade for the four lines. JS adds .in when ready / in view. */
+.reveal-lines .line {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-lines.in .line {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-lines.in .line:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.reveal-lines.in .line:nth-child(2) {
+  transition-delay: 0.45s;
+}
+.reveal-lines.in .line:nth-child(3) {
+  transition-delay: 0.85s;
+}
+.reveal-lines.in .line:nth-child(4) {
+  transition-delay: 1.25s;
+}
+
+.reveal-resolve {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 28px);
+  color: var(--accent-strong);
+  line-height: 1.3;
+}
+
+.reveal-sub {
+  margin-top: 10px;
+  color: var(--ink-2);
+  font-size: clamp(16px, 1.4vw, 18px);
+}
+
+/* =========================================================================
+   Act two: the live dial-in self-demo
+   ========================================================================= */
+
+.dial {
+  padding-top: clamp(36px, 5vw, 56px);
+}
+
+.dial-head {
+  max-width: var(--measure);
+  margin: 0 auto 22px;
+}
+
+.dial-head h2 {
+  font-size: clamp(22px, 2.8vw, 28px);
+}
+
+.dial-head p {
+  color: var(--ink-2);
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+#ctx-live {
+  position: relative; /* tooltip anchors to this, never fixed */
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+.frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: clamp(20px, 3.5vw, 30px);
+}
+
+/* ---- the slider bar ---- */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar .lab {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
+  flex: none;
+}
+
+.bar .read {
+  font-size: 13px;
+  color: var(--ink-3);
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  min-width: 92px;
+  text-align: right;
+}
+
+/* The range input — track fill set inline via JS as a linear-gradient
+   (background-image). Painted into the content box so the mobile padding that
+   grows the touch target to 44px keeps the visible track a thin line. */
+#ctx-range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--border);
+  background-image: linear-gradient(to right, var(--accent) 0%, var(--border) 0%);
+  background-repeat: no-repeat;
+  background-clip: content-box;
+  cursor: pointer;
+  outline-offset: 6px;
+}
+
+/* WebKit thumb: 18px white disc, 2px slate ring. */
+#ctx-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--accent);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+#ctx-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+/* Firefox thumb + track. */
+#ctx-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--accent);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+#ctx-range::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+#ctx-range::-moz-range-progress {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+/* ---- the manifesto ---- */
+.manifesto {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.4vw, 23px);
+  line-height: 1.62;
+  color: var(--ink);
+}
+
+/* A swappable word — neutral until turned on. */
+.manifesto .w {
+  border-radius: 2px;
+  transition: color 0.18s ease, background-color 0.18s ease,
+    border-color 0.18s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.manifesto .w.on {
+  color: var(--accent);
+  background: var(--accent-wash);
+  border-bottom: 1px solid var(--accent-line);
+  padding: 0 1px;
+  cursor: help;
+}
+
+.cap {
+  margin-top: 18px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink-3);
+}
+
+/* ---- the tooltip ---- */
+.tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-style: normal;
+  line-height: 1.2;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(27, 39, 51, 0.16);
+  transition: opacity 0.14s ease;
+}
+
+.tip::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--ink);
+}
+
+/* =========================================================================
+   Thesis section
+   ========================================================================= */
+
+.thesis {
+  background: var(--canvas-2);
+  border-block: 1px solid var(--border);
+}
+
+.beats {
+  max-width: var(--measure);
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(28px, 4vw, 38px);
+}
+
+.beat h3 {
+  font-size: clamp(20px, 2.4vw, 24px);
+  margin-bottom: 8px;
+}
+
+.beat p {
+  color: var(--ink-2);
+}
+
+/* =========================================================================
+   How it works
+   ========================================================================= */
+
+.steps {
+  max-width: 880px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+}
+
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+.step .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
+  color: var(--accent-strong);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+
+.step p {
+  font-size: 15.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.step p .tr,
+.step p .saved {
+  white-space: nowrap;
+}
+
+.offline-note {
+  max-width: 880px;
+  margin: 22px auto 0;
+  font-size: 14px;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/* =========================================================================
+   FAQ
+   ========================================================================= */
+
+.faq {
+  background: var(--canvas-2);
+  border-block: 1px solid var(--border);
+}
+
+.faq-list {
+  max-width: var(--measure);
+  margin-inline: auto;
+  display: grid;
+  gap: 4px;
+}
+
+.faq-list details {
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+}
+
+.faq-list summary {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 21px);
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 36px 12px 0;
+  position: relative;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list summary::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
+  transform: translateY(-65%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.faq-list details[open] summary::after {
+  transform: translateY(-35%) rotate(-135deg);
+}
+
+.faq-list .answer {
+  color: var(--ink-2);
+  font-size: 16px;
+  padding: 0 8px 14px 0;
+}
+
+/* =========================================================================
+   CTA
+   ========================================================================= */
+
+.cta {
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: clamp(26px, 3.4vw, 34px);
+  max-width: 18ch;
+  margin: 0 auto 28px;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The "Coming soon" badge — looks like a button, is not a link. */
+.badge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent-strong);
+  padding: 13px 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  cursor: not-allowed;
+  position: relative;
+}
+
+.badge-btn .chrome-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  flex: none;
+}
+
+/* Subtext / tooltip shown under the badge. */
+.badge-note {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-strong);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  padding: 13px 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.btn-secondary:hover {
+  text-decoration: none;
+  border-color: var(--accent-line);
+  background: var(--canvas-2);
+}
+
+.cta-star {
+  margin-top: 22px;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--canvas-2);
+  padding-block: 32px;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+}
+
+.footer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.footer-mark .brand-mark {
+  width: 24px;
+  height: 24px;
+  font-size: 15px;
+  border-radius: 6px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: var(--ink-2);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* =========================================================================
+   Privacy page
+   ========================================================================= */
+
+.doc {
+  padding-block: clamp(48px, 8vw, 80px);
+}
+
+.doc .prose h1 {
+  font-size: clamp(28px, 3.6vw, 38px);
+  margin-bottom: 6px;
+}
+
+.doc .updated {
+  color: var(--ink-3);
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 32px;
+}
+
+.doc .prose h2 {
+  font-size: clamp(19px, 2.2vw, 23px);
+  margin-top: 36px;
+  margin-bottom: 10px;
+}
+
+.doc .prose p {
+  color: var(--ink-2);
+  margin-bottom: 14px;
+}
+
+.doc .prose ul {
+  color: var(--ink-2);
+  margin: 0 0 16px 1.2em;
+}
+
+.doc .prose li {
+  margin-bottom: 6px;
+}
+
+.doc .prose strong {
+  color: var(--ink);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+
+@media (max-width: 560px) {
+  /* Bigger touch target for the slider on mobile: 44px row + thumb. */
+  .bar {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  #ctx-range {
+    order: 3;
+    flex-basis: 100%;
+    height: 44px;
+    background-clip: content-box;
+    padding-block: 19px; /* keeps a 6px visible track centered in 44px */
+  }
+
+  #ctx-range::-webkit-slider-thumb {
+    margin-top: -6px;
+  }
+
+  .bar .read {
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  .footer-links {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================================
+   Reduced motion: no reveal stagger, no smooth scroll.
+   (The dial drift is also disabled in JS.)
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-lines .line {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .manifesto .w,
+  .tip,
+  .faq-list summary::after {
+    transition: none;
+  }
+}
