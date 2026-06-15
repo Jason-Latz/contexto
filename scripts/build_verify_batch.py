@@ -7,9 +7,9 @@ enZipf descending (most-visible first), and writes exactly --chunks files of up 
 Always writes --chunks files (padding with empty arrays) so the workflow script can
 hardcode a constant chunk count.
 
-After the workflow's decisions are applied, call this script's companion
---commit-ledger <sources.json> to mark them done. Here we just advance by writing the
-queued sources to the ledger immediately (we process every queued word exactly once).
+The ledger is advanced by apply_verify_decisions.py after a batch's decisions are
+applied — NOT here — so a crashed or lost workflow run leaves its words un-ledgered
+and the next build re-queues them (no silent coverage loss).
 
 Usage:
   python scripts/build_verify_batch.py --chunks 100 --size 30
@@ -82,17 +82,17 @@ def main():
         (outdir / f"chunk_{i:03d}.json").write_text(json.dumps(recs, ensure_ascii=False, indent=1))
         queued.extend(s for (s, v) in chunk)
 
-    # advance the ledger now (every queued word is processed exactly once)
-    done.update(queued)
-    ledger_path.parent.mkdir(parents=True, exist_ok=True)
-    ledger_path.write_text(json.dumps(sorted(done), ensure_ascii=False))
+    # NOTE: the ledger is advanced by apply_verify_decisions.py AFTER decisions are
+    # applied — not here. A crashed/lost workflow run therefore leaves its words
+    # un-ledgered, and the next frequency-first build re-queues them naturally
+    # (no silent coverage loss).
 
     zmin = round(min((v.get("enZipf", 0) for _, v in batch), default=0), 2)
     zmax = round(max((v.get("enZipf", 0) for _, v in batch), default=0), 2)
     print(f"queued {len(queued)} words into {args.chunks} chunks (size {args.size})")
     print(f"  enZipf range this batch: {zmax} .. {zmin}")
     print(f"  pool remaining after this batch: {len(pool) - len(batch)}")
-    print(f"  ledger total processed: {len(done)}")
+    print(f"  ledger (already verified, pre-batch): {len(done)}")
 
 
 if __name__ == "__main__":

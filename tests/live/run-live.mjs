@@ -216,12 +216,25 @@ async function run() {
           gloss: e.getAttribute('data-gloss'),
         })))
 
-      // links still navigable: hrefs intact, not swallowed by a span
-      const linkOk = await page.evaluate(() => {
-        const a = document.querySelector('a[href]')
-        return a ? a.getAttribute('href') : null
+      // links still navigable: find an anchor the injector actually TOUCHED and assert
+      // it's intact — href non-empty + parseable, and the injected span stayed INSIDE
+      // the <a> (link text not split across the anchor boundary).
+      const linkCheck = await page.evaluate(() => {
+        const span = document.querySelector('a[href] [data-contexto="true"]')
+        const a = span ? span.closest('a[href]') : null
+        if (!a) return { injectedAnchor: false }
+        const href = a.getAttribute('href') || ''
+        let validUrl = false
+        try { new URL(a.href); validUrl = !!href.trim() } catch {}
+        return { injectedAnchor: true, href, validUrl, spanInside: a.contains(span) }
       })
-      if (linkOk === null) res.warnings.push('no anchor found to verify')
+      res.linkCheck = linkCheck
+      if (linkCheck.injectedAnchor) {
+        if (!linkCheck.validUrl) res.failures.push('injected anchor has empty/invalid href')
+        if (!linkCheck.spanInside) res.failures.push('injected span escaped its anchor (broken link)')
+      } else {
+        res.warnings.push('no injector-touched anchor on this page to verify')
+      }
 
       // tooltip on hover — hover a visible span and expect #contexto-tooltip
       // on-screen. Hover mechanics can be flaky on huge real pages, so a
@@ -265,7 +278,8 @@ async function run() {
       await page.waitForTimeout(1500)
       const afterRestore = await page.locator('[data-contexto="true"]').count()
       res.afterRestoreCount = afterRestore
-      if (res.spanCount > 0 && afterRestore >= res.spanCount) res.failures.push('density->0 did not reduce replacements')
+      // density 0 => floor(0 * candidates) == 0, so a correct restore clears ALL spans
+      if (res.spanCount > 0 && afterRestore !== 0) res.failures.push(`density->0 left ${afterRestore} spans (expected 0)`)
     } catch (e) {
       res.failures.push('exception: ' + String(e).slice(0, 200))
     } finally {

@@ -882,234 +882,206 @@
     "plural": "listas de mantenimiento"
   },
   {
-    "source": "equitable relief",
+    "source": "timetable",
     "kind": "snapshot",
-    "target": "reparación equitativa",
+    "target": "horario",
     "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "reparaciones equitativas"
+    "gender": "masculine",
+    "plural": "horarios"
   },
   {
-    "source": "guardianship",
+    "source": "scorecard",
     "kind": "snapshot",
-    "target": "tutela",
+    "target": "cuadro de mando",
     "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "tutelas"
+    "gender": "masculine",
+    "plural": "cuadros de mando"
   },
   {
-    "source": "piecemeal",
+    "source": "stink to high heaven",
     "kind": "snapshot",
-    "target": "deslavazadamente",
+    "target": "oler a chotuno",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "slab",
+    "kind": "snapshot",
+    "target": "losa",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "losas"
+  },
+  {
+    "source": "take something in stride",
+    "kind": "snapshot",
+    "target": "tomárselo con calma",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "space hopper",
+    "kind": "snapshot",
+    "target": "balón saltarín",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "open sesame",
+    "kind": "snapshot",
+    "target": "ábrete sésamo",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "haitian",
+    "kind": "snapshot",
+    "target": "haitiano",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "haitianos"
+  },
+  {
+    "source": "gamma variant",
+    "kind": "snapshot",
+    "target": "variante gamma",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "self-sacrificing",
+    "kind": "snapshot",
+    "target": "abnegado",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "riddle",
+    "kind": "snapshot",
+    "target": "adivinanza",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "adivinanzas"
+  },
+  {
+    "source": "basal",
+    "kind": "snapshot",
+    "target": "basal",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "town crier",
+    "kind": "snapshot",
+    "target": "pregonero",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "montage",
+    "kind": "snapshot",
+    "target": "montaje",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "montajes"
+  },
+  {
+    "source": "fictitious",
+    "kind": "snapshot",
+    "target": "ficticio",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "cubic metre",
+    "kind": "snapshot",
+    "target": "metro cúbico",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "multiplication",
+    "kind": "snapshot",
+    "target": "multiplicación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "multiplicaciones"
+  },
+  {
+    "source": "instinctively",
+    "kind": "snapshot",
+    "target": "instintivamente",
     "partOfSpeech": "adverb"
   },
   {
-    "source": "faq",
+    "source": "meridian",
     "kind": "snapshot",
-    "target": "pregunta frecuente",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "preguntas frecuentes"
-  },
-  {
-    "source": "leeway",
-    "kind": "snapshot",
-    "target": "deriva",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "derivas"
-  },
-  {
-    "source": "randomization",
-    "kind": "snapshot",
-    "target": "aleatorización",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "aleatorizaciones"
-  },
-  {
-    "source": "tremble",
-    "kind": "snapshot",
-    "target": "temblor",
+    "target": "meridiano",
     "partOfSpeech": "noun",
     "gender": "masculine",
-    "plural": "temblores"
+    "plural": "meridianos"
   },
   {
-    "source": "spina bifida",
+    "source": "cupboard",
     "kind": "snapshot",
-    "target": "espina bífida",
+    "target": "armario",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "armarios"
+  },
+  {
+    "source": "hit a snag",
+    "kind": "snapshot",
+    "target": "encontrar un problema inesperado",
     "partOfSpeech": "expression"
   },
   {
-    "source": "self-reliant",
+    "source": "miscarriage",
     "kind": "snapshot",
-    "target": "autosuficiente",
+    "target": "aborto espontáneo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "abortos espontáneos"
+  },
+  {
+    "source": "recital",
+    "kind": "snapshot",
+    "target": "recitación",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "recitaciones"
+  },
+  {
+    "source": "flowchart",
+    "kind": "snapshot",
+    "target": "diagrama de flujo",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "diagramas de flujo"
+  },
+  {
+    "source": "bacterium",
+    "kind": "snapshot",
+    "target": "bacteria",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "bacterias"
+  },
+  {
+    "source": "semantic field",
+    "kind": "snapshot",
+    "target": "campo semántico",
+    "partOfSpeech": "expression"
+  },
+  {
+    "source": "clerical",
+    "kind": "snapshot",
+    "target": "administrativo",
     "partOfSpeech": "adjective"
   },
   {
-    "source": "badger",
+    "source": "hawk moth",
     "kind": "snapshot",
-    "target": "fastidiar",
-    "partOfSpeech": "verb"
-  },
-  {
-    "source": "ovary",
-    "kind": "snapshot",
-    "target": "ovario",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "ovarios"
-  },
-  {
-    "source": "examining magistrate",
-    "kind": "snapshot",
-    "target": "juez de instrucción",
+    "target": "esfinge",
     "partOfSpeech": "expression"
   },
   {
-    "source": "corsage",
+    "source": "electroencephalogram",
     "kind": "snapshot",
-    "target": "ramillete",
+    "target": "electroencefalograma",
     "partOfSpeech": "noun",
     "gender": "masculine",
-    "plural": "ramilletes"
-  },
-  {
-    "source": "chickenpox",
-    "kind": "snapshot",
-    "target": "varicela",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "varicelas"
-  },
-  {
-    "source": "prenatal screening",
-    "kind": "snapshot",
-    "target": "tamizaje prenatal",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "tamizajes prenatales"
-  },
-  {
-    "source": "sash",
-    "kind": "snapshot",
-    "target": "hoja",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "hojas"
-  },
-  {
-    "source": "expiration",
-    "kind": "snapshot",
-    "target": "caducidad",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "caducidades"
-  },
-  {
-    "source": "fungal infection",
-    "kind": "snapshot",
-    "target": "infección fúngica",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "infecciones fúngicas"
-  },
-  {
-    "source": "adrenal gland",
-    "kind": "snapshot",
-    "target": "glándula suprarrenal",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "glándulas suprarrenales"
-  },
-  {
-    "source": "bequest",
-    "kind": "snapshot",
-    "target": "legado",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "legados"
-  },
-  {
-    "source": "parkinson's disease",
-    "kind": "snapshot",
-    "target": "enfermedad de Parkinson",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "enfermedades de Parkinson"
-  },
-  {
-    "source": "observational study",
-    "kind": "snapshot",
-    "target": "estudio observacional",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "estudios observacionales"
-  },
-  {
-    "source": "questionnaire",
-    "kind": "snapshot",
-    "target": "cuestionario",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "cuestionarios"
-  },
-  {
-    "source": "immerse",
-    "kind": "snapshot",
-    "target": "sumergir",
-    "partOfSpeech": "verb"
-  },
-  {
-    "source": "caramel",
-    "kind": "snapshot",
-    "target": "caramelo",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "caramelos"
-  },
-  {
-    "source": "shuffle",
-    "kind": "snapshot",
-    "target": "barajar",
-    "partOfSpeech": "verb"
-  },
-  {
-    "source": "incision",
-    "kind": "snapshot",
-    "target": "incisión",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "incisiones"
-  },
-  {
-    "source": "short-toed snake eagle",
-    "kind": "snapshot",
-    "target": "culebrera europea",
-    "partOfSpeech": "expression"
-  },
-  {
-    "source": "erratum",
-    "kind": "snapshot",
-    "target": "fe de erratas",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "fes de erratas"
-  },
-  {
-    "source": "nephrologist",
-    "kind": "snapshot",
-    "target": "nefrólogo",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "nefrólogos"
-  },
-  {
-    "source": "cynegetic",
-    "kind": "snapshot",
-    "target": "cinegético",
-    "partOfSpeech": "adjective"
+    "plural": "electroencefalogramas"
   },
   {
     "source": "isoflavone",
@@ -1128,112 +1100,50 @@
     "plural": "anamorfosis"
   },
   {
-    "source": "imperatively",
+    "source": "resubmission",
     "kind": "snapshot",
-    "target": "imperativamente",
-    "partOfSpeech": "adverb"
-  },
-  {
-    "source": "runbook",
-    "kind": "snapshot",
-    "target": "guía operativa",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "guías operativas"
-  },
-  {
-    "source": "pulmonology",
-    "kind": "snapshot",
-    "target": "neumología",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "neumologías"
-  },
-  {
-    "source": "autoresponder",
-    "kind": "snapshot",
-    "target": "respuesta automática",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "respuestas automáticas"
-  },
-  {
-    "source": "affectable",
-    "kind": "snapshot",
-    "target": "afectable",
-    "partOfSpeech": "adjective"
-  },
-  {
-    "source": "white-naped tit",
-    "kind": "snapshot",
-    "target": "carbonero nuquiblanco",
-    "partOfSpeech": "expression"
-  },
-  {
-    "source": "polytonic",
-    "kind": "snapshot",
-    "target": "politónico",
-    "partOfSpeech": "adjective"
-  },
-  {
-    "source": "cronbach's alpha",
-    "kind": "snapshot",
-    "target": "alfa de Cronbach",
+    "target": "reenvío",
     "partOfSpeech": "noun",
     "gender": "masculine",
-    "plural": "alfas de Cronbach"
+    "plural": "reenvíos"
   },
   {
-    "source": "pullet",
+    "source": "arabisation",
     "kind": "snapshot",
-    "target": "pollita",
+    "target": "arabización",
     "partOfSpeech": "noun",
     "gender": "feminine",
-    "plural": "pollitas"
+    "plural": "arabizaciones"
   },
   {
-    "source": "eudiometer",
+    "source": "unbibium",
     "kind": "snapshot",
-    "target": "eudiómetro",
+    "target": "unbibio",
     "partOfSpeech": "noun",
     "gender": "masculine",
-    "plural": "eudiómetros"
+    "plural": "unbibios"
   },
   {
-    "source": "synaesthesia",
+    "source": "cynegetic",
     "kind": "snapshot",
-    "target": "sinestesia",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "sinestesias"
-  },
-  {
-    "source": "insolvable",
-    "kind": "snapshot",
-    "target": "insoluble",
+    "target": "cinegético",
     "partOfSpeech": "adjective"
   },
   {
-    "source": "colposcopy",
+    "source": "anecdata",
     "kind": "snapshot",
-    "target": "colposcopia",
+    "target": "evidencia anecdótica",
     "partOfSpeech": "noun",
     "gender": "feminine",
-    "plural": "colposcopias"
+    "plural": "evidencias anecdóticas"
   },
   {
-    "source": "stylobate",
+    "source": "coquetry",
     "kind": "snapshot",
-    "target": "estilóbato",
+    "target": "coquetería",
     "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "estilóbatos"
-  },
-  {
-    "source": "moustachioed",
-    "kind": "snapshot",
-    "target": "bigotudo",
-    "partOfSpeech": "adjective"
+    "gender": "feminine",
+    "plural": "coqueterías"
   },
   {
     "source": "megalithism",
@@ -1244,10 +1154,92 @@
     "plural": "megalitismos"
   },
   {
-    "source": "refract",
+    "source": "perfectoid",
     "kind": "snapshot",
-    "target": "refractar",
-    "partOfSpeech": "verb"
+    "target": "perfectoide",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "bronchoscopy",
+    "kind": "snapshot",
+    "target": "broncoscopia",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "broncoscopias"
+  },
+  {
+    "source": "minimap",
+    "kind": "snapshot",
+    "target": "minimapa",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "minimapas"
+  },
+  {
+    "source": "okr",
+    "kind": "snapshot",
+    "target": "objetivo y resultado clave",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "objetivos y resultados clave"
+  },
+  {
+    "source": "bibliometrics",
+    "kind": "snapshot",
+    "target": "bibliometría",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "bibliometrías"
+  },
+  {
+    "source": "neap",
+    "kind": "snapshot",
+    "target": "muerta",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "onomasiology",
+    "kind": "snapshot",
+    "target": "onomasiología",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "onomasiologías"
+  },
+  {
+    "source": "prothetic",
+    "kind": "snapshot",
+    "target": "protético",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "paralipsis",
+    "kind": "snapshot",
+    "target": "paralipsis",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "paralipsis"
+  },
+  {
+    "source": "essaouira",
+    "kind": "snapshot",
+    "target": "Esauira",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "Esauiras"
+  },
+  {
+    "source": "discoid",
+    "kind": "snapshot",
+    "target": "discoide",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "source": "anapest",
+    "kind": "snapshot",
+    "target": "anapesto",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "anapestos"
   },
   {
     "source": "calypter",
@@ -1258,43 +1250,43 @@
     "plural": "caliptros"
   },
   {
-    "source": "guria",
+    "source": "codebook",
     "kind": "snapshot",
-    "target": "Guria",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "Gurias"
-  },
-  {
-    "source": "offboarding",
-    "kind": "snapshot",
-    "target": "desvinculación",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "desvinculaciones"
-  },
-  {
-    "source": "endosymbiosis",
-    "kind": "snapshot",
-    "target": "endosimbiosis",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "endosimbiosis"
-  },
-  {
-    "source": "potsherd",
-    "kind": "snapshot",
-    "target": "casco",
+    "target": "libro de códigos",
     "partOfSpeech": "noun",
     "gender": "masculine",
-    "plural": "cascos"
+    "plural": "libros de códigos"
   },
   {
-    "source": "arabisation",
+    "source": "thimblerigger",
     "kind": "snapshot",
-    "target": "arabización",
+    "target": "trilera",
     "partOfSpeech": "noun",
     "gender": "feminine",
-    "plural": "arabizaciones"
+    "plural": "trileras"
+  },
+  {
+    "source": "avocation",
+    "kind": "snapshot",
+    "target": "afición",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "aficiones"
+  },
+  {
+    "source": "casuistry",
+    "kind": "snapshot",
+    "target": "casuística",
+    "partOfSpeech": "noun",
+    "gender": "feminine",
+    "plural": "casuísticas"
+  },
+  {
+    "source": "enneadecagon",
+    "kind": "snapshot",
+    "target": "eneadecágono",
+    "partOfSpeech": "noun",
+    "gender": "masculine",
+    "plural": "eneadecágonos"
   }
 ]

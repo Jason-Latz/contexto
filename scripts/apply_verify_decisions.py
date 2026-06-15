@@ -20,6 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PACK = ROOT / "public" / "language-packs" / "es.json"
+LEDGER = ROOT / "pipeline" / "data" / "verify_ledger.json"
 
 
 def find(entries, source):
@@ -73,10 +74,21 @@ def main():
 
     out = {"curated": curated, "skipped": skipped}
     Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=1))
+
+    # Advance the ledger by the sources we actually have decisions for (commit-after-apply
+    # semantics — see build_verify_batch.py). Words with no decision stay un-ledgered and
+    # get re-queued by the next build.
+    decided = {d.get("source") for d in decisions if d.get("source")}
+    done = set(json.loads(LEDGER.read_text())) if LEDGER.exists() else set()
+    before = len(done)
+    done |= decided
+    LEDGER.parent.mkdir(parents=True, exist_ok=True)
+    LEDGER.write_text(json.dumps(sorted(done), ensure_ascii=False))
+
     print(f"decisions={len(decisions)} -> curated={len(curated)} skipped={len(skipped)} incomplete={len(incomplete)}")
     for s in incomplete[:15]:
         print("   incomplete:", s)
-    print(f"wrote {args.out}")
+    print(f"wrote {args.out}; ledger {before} -> {len(done)}")
 
 
 if __name__ == "__main__":
