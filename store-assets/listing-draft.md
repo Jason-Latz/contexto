@@ -33,8 +33,8 @@ Made by Jason Latz — https://jasonlatz.com (set this as the listing's "Develop
 
 ## Links
 
-- Homepage: TBD — the deployed Vercel site URL (deploy from `site/`; see MORNING-CHECKLIST.md).
-- Privacy policy URL: TBD — the deployed `/privacy/` page on the Vercel domain above.
+- Homepage: https://contexto-mauve.vercel.app
+- Privacy policy URL: https://contexto-mauve.vercel.app/privacy/
 
 ## Release Checklist
 
@@ -42,4 +42,4 @@ Made by Jason Latz — https://jasonlatz.com (set this as the listing's "Develop
 - [x] Language pack validation passes.
 - [x] Icons render at 16, 32, 48, and 128 px.
 - [x] Privacy policy includes support contact.
-- [ ] Store screenshots are captured from Spanish fixture and real article pages.
+- [x] Store screenshots captured (1280×800) — store-assets/screenshots/ (immersion, hover tooltip, saved word, popup).

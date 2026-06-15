@@ -2,15 +2,18 @@
 
 Ordered manual steps to finish the Chrome Web Store submission. Do them top to bottom.
 
-_Status: the landing site is merged into `main` (was `site/landing`). Step 2 (screenshots) and both polish items below are done. Steps 1 and 3 are yours (Vercel deploy + filling the listing)._
+_Status: site merged to `main` and DEPLOYED to production (https://contexto-mauve.vercel.app). Steps 1, 2, and both polish items are done. Only Step 3 — fill the listing + submit — is left._
 
-## 1. Deploy the landing site to Vercel
+## 1. Deploy the landing site to Vercel — DONE
 
-- [ ] Import this repo into Vercel (New Project -> import `Textum`).
-- [ ] Set **Root Directory = `site`** (the site is a static folder, no build step).
-- [ ] Deploy.
-- [ ] Note the public URL: `__________` (production domain).
-- [ ] Note the privacy URL: `<production-domain>/privacy/` -> `__________`.
+Deployed to production via Vercel CLI — project `contexto` (scope `jason-latzs-projects`), the
+`site/` folder as a static project.
+
+- [x] Live site: **https://contexto-mauve.vercel.app**
+- [x] Privacy URL (for the listing): **https://contexto-mauve.vercel.app/privacy/**
+- Redeploy after changes: `vercel deploy --prod --cwd site`.
+- Optional: add a custom domain (e.g. contexto.jasonlatz.com) in the Vercel dashboard, then
+  update `og:url` / `og:image` in `site/index.html` to match.
 
 ## 2. Extension store screenshots (1280x800) — DONE
 
