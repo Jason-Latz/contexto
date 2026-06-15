@@ -26,15 +26,15 @@ HAND = {
     "house": ["casa"], "dog": ["perro"], "cat": ["gato"], "water": ["agua"],
     "book": ["libro"], "city": ["ciudad"], "man": ["hombre"], "woman": ["mujer"],
     "day": ["día"], "night": ["noche"], "food": ["comida"], "friend": ["amigo"],
-    "school": ["escuela", "colegio"], "tree": ["árbol"], "street": ["calle"],
-    "world": ["mundo"], "year": ["año"], "hand": ["mano"], "eye": ["ojo"],
-    "door": ["puerta"], "table": ["mesa"], "name": ["nombre"], "river": ["río"],
+    "school": ["escuela", "colegio"], "street": ["calle"],
+    "world": ["mundo"], "year": ["año"], "eye": ["ojo"],
+    "door": ["puerta"], "table": ["mesa", "tabla"], "name": ["nombre"], "river": ["río"],
     "country": ["país"], "money": ["dinero"], "child": ["niño"], "mother": ["madre"],
-    "father": ["padre"], "head": ["cabeza"], "heart": ["corazón"], "word": ["palabra"],
+    "father": ["padre"], "heart": ["corazón"], "word": ["palabra"],
     # common verbs (acceptable sets widened for POS-ambiguous headwords)
-    "eat": ["comer"], "drink": ["beber"], "run": ["correr", "carrera"], "read": ["leer"],
+    "eat": ["comer"], "drink": ["beber", "bebida"], "read": ["leer", "lectura"],
     "write": ["escribir"], "speak": ["hablar"], "walk": ["caminar", "andar", "paseo"],
-    "sleep": ["dormir"], "buy": ["comprar"], "sell": ["vender"],
+    "sleep": ["dormir", "sueño"], "buy": ["comprar"], "sell": ["vender"],
     "live": ["vivir", "en vivo", "en directo"], "open": ["abrir", "abierto"],
     "close": ["cerrar", "cercano", "cerca"], "learn": ["aprender"], "teach": ["enseñar"],
     # common adjectives
@@ -60,8 +60,15 @@ def main():
     entries = json.loads(PACK.read_text())["entries"]
     golden = []
 
+    dropped = []
     for source, acceptable in HAND.items():
+        e = find(entries, source)
+        if not e or e.get("eligible") is not True or e.get("confidence") != "high":
+            dropped.append(source)
+            continue
         golden.append({"source": source, "kind": "hand", "acceptable": acceptable})
+    if dropped:
+        print(f"WARN: {len(dropped)} hand words not yet eligible+high (dropped): {dropped}")
 
     hand_sources = {s.lower() for s in HAND}
     # stratified snapshot of verified entries across frequency bands
