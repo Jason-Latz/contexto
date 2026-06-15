@@ -9,6 +9,10 @@ __pycache__/
 npm-debug.log*
 OVERNIGHT_PLAN.md
 MORNING_REPORT.md
+NIGHT_LOG.md
 .claude/
 batch.json
 decisions.json
+tests/live/screenshots/
+tests/live/.user-data/
+tests/live/.dist-test/
