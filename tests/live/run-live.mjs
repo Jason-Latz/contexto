@@ -162,6 +162,21 @@ async function runPopup(context) {
         if (!/English/.test(body) || !/Spanish/.test(body) || !/(dog|house)/.test(body)) res.failures.push('CSV content invalid')
       } else { res.failures.push('CSV export produced no download') }
     }
+    // info tooltip (density "i") must stay within the popup bounds — regression guard
+    const infoIcon = page.locator('.info-icon').first()
+    if (await infoIcon.count()) {
+      await infoIcon.hover()
+      await page.waitForTimeout(300)
+      res.infoTooltip = await page.evaluate(() => {
+        const el = document.querySelector('.info-tooltip')
+        if (!el) return null
+        const r = el.getBoundingClientRect()
+        const bw = Math.round(document.body.getBoundingClientRect().width)
+        return { left: Math.round(r.left), right: Math.round(r.right), vw: bw, visible: getComputedStyle(el).opacity !== '0' }
+      })
+      const t = res.infoTooltip
+      if (t && (t.left < 0 || t.right > t.vw + 1)) res.failures.push(`info-tooltip overflows popup (left=${t.left} right=${t.right} width=${t.vw})`)
+    }
     await page.screenshot({ path: path.join(SHOTS, 'popup.png') })
   } catch (e) {
     res.failures.push('exception: ' + String(e).slice(0, 160))
@@ -169,7 +184,7 @@ async function runPopup(context) {
     if (res.consoleErrors.length) res.failures.push(`${res.consoleErrors.length} console error(s)`)
     await page.close()
   }
-  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] popup: toggles=${res.toggles} exports=${res.exportButtons} credit=${res.creditLink} ${res.failures.join('; ')}`)
+  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] popup: toggles=${res.toggles} exports=${res.exportButtons} credit=${res.creditLink} tip=${res.infoTooltip ? `[${res.infoTooltip.left},${res.infoTooltip.right}]/${res.infoTooltip.vw}` : 'n/a'} ${res.failures.join('; ')}`)
   return res
 }
 

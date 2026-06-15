@@ -121,13 +121,13 @@
     }
 
     .section-title-with-info {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
     .info-icon {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -148,12 +148,14 @@
     }
 
     .info-tooltip {
+      /* Anchored to the section-title row (spans the card width) rather than the
+         tiny icon, so it can never overflow the popup's left/right edges. */
       position: absolute;
-      right: -6px;
-      left: auto;
+      left: 0;
+      right: 0;
       bottom: calc(100% + 8px);
       z-index: 10;
-      width: 232px;
+      width: auto;
       padding: 9px 11px;
       border: 1px solid var(--ctx-border);
       border-radius: var(--ctx-radius-sm);
