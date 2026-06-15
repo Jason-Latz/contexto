@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy — Contexto</title>
+    <meta
+      name="description"
+      content="Contexto runs entirely on your device. It makes no runtime network calls and does not collect, sell, or transfer your data."
+    />
+    <meta name="theme-color" content="#2f5d80" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/png" href="/assets/favicon-128.png" />
+    <link rel="apple-touch-icon" href="/assets/favicon-128.png" />
+
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- =================== HEADER =================== -->
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="Contexto home">
+          <span class="brand-mark" aria-hidden="true"><span>ñ</span></span>
+          <span class="brand-name">Contexto</span>
+        </a>
+        <span class="pill">Coming soon</span>
+      </div>
+    </header>
+
+    <main class="doc">
+      <div class="wrap">
+        <article class="prose">
+          <a class="back-link" href="/">← Back to Contexto</a>
+
+          <h1>Contexto privacy policy</h1>
+          <p class="updated">Last updated: June 14, 2026</p>
+
+          <p>
+            Contexto runs entirely on your device, in Chrome, using a bundled
+            Spanish language pack. It has a single purpose: to replace eligible
+            English words on the pages you read with their Spanish equivalents and
+            help you review the words you save.
+          </p>
+
+          <h2>Data collected</h2>
+          <p>
+            Contexto stores its state in <code>chrome.storage.local</code> on your
+            own device, including:
+          </p>
+          <ul>
+            <li>selected replacement density</li>
+            <li>saved unknown-word and review state</li>
+            <li>blocked-domain settings</li>
+            <li>recent session words for local quiz behavior</li>
+          </ul>
+          <p>This data never leaves your device.</p>
+
+          <h2>Data we do not collect or sell</h2>
+          <p>
+            Contexto does not collect personal information, browsing history, or
+            page content on any server.
+            <strong
+              >We do not sell, rent, or transfer your data to third parties, and we
+              do not use it for any purpose unrelated to the single purpose
+              above.</strong
+            >
+          </p>
+
+          <h2>Network use</h2>
+          <p>
+            Contexto makes no runtime network calls. It does not send page text,
+            browsing history, or translation requests to any server, and it uses no
+            hosted backend or translation API. Unknown-word exports (CSV / Quizlet
+            TSV) are generated locally from data already stored on your device.
+          </p>
+
+          <h2>Page access</h2>
+          <p>
+            Contexto's content script runs on the pages you visit so it can read
+            page text and replace eligible English words in context — this is the
+            only reason it needs broad page access, and the text is processed
+            locally and never transmitted. Contexto skips form controls, code
+            blocks, editable content, its own UI, non-English content, and any
+            domains you block.
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            Made by Jason Latz — <a href="https://jasonlatz.com">jasonlatz.com</a>.
+            For support or questions, open an issue at
+            <a href="https://github.com/Jason-Latz/contexto/issues"
+              >github.com/Jason-Latz/contexto/issues</a
+            >.
+          </p>
+        </article>
+      </div>
+    </main>
+
+    <!-- =================== FOOTER =================== -->
+    <footer class="site-footer">
+      <div class="wrap">
+        <span class="footer-mark">
+          <span class="brand-mark" aria-hidden="true"><span>ñ</span></span>
+          Made by <a href="https://jasonlatz.com">Jason Latz</a>
+        </span>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="/privacy/">Privacy</a>
+          <a href="https://github.com/Jason-Latz/contexto/blob/main/LICENSE"
+            >MIT License</a
+          >
+          <a href="https://github.com/Jason-Latz/contexto">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contexto, learn Spanish by reading the web</title>
+    <meta
+      name="description"
+      content="Learn Spanish while you read — Contexto swaps select English words for their Spanish equivalents on any page. Fully offline."
+    />
+    <meta name="theme-color" content="#2f5d80" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contexto, learn Spanish by reading the web" />
+    <meta
+      property="og:description"
+      content="Passive Spanish immersion in your browser. A few English words quietly become Spanish, in context, as you read. Fully offline and open source."
+    />
+    <meta property="og:image" content="/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contexto, learn Spanish by reading the web" />
+    <meta
+      name="twitter:description"
+      content="Passive Spanish immersion in your browser. A few English words quietly become Spanish, in context, as you read."
+    />
+    <meta name="twitter:image" content="/assets/og.png" />
+
+    <link rel="icon" type="image/png" href="/assets/favicon-128.png" />
+    <link rel="apple-touch-icon" href="/assets/favicon-128.png" />
+
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- =================== HEADER =================== -->
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="Contexto home">
+          <span class="brand-mark" aria-hidden="true"><span>ñ</span></span>
+          <span class="brand-name">Contexto</span>
+        </a>
+        <span class="pill">Coming soon</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- =================== HERO =================== -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="wrap">
+          <h1 id="hero-heading" class="visually-hidden">
+            Contexto, learn Spanish by reading the web
+          </h1>
+          <p class="visually-hidden">
+            The lines below add one Spanish word at a time. Each Spanish word is
+            underlined; hovering it shows the English original. Below them, a
+            slider lets you raise how much Spanish appears in a sample paragraph.
+          </p>
+
+          <!-- ---- Act one: the reveal ---- -->
+          <div class="reveal">
+            <p class="eyebrow">Read these in order</p>
+            <div class="reveal-lines" id="ctx-reveal">
+              <p class="line">
+                I poured the
+                <span class="tr" lang="es" title="milk to leche">leche</span> into
+                my morning coffee.
+              </p>
+              <p class="line">
+                The
+                <span class="tr" lang="es" title="cat to gato">gato</span> sat in
+                the <span class="tr" lang="es" title="sun to sol">sol</span>,
+                perfectly still.
+              </p>
+              <p class="line">
+                My
+                <span class="tr" lang="es" title="sister to hermana">hermana</span>
+                reads her
+                <span class="tr" lang="es" title="book to libro">libro</span> every
+                <span class="tr" lang="es" title="night to noche">noche</span>.
+              </p>
+              <p class="line">
+                We walk to the
+                <span class="tr" lang="es" title="market to mercado">mercado</span>
+                for <span class="tr" lang="es" title="bread to pan">pan</span> and
+                <span class="tr" lang="es" title="water to agua">agua</span>.
+              </p>
+            </div>
+            <p class="reveal-resolve">You just read Spanish. Nobody taught you.</p>
+            <p class="reveal-sub">
+              That is comprehensible input. That is Contexto.
+            </p>
+          </div>
+
+          <!-- ---- Act two: the live dial-in ---- -->
+          <div class="dial">
+            <div class="dial-head">
+              <h2>Try it on this page.</h2>
+              <p>
+                Slide toward Spanish. Watch the paragraph below change under your
+                hand — then hover any underlined word.
+              </p>
+            </div>
+
+            <div id="ctx-live">
+              <h2 class="visually-hidden">Live Spanish density demo</h2>
+              <div class="frame">
+                <div class="bar">
+                  <span class="lab">Spanish</span>
+                  <input
+                    id="ctx-range"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0"
+                    step="1"
+                    aria-label="Spanish density"
+                    aria-valuetext="0 percent Spanish, 0 words shown"
+                  />
+                  <span class="read" id="ctx-read">0% · 0 words</span>
+                </div>
+
+                <p class="manifesto" id="ctx-text">
+                  You did not learn your first
+                  <span class="w" data-en="language" data-es="idioma" data-th="0.36"
+                    >language</span
+                  >
+                  from flashcards. You
+                  <span class="w" data-en="learned" data-es="aprendiste" data-th="0.80"
+                    >learned</span
+                  >
+                  it by
+                  <span class="w" data-en="living" data-es="vivir" data-th="0.62"
+                    >living</span
+                  >
+                  inside it, meeting each new
+                  <span class="w" data-en="word" data-es="palabra" data-th="0.40"
+                    >word</span
+                  >
+                  wrapped in a
+                  <span class="w" data-en="sentence" data-es="frase" data-th="0.50"
+                    >sentence</span
+                  >
+                  you already
+                  <span
+                    class="w"
+                    data-en="understood"
+                    data-es="entendías"
+                    data-th="0.90"
+                    >understood</span
+                  >, and guessing the
+                  <span class="w" data-en="rest" data-es="resto" data-th="0.68"
+                    >rest</span
+                  >. That quiet
+                  <span
+                    class="w"
+                    data-en="inference"
+                    data-es="inferencia"
+                    data-th="0.30"
+                    >inference</span
+                  >, repeated a thousand times, is how
+                  <span class="w" data-en="fluency" data-es="fluidez" data-th="0.24"
+                    >fluency</span
+                  >
+                  is built. Contexto brings the same
+                  <span
+                    class="w"
+                    data-en="immersion"
+                    data-es="inmersión"
+                    data-th="0.12"
+                    >immersion</span
+                  >
+                  to the pages you already
+                  <span class="w" data-en="read" data-es="leer" data-th="0.56"
+                    >read</span
+                  >, a few
+                  <span class="w" data-en="words" data-es="palabras" data-th="0.45"
+                    >words</span
+                  >
+                  at a time, in
+                  <span class="w" data-en="Spanish" data-es="español" data-th="0.18"
+                    >Spanish</span
+                  >, in context.
+                </p>
+
+                <p class="cap">
+                  This is the actual extension behavior — a dial from your reading
+                  to gentle immersion.
+                </p>
+              </div>
+              <div class="tip" id="ctx-tip" role="status" aria-live="off"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== THESIS =================== -->
+      <section class="thesis" aria-labelledby="thesis-heading">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">The idea</p>
+            <h2 id="thesis-heading">How people actually learn a language</h2>
+          </div>
+
+          <div class="beats">
+            <div class="beat">
+              <h3>Drills teach you about a language.</h3>
+              <p>
+                Classes, flashcards, and quizzes build knowledge of rules. Fluency
+                is acquired differently — by meeting words in context you mostly
+                already understand and inferring the rest. Krashen called this
+                comprehensible input.
+              </p>
+            </div>
+
+            <div class="beat">
+              <h3>You already do this.</h3>
+              <p>
+                You learned your first language this way, and you still guess
+                unfamiliar English words from their surroundings every day.
+                Contexto simply points that same instinct at Spanish.
+              </p>
+            </div>
+
+            <div class="beat">
+              <h3>Immersion, without moving abroad.</h3>
+              <p>
+                You cannot always live in Madrid, but you already read for hours a
+                day. Contexto turns that ordinary reading into gentle, dosed
+                immersion — a few words at a time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== HOW IT WORKS =================== -->
+      <section class="how" aria-labelledby="how-heading">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">How it works</p>
+            <h2 id="how-heading">Four steps, then it fades into your reading</h2>
+          </div>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="num">1</span>
+              <p>Add Contexto to Chrome.</p>
+            </li>
+            <li class="step">
+              <span class="num">2</span>
+              <p>Read any page as usual.</p>
+            </li>
+            <li class="step">
+              <span class="num">3</span>
+              <p>
+                A few words appear in Spanish, in context — like
+                <span class="tr" lang="es" title="house to casa">casa</span>.
+              </p>
+            </li>
+            <li class="step">
+              <span class="num">4</span>
+              <p>
+                Hover to see the original; click to save it — like
+                <span class="saved">palabra</span> — and review later.
+              </p>
+            </li>
+          </ol>
+
+          <p class="offline-note">
+            Everything runs fully offline, on your device. Nothing you read leaves
+            your browser.
+          </p>
+        </div>
+      </section>
+
+      <!-- =================== FAQ =================== -->
+      <section class="faq" aria-labelledby="faq-heading">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Questions</p>
+            <h2 id="faq-heading">Frequently asked</h2>
+          </div>
+
+          <div class="faq-list">
+            <details>
+              <summary>Is it free?</summary>
+              <p class="answer">
+                Yes — free and open source under the MIT license.
+              </p>
+            </details>
+
+            <details>
+              <summary>Does my reading leave my device?</summary>
+              <p class="answer">
+                No. Contexto runs entirely offline; it never sends page text,
+                browsing history, or translations to any server. See the
+                <a href="/privacy/">privacy page</a>.
+              </p>
+            </details>
+
+            <details>
+              <summary>Which languages?</summary>
+              <p class="answer">
+                English to Spanish today; the engine is language-agnostic.
+              </p>
+            </details>
+
+            <details>
+              <summary>How is this different from flashcards?</summary>
+              <p class="answer">
+                Flashcards quiz you out of context; Contexto teaches in context,
+                the way immersion does, with no quizzes required (an optional
+                review exists).
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== CTA =================== -->
+      <section class="cta" aria-labelledby="cta-heading">
+        <div class="wrap">
+          <p class="eyebrow">Get it</p>
+          <h2 id="cta-heading">Read the web. Pick up Spanish on the way.</h2>
+
+          <div class="cta-actions">
+            <span
+              class="badge-btn"
+              aria-disabled="true"
+              title="Launching soon"
+            >
+              <span class="chrome-dot" aria-hidden="true"></span>
+              Coming soon to the Chrome Web Store
+            </span>
+            <a
+              class="btn-secondary"
+              href="https://github.com/Jason-Latz/contexto"
+              >View source on GitHub</a
+            >
+          </div>
+          <span class="badge-note">Launching soon.</span>
+          <p class="cta-star">Star the repo to hear when it launches.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- =================== FOOTER =================== -->
+    <footer class="site-footer">
+      <div class="wrap">
+        <span class="footer-mark">
+          <span class="brand-mark" aria-hidden="true"><span>ñ</span></span>
+          Made by <a href="https://jasonlatz.com">Jason Latz</a>
+        </span>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="/privacy/">Privacy</a>
+          <a href="https://github.com/Jason-Latz/contexto/blob/main/LICENSE"
+            >MIT License</a
+          >
+          <a href="https://github.com/Jason-Latz/contexto">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="/main.js"></script>
+  </body>
+</html>

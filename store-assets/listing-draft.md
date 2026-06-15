@@ -31,10 +31,15 @@ Contexto is designed to feel quiet and academic rather than game-like. It uses a
 
 Made by Jason Latz — https://jasonlatz.com (set this as the listing's "Developer website").
 
+## Links
+
+- Homepage: TBD — the deployed Vercel site URL (deploy from `site/`; see MORNING-CHECKLIST.md).
+- Privacy policy URL: TBD — the deployed `/privacy/` page on the Vercel domain above.
+
 ## Release Checklist
 
-- Build passes.
-- Language pack validation passes.
-- Icons render at 16, 32, 48, and 128 px.
-- Privacy policy includes support contact.
-- Store screenshots are captured from Spanish fixture and real article pages.
+- [x] Build passes.
+- [x] Language pack validation passes.
+- [x] Icons render at 16, 32, 48, and 128 px.
+- [x] Privacy policy includes support contact.
+- [ ] Store screenshots are captured from Spanish fixture and real article pages.
