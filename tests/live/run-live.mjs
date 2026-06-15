@@ -87,6 +87,91 @@ async function seed(context, s) {
   }, settingsFor(s))
 }
 
+async function extId(context) {
+  const sw = await getServiceWorker(context)
+  return new URL(sw.url()).host
+}
+
+// C1 — onboarding: with no seeded settings, the LevelPicker overlay must appear,
+// accept a level, tear down, and injection must follow.
+async function runOnboarding(context) {
+  const res = { name: 'onboarding', failures: [], consoleErrors: [] }
+  const sw = await getServiceWorker(context)
+  await sw.evaluate(async () => { await chrome.storage.local.clear() })
+  const page = await context.newPage()
+  page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })
+  try {
+    await page.goto(fileUrl(path.join(FIX, 'article-light.html')), { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector('#contexto-onboarding', { timeout: 8000 })
+    await page.screenshot({ path: path.join(SHOTS, 'onboarding.png') })
+    const btn = page.locator('#contexto-onboarding button', { hasText: /Advanced/i }).first()
+    await btn.click()
+    await page.waitForTimeout(2000)
+    const gone = await page.locator('#contexto-onboarding').count()
+    if (gone !== 0) res.failures.push('overlay did not tear down')
+    const spans = await page.locator('[data-contexto="true"]').count()
+    res.spanCount = spans
+    if (spans === 0) res.failures.push('no injection after onboarding')
+  } catch (e) {
+    res.failures.push('exception: ' + String(e).slice(0, 160))
+  } finally {
+    if (res.consoleErrors.length) res.failures.push(`${res.consoleErrors.length} console error(s)`)
+    await page.close()
+  }
+  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] onboarding: spans=${res.spanCount} ${res.failures.join('; ')}`)
+  return res
+}
+
+// C2 — popup: controls render, export produces valid files, credit link present.
+async function runPopup(context) {
+  const res = { name: 'popup', failures: [], consoleErrors: [] }
+  const sw = await getServiceWorker(context)
+  // seed a couple of saved "unknown" words so exports have content
+  await sw.evaluate(async () => {
+    await chrome.storage.local.set({
+      contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: ['example.com'], domainDecisions: {} },
+      contexto_lexicon: { dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000000000 }, house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000001000 } },
+    })
+  })
+  const id = await extId(context)
+  const page = await context.newPage()
+  page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })
+  try {
+    await page.goto(`chrome-extension://${id}/popup/index.html`, { waitUntil: 'domcontentloaded' })
+    await page.waitForTimeout(1200)
+    res.toggles = await page.locator('.toggle-button').count()
+    res.exportButtons = await page.locator('.export-button').count()
+    res.creditLink = await page.locator('a[href*="jasonlatz"]').count()
+    res.blockedChips = await page.locator('.blocked-domain, .domain-chip, .blocked-list *').count()
+    if (res.toggles < 1) res.failures.push('no toggle buttons')
+    if (res.exportButtons < 2) res.failures.push('missing export buttons (CSV/Quizlet)')
+    if (res.creditLink < 1) res.failures.push('missing jasonlatz.com credit link')
+    // CSV export download
+    const csvBtn = page.locator('.export-button', { hasText: /CSV/i }).first()
+    if (await csvBtn.count()) {
+      const [dl] = await Promise.all([
+        page.waitForEvent('download', { timeout: 5000 }).catch(() => null),
+        csvBtn.click(),
+      ])
+      if (dl) {
+        const stream = await dl.createReadStream()
+        let body = ''
+        for await (const c of stream) body += c
+        res.csvSample = body.slice(0, 160)
+        if (!/English,Spanish/.test(body) || !/dog|house/.test(body)) res.failures.push('CSV content invalid')
+      } else { res.failures.push('CSV export produced no download') }
+    }
+    await page.screenshot({ path: path.join(SHOTS, 'popup.png') })
+  } catch (e) {
+    res.failures.push('exception: ' + String(e).slice(0, 160))
+  } finally {
+    if (res.consoleErrors.length) res.failures.push(`${res.consoleErrors.length} console error(s)`)
+    await page.close()
+  }
+  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] popup: toggles=${res.toggles} exports=${res.exportButtons} credit=${res.creditLink} ${res.failures.join('; ')}`)
+  return res
+}
+
 async function run() {
   makeTestBuild()
   fs.mkdirSync(SHOTS, { recursive: true })
@@ -187,6 +272,12 @@ async function run() {
                 `tooltip=${res.tooltip?.found ? (res.tooltip.onScreen ? 'on-screen' : 'OFF-SCREEN') : 'none'} ` +
                 `${res.failures.join('; ')}${res.warnings.length ? ' | ' + res.warnings.join('; ') : ''}`)
   }
+
+  // UI scenarios (onboarding + popup) — criteria C1/C2
+  const uiResults = []
+  uiResults.push(await runOnboarding(context))
+  uiResults.push(await runPopup(context))
+  results.push(...uiResults)
 
   await context.close()
   fs.writeFileSync(path.join(SHOTS, 'results.json'), JSON.stringify(results, null, 2))
