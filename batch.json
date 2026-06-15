@@ -1,1352 +1,1352 @@
 [
   {
-    "source": "internet review",
+    "source": "walk the walk",
+    "partOfSpeech": "expression",
+    "target": "actuar",
+    "gloss": "To act consistently in line with one's claims; to follow through.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "i don't speak english",
+    "partOfSpeech": "expression",
+    "target": "no hablo español",
+    "gloss": "Indicates that the speaker is unable to speak the English language.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "give the lie to",
+    "partOfSpeech": "expression",
+    "target": "desmentir",
+    "gloss": "To reveal or prove (something) to be false; to refute.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "mary",
     "partOfSpeech": "noun",
-    "target": "reseña de internet",
-    "gloss": "an evaluation or assessment related to internet",
+    "target": "María",
+    "gloss": "Mary of Bethany, the sister of Lazarus and Martha.",
     "gender": "feminine",
-    "plural": "reseñas de internet",
-    "enZipf": 4.79
+    "plural": "Marías",
+    "enZipf": 4.78
   },
   {
-    "source": "daily review",
+    "source": "central europe",
+    "partOfSpeech": "expression",
+    "target": "Europa Central",
+    "gloss": "A geographic region in the center of Europe, usually including Austria, Switzerland, the Czech Republic, Hungary, Poland, Slovakia, Slovenia, Croatia and Germany.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "european council",
+    "partOfSpeech": "expression",
+    "target": "Consejo Europeo",
+    "gloss": "an institution of the European Union (EU) charged with defining the EU's overall political direction and priorities, that comprises the heads of state or government of the membe...",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "european union",
+    "partOfSpeech": "expression",
+    "target": "Unión Europea",
+    "gloss": "A supranational organisation, consisting of 27 member states, created in the 1950s to bring the nations of Europe into closer economic and political connection.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "north africa",
+    "partOfSpeech": "expression",
+    "target": "África del Norte",
+    "gloss": "A geographic region comprising the northern part of Africa, usually referring to specifically the regions north of the Sahara Desert where Arabic is widely spoken as a mother to...",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "standard model",
+    "partOfSpeech": "expression",
+    "target": "modelo estándar",
+    "gloss": "A theory about the electromagnetic, weak, and strong nuclear interactions that mediate the dynamics of the known subatomic particles.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.78
+  },
+  {
+    "source": "senior report",
     "partOfSpeech": "noun",
-    "target": "reseña de vida diaria",
-    "gloss": "a evaluation or assessment related to daily",
+    "target": "informe de adultos mayores",
+    "gloss": "a written account or summary related to senior",
+    "gender": "masculine",
+    "plural": "informes de adultos mayores",
+    "enZipf": 4.77
+  },
+  {
+    "source": "security photo",
+    "partOfSpeech": "noun",
+    "target": "foto de seguridad",
+    "gloss": "a photographic image related to security",
     "gender": "feminine",
-    "plural": "reseñas de vida diaria",
-    "enZipf": 4.79
+    "plural": "fotos de seguridad",
+    "enZipf": 4.77
   },
   {
-    "source": "career review",
+    "source": "personal photo",
     "partOfSpeech": "noun",
-    "target": "reseña de carrera",
-    "gloss": "a evaluation or assessment related to career",
+    "target": "foto de asuntos personales",
+    "gloss": "a photographic image related to personal",
     "gender": "feminine",
-    "plural": "reseñas de carrera",
-    "enZipf": 4.79
+    "plural": "fotos de asuntos personales",
+    "enZipf": 4.77
   },
   {
-    "source": "office analysis",
+    "source": "account photo",
     "partOfSpeech": "noun",
-    "target": "análisis de oficina",
-    "gloss": "an detailed examination related to office",
-    "gender": "masculine",
-    "plural": "análisis de oficina",
-    "enZipf": 4.79
-  },
-  {
-    "source": "food analysis",
-    "partOfSpeech": "noun",
-    "target": "análisis de comida",
-    "gloss": "a detailed examination related to food",
-    "gender": "masculine",
-    "plural": "análisis de comida",
-    "enZipf": 4.79
-  },
-  {
-    "source": "research analysis",
-    "partOfSpeech": "noun",
-    "target": "análisis de investigación",
-    "gloss": "a detailed examination related to research",
-    "gender": "masculine",
-    "plural": "análisis de investigación",
-    "enZipf": 4.79
-  },
-  {
-    "source": "history analysis",
-    "partOfSpeech": "noun",
-    "target": "análisis de historia",
-    "gloss": "a detailed examination related to history",
-    "gender": "masculine",
-    "plural": "análisis de historia",
-    "enZipf": 4.79
-  },
-  {
-    "source": "safety study",
-    "partOfSpeech": "noun",
-    "target": "estudio de seguridad",
-    "gloss": "a organized investigation related to safety",
-    "gender": "masculine",
-    "plural": "estudios de seguridad",
-    "enZipf": 4.79
-  },
-  {
-    "source": "senior research",
-    "partOfSpeech": "noun",
-    "target": "investigación de adultos mayores",
-    "gloss": "a systematic study related to senior",
+    "target": "foto de cuenta",
+    "gloss": "an photographic image related to account",
     "gender": "feminine",
-    "plural": "investigaciones de adultos mayores",
-    "enZipf": 4.79
+    "plural": "fotos de cuenta",
+    "enZipf": 4.77
   },
   {
-    "source": "extremely",
+    "source": "internet article",
+    "partOfSpeech": "noun",
+    "target": "artículo de internet",
+    "gloss": "an written web or print piece related to internet",
+    "gender": "masculine",
+    "plural": "artículos de internet",
+    "enZipf": 4.77
+  },
+  {
+    "source": "environment story",
+    "partOfSpeech": "noun",
+    "target": "historia de medio ambiente",
+    "gloss": "an account of events related to environment",
+    "gender": "feminine",
+    "plural": "historias de medio ambiente",
+    "enZipf": 4.77
+  },
+  {
+    "source": "weather story",
+    "partOfSpeech": "noun",
+    "target": "historia de clima",
+    "gloss": "a account of events related to weather",
+    "gender": "feminine",
+    "plural": "historias de clima",
+    "enZipf": 4.77
+  },
+  {
+    "source": "sales review",
+    "partOfSpeech": "noun",
+    "target": "reseña de ventas",
+    "gloss": "a evaluation or assessment related to sales",
+    "gender": "feminine",
+    "plural": "reseñas de ventas",
+    "enZipf": 4.77
+  },
+  {
+    "source": "student review",
+    "partOfSpeech": "noun",
+    "target": "reseña de estudiante",
+    "gloss": "a evaluation or assessment related to student",
+    "gender": "feminine",
+    "plural": "reseñas de estudiante",
+    "enZipf": 4.77
+  },
+  {
+    "source": "culture review",
+    "partOfSpeech": "noun",
+    "target": "reseña de cultura",
+    "gloss": "a evaluation or assessment related to culture",
+    "gender": "feminine",
+    "plural": "reseñas de cultura",
+    "enZipf": 4.77
+  },
+  {
+    "source": "store review",
+    "partOfSpeech": "noun",
+    "target": "reseña de tienda",
+    "gloss": "a evaluation or assessment related to store",
+    "gender": "feminine",
+    "plural": "reseñas de tienda",
+    "enZipf": 4.77
+  },
+  {
+    "source": "community analysis",
+    "partOfSpeech": "noun",
+    "target": "análisis de comunidad",
+    "gloss": "a detailed examination related to community",
+    "gender": "masculine",
+    "plural": "análisis de comunidad",
+    "enZipf": 4.77
+  },
+  {
+    "source": "data analysis",
+    "partOfSpeech": "noun",
+    "target": "análisis de datos",
+    "gloss": "a detailed examination related to data",
+    "gender": "masculine",
+    "plural": "análisis de datos",
+    "enZipf": 4.77
+  },
+  {
+    "source": "sports study",
+    "partOfSpeech": "noun",
+    "target": "estudio de deportes",
+    "gloss": "a organized investigation related to sports",
+    "gender": "masculine",
+    "plural": "estudios de deportes",
+    "enZipf": 4.77
+  },
+  {
+    "source": "annual study",
+    "partOfSpeech": "noun",
+    "target": "estudio de ciclo anual",
+    "gloss": "an organized investigation related to annual",
+    "gender": "masculine",
+    "plural": "estudios de ciclo anual",
+    "enZipf": 4.77
+  },
+  {
+    "source": "insurance study",
+    "partOfSpeech": "noun",
+    "target": "estudio de seguro",
+    "gloss": "an organized investigation related to insurance",
+    "gender": "masculine",
+    "plural": "estudios de seguro",
+    "enZipf": 4.77
+  },
+  {
+    "source": "plant research",
+    "partOfSpeech": "noun",
+    "target": "investigación de plantas",
+    "gloss": "a systematic study related to plant",
+    "gender": "feminine",
+    "plural": "investigaciones de plantas",
+    "enZipf": 4.77
+  },
+  {
+    "source": "neither",
     "partOfSpeech": "adverb",
-    "target": "extremadamente",
-    "gloss": "To an extreme degree.",
+    "target": "tampoco",
+    "gloss": "Similarly not.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "indeed",
+    "source": "possibly",
     "partOfSpeech": "adverb",
-    "target": "en efecto",
-    "gloss": "Truly; in fact; actually.",
+    "target": "posiblemente",
+    "gloss": "In the realm of possibility; indicates that the action may successfully be performed (is not impossible) regardless of any facts or circumstances known to, stated by or implied...",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "christ",
+    "source": "birth",
     "partOfSpeech": "noun",
-    "target": "Cristo",
-    "gloss": "A figure or other artistic depiction of Jesus Christ.",
+    "target": "nacimiento",
+    "gloss": "The process of childbearing; the beginning of life; the emergence of a human baby or other viviparous animal offspring from the mother's body into the environment.",
     "gender": "masculine",
-    "plural": "Cristos",
-    "enZipf": 4.79
+    "plural": "nacimientos",
+    "enZipf": 4.77
   },
   {
-    "source": "bet",
+    "source": "concept",
     "partOfSpeech": "noun",
-    "target": "apuesta",
-    "gloss": "A wager, an agreement between two parties that a stake (usually money) will be paid by the loser to the winner (the winner being the one who correctly forecast the outcome of an...",
+    "target": "concepto",
+    "gloss": "Understanding retained in the mind, from experience, reasoning and imagination; a generalization (generic, basic form), or abstraction (mental impression), of a particular set o...",
+    "gender": "masculine",
+    "plural": "conceptos",
+    "enZipf": 4.77
+  },
+  {
+    "source": "copy",
+    "partOfSpeech": "noun",
+    "target": "copia",
+    "gloss": "The result of gene or chromosomal duplication.",
     "gender": "feminine",
-    "plural": "apuestas",
-    "enZipf": 4.79
+    "plural": "copias",
+    "enZipf": 4.77
   },
   {
-    "source": "co-husband",
+    "source": "cup-and-ball",
     "partOfSpeech": "noun",
-    "target": "coesposo",
-    "gloss": "In a polyandrous marriage, another husband of a man’s wife.",
+    "target": "balero",
+    "gloss": "A traditional children's toy consisting of a hand-held wooden cup with a ball attached by a string. The player jerks the ball into the air and attempts to catch it in the cup.",
     "gender": "masculine",
-    "plural": "coesposos",
-    "enZipf": 4.79
+    "plural": "baleros",
+    "enZipf": 4.77
   },
   {
-    "source": "firm",
+    "source": "length",
     "partOfSpeech": "noun",
-    "target": "firma",
-    "gloss": "A business partnership; the name under which it trades.",
+    "target": "longitud",
+    "gloss": "The distance measured along the longest dimension of an object.",
     "gender": "feminine",
-    "plural": "firmas",
-    "enZipf": 4.79
+    "plural": "longitudes",
+    "enZipf": 4.77
   },
   {
-    "source": "handle",
+    "source": "she-cat",
     "partOfSpeech": "noun",
-    "target": "mango",
-    "gloss": "The part of an object which is (designed to be) held in the hand when used or moved.",
-    "gender": "masculine",
-    "plural": "mangos",
-    "enZipf": 4.79
-  },
-  {
-    "source": "negative",
-    "partOfSpeech": "noun",
-    "target": "negativo",
-    "gloss": "An image in which dark areas represent light ones, and the converse. [from 19th c.]",
-    "gender": "masculine",
-    "plural": "negativos",
-    "enZipf": 4.79
-  },
-  {
-    "source": "television",
-    "partOfSpeech": "noun",
-    "target": "televisión",
-    "gloss": "An electronic home entertainment device equipped with a screen and a speaker for receiving television signals and displaying them in audio-visual form.",
+    "target": "gata",
+    "gloss": "An (adult) female cat.",
     "gender": "feminine",
-    "plural": "televisiones",
-    "enZipf": 4.79
+    "plural": "gatas",
+    "enZipf": 4.77
   },
   {
-    "source": "till",
+    "source": "super-earth",
     "partOfSpeech": "noun",
-    "target": "caja",
-    "gloss": "A cash register.",
+    "target": "supertierra",
+    "gloss": "Any extrasolar rocky planet several times larger than Earth, especially such a planet detected as it transits its star.",
     "gender": "feminine",
-    "plural": "cajas",
-    "enZipf": 4.79
+    "plural": "supertierras",
+    "enZipf": 4.77
   },
   {
-    "source": "trouble",
-    "partOfSpeech": "noun",
-    "target": "lío",
-    "gloss": "A distressing or dangerous situation.",
-    "gender": "masculine",
-    "plural": "líos",
-    "enZipf": 4.79
-  },
-  {
-    "source": "camp",
+    "source": "best-selling",
     "partOfSpeech": "adjective",
-    "target": "amanerado",
-    "gloss": "Ostentatiously effeminate.",
+    "target": "superventas",
+    "gloss": "Highly popular with consumers purchasing goods within a specific class.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "correct",
+    "source": "completed",
     "partOfSpeech": "adjective",
-    "target": "correcto",
-    "gloss": "Free from error; true; accurate.",
+    "target": "completo",
+    "gloss": "Finished.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "dangerous",
+    "source": "dear",
     "partOfSpeech": "adjective",
-    "target": "peligroso",
-    "gloss": "Full of danger.",
+    "target": "entrañable",
+    "gloss": "Loved; lovable.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "back seat",
+    "source": "lucky",
+    "partOfSpeech": "adjective",
+    "target": "afortunado",
+    "gloss": "Favoured by luck; fortunate; having good success or good fortune.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "rare",
+    "partOfSpeech": "adjective",
+    "target": "raro",
+    "gloss": "Very uncommon; scarce.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "tough",
+    "partOfSpeech": "adjective",
+    "target": "resistente",
+    "gloss": "Rugged or physically hardy.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "christmas light",
     "partOfSpeech": "expression",
-    "target": "asiento trasero",
-    "gloss": "Any of the seats in the rear of a vehicle.",
+    "target": "luz de Navidad",
+    "gloss": "One of the electric lights, often arranged in strings, used at Christmas to decorate a Christmas tree, outdoor trees or bushes, a house, etc.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "basic law",
+    "source": "english studies",
     "partOfSpeech": "expression",
-    "target": "ley de bases",
-    "gloss": "A law or set of laws given to have constitutional powers and effect: a constitution.",
+    "target": "filología inglesa",
+    "gloss": "An academic discipline that includes the study of literatures written in the English language, English linguistics, and English sociolinguistics.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "big screen",
+    "source": "lie group",
     "partOfSpeech": "expression",
-    "target": "gran pantalla",
-    "gloss": "The large viewing surface upon which films are projected in a cinema.",
+    "target": "grupo de Lie",
+    "gloss": "Any group that is a smooth manifold and whose group operations are differentiable.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "building material",
+    "source": "asking price",
     "partOfSpeech": "expression",
-    "target": "material de construcción",
-    "gloss": "Any material which is used for construction purposes.",
+    "target": "precio de oferta",
+    "gloss": "The list price or sticker price of an item; the price without any discounts or incentives.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "complex number",
+    "source": "big mouth",
     "partOfSpeech": "expression",
-    "target": "número complejo",
-    "gloss": "A number of the form a + bi, where a and b are real numbers and i denotes the imaginary unit.",
+    "target": "lacoso",
+    "gloss": "The mouth of someone who talks too much, especially by making exaggerated claims or by inappropriately revealing information.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "computer program",
+    "source": "body shop",
     "partOfSpeech": "expression",
-    "target": "programa de ordenador",
-    "gloss": "A complete piece of software.",
+    "target": "carrocería",
+    "gloss": "A workshop in which damage to the bodywork of cars is repaired.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "double star",
+    "source": "computer security",
     "partOfSpeech": "expression",
-    "target": "estrella doble",
-    "gloss": "Two stars which form a stellar system, such that they orbit the point of equilibrium of their gravitational fields; a binary star.",
+    "target": "seguridad informática",
+    "gloss": "A branch of computer science that addresses enforcement of 'secure' behavior on the operation of computers.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "drop shot",
+    "source": "cover version",
     "partOfSpeech": "expression",
-    "target": "dejada",
-    "gloss": "In sports such as badminton, squash, tennis and volleyball, a lightly-struck shot that just lands into play.",
+    "target": "obra versionada",
+    "gloss": "A version of a song that is a new performance or rerecording of that song by a different artist.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "earth science",
+    "source": "failed state",
     "partOfSpeech": "expression",
-    "target": "ciencia de la terra",
-    "gloss": "Any of the sciences dealing with the planet Earth, such as geology and meteorology.",
+    "target": "estado fallido",
+    "gloss": "A state that has failed to meet the basic conditions and responsibilities of a sovereign government; one that has lost physical control of its territory, the ability to provide...",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "enter into",
+    "source": "fashion house",
     "partOfSpeech": "expression",
-    "target": "entrar en",
-    "gloss": "To engage in a formal or informal process.",
+    "target": "casa de moda",
+    "gloss": "a company employed in fashion design; a couturier",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "fair sex",
+    "source": "fast track",
     "partOfSpeech": "expression",
-    "target": "bello sexo",
-    "gloss": "Women collectively.",
+    "target": "de vía rápida",
+    "gloss": "The quickest or most direct method or path.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "family tree",
+    "source": "free throw",
     "partOfSpeech": "expression",
-    "target": "árbol genealógico",
-    "gloss": "A grafting technique involving the joining of different varieties of plants onto a single tree or plant.",
+    "target": "tiro libre",
+    "gloss": "A shot, worth one point, taken from the free-throw line and without opposition.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "flight number",
-    "partOfSpeech": "expression",
-    "target": "número de vuelo",
-    "gloss": "A callsign assigned to a commercial flight for the purposes of reservation and ticketing, typically consisting of a 2 character airline code and a 1 to 4 digit number to indicat...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "foreign language",
-    "partOfSpeech": "expression",
-    "target": "lengua extranjera",
-    "gloss": "A language that is not widely or officially spoken in a particular place.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "gold standard",
-    "partOfSpeech": "expression",
-    "target": "patrón oro",
-    "gloss": "A monetary system where the value of circulating money is linked to the value of gold.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "ground ball",
-    "partOfSpeech": "expression",
-    "target": "roletazo",
-    "gloss": "A batted ball that bounces one or more times on the infield; a grounder.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "holy water",
-    "partOfSpeech": "expression",
-    "target": "agua bendita",
-    "gloss": "In certain Christian churches, water that has been sanctified by a priest or bishop for the purpose of baptism or for the blessing of persons, places, or things.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "improve",
+    "source": "garden",
     "partOfSpeech": "verb",
-    "target": "mejorar",
-    "gloss": "To make (something) better; to increase the value or productivity (of something).",
+    "target": "trabajar el jardín",
+    "gloss": "To grow plants in a garden; to create or maintain a garden.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "international organization",
-    "partOfSpeech": "expression",
-    "target": "organismo internacional",
-    "gloss": "An organisation established by a treaty or other instrument governed by international law and possessing its own international legal personality.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "league table",
-    "partOfSpeech": "expression",
-    "target": "clasificación",
-    "gloss": "A tabular display of the teams in some league in order of win percentage or points awarded, often also including number of matches played, won, lost, and drawn, goal difference,...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "music theory",
-    "partOfSpeech": "expression",
-    "target": "teoría musical",
-    "gloss": "The field of study dealing with how music works, typically examining the language and notation of music, the patterns and structures in composers' techniques, and so on.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "note value",
-    "partOfSpeech": "expression",
-    "target": "valor de la nota",
-    "gloss": "A musical notation that indicates the relative duration of a note, using the color or shape of the note head, the presence or absence of a stem, and the presence of flags.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "paper cup",
-    "partOfSpeech": "expression",
-    "target": "vaso de papel",
-    "gloss": "A disposable cup made out of paper and often lined with plastic or wax to prevent liquid from leaking out or soaking through the paper.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "pop group",
-    "partOfSpeech": "expression",
-    "target": "grupo de pop",
-    "gloss": "A musical group specializing in pop music.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "popular science",
-    "partOfSpeech": "expression",
-    "target": "de divulgación científica",
-    "gloss": "Of, or having to do with science, but aimed at ordinary people as opposed to scientists; intended for general consumption.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "prevent",
+    "source": "host",
     "partOfSpeech": "verb",
-    "target": "impedir",
-    "gloss": "To stop (an outcome); to keep from (doing something). [from 16th c.]",
+    "target": "animar",
+    "gloss": "To perform the role of a host.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "pull off",
-    "partOfSpeech": "expression",
-    "target": "conseguir",
-    "gloss": "To achieve, accomplish, succeed at (something difficult).",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "right-click",
+    "source": "housing",
     "partOfSpeech": "verb",
-    "target": "clicar el botón derecho",
-    "gloss": "To press the right-hand button on a computer mouse.",
+    "target": "alojamiento",
+    "gloss": "activity of enclosing or providing residence",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "risk management",
+    "source": "job interview",
     "partOfSpeech": "expression",
-    "target": "gestión de riesgos",
-    "gloss": "The process of determining the maximum acceptable level of overall risk to and from a proposed activity, then using risk assessment techniques to determine the initial level of...",
+    "target": "entrevista de trabajo",
+    "gloss": "A formal interview in which a job applicant must answer questions, especially in a professional manner, to determine whether they are suitable for the job applied for.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "round table",
+    "source": "make-up artist",
     "partOfSpeech": "expression",
-    "target": "mesa redonda",
-    "gloss": "A conference at which participants of similar status discuss and exchange views.",
+    "target": "maquilladora",
+    "gloss": "A person who applies makeup and prosthetics for theatrical, television, film, fashion, magazines and similar productions.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "royal family",
+    "source": "news agency",
     "partOfSpeech": "expression",
-    "target": "familia real",
-    "gloss": "The family of the ruling sovereign of a country or state.",
+    "target": "agencia de noticias",
+    "gloss": "An organisation that gathers and distributes news to newspapers and radio and television broadcasters.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "set foot",
+    "source": "opportunity cost",
     "partOfSpeech": "expression",
-    "target": "pisar",
-    "gloss": "To enter",
+    "target": "coste de oportunidad",
+    "gloss": "The cost of an opportunity forgone (and the loss of the benefits that could be received from that opportunity); the most valuable forgone alternative.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "sign language",
+    "source": "personal computer",
     "partOfSpeech": "expression",
-    "target": "lengua de señas",
-    "gloss": "Sign languages (sense 1) considered collectively.",
+    "target": "ordenador personal",
+    "gloss": "A computer for use by one person at a time (using a microprocessor).",
     "gender": "",
     "plural": "",
-    "enZipf": 4.79
+    "enZipf": 4.77
   },
   {
-    "source": "sound box",
-    "partOfSpeech": "expression",
-    "target": "caja de resonancia",
-    "gloss": "The open chamber (resonator) of a stringed musical instrument, which intensifies its tone.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "sound card",
-    "partOfSpeech": "expression",
-    "target": "tarjeta de sonido",
-    "gloss": "A computer hardware device used for generating and capturing sounds.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "war crime",
-    "partOfSpeech": "expression",
-    "target": "crimen de guerra",
-    "gloss": "A punishable offence under international law for violations of the laws of war by any person or persons, military or civilian.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "weight training",
-    "partOfSpeech": "expression",
-    "target": "musculación",
-    "gloss": "A form of physical exercise using weights to increase the strength and size of muscles by using exercises specific for each muscle group.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "age of majority",
-    "partOfSpeech": "expression",
-    "target": "mayoría de edad",
-    "gloss": "The age at which the rights and privileges of an adult are legally granted or recognized; i.e.; the age where a person ceases to be a minor legally and becomes a legal adult.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "chief of staff",
-    "partOfSpeech": "expression",
-    "target": "jefe del servicio",
-    "gloss": "The head of any of several political departments in several nations.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "force of nature",
-    "partOfSpeech": "expression",
-    "target": "fuerza de la naturaleza",
-    "gloss": "A mighty natural force which is beyond human control, notably if potentially catastrophic, such as the elements (e.g. storms and extreme temperatures) or geological (e.g. seismi...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "join the club",
-    "partOfSpeech": "expression",
-    "target": "bienvenido al club",
-    "gloss": "An expression of sympathy for a shared experience.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "set up shop",
-    "partOfSpeech": "expression",
-    "target": "abrir un establecimiento",
-    "gloss": "To establish a business.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "take a seat",
-    "partOfSpeech": "expression",
-    "target": "tomar asiento",
-    "gloss": "To sit down; to become seated, to sit.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "walk the dog",
-    "partOfSpeech": "expression",
-    "target": "pasear al perro",
-    "gloss": "To take a dog for a walk, so as to give it exercise.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "waste of time",
-    "partOfSpeech": "expression",
-    "target": "pérdida de tiempo",
-    "gloss": "A pointless or unproductive task.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "do you speak english",
-    "partOfSpeech": "expression",
-    "target": "habla español",
-    "gloss": "Asks the interlocutor whether or not they are able to speak in the English language.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "down in the mouth",
-    "partOfSpeech": "expression",
-    "target": "cariacontecido",
-    "gloss": "Sad or discouraged, especially as indicated by one's facial appearance.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "fight fire with fire",
-    "partOfSpeech": "expression",
-    "target": "combatir el fuego con fuego",
-    "gloss": "To respond to an attack with a similar or identical counter-attack (e.g. to respond to gunfire with reciprocal gunfire).",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "fish out of water",
-    "partOfSpeech": "expression",
-    "target": "como pez fuera del agua",
-    "gloss": "A person in unfamiliar and often uncomfortable surroundings.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "shit out of luck",
-    "partOfSpeech": "expression",
-    "target": "plenamente jodido",
-    "gloss": "Completely out of luck; in unfortunate circumstances such that all options for achieving one's goal are exhausted; unlucky; screwed.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "sounds like a plan",
-    "partOfSpeech": "expression",
-    "target": "dale",
-    "gloss": "Used to indicate agreement with a proposed suggestion.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "you're welcome a million",
-    "partOfSpeech": "expression",
-    "target": "de nada un millón",
-    "gloss": "You're welcome, intensified.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "richard",
-    "partOfSpeech": "noun",
-    "target": "Ricardo",
-    "gloss": "A surname originating as a patronymic.",
-    "gender": "masculine",
-    "plural": "Ricardos",
-    "enZipf": 4.79
-  },
-  {
-    "source": "usa",
-    "partOfSpeech": "noun",
-    "target": "EUA",
-    "gloss": "Initialism of the United States of America: a country in North America.",
-    "gender": "feminine",
-    "plural": "EUAs",
-    "enZipf": 4.79
-  },
-  {
-    "source": "fourth world",
-    "partOfSpeech": "expression",
-    "target": "cuarto mundo",
-    "gloss": "Synonym of Túwaquachi.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "middle chinese",
-    "partOfSpeech": "expression",
-    "target": "Chino Medio",
-    "gloss": "Chinese language spoken during Southern and Northern Dynasties and the Sui, Tang, and Song dynasties (6th century – 10th century)",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "mother nature",
-    "partOfSpeech": "expression",
-    "target": "Madre Naturaleza",
-    "gloss": "A personification of nature as woman, emphasizing fertility and fecundity.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "wonder woman",
-    "partOfSpeech": "expression",
-    "target": "Mujer Maravilla",
-    "gloss": "A DC Comics superheroine. [from 1941.]",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.79
-  },
-  {
-    "source": "product list",
-    "partOfSpeech": "noun",
-    "target": "lista de producto",
-    "gloss": "a ordered group of items related to product",
-    "gender": "feminine",
-    "plural": "listas de producto",
-    "enZipf": 4.78
-  },
-  {
-    "source": "hotel list",
-    "partOfSpeech": "noun",
-    "target": "lista de hotel",
-    "gloss": "a ordered group of items related to hotel",
-    "gender": "feminine",
-    "plural": "listas de hotel",
-    "enZipf": 4.78
-  },
-  {
-    "source": "sports list",
-    "partOfSpeech": "noun",
-    "target": "lista de deportes",
-    "gloss": "a ordered group of items related to sports",
-    "gender": "feminine",
-    "plural": "listas de deportes",
-    "enZipf": 4.78
-  },
-  {
-    "source": "annual list",
-    "partOfSpeech": "noun",
-    "target": "lista de ciclo anual",
-    "gloss": "an ordered group of items related to annual",
-    "gender": "feminine",
-    "plural": "listas de ciclo anual",
-    "enZipf": 4.78
-  },
-  {
-    "source": "insurance list",
-    "partOfSpeech": "noun",
-    "target": "lista de seguro",
-    "gloss": "an ordered group of items related to insurance",
-    "gender": "feminine",
-    "plural": "listas de seguro",
-    "enZipf": 4.78
-  },
-  {
-    "source": "project photo",
-    "partOfSpeech": "noun",
-    "target": "foto de proyecto",
-    "gloss": "a photographic image related to project",
-    "gender": "feminine",
-    "plural": "fotos de proyecto",
-    "enZipf": 4.78
-  },
-  {
-    "source": "energy photo",
-    "partOfSpeech": "noun",
-    "target": "foto de energía",
-    "gloss": "an photographic image related to energy",
-    "gender": "feminine",
-    "plural": "fotos de energía",
-    "enZipf": 4.78
-  },
-  {
-    "source": "market image",
-    "partOfSpeech": "noun",
-    "target": "imagen de mercado",
-    "gloss": "a visual representation related to market",
-    "gender": "feminine",
-    "plural": "imágenes de mercado",
-    "enZipf": 4.78
-  },
-  {
-    "source": "education image",
-    "partOfSpeech": "noun",
-    "target": "imagen de educación",
-    "gloss": "an visual representation related to education",
-    "gender": "feminine",
-    "plural": "imágenes de educación",
-    "enZipf": 4.78
-  },
-  {
-    "source": "media image",
-    "partOfSpeech": "noun",
-    "target": "imagen de medios",
-    "gloss": "a visual representation related to media",
-    "gender": "feminine",
-    "plural": "imágenes de medios",
-    "enZipf": 4.78
-  },
-  {
-    "source": "plant video",
-    "partOfSpeech": "noun",
-    "target": "video de plantas",
-    "gloss": "a recorded moving image related to plant",
-    "gender": "masculine",
-    "plural": "videos de plantas",
-    "enZipf": 4.78
-  },
-  {
-    "source": "hospital article",
-    "partOfSpeech": "noun",
-    "target": "artículo de hospital",
-    "gloss": "a written web or print piece related to hospital",
-    "gender": "masculine",
-    "plural": "artículos de hospital",
-    "enZipf": 4.78
-  },
-  {
-    "source": "legal article",
-    "partOfSpeech": "noun",
-    "target": "artículo de asuntos legales",
-    "gloss": "a written web or print piece related to legal",
-    "gender": "masculine",
-    "plural": "artículos de asuntos legales",
-    "enZipf": 4.78
-  },
-  {
-    "source": "daily article",
-    "partOfSpeech": "noun",
-    "target": "artículo de vida diaria",
-    "gloss": "a written web or print piece related to daily",
-    "gender": "masculine",
-    "plural": "artículos de vida diaria",
-    "enZipf": 4.78
-  },
-  {
-    "source": "career article",
-    "partOfSpeech": "noun",
-    "target": "artículo de carrera",
-    "gloss": "a written web or print piece related to career",
-    "gender": "masculine",
-    "plural": "artículos de carrera",
-    "enZipf": 4.78
-  },
-  {
-    "source": "plant story",
-    "partOfSpeech": "noun",
-    "target": "historia de plantas",
-    "gloss": "a account of events related to plant",
-    "gender": "feminine",
-    "plural": "historias de plantas",
-    "enZipf": 4.78
-  },
-  {
-    "source": "product study",
-    "partOfSpeech": "noun",
-    "target": "estudio de producto",
-    "gloss": "a organized investigation related to product",
-    "gender": "masculine",
-    "plural": "estudios de producto",
-    "enZipf": 4.78
-  },
-  {
-    "source": "hotel study",
-    "partOfSpeech": "noun",
-    "target": "estudio de hotel",
-    "gloss": "a organized investigation related to hotel",
-    "gender": "masculine",
-    "plural": "estudios de hotel",
-    "enZipf": 4.78
-  },
-  {
-    "source": "planning research",
-    "partOfSpeech": "noun",
-    "target": "investigación de planificación",
-    "gloss": "a systematic study related to planning",
-    "gender": "feminine",
-    "plural": "investigaciones de planificación",
-    "enZipf": 4.78
-  },
-  {
-    "source": "credit hour",
-    "partOfSpeech": "noun",
-    "target": "hora crédito",
-    "gloss": "academic credit unit",
-    "gender": "feminine",
-    "plural": "horas crédito",
-    "enZipf": 4.78
-  },
-  {
-    "source": "advantage",
-    "partOfSpeech": "noun",
-    "target": "ventaja",
-    "gloss": "Any condition, circumstance, opportunity or means, particularly favorable or chance to success, or to any desired end.",
-    "gender": "feminine",
-    "plural": "ventajas",
-    "enZipf": 4.78
-  },
-  {
-    "source": "cat",
-    "partOfSpeech": "noun",
-    "target": "felino",
-    "gloss": "An animal of the family Felidae.",
-    "gender": "masculine",
-    "plural": "felinos",
-    "enZipf": 4.78
-  },
-  {
-    "source": "fifth",
-    "partOfSpeech": "noun",
-    "target": "quinto",
-    "gloss": "The person or thing in the fifth position.",
-    "gender": "masculine",
-    "plural": "quintos",
-    "enZipf": 4.78
-  },
-  {
-    "source": "function",
-    "partOfSpeech": "noun",
-    "target": "función",
-    "gloss": "What something does or is used for.",
-    "gender": "feminine",
-    "plural": "funciones",
-    "enZipf": 4.78
-  },
-  {
-    "source": "influence",
-    "partOfSpeech": "noun",
-    "target": "influencia",
-    "gloss": "The power to affect, control or manipulate something or someone; the ability to change the development of fluctuating things such as conduct, thoughts or decisions.",
-    "gender": "feminine",
-    "plural": "influencias",
-    "enZipf": 4.78
-  },
-  {
-    "source": "marketing",
-    "partOfSpeech": "noun",
-    "target": "mercadotecnia",
-    "gloss": "The promotion, distribution and selling of a product or service; the work of a marketer; includes market research and advertising.",
-    "gender": "feminine",
-    "plural": "mercadotecnias",
-    "enZipf": 4.78
-  },
-  {
-    "source": "produce",
-    "partOfSpeech": "noun",
-    "target": "producción",
-    "gloss": "That which is produced.",
-    "gender": "feminine",
-    "plural": "producciones",
-    "enZipf": 4.78
-  },
-  {
-    "source": "progress",
-    "partOfSpeech": "noun",
-    "target": "progreso",
-    "gloss": "Specifically, advancement to a higher or more developed state; development, growth. [from 15th c.]",
-    "gender": "masculine",
-    "plural": "progresos",
-    "enZipf": 4.78
-  },
-  {
-    "source": "shooting",
-    "partOfSpeech": "noun",
-    "target": "tiroteo",
-    "gloss": "an instance of shooting with a gun or other weapon",
-    "gender": "masculine",
-    "plural": "tiroteos",
-    "enZipf": 4.78
-  },
-  {
-    "source": "van",
-    "partOfSpeech": "noun",
-    "target": "furgoneta",
-    "gloss": "A covered motor vehicle used to carry goods or (normally less than ten) persons, usually roughly cuboid in shape, Depending on the type of van, it can be bigger or smaller than...",
-    "gender": "feminine",
-    "plural": "furgonetas",
-    "enZipf": 4.78
-  },
-  {
-    "source": "wood",
-    "partOfSpeech": "noun",
-    "target": "madera",
-    "gloss": "The substance making up the central part of the trunk and branches of a tree. Used as a material for construction, to manufacture various items, etc. or as fuel.",
-    "gender": "feminine",
-    "plural": "maderas",
-    "enZipf": 4.78
-  },
-  {
-    "source": "aware",
-    "partOfSpeech": "adjective",
-    "target": "consciente",
-    "gloss": "Vigilant or on one's guard against danger or difficulty.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "clean-cut",
-    "partOfSpeech": "adjective",
-    "target": "nítido",
-    "gloss": "Having a neat, smart appearance",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "eastern",
-    "partOfSpeech": "adjective",
-    "target": "oriental",
-    "gloss": "Of, facing, situated in, or related to the east.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "impossible",
-    "partOfSpeech": "adjective",
-    "target": "imposible",
-    "gloss": "Not possible; not able to be done or happen.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "proud",
-    "partOfSpeech": "adjective",
-    "target": "orgulloso",
-    "gloss": "Feeling honoured (by something); feeling happy or satisfied about an event or fact; gratified.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "cast up",
-    "partOfSpeech": "expression",
-    "target": "echar cuentas",
-    "gloss": "To compute.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "cell line",
-    "partOfSpeech": "expression",
-    "target": "línea celular",
-    "gloss": "A biological tissue or group of individual cells that are genetically identical as a result of dividing mitotically from a single progenitor cell.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "construction site",
-    "partOfSpeech": "expression",
-    "target": "obra",
-    "gloss": "A place where a building or other physical structure is under construction. (This entry is a translation hub.)",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "cut scene",
-    "partOfSpeech": "expression",
-    "target": "cinemática",
-    "gloss": "A usually non-interactive portion of cinematic narrative shown during a video game to advance the story. It may be presented with full motion video or may be rendered with the g...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "dark blue",
-    "partOfSpeech": "expression",
-    "target": "azul oscuro",
-    "gloss": "A deep, dim blue colour: navy or similar.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "decide",
+    "source": "prove",
     "partOfSpeech": "verb",
-    "target": "decidir",
-    "gloss": "To resolve (a contest, problem, dispute, etc.); to choose, determine, or settle.",
+    "target": "probar",
+    "gloss": "To demonstrate that something is true or viable; to give proof for; to bear out; to testify.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "double-park",
-    "partOfSpeech": "verb",
-    "target": "aparcar en doble fila",
-    "gloss": "To park a car next to a car already parked on the side of a street, obstructing traffic.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "federal district",
+    "source": "second wind",
     "partOfSpeech": "expression",
-    "target": "distrito federal",
-    "gloss": "A type of federal subdivision, often composed of a capital city.",
+    "target": "aire nuevo",
+    "gloss": "A renewed feeling of energy after having reached the point of exhaustion.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "food fish",
+    "source": "set square",
     "partOfSpeech": "expression",
-    "target": "pescado",
-    "gloss": "Any fish used as human food.",
+    "target": "escuadra",
+    "gloss": "A flat triangular piece of plastic or other material, having corners of precise angles, used in technical drawing",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "free speech",
+    "source": "shut up",
     "partOfSpeech": "expression",
-    "target": "libertad de expresión",
-    "gloss": "The ability or right, especially legal right, to make such expression.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "holy war",
-    "partOfSpeech": "expression",
-    "target": "guerra santa",
-    "gloss": "A war which is primarily caused or justified by differences in religion and beliefs.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "human resources",
-    "partOfSpeech": "expression",
-    "target": "recursos humanos",
-    "gloss": "The personnel department of an organization, dealing with the recruitment, administration, management and training of employees.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "love seat",
-    "partOfSpeech": "expression",
-    "target": "confidente",
-    "gloss": "A small sofa for two people.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "mass line",
-    "partOfSpeech": "expression",
-    "target": "línea de masas",
-    "gloss": "The policy of consulting the masses, interpreting their suggestions within the framework of Marxism-Leninism, and then enforcing the resulting policies, as introduced by the Chi...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "one-stop shop",
-    "partOfSpeech": "expression",
-    "target": "tienda uniparada",
-    "gloss": "A single place, institution, service, website, technology, etc., that provides everything necessary.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "physical education",
-    "partOfSpeech": "expression",
-    "target": "educación física",
-    "gloss": "An element of an educational curriculum concerned with bodily development, physical health and wellness, strength, physical co-ordination, and agility.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "pop music",
-    "partOfSpeech": "expression",
-    "target": "música pop",
-    "gloss": "Music intended for or accepted by a wide audience, usually with a commercial basis and distinguished from other genres such as classical music and folk music, and nowadays also...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "press conference",
-    "partOfSpeech": "expression",
-    "target": "rueda de prensa",
-    "gloss": "A question-and-answer session with members of television, print and other media.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "private message",
-    "partOfSpeech": "expression",
-    "target": "mensaje privado",
-    "gloss": "A message sent to another user of a social media or chat platform through a private channel as opposed to a publicly accessible area or chatroom.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "project manager",
-    "partOfSpeech": "expression",
-    "target": "director de proyecto",
-    "gloss": "One who manages projects.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "protection money",
-    "partOfSpeech": "expression",
-    "target": "protección",
-    "gloss": "Money paid, especially at regular intervals, to criminals or to corrupt officials who threaten to cause harm to the payer or to his or her business if the money is not paid.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "pull down",
-    "partOfSpeech": "expression",
-    "target": "demoler",
-    "gloss": "To demolish or destroy (a building etc.).",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "require",
-    "partOfSpeech": "verb",
-    "target": "necesitar",
-    "gloss": "Naturally to demand (something) as indispensable; to need, to call for as necessary. [from 15th c.]",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "right-hand rule",
-    "partOfSpeech": "expression",
-    "target": "regla de la mano derecha",
-    "gloss": "A common mnemonic for understanding notation conventions for vectors in three dimensions.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "school bus",
-    "partOfSpeech": "expression",
-    "target": "autobús escolar",
-    "gloss": "A bus which carries children to or from school.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "secret police",
-    "partOfSpeech": "expression",
-    "target": "policía secreta",
-    "gloss": "A police force operating in secrecy and outside the normal boundaries of law and hidden from the public, usually in support of a totalitarian government's political policies to...",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "sell-by date",
-    "partOfSpeech": "expression",
-    "target": "fecha de caducidad",
-    "gloss": "The final date on which a perishable product should be sold to the public.",
-    "gender": "",
-    "plural": "",
-    "enZipf": 4.78
-  },
-  {
-    "source": "shut",
-    "partOfSpeech": "verb",
     "target": "cerrar",
-    "gloss": "To confine in an enclosed area; to enclose.",
+    "gloss": "To close (a building) so that no one can enter.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "sound effect",
+    "source": "sick pay",
     "partOfSpeech": "expression",
-    "target": "efecto de sonido",
-    "gloss": "An artificially created or enhanced sound, used to accompany the action of a dramatic production, such as a film, play or video game.",
+    "target": "subsidio de enfermedad",
+    "gloss": "Money paid to an employee on sick leave.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "word search",
+    "source": "square number",
     "partOfSpeech": "expression",
-    "target": "buscapalabras",
-    "gloss": "A word game consisting of a grid of letters, the aim of which is to find an array of given words hidden within the grid.",
+    "target": "número cuadrado",
+    "gloss": "Any integer which is the product of some integer times itself: any integer whose square root is also an integer.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "bottom the house",
+    "source": "stock market",
     "partOfSpeech": "expression",
-    "target": "limpiar completamente",
-    "gloss": "To clean a house from top to bottom; to clean a house extremely thoroughly.",
+    "target": "mercado de valores",
+    "gloss": "A market for the trading of company stock.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "break the ice",
+    "source": "talk shop",
     "partOfSpeech": "expression",
-    "target": "romper el hielo",
-    "gloss": "To start to get to know people to avoid social awkwardness and formality.",
+    "target": "hablar de negocios",
+    "gloss": "To discuss one's work or (sometimes, by extension) hobby; especially, to do so in a way that only insiders would understand, is tedious or boring to the listener, or both.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
   },
   {
-    "source": "door to door",
+    "source": "town centre",
     "partOfSpeech": "expression",
-    "target": "de puerta en puerta",
-    "gloss": "From one household or business to the next.",
+    "target": "centro urbano",
+    "gloss": "The main commercial or business area of a town, containing the principal shops, banks, restaurants and public traffic hub.",
     "gender": "",
     "plural": "",
-    "enZipf": 4.78
+    "enZipf": 4.77
+  },
+  {
+    "source": "white coffee",
+    "partOfSpeech": "expression",
+    "target": "cortado",
+    "gloss": "Coffee (the drink) with milk added.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "post office box",
+    "partOfSpeech": "expression",
+    "target": "apartado de correos",
+    "gloss": "A uniquely addressable lockable box located on the premises of a post office that may be hired as collection point for mail.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "speed of sound",
+    "partOfSpeech": "expression",
+    "target": "velocidad del sonido",
+    "gloss": "The speed at which sound is propagated through some medium under specified conditions.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "eastern time",
+    "partOfSpeech": "expression",
+    "target": "hora del este",
+    "gloss": "Eastern Daylight/Eastern Standard Time",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "west africa",
+    "partOfSpeech": "expression",
+    "target": "África Occidental",
+    "gloss": "A geographic region comprising the western portion of Africa, spanning 16 countries.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.77
+  },
+  {
+    "source": "planning report",
+    "partOfSpeech": "noun",
+    "target": "informe de planificación",
+    "gloss": "a written account or summary related to planning",
+    "gender": "masculine",
+    "plural": "informes de planificación",
+    "enZipf": 4.76
+  },
+  {
+    "source": "senior list",
+    "partOfSpeech": "noun",
+    "target": "lista de adultos mayores",
+    "gloss": "a ordered group of items related to senior",
+    "gender": "feminine",
+    "plural": "listas de adultos mayores",
+    "enZipf": 4.76
+  },
+  {
+    "source": "online photo",
+    "partOfSpeech": "noun",
+    "target": "foto de internet",
+    "gloss": "an photographic image related to online",
+    "gender": "feminine",
+    "plural": "fotos de internet",
+    "enZipf": 4.76
+  },
+  {
+    "source": "training photo",
+    "partOfSpeech": "noun",
+    "target": "foto de capacitación",
+    "gloss": "a photographic image related to training",
+    "gender": "feminine",
+    "plural": "fotos de capacitación",
+    "enZipf": 4.76
+  },
+  {
+    "source": "design photo",
+    "partOfSpeech": "noun",
+    "target": "foto de diseño",
+    "gloss": "a photographic image related to design",
+    "gender": "feminine",
+    "plural": "fotos de diseño",
+    "enZipf": 4.76
+  },
+  {
+    "source": "event photo",
+    "partOfSpeech": "noun",
+    "target": "foto de evento",
+    "gloss": "an photographic image related to event",
+    "gender": "feminine",
+    "plural": "fotos de evento",
+    "enZipf": 4.76
+  },
+  {
+    "source": "project image",
+    "partOfSpeech": "noun",
+    "target": "imagen de proyecto",
+    "gloss": "a visual representation related to project",
+    "gender": "feminine",
+    "plural": "imágenes de proyecto",
+    "enZipf": 4.76
+  },
+  {
+    "source": "energy image",
+    "partOfSpeech": "noun",
+    "target": "imagen de energía",
+    "gloss": "an visual representation related to energy",
+    "gender": "feminine",
+    "plural": "imágenes de energía",
+    "enZipf": 4.76
+  },
+  {
+    "source": "environment video",
+    "partOfSpeech": "noun",
+    "target": "video de medio ambiente",
+    "gloss": "an recorded moving image related to environment",
+    "gender": "masculine",
+    "plural": "videos de medio ambiente",
+    "enZipf": 4.76
+  },
+  {
+    "source": "weather video",
+    "partOfSpeech": "noun",
+    "target": "video de clima",
+    "gloss": "a recorded moving image related to weather",
+    "gender": "masculine",
+    "plural": "videos de clima",
+    "enZipf": 4.76
+  },
+  {
+    "source": "library video",
+    "partOfSpeech": "noun",
+    "target": "video de biblioteca",
+    "gloss": "a recorded moving image related to library",
+    "gender": "masculine",
+    "plural": "videos de biblioteca",
+    "enZipf": 4.76
+  },
+  {
+    "source": "culture article",
+    "partOfSpeech": "noun",
+    "target": "artículo de cultura",
+    "gloss": "a written web or print piece related to culture",
+    "gender": "masculine",
+    "plural": "artículos de cultura",
+    "enZipf": 4.76
+  },
+  {
+    "source": "library story",
+    "partOfSpeech": "noun",
+    "target": "historia de biblioteca",
+    "gloss": "a account of events related to library",
+    "gender": "feminine",
+    "plural": "historias de biblioteca",
+    "enZipf": 4.76
+  },
+  {
+    "source": "travel review",
+    "partOfSpeech": "noun",
+    "target": "reseña de viaje",
+    "gloss": "a evaluation or assessment related to travel",
+    "gender": "feminine",
+    "plural": "reseñas de viaje",
+    "enZipf": 4.76
+  },
+  {
+    "source": "content review",
+    "partOfSpeech": "noun",
+    "target": "reseña de contenido",
+    "gloss": "a evaluation or assessment related to content",
+    "gender": "feminine",
+    "plural": "reseñas de contenido",
+    "enZipf": 4.76
+  },
+  {
+    "source": "conference review",
+    "partOfSpeech": "noun",
+    "target": "reseña de conferencia",
+    "gloss": "a evaluation or assessment related to conference",
+    "gender": "feminine",
+    "plural": "reseñas de conferencia",
+    "enZipf": 4.76
+  },
+  {
+    "source": "market analysis",
+    "partOfSpeech": "noun",
+    "target": "análisis de mercado",
+    "gloss": "a detailed examination related to market",
+    "gender": "masculine",
+    "plural": "análisis de mercado",
+    "enZipf": 4.76
+  },
+  {
+    "source": "education analysis",
+    "partOfSpeech": "noun",
+    "target": "análisis de educación",
+    "gloss": "an detailed examination related to education",
+    "gender": "masculine",
+    "plural": "análisis de educación",
+    "enZipf": 4.76
+  },
+  {
+    "source": "media analysis",
+    "partOfSpeech": "noun",
+    "target": "análisis de medios",
+    "gloss": "a detailed examination related to media",
+    "gender": "masculine",
+    "plural": "análisis de medios",
+    "enZipf": 4.76
+  },
+  {
+    "source": "senior study",
+    "partOfSpeech": "noun",
+    "target": "estudio de adultos mayores",
+    "gloss": "a organized investigation related to senior",
+    "gender": "masculine",
+    "plural": "estudios de adultos mayores",
+    "enZipf": 4.76
+  },
+  {
+    "source": "environment research",
+    "partOfSpeech": "noun",
+    "target": "investigación de medio ambiente",
+    "gloss": "an systematic study related to environment",
+    "gender": "feminine",
+    "plural": "investigaciones de medio ambiente",
+    "enZipf": 4.76
+  },
+  {
+    "source": "weather research",
+    "partOfSpeech": "noun",
+    "target": "investigación de clima",
+    "gloss": "a systematic study related to weather",
+    "gender": "feminine",
+    "plural": "investigaciones de clima",
+    "enZipf": 4.76
+  },
+  {
+    "source": "ad",
+    "partOfSpeech": "adverb",
+    "target": "d.C.",
+    "gloss": "Initialism of Anno Domini (borrowed from Latin); in the year of our Lord.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "apple",
+    "partOfSpeech": "noun",
+    "target": "manzana",
+    "gloss": "A tree of the genus Malus; especially Malus domestica which is cultivated for its edible fruit; the apple tree. [from 15th c.]",
+    "gender": "feminine",
+    "plural": "manzanas",
+    "enZipf": 4.76
+  },
+  {
+    "source": "bitch",
+    "partOfSpeech": "noun",
+    "target": "perra",
+    "gloss": "A female dog or other canine, particularly a recent mother.",
+    "gender": "feminine",
+    "plural": "perras",
+    "enZipf": 4.76
+  },
+  {
+    "source": "co-brother-in-law",
+    "partOfSpeech": "noun",
+    "target": "concuñado",
+    "gloss": "One's spouse's brother-in-law (one's spouse's sibling's husband), especially one's wife's sister's husband; either of two (or more) men who marry sisters, in relation to the oth...",
+    "gender": "masculine",
+    "plural": "concuñados",
+    "enZipf": 4.76
+  },
+  {
+    "source": "fellow",
+    "partOfSpeech": "noun",
+    "target": "compañero",
+    "gloss": "A companion; a comrade.",
+    "gender": "masculine",
+    "plural": "compañeros",
+    "enZipf": 4.76
+  },
+  {
+    "source": "high-rise",
+    "partOfSpeech": "noun",
+    "target": "edificio alto",
+    "gloss": "A tall building, one consisting of many storeys.",
+    "gender": "masculine",
+    "plural": "edificios alto",
+    "enZipf": 4.76
+  },
+  {
+    "source": "horse",
+    "partOfSpeech": "noun",
+    "target": "caballería",
+    "gloss": "Cavalry soldiers (sometimes capitalized when referring to an official category).",
+    "gender": "feminine",
+    "plural": "caballerías",
+    "enZipf": 4.76
+  },
+  {
+    "source": "magic",
+    "partOfSpeech": "noun",
+    "target": "magia",
+    "gloss": "The application of rituals or actions, especially those based on occult knowledge, to subdue or manipulate natural or supernatural beings and forces in order to have some benefi...",
+    "gender": "feminine",
+    "plural": "magias",
+    "enZipf": 4.76
+  },
+  {
+    "source": "stick",
+    "partOfSpeech": "noun",
+    "target": "astilla",
+    "gloss": "A small, thin branch from a tree or bush; a twig; a branch.",
+    "gender": "feminine",
+    "plural": "astillas",
+    "enZipf": 4.76
+  },
+  {
+    "source": "vehicle",
+    "partOfSpeech": "noun",
+    "target": "vehículo",
+    "gloss": "A conveyance: a spacious device for carrying or transporting substances, objects, people or animals.",
+    "gender": "masculine",
+    "plural": "vehículos",
+    "enZipf": 4.76
+  },
+  {
+    "source": "wake",
+    "partOfSpeech": "noun",
+    "target": "estela",
+    "gloss": "The path left behind a ship on the surface of the water.",
+    "gender": "feminine",
+    "plural": "estelas",
+    "enZipf": 4.76
+  },
+  {
+    "source": "alive",
+    "partOfSpeech": "adjective",
+    "target": "vivo",
+    "gloss": "Having life; living; not dead.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "knowing",
+    "partOfSpeech": "adjective",
+    "target": "cognociente",
+    "gloss": "Possessing knowledge or understanding; knowledgeable, intelligent. [from 14th c.]",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "net",
+    "partOfSpeech": "adjective",
+    "target": "neto",
+    "gloss": "Remaining after expenses or deductions.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "chinese character",
+    "partOfSpeech": "expression",
+    "target": "carácter chino",
+    "gloss": "Any character used in the written form of several languages of China, Japan, Korea and Vietnam.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "russian blue",
+    "partOfSpeech": "expression",
+    "target": "azul ruso",
+    "gloss": "A domestic cat of a breed with dense silver to grey fur.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "t cell",
+    "partOfSpeech": "expression",
+    "target": "célula T",
+    "gloss": "A lymphocyte, from the thymus, that can recognise specific antigens and can activate or deactivate other immune cells.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "accept service",
+    "partOfSpeech": "expression",
+    "target": "darse por notificado",
+    "gloss": "To receive and acknowledge receipt of service of process.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "access code",
+    "partOfSpeech": "expression",
+    "target": "código de acceso",
+    "gloss": "A typically alphanumeric sequence that permits access to a secure service or network.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "association football",
+    "partOfSpeech": "expression",
+    "target": "fútbol",
+    "gloss": "A ball game played between two teams of eleven players, each attempting to win by scoring more goals than their opponent.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "bar shot",
+    "partOfSpeech": "expression",
+    "target": "palanqueta",
+    "gloss": "A double-headed shot, consisting of a bar, with a ball or half ball at each end; formerly used for destroying the masts or rigging in naval combat.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "black coffee",
+    "partOfSpeech": "expression",
+    "target": "café solo",
+    "gloss": "Coffee served as a beverage without cream or milk.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "body camera",
+    "partOfSpeech": "expression",
+    "target": "cámara corporal",
+    "gloss": "A video recording system worn on the body, typically used by law enforcement officers to record their interactions with the public, and gather video evidence at crime scenes. [f...",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "boss",
+    "partOfSpeech": "verb",
+    "target": "bosear",
+    "gloss": "To exercise authoritative control over; to tell (someone) what to do, often repeatedly.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "cast off",
+    "partOfSpeech": "expression",
+    "target": "descartar",
+    "gloss": "To discard or reject something.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "child marriage",
+    "partOfSpeech": "expression",
+    "target": "matrimonio infantil",
+    "gloss": "The marriage or cohabitation between a minor and an adult or another minor.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "clean break",
+    "partOfSpeech": "expression",
+    "target": "cortar por lo sano",
+    "gloss": "The complete termination of a relationship, or an exit from a situation.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "common knowledge",
+    "partOfSpeech": "expression",
+    "target": "conocimiento general",
+    "gloss": "That which is known by most people, and thus cannot reasonably be contested.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "do drugs",
+    "partOfSpeech": "expression",
+    "target": "drogarse",
+    "gloss": "To abuse an illegal drug or drugs, especially as a result of chemical addiction.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "dress",
+    "partOfSpeech": "verb",
+    "target": "andar vestido",
+    "gloss": "To put clothes (or, formerly, armour) on (oneself or someone, a doll, a mannequin, etc.); to clothe. [from 15th c.]",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "economic growth",
+    "partOfSpeech": "expression",
+    "target": "crecimiento económico",
+    "gloss": "The growth of the economic output of a country.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "fashion show",
+    "partOfSpeech": "expression",
+    "target": "desfile de moda",
+    "gloss": "An event at which fashionable clothes are modelled for an audience.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "foreign minister",
+    "partOfSpeech": "expression",
+    "target": "ministro extranjero",
+    "gloss": "The cabinet official in charge of relationships with foreign nations.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "give-away shop",
+    "partOfSpeech": "expression",
+    "target": "tienda gratis",
+    "gloss": "A shop or store where all goods are free of charge.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "heavy industry",
+    "partOfSpeech": "expression",
+    "target": "industria pesada",
+    "gloss": "Industrial processes that are very complex or involve large and heavy equipment, facilities, or end products.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "left-click",
+    "partOfSpeech": "verb",
+    "target": "clicar el botón izquierdo",
+    "gloss": "To press the left button on a computer mouse.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "me neither",
+    "partOfSpeech": "expression",
+    "target": "yo tampoco",
+    "gloss": "Used to say that a negative-containing statement of the previous speaker applies to the speaker as well.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "mother ship",
+    "partOfSpeech": "expression",
+    "target": "buque nodriza",
+    "gloss": "A vessel, aircraft or spacecraft that serves or carries a smaller vessel or vessels that operate independently from it.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "name brand",
+    "partOfSpeech": "expression",
+    "target": "marca",
+    "gloss": "A product having such a mark or name.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "natural gas",
+    "partOfSpeech": "expression",
+    "target": "gas natural",
+    "gloss": "A mixture of gaseous hydrocarbons associated with petroleum deposits; mostly methane with smaller amounts of ethane, propane and butane; principally used as a fuel.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "poor box",
+    "partOfSpeech": "expression",
+    "target": "cepillo",
+    "gloss": "A locked box with a slot for depositing coins into, usually placed in churches to accept donations for the needy.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "small screen",
+    "partOfSpeech": "expression",
+    "target": "pequeña pantalla",
+    "gloss": "The broadcast or cable television screen, as opposed to the cinema screen (or big screen)",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "smart city",
+    "partOfSpeech": "expression",
+    "target": "ciudad inteligente",
+    "gloss": "A municipality that uses information and communications technology, such as electronic sensors, to increase efficiency and improve the quality of services.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "social status",
+    "partOfSpeech": "expression",
+    "target": "estatus social",
+    "gloss": "One's position within a social hierarchy, one's social class along with any personal social advantages or disadvantages, one's value relative to society.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "space bar",
+    "partOfSpeech": "expression",
+    "target": "barra espaciadora",
+    "gloss": "A key, in the shape of a bar, near the bottom of a keyboard, that generates a space character when pressed.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "standard language",
+    "partOfSpeech": "expression",
+    "target": "lengua estándar",
+    "gloss": "A language that has a standard form as one of its varieties; a language that has undergone standardization.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "stick to",
+    "partOfSpeech": "expression",
+    "target": "ceñirse a",
+    "gloss": "To persist; to continue (to use, do, etc.)",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "throw away",
+    "partOfSpeech": "expression",
+    "target": "tirar",
+    "gloss": "To discard (trash, garbage, or the like), to toss out, to put in the trash.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "video camera",
+    "partOfSpeech": "expression",
+    "target": "cámara de vídeo",
+    "gloss": "A device for recording video footage, often a portable one used by amateurs; also as a fixed installation for surveillance purposes.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "wedding night",
+    "partOfSpeech": "expression",
+    "target": "noche de bodas",
+    "gloss": "First night of a married couple in the conjugal bed.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "white lie",
+    "partOfSpeech": "expression",
+    "target": "mentira piadosa",
+    "gloss": "A deliberately untrue statement which is intended to produce a favorable result; especially, one which is judged to be better than an overhonest alternative, as for example to r...",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "wind power",
+    "partOfSpeech": "expression",
+    "target": "energía eólica",
+    "gloss": "Power of the wind.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
+  },
+  {
+    "source": "family home evening",
+    "partOfSpeech": "expression",
+    "target": "noche familiar",
+    "gloss": "An evening, usually Monday, set apart once a week for family activity such as lessons, games, and prayer.",
+    "gender": "",
+    "plural": "",
+    "enZipf": 4.76
   }
 ]
