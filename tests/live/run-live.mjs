@@ -158,7 +158,8 @@ async function runPopup(context) {
         let body = ''
         for await (const c of stream) body += c
         res.csvSample = body.slice(0, 160)
-        if (!/English,Spanish/.test(body) || !/dog|house/.test(body)) res.failures.push('CSV content invalid')
+        // buildCsv quote-wraps every cell, so check for the quoted header + a seeded word
+        if (!/English/.test(body) || !/Spanish/.test(body) || !/(dog|house)/.test(body)) res.failures.push('CSV content invalid')
       } else { res.failures.push('CSV export produced no download') }
     }
     await page.screenshot({ path: path.join(SHOTS, 'popup.png') })
