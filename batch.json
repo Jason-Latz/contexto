@@ -1,2070 +1,2090 @@
 [
   {
-    "source": "one-armed",
-    "target": "manco",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Having only one arm; especially having lost an arm.",
-    "frequencyRank": 29752,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "plot",
-    "target": "argumento",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The course of a story, comprising a series of incidents which are gradually unfolded, sometimes by unexpected means. [from 1640s]",
-    "frequencyRank": 19353,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "argumentos",
-    "gender": "masculine",
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "possibility",
-    "target": "posibilidad",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The quality of being possible.",
-    "frequencyRank": 19566,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "posibilidades",
-    "gender": "feminine",
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "project survey",
-    "target": "encuesta de proyecto",
-    "plural": "encuestas de proyecto",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a set of questions for gathering opinions related to project",
-    "confidence": "medium",
-    "frequencyRank": 2302,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "project update",
-    "target": "actualización de proyecto",
-    "plural": "actualizaciones de proyecto",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a new information or revision related to project",
-    "confidence": "medium",
-    "frequencyRank": 1777,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "random",
-    "target": "aleatorio",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Involving an outcome which is impossible to predict, but which may be represented by a probability distribution; in the ideal case, involving outcomes which are equally likely.",
-    "frequencyRank": 30566,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "recovery",
-    "target": "recuperación",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The act or process of regaining or repossession of something lost.",
-    "frequencyRank": 20391,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "recuperaciones",
-    "gender": "feminine",
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "red blood cell",
-    "target": "glóbulo rojo",
+    "source": "civil engineering",
+    "target": "ingeniería civil",
     "partOfSpeech": "expression",
-    "sourceGloss": "A type of cell in the blood of vertebrates that contains hemoglobin and transports oxygen from the lungs to the tissues; an erythrocyte.",
-    "frequencyRank": 46148,
+    "sourceGloss": "The technical design and construction of public works such as bridges, buildings, harbours, public greens, roads, etc., and/or technically equivalent private (usually corporate)...",
+    "frequencyRank": 35154,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "rent",
-    "target": "alquilar",
+    "source": "climate article",
+    "target": "artículo de clima",
+    "plural": "artículos de clima",
+    "gender": "masculine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a written web or print piece related to climate",
+    "confidence": "medium",
+    "frequencyRank": 1608,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "combat",
+    "target": "combatir",
     "partOfSpeech": "verb",
-    "sourceGloss": "To take a lease of premises in exchange for rent.",
-    "frequencyRank": 41758,
+    "sourceGloss": "To fight (with); to struggle for victory (against).",
+    "frequencyRank": 35328,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "represent",
-    "target": "representar",
-    "partOfSpeech": "verb",
-    "sourceGloss": "To present again or anew; to present by means of something standing in the place of; to exhibit the counterpart or image of; to typify.",
-    "frequencyRank": 41781,
+    "source": "common era",
+    "target": "era común",
+    "partOfSpeech": "expression",
+    "sourceGloss": "The secular equivalent of anno Domini and the Christian Era, the internationally recognized method of numbering years on the Gregorian calendar.",
+    "frequencyRank": 49470,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "restaurant list",
-    "target": "lista de restaurante",
-    "plural": "listas de restaurante",
+    "source": "conference guide",
+    "target": "guía de conferencia",
+    "plural": "guías de conferencia",
     "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a ordered group of items related to restaurant",
+    "sourceGloss": "a helpful set of instructions related to conference",
     "confidence": "medium",
-    "frequencyRank": 1068,
+    "frequencyRank": 1030,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "restaurant study",
-    "target": "estudio de restaurante",
-    "plural": "estudios de restaurante",
-    "gender": "masculine",
+    "source": "consumer",
+    "target": "consumidor",
     "partOfSpeech": "noun",
-    "sourceGloss": "a organized investigation related to restaurant",
-    "confidence": "medium",
-    "frequencyRank": 2433,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "sea horse",
-    "target": "caballito de mar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Any of the small marine fish of the genus Hippocampus that have a horselike head and swim upright.",
-    "frequencyRank": 42261,
+    "sourceGloss": "Someone who trades money for goods or services as an individual.",
+    "frequencyRank": 10711,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "plural": "consumidores",
+    "gender": "masculine",
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "shopping list",
-    "target": "lista de compras",
-    "plural": "listas de compras",
+    "source": "content guide",
+    "target": "guía de contenido",
+    "plural": "guías de contenido",
     "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a ordered group of items related to shopping",
+    "sourceGloss": "a helpful set of instructions related to content",
     "confidence": "medium",
-    "frequencyRank": 1137,
+    "frequencyRank": 1010,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "shopping study",
-    "target": "estudio de compras",
-    "plural": "estudios de compras",
+    "source": "content map",
+    "target": "mapa de contenido",
+    "plural": "mapas de contenido",
     "gender": "masculine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a organized investigation related to shopping",
+    "sourceGloss": "a visual layout of a place or topic related to content",
     "confidence": "medium",
-    "frequencyRank": 2502,
+    "frequencyRank": 1220,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "sky blue",
-    "target": "celeste",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Of a vibrant light blue colour, like that of the sky on a fine day.",
-    "frequencyRank": 42653,
+    "source": "counter",
+    "target": "contra",
+    "partOfSpeech": "adverb",
+    "sourceGloss": "Contrary, in opposition; in an opposite direction.",
+    "frequencyRank": 4870,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "south asia",
-    "target": "Asia del Sur",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A geographic region of Asia, comprising all the countries of the Indian subcontinent (principally India, Pakistan, Bangladesh, Nepal, and Bhutan) and the Indian Ocean (principal...",
-    "frequencyRank": 50042,
+    "source": "creation",
+    "target": "creación",
+    "partOfSpeech": "noun",
+    "sourceGloss": "Something created such as an invention or artwork.",
+    "frequencyRank": 11011,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "plural": "creaciones",
+    "gender": "feminine",
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "south korea",
-    "target": "Corea del Sur",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A country in East Asia, comprising the southern part of the Korean Peninsula. Official name: Republic of Korea. Capital: Seoul.",
-    "frequencyRank": 50052,
+    "source": "crying",
+    "target": "llanto",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The act of one who cries; a weeping or shouting.",
+    "frequencyRank": 11122,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "plural": "llantos",
+    "gender": "masculine",
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "southern africa",
-    "target": "África austral",
+    "source": "customer service",
+    "target": "servicio al cliente",
     "partOfSpeech": "expression",
-    "sourceGloss": "A geographic region comprising the southern part of Africa; always including South Africa, Namibia, Botswana, Lesotho and Eswatini, and sometimes also Angola, Mozambique, Zambia...",
-    "frequencyRank": 50062,
+    "sourceGloss": "The act of providing services to customers before, during and after a purchase.",
+    "frequencyRank": 35859,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "speed bag",
-    "target": "pera de boxeo",
+    "source": "customer support",
+    "target": "atención al cliente",
     "partOfSpeech": "expression",
-    "sourceGloss": "A small air-filled punching bag anchored at the top to a rebound platform parallel to the ground.",
-    "frequencyRank": 42955,
+    "sourceGloss": "Provision of service to customers before, during and after a purchase.",
+    "frequencyRank": 35860,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "sugar baby",
-    "target": "mantenido",
+    "source": "d-flat major",
+    "target": "re bemol mayor",
     "partOfSpeech": "expression",
-    "sourceGloss": "The younger recipient (usually female or a bottom) of interest from a sugar daddy or sugar mama, especially financial and romantic in an intergenerational relationship.",
-    "frequencyRank": 43340,
+    "sourceGloss": "A major key with the notes D♭, E♭, F, G♭, A♭, B♭, C, the key signature of which has five flats.",
+    "frequencyRank": 32740,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "switch off",
-    "target": "apagar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To stop or disable a device by turning a switch or a lever.",
-    "frequencyRank": 43467,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "tea oil",
-    "target": "aceite de Camelia",
-    "partOfSpeech": "expression",
-    "sourceGloss": "An oil contained in seeds of species of Camellia, including the tea plant, used in cooking especially in southern China.",
-    "frequencyRank": 43595,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "touch screen",
-    "target": "pantalla táctil",
-    "partOfSpeech": "expression",
-    "sourceGloss": "An input and output device that allows the user to interact with the computer by touching the display screen.",
-    "frequencyRank": 43865,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "transfer tax",
-    "target": "impuesto de transferencia",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A transaction fee (often relatively small in relation to the value of property) imposed on the transfer of title to property.",
-    "frequencyRank": 43931,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "understood",
-    "target": "entendido",
+    "source": "defined",
+    "target": "definido",
     "partOfSpeech": "adjective",
-    "sourceGloss": "Having been comprehended.",
-    "frequencyRank": 31966,
+    "sourceGloss": "Having a definition or value.",
+    "frequencyRank": 26923,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "us dollar",
-    "target": "dólar estadounidense",
+    "source": "describe",
+    "target": "describir",
+    "partOfSpeech": "verb",
+    "sourceGloss": "To represent in words.",
+    "frequencyRank": 36153,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "direct selling",
+    "target": "venta directa",
     "partOfSpeech": "expression",
-    "sourceGloss": "The official currency of the United States.",
-    "frequencyRank": 33274,
+    "sourceGloss": "The marketing and selling of products directly to consumers away from a fixed retail location.",
+    "frequencyRank": 36283,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "walking fish",
-    "target": "pez caminador",
+    "source": "east asian",
+    "target": "asiático oriental",
     "partOfSpeech": "expression",
-    "sourceGloss": "Any fish that is able to travel over land for extended periods of time",
-    "frequencyRank": 44403,
+    "sourceGloss": "Of, from, or pertaining to East Asia.",
+    "frequencyRank": 32767,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.58,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "white meat",
-    "target": "carne blanca",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Meats whose color, either before or after cooking, is considered white as opposed to red, including poultry, seafood, and in some uses, even pork.",
-    "frequencyRank": 44603,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.58,
-    "eligible": true
-  },
-  {
-    "source": "academy",
-    "target": "academia",
+    "source": "employment",
+    "target": "empleo",
     "partOfSpeech": "noun",
-    "sourceGloss": "An institution for the study of higher learning; a college or a university; typically a private school. [First attested in the mid 16th century.]",
-    "frequencyRank": 6989,
+    "sourceGloss": "The occupation or work for which one is used, and often paid.",
+    "frequencyRank": 12485,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "plural": "academias",
+    "plural": "empleos",
+    "gender": "masculine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "engine block",
+    "target": "bloque del motor",
+    "partOfSpeech": "expression",
+    "sourceGloss": "The metal casting that contains the piston cylinders of an engine.",
+    "frequencyRank": 36812,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "evil eye",
+    "target": "mal de ojo",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A wicked look conveying dislike or envy that in many cultures is believed to be able to cause bad luck or injury; also, the ability to cause bad luck or injury through such a lo...",
+    "frequencyRank": 36921,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "evil-eye",
+    "target": "aojar",
+    "partOfSpeech": "verb",
+    "sourceGloss": "to cast an evil eye upon someone or something",
+    "frequencyRank": 36924,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "exclusive",
+    "target": "chiva",
+    "partOfSpeech": "noun",
+    "sourceGloss": "Information (or an artefact) that is granted or obtained exclusively.",
+    "frequencyRank": 12857,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "chivas",
     "gender": "feminine",
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "accident rate",
-    "target": "siniestralidad",
+    "source": "excuse",
+    "target": "excusa",
+    "partOfSpeech": "noun",
+    "sourceGloss": "An explanation designed to avoid or alleviate guilt or negative judgment; a plea offered in extenuation of a fault.",
+    "frequencyRank": 12864,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "excusas",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "excuse me",
+    "target": "cómo",
     "partOfSpeech": "expression",
-    "sourceGloss": "Frequency or rate of accidents.",
-    "frequencyRank": 33388,
+    "sourceGloss": "Said, as though as a request to repeat information, in order to indicate disbelief or indignation.",
+    "frequencyRank": 36959,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "accurate",
-    "target": "preciso",
+    "source": "expert",
+    "target": "experto",
     "partOfSpeech": "adjective",
-    "sourceGloss": "Telling the truth or giving a true result; exact; not defective or faulty",
-    "frequencyRank": 25345,
+    "sourceGloss": "Characteristic of an expert.",
+    "frequencyRank": 27556,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "achieve",
-    "target": "lograr",
-    "partOfSpeech": "verb",
-    "sourceGloss": "To carry out successfully; to accomplish. [from 14th c.]",
-    "frequencyRank": 33414,
+    "source": "false friend",
+    "target": "falso amigo",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A word in a language that bears a deceptive resemblance to a word in another language but in fact has a different meaning.",
+    "frequencyRank": 37090,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "adam",
-    "target": "Adán",
+    "source": "finance list",
+    "target": "lista de finanzas",
+    "plural": "listas de finanzas",
+    "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "The first man and the progenitor of the human race.",
-    "frequencyRank": 47400,
+    "sourceGloss": "a ordered group of items related to finance",
     "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "Adanes",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "afford",
-    "target": "asequir",
-    "partOfSpeech": "verb",
-    "sourceGloss": "To incur, stand, or bear without serious detriment, as an act which might under other circumstances be injurious; (usually, after an expression of ability, as could, able, diffi...",
-    "frequencyRank": 33513,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "airport analysis",
-    "target": "análisis de aeropuerto",
-    "plural": "análisis de aeropuerto",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an detailed examination related to airport",
-    "confidence": "medium",
-    "frequencyRank": 2209,
+    "frequencyRank": 1048,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "alcohol-free",
-    "target": "sin alcohol",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Containing no alcohol.",
-    "frequencyRank": 25503,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "andrew",
-    "target": "Andrés",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A en given name.",
-    "frequencyRank": 47487,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "Andréses",
+    "source": "finance study",
+    "target": "estudio de finanzas",
+    "plural": "estudios de finanzas",
     "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "animal image",
-    "target": "imagen de animales",
-    "plural": "imágenes de animales",
-    "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "an visual representation related to animal",
+    "sourceGloss": "a organized investigation related to finance",
     "confidence": "medium",
-    "frequencyRank": 1438,
+    "frequencyRank": 2413,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "assume",
+    "source": "first-aid box",
+    "target": "botiquín",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A first aid kit; the box that contains the kit's contents.",
+    "frequencyRank": 37277,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "food bowl",
+    "target": "cuenco",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A bowl that is used to serve food, especially to pets.",
+    "frequencyRank": 37401,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "foreign exchange market",
+    "target": "mercado de divisas",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A market for trading one currency for another.",
+    "frequencyRank": 45502,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "garden photo",
+    "target": "foto de jardín",
+    "plural": "fotos de jardín",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a photographic image related to garden",
+    "confidence": "medium",
+    "frequencyRank": 1280,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "goal kick",
+    "target": "saque de meta",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A set piece taken from the goal area after an attacker touches the ball out of play over the goal line.",
+    "frequencyRank": 37870,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "grace",
+    "target": "agraciar",
+    "partOfSpeech": "verb",
+    "sourceGloss": "To adorn; to decorate; to embellish and dignify.",
+    "frequencyRank": 37927,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "hand cream",
+    "target": "crema de manos",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A cosmetic cream used to moisturize the hands.",
+    "frequencyRank": 38108,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "holiday study",
+    "target": "estudio de vacaciones",
+    "plural": "estudios de vacaciones",
+    "gender": "masculine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a organized investigation related to holiday",
+    "confidence": "medium",
+    "frequencyRank": 2501,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "home delivery",
+    "target": "entrega a domicilio",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A service of delivering goods to the consumer's home.",
+    "frequencyRank": 38336,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "hopefully",
+    "target": "aguardantemente",
+    "partOfSpeech": "adverb",
+    "sourceGloss": "In a hopeful manner. [from 17th c.]",
+    "frequencyRank": 5152,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "housing photo",
+    "target": "foto de vivienda",
+    "plural": "fotos de vivienda",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a photographic image related to housing",
+    "confidence": "medium",
+    "frequencyRank": 1335,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "identify",
+    "target": "identificar",
+    "partOfSpeech": "verb",
+    "sourceGloss": "To establish the identity of someone or something.",
+    "frequencyRank": 38496,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "importance",
+    "target": "importancia",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The quality or condition of being important or worthy of note.",
+    "frequencyRank": 15304,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "importancias",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "independence day",
+    "target": "día de la independencia",
+    "partOfSpeech": "expression",
+    "sourceGloss": "An annual celebration commemorating the anniversary of a nation's assumption of independent statehood.",
+    "frequencyRank": 38611,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "inside joke",
+    "target": "broma privada",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A joke that is understood or meant to be understood only by certain people who are aware of the details (an ingroup).",
+    "frequencyRank": 38696,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "kitchen list",
+    "target": "lista de cocina",
+    "plural": "listas de cocina",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a ordered group of items related to kitchen",
+    "confidence": "medium",
+    "frequencyRank": 1069,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "kitchen study",
+    "target": "estudio de cocina",
+    "plural": "estudios de cocina",
+    "gender": "masculine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a organized investigation related to kitchen",
+    "confidence": "medium",
+    "frequencyRank": 2434,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "latter",
+    "target": "segundo",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Relating to or being the second of two items.",
+    "frequencyRank": 29004,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "life sentence",
+    "target": "cadena perpetua",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A sentence of imprisonment for the remainder of the defendant's life.",
+    "frequencyRank": 39188,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "lower limit",
+    "target": "límite inferior",
+    "partOfSpeech": "expression",
+    "sourceGloss": "The lower limit of a sequence of real numbers is the real number which can be found as follows: remove the first term of the sequence in order to obtain the \"first subsequence.\"...",
+    "frequencyRank": 39397,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "manufacturing",
+    "target": "fabricación",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The transformation of raw materials into finished products, usually on a large scale.",
+    "frequencyRank": 16787,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "fabricaciones",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "mass murder",
+    "target": "asesinato masivo",
+    "partOfSpeech": "expression",
+    "sourceGloss": "The killing of a large number of people over a short period of time.",
+    "frequencyRank": 39583,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "measure word",
+    "target": "clasificador",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A word or morpheme used in combination with a numeral to indicate the count of nouns, used especially in Asian languages.",
+    "frequencyRank": 39619,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "medical survey",
+    "target": "encuesta de atención médica",
+    "plural": "encuestas de atención médica",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a set of questions for gathering opinions related to medical",
+    "confidence": "medium",
+    "frequencyRank": 2323,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "medical update",
+    "target": "actualización de atención médica",
+    "plural": "actualizaciones de atención médica",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to medical",
+    "confidence": "medium",
+    "frequencyRank": 1798,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "medicine ball",
+    "target": "balón de gimnasia",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A large, heavy sphere of leather, plastic or rubber etc. filled with sand or similar, and used for athletic training or physical rehabilitation.",
+    "frequencyRank": 39639,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "meeting survey",
+    "target": "encuesta de reunión",
+    "plural": "encuestas de reunión",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a set of questions for gathering opinions related to meeting",
+    "confidence": "medium",
+    "frequencyRank": 2394,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "meeting update",
+    "target": "actualización de reunión",
+    "plural": "actualizaciones de reunión",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to meeting",
+    "confidence": "medium",
+    "frequencyRank": 1869,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "mess up",
+    "target": "desarreglar",
+    "partOfSpeech": "expression",
+    "sourceGloss": "To make a mess of; to untidy, disorder, soil, or muss.",
+    "frequencyRank": 39683,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "mining",
+    "target": "minería",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The activity of removing solid valuables from the earth.",
+    "frequencyRank": 17245,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "minerías",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "mountain pass",
+    "target": "puerto",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A low point in a mountain range that allows travelers to cross the range.",
+    "frequencyRank": 39907,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "movie survey",
+    "target": "encuesta de película",
+    "plural": "encuestas de película",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a set of questions for gathering opinions related to movie",
+    "confidence": "medium",
+    "frequencyRank": 2350,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "movie update",
+    "target": "actualización de película",
+    "plural": "actualizaciones de película",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to movie",
+    "confidence": "medium",
+    "frequencyRank": 1825,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "national assembly",
+    "target": "Asamblea Nacional",
+    "partOfSpeech": "expression",
+    "sourceGloss": "National legislature.",
+    "frequencyRank": 49801,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "nature map",
+    "target": "mapa de naturaleza",
+    "plural": "mapas de naturaleza",
+    "gender": "masculine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a visual layout of a place or topic related to nature",
+    "confidence": "medium",
+    "frequencyRank": 1227,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "park survey",
+    "target": "encuesta de parque",
+    "plural": "encuestas de parque",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a set of questions for gathering opinions related to park",
+    "confidence": "medium",
+    "frequencyRank": 2381,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "park update",
+    "target": "actualización de parque",
+    "plural": "actualizaciones de parque",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to park",
+    "confidence": "medium",
+    "frequencyRank": 1856,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "payment study",
+    "target": "estudio de pago",
+    "plural": "estudios de pago",
+    "gender": "masculine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a organized investigation related to payment",
+    "confidence": "medium",
+    "frequencyRank": 2415,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "perspective",
+    "target": "perspectiva",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A view, vista or outlook.",
+    "frequencyRank": 18985,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "perspectivas",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "pregnant",
+    "target": "preñado",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Carrying developing offspring within the body.",
+    "frequencyRank": 30312,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "premier",
+    "target": "excelente",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Foremost; first or highest in quality or degree.",
+    "frequencyRank": 30321,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "promote",
+    "target": "promover",
+    "partOfSpeech": "verb",
+    "sourceGloss": "To raise (someone) to a more important, responsible, or remunerative job or rank.",
+    "frequencyRank": 41240,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "revolution",
+    "target": "revolución",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A political upheaval in a government or state characterized by great change.",
+    "frequencyRank": 20686,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "revoluciones",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "sales guide",
+    "target": "guía de ventas",
+    "plural": "guías de ventas",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a helpful set of instructions related to sales",
+    "confidence": "medium",
+    "frequencyRank": 942,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "season ticket",
+    "target": "abono de temporada",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A ticket that is valid for all of the events in a series of related events for which individual tickets would otherwise be needed.",
+    "frequencyRank": 42282,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "secret agent",
+    "target": "agente secreta",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A member of an intelligence agency whose identity or affiliation is kept confidential.",
+    "frequencyRank": 42300,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "severe",
+    "target": "severo",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Very bad or intense.",
+    "frequencyRank": 31005,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "sex appeal",
+    "target": "atracción sexual",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Sexual attractiveness. [from 1910s]",
+    "frequencyRank": 42400,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "software photo",
+    "target": "foto de software",
+    "plural": "fotos de software",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a photographic image related to software",
+    "confidence": "medium",
+    "frequencyRank": 1283,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "store guide",
+    "target": "guía de tienda",
+    "plural": "guías de tienda",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a helpful set of instructions related to store",
+    "confidence": "medium",
+    "frequencyRank": 1015,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "stress ball",
+    "target": "bola antiestrés",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A small, malleable toy ball filled with soft material, used to relieve muscle tension in one's palm and hand and alleviate general feelings of anxiety.",
+    "frequencyRank": 43244,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "student guide",
+    "target": "guía de estudiante",
+    "plural": "guías de estudiante",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a helpful set of instructions related to student",
+    "confidence": "medium",
+    "frequencyRank": 956,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "suppose",
     "target": "suponer",
     "partOfSpeech": "verb",
-    "sourceGloss": "To authenticate by means of belief; to surmise; to suppose to be true, especially without proof",
-    "frequencyRank": 33849,
+    "sourceGloss": "To take for granted; to conclude, with less than absolute supporting data; to believe.",
+    "frequencyRank": 43401,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "be my guest",
-    "target": "adelante",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Do as you wish; go ahead; help yourself; go for it!",
-    "frequencyRank": 45109,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "blow off",
-    "target": "desatender",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To let steam escape through a passage provided for the purpose.",
-    "frequencyRank": 34402,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "bottle",
-    "target": "botella",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The contents of such a container.",
-    "frequencyRank": 9100,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "botellas",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "bunch",
-    "target": "racimo",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A group of similar things, either growing together, or in a cluster or clump, usually fastened together.",
-    "frequencyRank": 9344,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "racimos",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "business as usual",
-    "target": "como si nada ocurriera",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The normal course of an activity, particularly in circumstances that are out of the ordinary.",
-    "frequencyRank": 45211,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "cell theory",
-    "target": "teoría celular",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The scientific theory that all living organisms are made of cells as the smallest functional unit.",
-    "frequencyRank": 34943,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "chain stay",
-    "target": "tirante inferior",
-    "partOfSpeech": "expression",
-    "sourceGloss": "One of the two frame tubes that run horizontally from the bottom bracket shell back to the rear dropouts.",
-    "frequencyRank": 34977,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "chat",
-    "target": "charla",
-    "partOfSpeech": "noun",
-    "sourceGloss": "Informal conversation.",
-    "frequencyRank": 9934,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "charlas",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "chemical",
-    "target": "producto químico",
-    "partOfSpeech": "noun",
-    "sourceGloss": "An artificial chemical compound.",
-    "frequencyRank": 9960,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "productos químico",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "child abuse",
-    "target": "abuso de menores",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Physical, sexual or emotional mistreatment of a child that causes long-term or permanent damage. [from 20th c.]",
-    "frequencyRank": 35064,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "china proper",
-    "target": "China histórica",
-    "partOfSpeech": "expression",
-    "sourceGloss": "China excluding Inner Mongolia, Manchuria, Mongolia, Taiwan, Tibet, Tuva, and Xinjiang.",
-    "frequencyRank": 49449,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "climate review",
-    "target": "reseña de clima",
-    "plural": "reseñas de clima",
+    "source": "tax survey",
+    "target": "encuesta de impuesto",
+    "plural": "encuestas de impuesto",
     "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a evaluation or assessment related to climate",
+    "sourceGloss": "a set of questions for gathering opinions related to tax",
     "confidence": "medium",
-    "frequencyRank": 1923,
+    "frequencyRank": 2390,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "competitive",
-    "target": "competitivo",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Of or pertaining to competition.",
-    "frequencyRank": 26567,
+    "source": "tax update",
+    "target": "actualización de impuesto",
+    "plural": "actualizaciones de impuesto",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to tax",
+    "confidence": "medium",
+    "frequencyRank": 1865,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "think tank",
+    "target": "centro de reflexión",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A group of people who collectively perform research and develop reports and recommendations on topics relating to strategic planning or public policy, and which is usually funde...",
+    "frequencyRank": 43706,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "conference map",
-    "target": "mapa de conferencia",
-    "plural": "mapas de conferencia",
+    "source": "tool",
+    "target": "herramienta",
+    "partOfSpeech": "noun",
+    "sourceGloss": "Any physical device meant to ease or do a task.",
+    "frequencyRank": 23467,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "herramientas",
+    "gender": "feminine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "tournament",
+    "target": "torneo",
+    "partOfSpeech": "noun",
+    "sourceGloss": "During the Middle Ages, a series of battles and other contests designed to prepare knights for war.",
+    "frequencyRank": 23522,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "torneos",
+    "gender": "masculine",
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "travel guide",
+    "target": "guía de viaje",
+    "plural": "guías de viaje",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a helpful set of instructions related to travel",
+    "confidence": "medium",
+    "frequencyRank": 947,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "travel map",
+    "target": "mapa de viaje",
+    "plural": "mapas de viaje",
     "gender": "masculine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a visual layout of a place or topic related to conference",
+    "sourceGloss": "a visual layout of a place or topic related to travel",
     "confidence": "medium",
-    "frequencyRank": 1240,
+    "frequencyRank": 1157,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "culture guide",
-    "target": "guía de cultura",
-    "plural": "guías de cultura",
-    "gender": "feminine",
+    "source": "turkey",
+    "target": "pavo",
     "partOfSpeech": "noun",
-    "sourceGloss": "a helpful set of instructions related to culture",
+    "sourceGloss": "A bird in the genus Meleagris with a fan-shaped tail and wattled neck, especially the wild turkey (Meleagris gallopavo, now domesticated).",
+    "frequencyRank": 23846,
     "confidence": "medium",
-    "frequencyRank": 990,
     "sourceIds": [
-      "curated-contexto"
+      "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "culture map",
-    "target": "mapa de cultura",
-    "plural": "mapas de cultura",
+    "plural": "pavos",
     "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a visual layout of a place or topic related to culture",
-    "confidence": "medium",
-    "frequencyRank": 1200,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "design survey",
-    "target": "encuesta de diseño",
-    "plural": "encuestas de diseño",
+    "source": "united kingdom",
+    "target": "Reino Unido",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A kingdom and country in Northern Europe, comprising the four countries of England, Scotland and Wales on the island of Great Britain, and Northern Ireland on the northeastern p...",
+    "frequencyRank": 50130,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "victim",
+    "target": "víctima",
+    "partOfSpeech": "noun",
+    "sourceGloss": "One who is harmed or killed as a result of a natural or man-made disaster or impersonal condition.",
+    "frequencyRank": 24252,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "víctimas",
     "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a set of questions for gathering opinions related to design",
-    "confidence": "medium",
-    "frequencyRank": 2374,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
+    "enZipf": 4.56,
     "eligible": true
   },
   {
-    "source": "design update",
-    "target": "actualización de diseño",
-    "plural": "actualizaciones de diseño",
+    "source": "west asia",
+    "target": "Asia Occidental",
+    "partOfSpeech": "expression",
+    "sourceGloss": "The westernmost geographic region of Asia, which includes Anatolia, the Arabian Peninsula, Iran, the Levant, Mesopotamia, the Sinai Peninsula, and Transcaucasia.",
+    "frequencyRank": 50159,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "yellow press",
+    "target": "amarillismo",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Newspapers which publish sensationalist articles rather than well researched and sober journalism.",
+    "frequencyRank": 44832,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.56,
+    "eligible": true
+  },
+  {
+    "source": "amazon",
+    "target": "amazona",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A member of a mythical race of female warriors inhabiting the Black Sea area.",
+    "frequencyRank": 5979,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "amazonas",
     "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a new information or revision related to design",
-    "confidence": "medium",
-    "frequencyRank": 1849,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "diet",
-    "target": "dieta",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The food and beverage a person or animal consumes.",
-    "frequencyRank": 11738,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "dietas",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "digital analysis",
-    "target": "análisis de medios digitales",
-    "plural": "análisis de medios digitales",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a detailed examination related to digital",
-    "confidence": "medium",
-    "frequencyRank": 2258,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "domestic policy",
-    "target": "política interna",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A government's policy relating to issues and activity within a nation's borders.",
-    "frequencyRank": 36431,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "early bird",
-    "target": "madrugador",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A person who wakes early or arrives early, typically before most others.",
-    "frequencyRank": 36616,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "eat someone alive",
-    "target": "comer vivo",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To bite repeatedly.",
-    "frequencyRank": 45403,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "emergency article",
-    "target": "artículo de emergencia",
-    "plural": "artículos de emergencia",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an written web or print piece related to emergency",
-    "confidence": "medium",
-    "frequencyRank": 1634,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "emergency review",
-    "target": "reseña de emergencia",
-    "plural": "reseñas de emergencia",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an evaluation or assessment related to emergency",
-    "confidence": "medium",
-    "frequencyRank": 1949,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "escape room",
-    "target": "escape room",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A room containing various puzzles and riddles that players must solve in order to escape.",
-    "frequencyRank": 36883,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "event survey",
-    "target": "encuesta de evento",
-    "plural": "encuestas de evento",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an set of questions for gathering opinions related to event",
-    "confidence": "medium",
-    "frequencyRank": 2393,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "event update",
-    "target": "actualización de evento",
-    "plural": "actualizaciones de evento",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an new information or revision related to event",
-    "confidence": "medium",
-    "frequencyRank": 1868,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "favourite",
-    "target": "favorito",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A person or thing who enjoys special regard or favour.",
-    "frequencyRank": 13109,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "favoritos",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "finance report",
-    "target": "informe de finanzas",
-    "plural": "informes de finanzas",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a written account or summary related to finance",
-    "confidence": "medium",
-    "frequencyRank": 838,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "follow suit",
-    "target": "arrastrar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To play a card of the same suit as the previous or leading card.",
-    "frequencyRank": 37394,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "food truck",
-    "target": "gastroneta",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A van (or wagon) that serves as a restaurant kitchen to sell hot food to customers.",
-    "frequencyRank": 37409,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "hand truck",
-    "target": "diablito",
-    "partOfSpeech": "expression",
-    "sourceGloss": "An L-shaped box-moving handcart with handles at one end, wheels at the base, with a small ledge to set objects on, flat against the floor when the hand-truck is upright. It make...",
-    "frequencyRank": 38120,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "hold my beer",
-    "target": "sujétame el cubata",
-    "partOfSpeech": "expression",
-    "sourceGloss": "I am about to attempt something dangerous and/or stupid.",
-    "frequencyRank": 45674,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "holiday list",
-    "target": "lista de vacaciones",
-    "plural": "listas de vacaciones",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a ordered group of items related to holiday",
-    "confidence": "medium",
-    "frequencyRank": 1136,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "holiday report",
-    "target": "informe de vacaciones",
-    "plural": "informes de vacaciones",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a written account or summary related to holiday",
-    "confidence": "medium",
-    "frequencyRank": 926,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "holy saturday",
-    "target": "Sábado Santo",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The Saturday immediately after Good Friday and before Easter.",
-    "frequencyRank": 32904,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "human chain",
-    "target": "cadena humana",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A form of demonstration in which people link their arms as a show of political solidarity.",
-    "frequencyRank": 38418,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "kiss me",
-    "target": "bésame",
-    "partOfSpeech": "expression",
-    "sourceGloss": "I informally request that you kiss me—that you touch my lips with your lips or press the lips against, as an expression of love or affection.",
-    "frequencyRank": 38965,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "kitchen report",
-    "target": "informe de cocina",
-    "plural": "informes de cocina",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a written account or summary related to kitchen",
-    "confidence": "medium",
-    "frequencyRank": 859,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "lane",
-    "target": "camino",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A narrow passageway between fences, walls, hedges or trees.",
-    "frequencyRank": 16119,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "caminos",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "language assistant",
-    "target": "auxiliar de conversación",
-    "partOfSpeech": "expression",
-    "sourceGloss": "An assistant teacher of a foreign language, usually a native speaker in a foreign country",
-    "frequencyRank": 39028,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "last mile",
-    "target": "último kilómetro",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The portion of the infrastructure that carries communication signals from the main system to the end user's business or home, often involving greater expense to install and main...",
-    "frequencyRank": 39048,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "left-wing",
-    "target": "de izquierdas",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Of political ideologies: favoring political, social, and economic equality.",
-    "frequencyRank": 29025,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "life-saving",
-    "target": "socorrismo",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Preserving life; preventing death.",
-    "frequencyRank": 29065,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "live stream",
-    "target": "directo",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A real-time broadcast of audio or video over the Internet.",
-    "frequencyRank": 39273,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "mess with",
-    "target": "huevear",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To joke around with or dupe someone, in either a friendly or unfriendly manner.",
-    "frequencyRank": 39684,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "military exercise",
-    "target": "ejercicio militar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A large-scale activity involving military forces from multiple countries or commands, designed to demonstrate the level of alliance between those forces and their ability to coo...",
-    "frequencyRank": 39729,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "mix and match",
-    "target": "mesclar y entonar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To vary elements to make compatible combinations.",
-    "frequencyRank": 45910,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "money talks",
-    "target": "el dinero manda",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Money or moneyed interests have power.",
-    "frequencyRank": 39845,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "navy",
-    "target": "marina",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A country's entire maritime military force, including ships and personnel.",
-    "frequencyRank": 17752,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "marinas",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "net weight",
-    "target": "peso neto",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The weight of a product (especially food) without the (tare) weight of its packaging.",
-    "frequencyRank": 40059,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "north korea",
-    "target": "Corea del Norte",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A country in East Asia, whose territory consists of the northern part of Korea. Official name: Democratic People's Republic of Korea. Capital: Pyongyang.",
-    "frequencyRank": 49848,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "online survey",
-    "target": "encuesta de internet",
-    "plural": "encuestas de internet",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an set of questions for gathering opinions related to online",
-    "confidence": "medium",
-    "frequencyRank": 2362,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "online update",
-    "target": "actualización de internet",
-    "plural": "actualizaciones de internet",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "an new information or revision related to online",
-    "confidence": "medium",
-    "frequencyRank": 1837,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "open-air museum",
-    "target": "museo al aire libre",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A museum where the exhibitions are located outdoors.",
-    "frequencyRank": 40320,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "operating table",
-    "target": "mesa de operaciones",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A table on which a patient lies during a surgical operation.",
-    "frequencyRank": 40330,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "opposite side",
-    "target": "cateto opuesto",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The side (or more specifically, leg) of a right triangle that is opposite (or not adjacent to) a given angle.",
-    "frequencyRank": 40340,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "opposition",
-    "target": "oposición",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The action of opposing or of being in conflict.",
-    "frequencyRank": 18268,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "oposiciones",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "payment list",
-    "target": "lista de pago",
-    "plural": "listas de pago",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a ordered group of items related to payment",
-    "confidence": "medium",
-    "frequencyRank": 1050,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "payment report",
-    "target": "informe de pago",
-    "plural": "informes de pago",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a written account or summary related to payment",
-    "confidence": "medium",
-    "frequencyRank": 840,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "permanent",
-    "target": "permanente",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Without end, eternal.",
-    "frequencyRank": 30052,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "personal survey",
-    "target": "encuesta de asuntos personales",
-    "plural": "encuestas de asuntos personales",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a set of questions for gathering opinions related to personal",
-    "confidence": "medium",
-    "frequencyRank": 2364,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "personal update",
-    "target": "actualización de asuntos personales",
-    "plural": "actualizaciones de asuntos personales",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a new information or revision related to personal",
-    "confidence": "medium",
-    "frequencyRank": 1839,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "planet x",
-    "target": "planeta X",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A hypothetical planet in the Solar system, beyond the currently known outermost planet. (The term was applied to Eris for a short while, when Pluto was still considered the nint...",
-    "frequencyRank": 49927,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "pleasure",
-    "target": "gustar",
+    "source": "attend",
+    "target": "asistir",
     "partOfSpeech": "verb",
-    "sourceGloss": "To take pleasure; to seek or pursue pleasure.",
-    "frequencyRank": 40924,
+    "sourceGloss": "To be present at (an event or place) in order to take part in some action or proceedings; also, to regularly go to (an event or place). [from 17th c.]",
+    "frequencyRank": 33875,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "power struggle",
-    "target": "lucha de poder",
+    "source": "ban",
+    "target": "prohibición",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A prohibition.",
+    "frequencyRank": 8508,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "prohibiciones",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "blood moon",
+    "target": "luna de sangre",
     "partOfSpeech": "expression",
-    "sourceGloss": "A situation where two or more people or groups fight to gain dominance over each other.",
-    "frequencyRank": 41100,
+    "sourceGloss": "The moon as it appears during a total lunar eclipse.",
+    "frequencyRank": 34390,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "prefer",
-    "target": "preferir",
+    "source": "blow away",
+    "target": "dejar atónito",
+    "partOfSpeech": "expression",
+    "sourceGloss": "To flabbergast; to impress greatly.",
+    "frequencyRank": 34401,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "bright and early",
+    "target": "de mañana",
+    "partOfSpeech": "expression",
+    "sourceGloss": "(Very) early in the morning.",
+    "frequencyRank": 45200,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "brilliant",
+    "target": "perla",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The size of type between excelsior and diamond, standardized as 4-point.",
+    "frequencyRank": 9235,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "perlas",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "carbon",
+    "target": "carbono",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The chemical element (symbol C) with an atomic number of 6. It can be found in pure form for example as graphite, a black, shiny and very soft material, or diamond, a colourless...",
+    "frequencyRank": 9608,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "carbonos",
+    "gender": "masculine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "catholic",
+    "target": "católico",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A member of a Catholic church.",
+    "frequencyRank": 6161,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "católicos",
+    "gender": "masculine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "central asian",
+    "target": "centroasiático",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Of, from or pertaining to Central Asia.",
+    "frequencyRank": 32681,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "class struggle",
+    "target": "lucha de clases",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Conflict between social or economic classes (especially between the capitalist and proletariat classes); the active expression of a theoretical class conflict looked at from any...",
+    "frequencyRank": 35170,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "concert",
+    "target": "concierto",
+    "partOfSpeech": "noun",
+    "sourceGloss": "An agreement in a design or plan; a union formed by mutual communication of opinions and views; an accordance in a scheme; harmony; a simultaneous action.",
+    "frequencyRank": 10584,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "conciertos",
+    "gender": "masculine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "contract bridge",
+    "target": "bridge de contrato",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A card game in which four players, forming two partnerships, first bid then play by taking tricks.",
+    "frequencyRank": 35588,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "crash",
+    "target": "chocar",
     "partOfSpeech": "verb",
-    "sourceGloss": "To be in the habit of choosing something rather than something else; to favor; to like better. [from 14th c.]",
-    "frequencyRank": 41131,
+    "sourceGloss": "To collide with something destructively; to fall or come down violently.",
+    "frequencyRank": 35740,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "rock and roll",
-    "target": "rock and roll",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A style of vigorous dancing associated with this genre of music.",
-    "frequencyRank": 46173,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "room temperature",
-    "target": "temperatura ambiente",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A normal temperature of a room in which people live; typically 20 to 23°C (68 to 73°F); neither heated nor cooled.",
-    "frequencyRank": 42008,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "running joke",
-    "target": "broma recurrente",
-    "partOfSpeech": "expression",
-    "sourceGloss": "An ongoing joke, one that is regularly repeated or continued.",
-    "frequencyRank": 42094,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "sales map",
-    "target": "mapa de ventas",
-    "plural": "mapas de ventas",
-    "gender": "masculine",
+    "source": "cross-reference",
+    "target": "remisión",
     "partOfSpeech": "noun",
-    "sourceGloss": "a visual layout of a place or topic related to sales",
-    "confidence": "medium",
-    "frequencyRank": 1152,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "scheme",
-    "target": "proyecto",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A systematic plan of future action. [from 18th c.]",
-    "frequencyRank": 21158,
+    "sourceGloss": "A reference or direction in one place in a book or other source of information to information at another place in the same work.",
+    "frequencyRank": 11079,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "plural": "proyectos",
-    "gender": "masculine",
-    "enZipf": 4.57,
+    "plural": "remisiones",
+    "gender": "feminine",
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "security survey",
-    "target": "encuesta de seguridad",
-    "plural": "encuestas de seguridad",
+    "source": "cultural studies",
+    "target": "estudios culturales",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A diverse field of study which examines representations of culture through a variety of academic theories.",
+    "frequencyRank": 35838,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "customer story",
+    "target": "historia de cliente",
+    "plural": "historias de cliente",
     "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a set of questions for gathering opinions related to security",
+    "sourceGloss": "a account of events related to customer",
     "confidence": "medium",
-    "frequencyRank": 2337,
+    "frequencyRank": 1674,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "security update",
-    "target": "actualización de seguridad",
-    "plural": "actualizaciones de seguridad",
-    "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a new information or revision related to security",
-    "confidence": "medium",
-    "frequencyRank": 1812,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "storage",
-    "target": "almacenamiento",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The act of storing goods; the state of being stored.",
-    "frequencyRank": 22497,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "almacenamientos",
-    "gender": "masculine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "store map",
-    "target": "mapa de tienda",
-    "plural": "mapas de tienda",
+    "source": "customer video",
+    "target": "video de cliente",
+    "plural": "videos de cliente",
     "gender": "masculine",
     "partOfSpeech": "noun",
-    "sourceGloss": "a visual layout of a place or topic related to store",
+    "sourceGloss": "a recorded moving image related to customer",
     "confidence": "medium",
-    "frequencyRank": 1225,
+    "frequencyRank": 1464,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "student map",
-    "target": "mapa de estudiante",
-    "plural": "mapas de estudiante",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a visual layout of a place or topic related to student",
-    "confidence": "medium",
-    "frequencyRank": 1166,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "surface analysis",
-    "target": "análisis superficial",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Any synchronically valid analysis of a word’s morphology regardless of whether it represents its diachronic etymology, that is, its historical origin.",
-    "frequencyRank": 43407,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "t-shirt",
-    "target": "camiseta",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A lightweight shirt without buttons, usually with short sleeves and no collar. Often made of cotton and frequently bears a picture or slogan.",
-    "frequencyRank": 6780,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "camisetas",
-    "gender": "feminine",
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "table wine",
-    "target": "vino de mesa",
-    "partOfSpeech": "expression",
-    "sourceGloss": "Wine that is not fortified or sparkling.",
-    "frequencyRank": 43494,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "tank",
-    "target": "tanquear",
+    "source": "deliver",
+    "target": "liberar",
     "partOfSpeech": "verb",
-    "sourceGloss": "To attract the attacks of an enemy target in cooperative team-based combat, so that one's teammates can defeat the enemy in question more efficiently.",
-    "frequencyRank": 43552,
+    "sourceGloss": "To set free from restraint or danger.",
+    "frequencyRank": 36079,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "taylor series",
-    "target": "serie de Taylor",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A power series representation of given infinitely differentiable function \\textstyle f whose terms are calculated from the function's arbitrary order derivatives at given refere...",
-    "frequencyRank": 33256,
+    "source": "depth",
+    "target": "profundidad",
+    "partOfSpeech": "noun",
+    "sourceGloss": "the vertical distance below a surface; the degree to which something is deep",
+    "frequencyRank": 11603,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "tend",
-    "target": "ofrecer",
-    "partOfSpeech": "verb",
-    "sourceGloss": "To make a tender of; to offer or tender.",
-    "frequencyRank": 43641,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "tight",
-    "target": "ajustado",
-    "partOfSpeech": "adjective",
-    "sourceGloss": "Firmly held together; compact; not loose or open.",
-    "frequencyRank": 31703,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "time frame",
-    "target": "marco temporal",
-    "partOfSpeech": "expression",
-    "sourceGloss": "The period of time during which something is expected to occur, or does occur.",
-    "frequencyRank": 43778,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "trading post",
-    "target": "puesto comercial",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A place where trading of goods takes place.",
-    "frequencyRank": 43903,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.57,
-    "eligible": true
-  },
-  {
-    "source": "training survey",
-    "target": "encuesta de capacitación",
-    "plural": "encuestas de capacitación",
+    "plural": "profundidades",
     "gender": "feminine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a set of questions for gathering opinions related to training",
-    "confidence": "medium",
-    "frequencyRank": 2370,
-    "sourceIds": [
-      "curated-contexto"
-    ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "twenty-third",
-    "target": "vigésimo tercero",
+    "source": "deputy",
+    "target": "diputado",
     "partOfSpeech": "noun",
-    "sourceGloss": "The person or thing in the twenty-third position.",
-    "frequencyRank": 23884,
+    "sourceGloss": "A member of Dáil Éireann, or the title of a member of Dáil Éireann.",
+    "frequencyRank": 11605,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "plural": "vigésimos tercero",
+    "plural": "diputados",
     "gender": "masculine",
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "ultimately",
-    "target": "finalmente",
+    "source": "digital camera",
+    "target": "cámara digital",
+    "partOfSpeech": "expression",
+    "sourceGloss": "An electronic, often battery-powered device for recording and storing photographs in digital format, especially on a flash card.",
+    "frequencyRank": 36247,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "dirty",
+    "target": "obscenamente",
     "partOfSpeech": "adverb",
-    "sourceGloss": "Indicating the last item.",
-    "frequencyRank": 5818,
+    "sourceGloss": "In a dirty manner.",
+    "frequencyRank": 4921,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "unlike",
-    "target": "desemejante",
+    "source": "dry ice",
+    "target": "hielo seco",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Carbon dioxide frozen in the solid state, used especially as a cooling agent and for the production of fog-like special effects. It sublimes at −78.5 °C (−109.3 °F) at normal at...",
+    "frequencyRank": 36565,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "electronic",
+    "target": "electrónico",
     "partOfSpeech": "adjective",
-    "sourceGloss": "Not like; dissimilar (to); having no resemblance; unalike.",
-    "frequencyRank": 32076,
+    "sourceGloss": "Of or pertaining to an electron or electrons.",
+    "frequencyRank": 27325,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "white pages",
-    "target": "páginas blancas",
+    "source": "empty set",
+    "target": "conjunto vacío",
     "partOfSpeech": "expression",
-    "sourceGloss": "The telephone directory (or section of a larger directory) that lists residential numbers.",
-    "frequencyRank": 44608,
+    "sourceGloss": "The unique set that contains no elements, denoted ∅ or {}.",
+    "frequencyRank": 36766,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "yard",
-    "target": "patio",
-    "partOfSpeech": "noun",
-    "sourceGloss": "A small, usually uncultivated area adjoining or (now especially) within the precincts of a house or other building.",
-    "frequencyRank": 24791,
+    "source": "ex-gay",
+    "target": "ex-gay",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Of or pertaining to the movement that considers homosexuality a disease and claims it can be cured by conversion therapy.",
+    "frequencyRank": 27505,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "plural": "patios",
-    "gender": "masculine",
-    "enZipf": 4.57,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "animal analysis",
-    "target": "análisis de animales",
-    "plural": "análisis de animales",
-    "gender": "masculine",
+    "source": "existence",
+    "target": "existencia",
     "partOfSpeech": "noun",
-    "sourceGloss": "an detailed examination related to animal",
+    "sourceGloss": "The state of being, existing, or occurring; beinghood.",
+    "frequencyRank": 12887,
     "confidence": "medium",
-    "frequencyRank": 2278,
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "existencias",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "expression",
+    "target": "expresión",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A particular way of phrasing an idea.",
+    "frequencyRank": 12939,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "expresiones",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "fair-weather friend",
+    "target": "amigo de buen temperie",
+    "partOfSpeech": "expression",
+    "sourceGloss": "One who is friendly, helpful, or available only when it is advantageous or convenient to be so. [from early 18th c.]",
+    "frequencyRank": 37064,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "faster-than-light",
+    "target": "hiperlumínico",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Faster than the speed of light in a vacuum, the theoretical speed limit for travel within the universe.",
+    "frequencyRank": 27642,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "fire escape",
+    "target": "escalera de escape de incendios",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Any of the series of emergency doors, ladders, or stairs used to evacuate a building if a fire breaks out.",
+    "frequencyRank": 37256,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "french canadian",
+    "target": "canadiense francés",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A Canadian whose first language is French.",
+    "frequencyRank": 32841,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "friendly fire",
+    "target": "fuego amigo",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Weapons fire coming from allied or friendly forces, as opposed to fire coming from enemy forces. [from 1910s]",
+    "frequencyRank": 37540,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "garden image",
+    "target": "imagen de jardín",
+    "plural": "imágenes de jardín",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a visual representation related to garden",
+    "confidence": "medium",
+    "frequencyRank": 1385,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "apartment building",
-    "target": "edificio de apartamentos",
+    "source": "get laid",
+    "target": "cabalgar",
     "partOfSpeech": "expression",
-    "sourceGloss": "A residential building containing multiple apartments or flats.",
-    "frequencyRank": 33720,
+    "sourceGloss": "To cause to have sex.",
+    "frequencyRank": 37744,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "assembly line",
-    "target": "línea de montaje",
+    "source": "government bond",
+    "target": "bono gubernamental",
     "partOfSpeech": "expression",
-    "sourceGloss": "A system of workers and machinery in which a product is assembled in a series of consecutive operations; typically the product is conveyed by a continuously moving belt.",
-    "frequencyRank": 33836,
+    "sourceGloss": "A bond issued by a national government, generally with a promise to pay periodic interest payments and to repay the face value on the maturity date.",
+    "frequencyRank": 37924,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "basketball",
-    "target": "baloncesto",
+    "source": "high definition",
+    "target": "alta definición",
+    "partOfSpeech": "expression",
+    "sourceGloss": "Enhanced picture quality on a TV or any other display.",
+    "frequencyRank": 38273,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "house-trained",
+    "target": "limpio",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Trained not to excrete indoors.",
+    "frequencyRank": 28324,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "housing image",
+    "target": "imagen de vivienda",
+    "plural": "imágenes de vivienda",
+    "gender": "feminine",
     "partOfSpeech": "noun",
-    "sourceGloss": "The particular kind of ball used in the sport of basketball.",
-    "frequencyRank": 8599,
+    "sourceGloss": "a visual representation related to housing",
     "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "baloncestos",
-    "gender": "masculine",
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "bell-end",
-    "target": "capullo",
-    "partOfSpeech": "noun",
-    "sourceGloss": "The glans penis.",
-    "frequencyRank": 8699,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "plural": "capullos",
-    "gender": "masculine",
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "benefit of the doubt",
-    "target": "beneficio de la duda",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A favorable judgement given in the absence of full evidence.",
-    "frequencyRank": 46735,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "bottle up",
-    "target": "embotellar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To put into bottles.",
-    "frequencyRank": 34493,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "bottom dead center",
-    "target": "punto muerto inferior",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A position in the cycle of a piston engine wherein the piston is at the bottommost point in its stroke. In a four-stroke cycle, BDC occurs twice: at the end of the intake stroke...",
-    "frequencyRank": 45181,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "box wine",
-    "target": "tetra",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A type of wine that is sealed in a plastic bladder and packaged in a cardboard box; cask wine.",
-    "frequencyRank": 34523,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "branch off",
-    "target": "bifurcar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To diverge into two or more separate paths.",
-    "frequencyRank": 34555,
-    "confidence": "medium",
-    "sourceIds": [
-      "freedict-eng-spa-2025.11.23"
-    ],
-    "enZipf": 4.56,
-    "eligible": true
-  },
-  {
-    "source": "budget analysis",
-    "target": "análisis de presupuesto",
-    "plural": "análisis de presupuesto",
-    "gender": "masculine",
-    "partOfSpeech": "noun",
-    "sourceGloss": "a detailed examination related to budget",
-    "confidence": "medium",
-    "frequencyRank": 2204,
+    "frequencyRank": 1440,
     "sourceIds": [
       "curated-contexto"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "business cycle",
-    "target": "ciclo económico",
+    "source": "i'm pregnant",
+    "target": "estoy embarazada",
     "partOfSpeech": "expression",
-    "sourceGloss": "A long-term fluctuation in economic activity between growth and recession.",
-    "frequencyRank": 34691,
+    "sourceGloss": "Indicates that the speaker is pregnant.",
+    "frequencyRank": 32934,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "california roll",
-    "target": "rollo California",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A popular form of sushi in the United States, commonly made with avocado, cucumber, and crab meat, and wrapped with rice.",
-    "frequencyRank": 32650,
+    "source": "in-depth",
+    "target": "profundo",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Thorough; comprehensive.",
+    "frequencyRank": 28515,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "canadian football",
-    "target": "fútbol canadiense",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A game similar to American football played on a field of 110 yards long and 65 yards wide (with two 20 yard-long endzones) in which two teams of 12 players attempt to get an ovo...",
-    "frequencyRank": 32656,
+    "source": "interior",
+    "target": "interior",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The inside of a building, container, cavern, or other enclosed structure.",
+    "frequencyRank": 15597,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "plural": "interiores",
+    "gender": "masculine",
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "cat lady",
-    "target": "loca de los gatos",
-    "partOfSpeech": "expression",
-    "sourceGloss": "A woman, often elderly, who devotes her time and attention to one or usually many domestic cats.",
-    "frequencyRank": 34896,
+    "source": "joy",
+    "target": "alegría",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A feeling of extreme happiness or cheerfulness, especially related to the acquisition or expectation of something good.",
+    "frequencyRank": 15829,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "plural": "alegrías",
+    "gender": "feminine",
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "chat up",
-    "target": "camelar",
-    "partOfSpeech": "expression",
-    "sourceGloss": "To talk to (someone) in a friendly, open, or casual manner, sometimes also in a charming or affected manner, usually to curry favor, and sometimes flirtatiously with the intenti...",
-    "frequencyRank": 35007,
+    "source": "laid-back",
+    "target": "relajado",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Relaxed and easy-going; demonstrating an absence of stress or worry.",
+    "frequencyRank": 28977,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
     "eligible": true
   },
   {
-    "source": "church of scotland",
-    "target": "Iglesia de Escocia",
+    "source": "language survey",
+    "target": "encuesta de idioma",
+    "plural": "encuestas de idioma",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a set of questions for gathering opinions related to language",
+    "confidence": "medium",
+    "frequencyRank": 2352,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "language update",
+    "target": "actualización de idioma",
+    "plural": "actualizaciones de idioma",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a new information or revision related to language",
+    "confidence": "medium",
+    "frequencyRank": 1827,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "leading edge",
+    "target": "borde anterior",
     "partOfSpeech": "expression",
-    "sourceGloss": "The national Presbyterian church of Scotland.",
-    "frequencyRank": 50250,
+    "sourceGloss": "The frontmost edge of a wing or other airfoil of an aircraft; sometimes contains slots or slats.",
+    "frequencyRank": 39089,
     "confidence": "medium",
     "sourceIds": [
       "freedict-eng-spa-2025.11.23"
     ],
-    "enZipf": 4.56,
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "legislation",
+    "target": "legislación",
+    "partOfSpeech": "noun",
+    "sourceGloss": "The act of legislating; preparation and enactment of laws.",
+    "frequencyRank": 16247,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "legislaciones",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "light novel",
+    "target": "novela ligera",
+    "partOfSpeech": "expression",
+    "sourceGloss": "A Japanese novel primarily targeting young adults, typically illustrated (in an anime/manga style) and containing not more than 50,000 words.",
+    "frequencyRank": 39195,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "manner",
+    "target": "manera",
+    "partOfSpeech": "noun",
+    "sourceGloss": "Mode of action; way of performing or doing anything.",
+    "frequencyRank": 16768,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "maneras",
+    "gender": "feminine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "mate",
+    "target": "compañero",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A fellow, comrade, colleague, partner or someone with whom something is shared, e.g. shipmate, classmate.",
+    "frequencyRank": 16876,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "compañeros",
+    "gender": "masculine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "nature guide",
+    "target": "guía de naturaleza",
+    "plural": "guías de naturaleza",
+    "gender": "feminine",
+    "partOfSpeech": "noun",
+    "sourceGloss": "a helpful set of instructions related to nature",
+    "confidence": "medium",
+    "frequencyRank": 1017,
+    "sourceIds": [
+      "curated-contexto"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "noise",
+    "target": "ruido",
+    "partOfSpeech": "noun",
+    "sourceGloss": "Various sounds, usually unwanted or unpleasant.",
+    "frequencyRank": 17946,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "ruidos",
+    "gender": "masculine",
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "over-the-counter",
+    "target": "de venta directa",
+    "partOfSpeech": "adjective",
+    "sourceGloss": "Legal for sale or distribution without the requirement of a prescription.",
+    "frequencyRank": 29851,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "enZipf": 4.55,
+    "eligible": true
+  },
+  {
+    "source": "pakistan",
+    "target": "Pakistán",
+    "partOfSpeech": "noun",
+    "sourceGloss": "A country in South Asia. Official name: Islamic Republic of Pakistan. Capital: Islamabad.",
+    "frequencyRank": 48695,
+    "confidence": "medium",
+    "sourceIds": [
+      "freedict-eng-spa-2025.11.23"
+    ],
+    "plural": "Pakistanes",
+    "gender": "masculine",
+    "enZipf": 4.55,
     "eligible": true
   }
 ]
