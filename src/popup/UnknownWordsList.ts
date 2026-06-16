@@ -109,10 +109,7 @@ export async function renderUnknownWordsList(
     }
 
     for (const word of words) {
-      const chip = document.createElement('span')
-      chip.className = 'word-chip'
-      chip.textContent = word.lemma
-      list.appendChild(chip)
+      list.appendChild(buildChip(word))
     }
   }
 
@@ -142,6 +139,77 @@ function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord
       markedAt: entry.selfMarkedUnknownAt ?? 0,
     }))
     .sort((a, b) => b.markedAt - a.markedAt || a.lemma.localeCompare(b.lemma))
+}
+
+// Build one review chip. When the word resolves to a usable Spanish target the chip
+// leads with the SPANISH word and reveals the English source + gloss inline on hover
+// or keyboard focus (the English meaning also rides on the body's aria-label so it is
+// not hover-only for screen-reader users). When there is no usable target — a missing
+// or low-confidence entry, or a failed pack load — the chip falls back to showing the
+// English lemma exactly as before, with no reveal.
+function buildChip(word: UnknownWord): HTMLElement {
+  const entry = lookup(word.lemma)
+  const target = entry?.target ?? ''
+
+  const chip = document.createElement('span')
+  chip.className = 'word-chip'
+
+  if (!target) {
+    chip.classList.add('word-chip--plain')
+    chip.textContent = word.lemma
+    return chip
+  }
+
+  const gloss = entry?.sourceGloss ?? ''
+  const noun = getNounEntry(entry)
+
+  // Focusable body: hover or Tab reveals the English meaning inline.
+  const body = document.createElement('span')
+  body.className = 'word-chip__body'
+  body.tabIndex = 0
+  body.setAttribute('aria-label', buildChipAriaLabel(word.lemma, entry, noun))
+
+  const targetEl = document.createElement('span')
+  targetEl.className = 'word-chip__target'
+  targetEl.lang = 'es'
+  targetEl.textContent = target
+  body.appendChild(targetEl)
+
+  // Revealed-on-hover/focus block. aria-hidden because the body's aria-label already
+  // carries the same information — this avoids a duplicate screen-reader announcement.
+  const reveal = document.createElement('span')
+  reveal.className = 'word-chip__reveal'
+  reveal.setAttribute('aria-hidden', 'true')
+
+  const english = document.createElement('span')
+  english.className = 'word-chip__english'
+  english.textContent = word.lemma
+  reveal.appendChild(english)
+
+  if (gloss) {
+    const glossEl = document.createElement('span')
+    glossEl.className = 'word-chip__gloss'
+    glossEl.textContent = gloss
+    reveal.appendChild(glossEl)
+  }
+
+  body.appendChild(reveal)
+  chip.appendChild(body)
+  return chip
+}
+
+// Flat, comma-joined accessible name, e.g. "perro, dog, noun, masculine, plural perros".
+function buildChipAriaLabel(
+  lemma: string,
+  entry: TranslationEntry | null,
+  noun: NounTranslationEntry | null,
+): string {
+  const parts = [entry?.target ?? '', lemma, entry?.partOfSpeech ?? '']
+  if (noun) {
+    parts.push(noun.gender)
+    if (noun.plural) parts.push(`plural ${noun.plural}`)
+  }
+  return parts.filter(Boolean).join(', ')
 }
 
 function buildExportButton(label: string, onClick: () => void): HTMLButtonElement {
