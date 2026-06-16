@@ -1,4 +1,5 @@
 import { loadLanguagePack, lookup } from '../language/loader.js'
+import { openPracticePanel, countPracticeable } from './PracticePanel.js'
 import type { LexiconEntry, NounTranslationEntry, TranslationEntry } from '../types/index.js'
 
 type Filter = 'all' | 'session'
@@ -83,9 +84,22 @@ export async function renderUnknownWordsList(
   sessionBtn.type = 'button'
   sessionBtn.className = 'filter-btn'
 
+  // Practice launches a staleness-ordered review over the saved-unknown words.
+  // Built from .export-button (which has a :disabled rule); right-aligned in the row.
+  const practiceBtn = document.createElement('button')
+  practiceBtn.type = 'button'
+  practiceBtn.className = 'export-button practice-launch'
+
   filterBar.appendChild(allBtn)
   filterBar.appendChild(sessionBtn)
-  section.appendChild(filterBar)
+  filterBar.appendChild(practiceBtn)
+
+  // Swappable card body — hidden while the practice panel is open so the panel
+  // takes over below the section title.
+  const bodyWrap = document.createElement('div')
+  bodyWrap.className = 'word-body'
+  bodyWrap.appendChild(filterBar)
+  section.appendChild(bodyWrap)
 
   const exportActions = document.createElement('div')
   exportActions.className = 'export-actions'
@@ -108,7 +122,7 @@ export async function renderUnknownWordsList(
 
   exportActions.appendChild(csvBtn)
   exportActions.appendChild(quizletBtn)
-  section.appendChild(exportActions)
+  bodyWrap.appendChild(exportActions)
 
   // Transient "Marked known · Undo" affordance (aria-live so it is announced).
   const undoBar = document.createElement('div')
@@ -122,7 +136,7 @@ export async function renderUnknownWordsList(
   undoBtn.textContent = 'Undo'
   undoBar.appendChild(undoText)
   undoBar.appendChild(undoBtn)
-  section.appendChild(undoBar)
+  bodyWrap.appendChild(undoBar)
 
   let undoTimer: ReturnType<typeof setTimeout> | null = null
   let pendingUndo: UnknownWord | null = null
@@ -149,13 +163,15 @@ export async function renderUnknownWordsList(
     const word = pendingUndo
     hideUndo()
     allUnknown = [...allUnknown, word].sort(compareUnknown)
-    afterModelChange()
+    // Persist first (the synchronous part of onRestore mutates the store) so the
+    // practice count recomputed by afterModelChange sees the restored word.
     void handlers.onRestore(word.lemma, word.markedAt)
+    afterModelChange()
   })
 
   const list = document.createElement('div')
   list.className = 'word-list'
-  section.appendChild(list)
+  bodyWrap.appendChild(list)
 
   function handleMarkKnown(word: UnknownWord, chipEl: HTMLElement): void {
     // Optimistic fade, then drop from the model and persist the soft-remove.
@@ -178,6 +194,12 @@ export async function renderUnknownWordsList(
   function updateCounts(): void {
     allBtn.textContent = `All (${allUnknown.length})`
     sessionBtn.textContent = `This session (${sessionCount()})`
+    // Practiceable count comes from the store (answerable saved-unknown words), which
+    // mark-known / Undo keep in sync. Disabled when there is nothing to practice or
+    // the pack failed to load (every lookup misses).
+    const practiceCount = countPracticeable()
+    practiceBtn.textContent = `Practice (${practiceCount})`
+    practiceBtn.disabled = practiceCount === 0
   }
 
   function renderList(): void {
@@ -215,6 +237,17 @@ export async function renderUnknownWordsList(
     sessionBtn.classList.add('active')
     allBtn.classList.remove('active')
     renderList()
+  })
+
+  practiceBtn.addEventListener('click', () => {
+    hideUndo()
+    bodyWrap.style.display = 'none'
+    void openPracticePanel(section, {
+      onClose: () => {
+        bodyWrap.style.display = ''
+        updateCounts()
+      },
+    })
   })
 
   updateCounts()
