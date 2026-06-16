@@ -258,6 +258,7 @@
 
     .word-filter {
       display: flex;
+      align-items: center;
       gap: 6px;
       margin-bottom: 10px;
     }
@@ -376,6 +377,7 @@
     /* Mark-known check — quiet until hover/focus. */
     .word-chip__known {
       flex: none;
+      align-self: flex-start;
       border: none;
       background: none;
       cursor: pointer;
@@ -435,8 +437,11 @@
       border-radius: 3px;
     }
 
-    /* Practice launcher — right-aligned in the filter row. */
-    .practice-launch { margin-left: auto; }
+    /* Practice launcher — right-aligned in the filter row; pill to match the filters. */
+    .practice-launch {
+      margin-left: auto;
+      border-radius: var(--ctx-radius-pill);
+    }
 
     /* In-popup practice panel (body-swap below the section title). */
     .practice-header {
@@ -446,16 +451,7 @@
       margin-bottom: 12px;
     }
 
-    .practice-label {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--ctx-eyebrow);
-    }
-
     .practice-progress {
-      margin-left: auto;
       font-size: 11px;
       color: var(--ctx-ink-3);
       font-variant-numeric: tabular-nums;
@@ -463,6 +459,7 @@
 
     .practice-close {
       flex: none;
+      margin-left: auto;
       border: none;
       background: none;
       cursor: pointer;

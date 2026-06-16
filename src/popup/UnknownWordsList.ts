@@ -29,7 +29,7 @@ export interface UnknownWordsListHandlers {
   // previous list position rather than jumping to the top.
   onRestore: (lemma: string, markedAt: number) => void | Promise<void>
   // Notify the popup that the saved-unknown total changed (updates the stats panel).
-  onUnknownTotalChange?: (total: number) => void
+  onUnknownTotalChange: (total: number) => void
 }
 
 // How long the "Marked known · Undo" affordance stays before auto-dismissing. The
@@ -139,7 +139,17 @@ export async function renderUnknownWordsList(
   bodyWrap.appendChild(undoBar)
 
   let undoTimer: ReturnType<typeof setTimeout> | null = null
+  // The pending optimistic-removal timer (the 140ms fade). Tracked so an Undo within
+  // the fade window can cancel it instead of letting it strip the restored word out.
+  let removalTimer: ReturnType<typeof setTimeout> | null = null
   let pendingUndo: UnknownWord | null = null
+
+  function clearRemovalTimer(): void {
+    if (removalTimer !== null) {
+      clearTimeout(removalTimer)
+      removalTimer = null
+    }
+  }
 
   function hideUndo(): void {
     undoBar.classList.remove('is-visible')
@@ -156,13 +166,22 @@ export async function renderUnknownWordsList(
     undoBar.classList.add('is-visible')
     if (undoTimer !== null) clearTimeout(undoTimer)
     undoTimer = setTimeout(hideUndo, UNDO_VISIBLE_MS)
+    // Marking known removes the chip (and its focus); move focus to Undo so keyboard
+    // and screen-reader users can actually reach the time-limited control.
+    undoBtn.focus()
   }
 
   undoBtn.addEventListener('click', () => {
     if (!pendingUndo) return
     const word = pendingUndo
+    // Cancel any still-pending optimistic removal so it can't strip the word back out
+    // after we restore it.
+    clearRemovalTimer()
     hideUndo()
-    allUnknown = [...allUnknown, word].sort(compareUnknown)
+    // Re-add only if the removal already fired; otherwise the word is still present.
+    if (!allUnknown.some(w => w.lemma === word.lemma)) {
+      allUnknown = [...allUnknown, word].sort(compareUnknown)
+    }
     // Persist first (the synchronous part of onRestore mutates the store) so the
     // practice count recomputed by afterModelChange sees the restored word.
     void handlers.onRestore(word.lemma, word.markedAt)
@@ -177,7 +196,9 @@ export async function renderUnknownWordsList(
     // Optimistic fade, then drop from the model and persist the soft-remove.
     chipEl.classList.add('word-chip--leaving')
     void handlers.onMarkKnown(word.lemma)
-    setTimeout(() => {
+    clearRemovalTimer()
+    removalTimer = setTimeout(() => {
+      removalTimer = null
       allUnknown = allUnknown.filter(w => w.lemma !== word.lemma)
       afterModelChange()
     }, 140)
@@ -188,7 +209,7 @@ export async function renderUnknownWordsList(
   function afterModelChange(): void {
     updateCounts()
     renderList()
-    handlers.onUnknownTotalChange?.(allUnknown.length)
+    handlers.onUnknownTotalChange(allUnknown.length)
   }
 
   function updateCounts(): void {
@@ -242,8 +263,11 @@ export async function renderUnknownWordsList(
   practiceBtn.addEventListener('click', () => {
     hideUndo()
     bodyWrap.style.display = 'none'
+    // The card title becomes the panel's single eyebrow while practising.
+    title.textContent = 'Practice'
     void openPracticePanel(section, {
       onClose: () => {
+        title.textContent = 'Unknown Words'
         bodyWrap.style.display = ''
         updateCounts()
       },

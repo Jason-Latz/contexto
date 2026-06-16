@@ -26,11 +26,16 @@ export interface PracticePanelOptions {
   onClose: () => void
 }
 
-// Count of saved-unknown words that can actually be practiced (have a usable target).
+// Saved-unknown lemmas that can actually be practiced (resolve to a usable Spanish
+// target), stalest-first. Shared by the count and the queue so the two can't drift.
+function practiceableLemmas(): string[] {
+  return orderUnknownByStaleness(getLexiconForStorage())
+    .filter(lemma => Boolean(lookup(lemma)?.target))
+}
+
 // Drives the "Practice (N)" button label and disabled state.
 export function countPracticeable(): number {
-  const lexicon = getLexiconForStorage()
-  return orderUnknownByStaleness(lexicon).filter(lemma => Boolean(lookup(lemma)?.target)).length
+  return practiceableLemmas().length
 }
 
 export async function openPracticePanel(host: HTMLElement, options: PracticePanelOptions): Promise<void> {
@@ -41,9 +46,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
     // If the pack can't load, the queue below is empty and we show the empty state.
   }
 
-  const queue = orderUnknownByStaleness(getLexiconForStorage())
-    .filter(lemma => Boolean(lookup(lemma)?.target))
-    .slice(0, MAX_BATCH)
+  const queue = practiceableLemmas().slice(0, MAX_BATCH)
 
   const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
 
@@ -53,10 +56,8 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
   const header = document.createElement('div')
   header.className = 'practice-header'
 
-  const label = document.createElement('span')
-  label.className = 'practice-label'
-  label.textContent = 'Practice'
-
+  // No eyebrow label here — the host card's title is swapped to "Practice" while the
+  // panel is open, so a label here would be a duplicate.
   const progress = document.createElement('span')
   progress.className = 'practice-progress'
 
@@ -69,7 +70,6 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
   closeGlyph.textContent = '×'
   closeBtn.appendChild(closeGlyph)
 
-  header.appendChild(label)
   header.appendChild(progress)
   header.appendChild(closeBtn)
 
@@ -77,10 +77,12 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
   content.className = 'practice-content'
 
   // Screen-reader feedback — MeaningRecall gives only a brief colour cue otherwise.
+  // Assertive because focus advances to the next question right after, which can
+  // otherwise clip a polite announcement.
   const status = document.createElement('div')
   status.className = 'practice-status'
   status.setAttribute('role', 'status')
-  status.setAttribute('aria-live', 'polite')
+  status.setAttribute('aria-live', 'assertive')
 
   panel.appendChild(header)
   panel.appendChild(content)
@@ -113,7 +115,8 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
     return
   }
 
-  let index = 0
+  let index = 0      // queue cursor (advances over skips too)
+  let answered = 0   // questions actually shown + answered (drives the count/progress)
 
   function showDone(): void {
     progress.textContent = ''
@@ -121,7 +124,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
     while (content.firstChild) content.removeChild(content.firstChild)
     const done = document.createElement('p')
     done.className = 'practice-empty'
-    done.textContent = `Done — reviewed ${index} word${index === 1 ? '' : 's'}.`
+    done.textContent = `Done — reviewed ${answered} word${answered === 1 ? '' : 's'}.`
     content.appendChild(done)
     closeBtn.focus()
   }
@@ -144,7 +147,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
       return
     }
 
-    progress.textContent = `${index} of ${queue.length}`
+    progress.textContent = `${answered + 1} of ${queue.length}`
     while (content.firstChild) content.removeChild(content.firstChild)
 
     renderMeaningRecall(content, {
@@ -153,6 +156,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
       onResult: (correct) => {
         applyQuizResult(lemma, correct)
         void flushLexiconMerge()
+        answered++
         status.textContent = correct ? 'Correct.' : `Incorrect — “${target}” means “${lemma}”.`
         showNext()
       },
