@@ -7,8 +7,9 @@
  * answer runs applyQuizResult (which stamps lastReviewedAt, advancing staleness) and
  * is persisted through the clobber-safe merge-write.
  *
- * Reuses MeaningRecall (Spanish → pick the English meaning) — the same recall
- * direction as the chips. The in-memory lexicon store is the source of truth (loaded
+ * Flashcard format: show the Spanish word, reveal the English meaning + gloss on
+ * demand, then the user self-grades know / don't-know (which maps to a correct /
+ * incorrect SM-2 result). The in-memory lexicon store is the source of truth (loaded
  * once at popup init and kept current by mutations), so the panel does NOT re-read
  * storage, which would drop pending changes.
  */
@@ -17,7 +18,6 @@ import { getLexiconForStorage, getEntry, flushLexiconMerge } from '../store/lexi
 import { applyQuizResult } from '../engine/wordLifecycle.js'
 import { orderUnknownByStaleness } from '../engine/reviewQueue.js'
 import { loadLanguagePack, lookup } from '../language/loader.js'
-import { renderMeaningRecall } from '../quiz/MeaningRecall.js'
 
 // Cap one practice run so a long backlog doesn't become an endless session.
 const MAX_BATCH = 10
@@ -76,18 +76,13 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
   const content = document.createElement('div')
   content.className = 'practice-content'
 
-  // Screen-reader feedback — MeaningRecall gives only a brief colour cue otherwise.
-  // Assertive because focus advances to the next question right after, which can
-  // otherwise clip a polite announcement.
-  const status = document.createElement('div')
-  status.className = 'practice-status'
-  status.setAttribute('role', 'status')
-  status.setAttribute('aria-live', 'assertive')
-
   panel.appendChild(header)
   panel.appendChild(content)
-  panel.appendChild(status)
   host.appendChild(panel)
+
+  function clearContent(): void {
+    while (content.firstChild) content.removeChild(content.firstChild)
+  }
 
   function close(): void {
     panel.remove()
@@ -120,8 +115,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
 
   function showDone(): void {
     progress.textContent = ''
-    status.textContent = ''
-    while (content.firstChild) content.removeChild(content.firstChild)
+    clearContent()
     const done = document.createElement('p')
     done.className = 'practice-empty'
     done.textContent = `Done — reviewed ${answered} word${answered === 1 ? '' : 's'}.`
@@ -141,30 +135,84 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
     // A word marked known in another tab since the queue was built must be skipped,
     // not resurrected.
     const entry = getEntry(lemma)
-    const target = lookup(lemma)?.target ?? ''
+    const dict = lookup(lemma)
+    const target = dict?.target ?? ''
     if (!entry.selfMarkedUnknown || !target) {
       showNext()
       return
     }
 
     progress.textContent = `${answered + 1} of ${queue.length}`
-    while (content.firstChild) content.removeChild(content.firstChild)
+    renderFront(lemma, target, dict?.sourceGloss ?? '')
+  }
 
-    renderMeaningRecall(content, {
-      englishLemma: lemma,
-      targetWord: target,
-      onResult: (correct) => {
-        applyQuizResult(lemma, correct)
-        void flushLexiconMerge()
-        answered++
-        status.textContent = correct ? 'Correct.' : `Incorrect — “${target}” means “${lemma}”.`
-        showNext()
-      },
-    })
+  // Front of the card: the Spanish word and a button to reveal the answer.
+  function renderFront(lemma: string, target: string, gloss: string): void {
+    clearContent()
+    content.appendChild(textEl('p', 'practice-prompt', 'Do you know this word?'))
+    const term = textEl('p', 'practice-term', target)
+    term.lang = 'es'
+    content.appendChild(term)
 
-    // Move focus into the freshly-rendered question for keyboard play.
-    content.querySelector('button')?.focus()
+    const showBtn = document.createElement('button')
+    showBtn.type = 'button'
+    showBtn.className = 'practice-show'
+    showBtn.textContent = 'Show answer'
+    showBtn.addEventListener('click', () => renderBack(lemma, target, gloss))
+    content.appendChild(showBtn)
+    showBtn.focus()
+  }
+
+  // Back of the card: the English meaning + gloss, then self-grade buttons.
+  function renderBack(lemma: string, target: string, gloss: string): void {
+    clearContent()
+    const term = textEl('p', 'practice-term', target)
+    term.lang = 'es'
+    content.appendChild(term)
+
+    const answer = document.createElement('div')
+    answer.className = 'practice-answer'
+    answer.tabIndex = -1
+    answer.setAttribute('aria-label', gloss ? `${lemma}, ${gloss}` : lemma)
+    answer.appendChild(textEl('span', 'practice-answer__en', lemma))
+    if (gloss) answer.appendChild(textEl('span', 'practice-answer__gloss', gloss))
+    content.appendChild(answer)
+
+    const grades = document.createElement('div')
+    grades.className = 'practice-grade'
+    grades.appendChild(gradeButton('Didn’t know', lemma, false))
+    grades.appendChild(gradeButton('Knew it', lemma, true))
+    content.appendChild(grades)
+
+    // Focus the revealed answer so screen readers announce it; Tab reaches the
+    // grade buttons next.
+    answer.focus()
+  }
+
+  function gradeButton(label: string, lemma: string, known: boolean): HTMLButtonElement {
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = known ? 'practice-grade__btn practice-grade__btn--know' : 'practice-grade__btn'
+    btn.textContent = label
+    btn.addEventListener('click', () => grade(lemma, known))
+    return btn
+  }
+
+  // Self-grade maps to an SM-2 correct/incorrect result (which stamps lastReviewedAt)
+  // and is persisted clobber-safe before advancing.
+  function grade(lemma: string, known: boolean): void {
+    applyQuizResult(lemma, known)
+    void flushLexiconMerge()
+    answered++
+    showNext()
   }
 
   showNext()
+}
+
+function textEl(tag: string, className: string, text: string): HTMLElement {
+  const node = document.createElement(tag)
+  node.className = className
+  node.textContent = text
+  return node
 }
