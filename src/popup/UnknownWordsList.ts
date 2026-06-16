@@ -18,10 +18,29 @@ interface ExportRow {
   addedAt: string
 }
 
+// Persistence + cross-section callbacks owned by the popup entry (index.ts), which
+// holds the lexicon store. Keeps this module DOM-only — it never touches storage.
+export interface UnknownWordsListHandlers {
+  // Soft-remove: drop the word from the review list without permanently excluding it
+  // from replacement (clears selfMarkedUnknown only).
+  onMarkKnown: (lemma: string) => void | Promise<void>
+  // Undo a soft-remove, restoring the word's ORIGINAL save time so it returns to its
+  // previous list position rather than jumping to the top.
+  onRestore: (lemma: string, markedAt: number) => void | Promise<void>
+  // Notify the popup that the saved-unknown total changed (updates the stats panel).
+  onUnknownTotalChange?: (total: number) => void
+}
+
+// How long the "Marked known · Undo" affordance stays before auto-dismissing. The
+// Undo control is a real focusable button, so this timeout is convenience, not the
+// only way to undo.
+const UNDO_VISIBLE_MS = 6000
+
 export async function renderUnknownWordsList(
   container: HTMLElement,
   lexicon: Record<string, LexiconEntry>,
   sessionLemmas: ReadonlySet<string>,
+  handlers: UnknownWordsListHandlers,
 ): Promise<void> {
   // The pack is only needed to enrich exports with the Spanish target/gloss; a
   // load failure must not blank the user's saved-words list or the popup.
@@ -31,8 +50,19 @@ export async function renderUnknownWordsList(
     console.warn('[Contexto] Language pack unavailable in popup; showing saved words without Spanish enrichment:', err)
   }
 
-  const allUnknown = collectUnknownWords(lexicon)
-  const sessionUnknown = allUnknown.filter(word => sessionLemmas.has(word.lemma))
+  // Mutable model — mark-known removes from here; Undo re-inserts.
+  let allUnknown = collectUnknownWords(lexicon)
+  let currentFilter: Filter = 'all'
+
+  function wordsForFilter(): UnknownWord[] {
+    return currentFilter === 'session'
+      ? allUnknown.filter(word => sessionLemmas.has(word.lemma))
+      : allUnknown
+  }
+
+  function sessionCount(): number {
+    return allUnknown.filter(word => sessionLemmas.has(word.lemma)).length
+  }
 
   const section = document.createElement('div')
   section.className = 'section'
@@ -48,12 +78,10 @@ export async function renderUnknownWordsList(
   const allBtn = document.createElement('button')
   allBtn.type = 'button'
   allBtn.className = 'filter-btn active'
-  allBtn.textContent = `All (${allUnknown.length})`
 
   const sessionBtn = document.createElement('button')
   sessionBtn.type = 'button'
   sessionBtn.className = 'filter-btn'
-  sessionBtn.textContent = `This session (${sessionUnknown.length})`
 
   filterBar.appendChild(allBtn)
   filterBar.appendChild(sessionBtn)
@@ -63,20 +91,18 @@ export async function renderUnknownWordsList(
   exportActions.className = 'export-actions'
 
   const csvBtn = buildExportButton('CSV', () => {
-    const words = currentFilter === 'session' ? sessionUnknown : allUnknown
     downloadText(
       exportFilename('contexto-unknown-words', 'csv'),
       'text/csv;charset=utf-8',
-      buildCsv(words),
+      buildCsv(wordsForFilter()),
     )
   })
 
   const quizletBtn = buildExportButton('Quizlet TSV', () => {
-    const words = currentFilter === 'session' ? sessionUnknown : allUnknown
     downloadText(
       exportFilename('contexto-quizlet', 'tsv'),
       'text/tab-separated-values;charset=utf-8',
-      buildQuizletTsv(words),
+      buildQuizletTsv(wordsForFilter()),
     )
   })
 
@@ -84,16 +110,80 @@ export async function renderUnknownWordsList(
   exportActions.appendChild(quizletBtn)
   section.appendChild(exportActions)
 
+  // Transient "Marked known · Undo" affordance (aria-live so it is announced).
+  const undoBar = document.createElement('div')
+  undoBar.className = 'word-undo'
+  undoBar.setAttribute('role', 'status')
+  undoBar.setAttribute('aria-live', 'polite')
+  const undoText = document.createElement('span')
+  const undoBtn = document.createElement('button')
+  undoBtn.type = 'button'
+  undoBtn.className = 'word-undo__btn'
+  undoBtn.textContent = 'Undo'
+  undoBar.appendChild(undoText)
+  undoBar.appendChild(undoBtn)
+  section.appendChild(undoBar)
+
+  let undoTimer: ReturnType<typeof setTimeout> | null = null
+  let pendingUndo: UnknownWord | null = null
+
+  function hideUndo(): void {
+    undoBar.classList.remove('is-visible')
+    pendingUndo = null
+    if (undoTimer !== null) {
+      clearTimeout(undoTimer)
+      undoTimer = null
+    }
+  }
+
+  function showUndo(word: UnknownWord): void {
+    pendingUndo = word
+    undoText.textContent = `Marked “${word.lemma}” as known. `
+    undoBar.classList.add('is-visible')
+    if (undoTimer !== null) clearTimeout(undoTimer)
+    undoTimer = setTimeout(hideUndo, UNDO_VISIBLE_MS)
+  }
+
+  undoBtn.addEventListener('click', () => {
+    if (!pendingUndo) return
+    const word = pendingUndo
+    hideUndo()
+    allUnknown = [...allUnknown, word].sort(compareUnknown)
+    afterModelChange()
+    void handlers.onRestore(word.lemma, word.markedAt)
+  })
+
   const list = document.createElement('div')
   list.className = 'word-list'
   section.appendChild(list)
 
-  let currentFilter: Filter = 'all'
+  function handleMarkKnown(word: UnknownWord, chipEl: HTMLElement): void {
+    // Optimistic fade, then drop from the model and persist the soft-remove.
+    chipEl.classList.add('word-chip--leaving')
+    void handlers.onMarkKnown(word.lemma)
+    setTimeout(() => {
+      allUnknown = allUnknown.filter(w => w.lemma !== word.lemma)
+      afterModelChange()
+    }, 140)
+    showUndo(word)
+  }
+
+  // Re-render the list, refresh the filter-count labels, and report the new total.
+  function afterModelChange(): void {
+    updateCounts()
+    renderList()
+    handlers.onUnknownTotalChange?.(allUnknown.length)
+  }
+
+  function updateCounts(): void {
+    allBtn.textContent = `All (${allUnknown.length})`
+    sessionBtn.textContent = `This session (${sessionCount()})`
+  }
 
   function renderList(): void {
     while (list.firstChild) list.removeChild(list.firstChild)
 
-    const words = currentFilter === 'session' ? sessionUnknown : allUnknown
+    const words = wordsForFilter()
     const hasWords = words.length > 0
     csvBtn.disabled = !hasWords
     quizletBtn.disabled = !hasWords
@@ -109,7 +199,7 @@ export async function renderUnknownWordsList(
     }
 
     for (const word of words) {
-      list.appendChild(buildChip(word))
+      list.appendChild(buildChip(word, chipEl => handleMarkKnown(word, chipEl)))
     }
   }
 
@@ -127,8 +217,13 @@ export async function renderUnknownWordsList(
     renderList()
   })
 
+  updateCounts()
   renderList()
   container.appendChild(section)
+}
+
+function compareUnknown(a: UnknownWord, b: UnknownWord): number {
+  return b.markedAt - a.markedAt || a.lemma.localeCompare(b.lemma)
 }
 
 function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord[] {
@@ -138,7 +233,7 @@ function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord
       lemma,
       markedAt: entry.selfMarkedUnknownAt ?? 0,
     }))
-    .sort((a, b) => b.markedAt - a.markedAt || a.lemma.localeCompare(b.lemma))
+    .sort(compareUnknown)
 }
 
 // Build one review chip. When the word resolves to a usable Spanish target the chip
@@ -147,7 +242,7 @@ function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord
 // not hover-only for screen-reader users). When there is no usable target — a missing
 // or low-confidence entry, or a failed pack load — the chip falls back to showing the
 // English lemma exactly as before, with no reveal.
-function buildChip(word: UnknownWord): HTMLElement {
+function buildChip(word: UnknownWord, onMarkKnown: (chipEl: HTMLElement) => void): HTMLElement {
   const entry = lookup(word.lemma)
   const target = entry?.target ?? ''
 
@@ -155,46 +250,64 @@ function buildChip(word: UnknownWord): HTMLElement {
   chip.className = 'word-chip'
 
   if (!target) {
+    // English-only fallback: no usable Spanish to reveal, so the lemma is the chip.
     chip.classList.add('word-chip--plain')
-    chip.textContent = word.lemma
-    return chip
+    const plain = document.createElement('span')
+    plain.className = 'word-chip__plain-text'
+    plain.textContent = word.lemma
+    chip.appendChild(plain)
+  } else {
+    const gloss = entry?.sourceGloss ?? ''
+    const noun = getNounEntry(entry)
+
+    // Focusable body: hover or Tab reveals the English meaning inline.
+    const body = document.createElement('span')
+    body.className = 'word-chip__body'
+    body.tabIndex = 0
+    body.setAttribute('aria-label', buildChipAriaLabel(word.lemma, entry, noun))
+
+    const targetEl = document.createElement('span')
+    targetEl.className = 'word-chip__target'
+    targetEl.lang = 'es'
+    targetEl.textContent = target
+    body.appendChild(targetEl)
+
+    // Revealed-on-hover/focus block. aria-hidden because the body's aria-label already
+    // carries the same information — this avoids a duplicate screen-reader announcement.
+    const reveal = document.createElement('span')
+    reveal.className = 'word-chip__reveal'
+    reveal.setAttribute('aria-hidden', 'true')
+
+    const english = document.createElement('span')
+    english.className = 'word-chip__english'
+    english.textContent = word.lemma
+    reveal.appendChild(english)
+
+    if (gloss) {
+      const glossEl = document.createElement('span')
+      glossEl.className = 'word-chip__gloss'
+      glossEl.textContent = gloss
+      reveal.appendChild(glossEl)
+    }
+
+    body.appendChild(reveal)
+    chip.appendChild(body)
   }
 
-  const gloss = entry?.sourceGloss ?? ''
-  const noun = getNounEntry(entry)
+  // Mark-known: a separate target from the reveal body so revealing English never
+  // graduates the word by accident.
+  const knownBtn = document.createElement('button')
+  knownBtn.type = 'button'
+  knownBtn.className = 'word-chip__known'
+  knownBtn.setAttribute('aria-label', `Mark ${word.lemma} as known`)
+  knownBtn.title = 'Mark as known'
+  const check = document.createElement('span')
+  check.setAttribute('aria-hidden', 'true')
+  check.textContent = '✓'
+  knownBtn.appendChild(check)
+  knownBtn.addEventListener('click', () => onMarkKnown(chip))
+  chip.appendChild(knownBtn)
 
-  // Focusable body: hover or Tab reveals the English meaning inline.
-  const body = document.createElement('span')
-  body.className = 'word-chip__body'
-  body.tabIndex = 0
-  body.setAttribute('aria-label', buildChipAriaLabel(word.lemma, entry, noun))
-
-  const targetEl = document.createElement('span')
-  targetEl.className = 'word-chip__target'
-  targetEl.lang = 'es'
-  targetEl.textContent = target
-  body.appendChild(targetEl)
-
-  // Revealed-on-hover/focus block. aria-hidden because the body's aria-label already
-  // carries the same information — this avoids a duplicate screen-reader announcement.
-  const reveal = document.createElement('span')
-  reveal.className = 'word-chip__reveal'
-  reveal.setAttribute('aria-hidden', 'true')
-
-  const english = document.createElement('span')
-  english.className = 'word-chip__english'
-  english.textContent = word.lemma
-  reveal.appendChild(english)
-
-  if (gloss) {
-    const glossEl = document.createElement('span')
-    glossEl.className = 'word-chip__gloss'
-    glossEl.textContent = gloss
-    reveal.appendChild(glossEl)
-  }
-
-  body.appendChild(reveal)
-  chip.appendChild(body)
   return chip
 }
 
