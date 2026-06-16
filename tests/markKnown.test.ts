@@ -39,6 +39,14 @@ test('markUnknown(true) preserves an existing first-save time (does not refresh 
   assert.equal(getEntry('tres').selfMarkedUnknownAt, 12_345)
 })
 
+test('markUnknown twice keeps the first-save time (natural double-mark path)', () => {
+  markUnknown('siete', true)
+  const first = getEntry('siete').selfMarkedUnknownAt
+  assert.ok(first > 0)
+  markUnknown('siete', true)
+  assert.equal(getEntry('siete').selfMarkedUnknownAt, first)
+})
+
 test('markKnown(true) excludes from replacement and clears the unknown mark', () => {
   markUnknown('cuatro', true)
   markKnown('cuatro', true)
