@@ -188,6 +188,44 @@ async function runPopup(context) {
   return res
 }
 
+// Regression: clicking a replaced word inside a delegated-click widget (Google
+// jsaction "People also ask" style — plain <div>, listener on document) must NOT
+// be swallowed; the page's handler must still fire.
+async function runDelegatedClick(context) {
+  const res = { name: 'delegated-click', failures: [], consoleErrors: [] }
+  const sw = await getServiceWorker(context)
+  await sw.evaluate(async () => {
+    await chrome.storage.local.clear()
+    await chrome.storage.local.set({ contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.95, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: [], domainDecisions: {} } })
+  })
+  const page = await context.newPage()
+  page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })
+  try {
+    await page.goto(fileUrl(path.join(FIX, 'delegated-click.html')), { waitUntil: 'domcontentloaded' })
+    await page.waitForTimeout(2500)
+    res.totalSpans = await page.locator('[data-contexto="true"]').count()
+    res.faqQHtml = await page.evaluate(() => (document.querySelector('.faq-q') || {}).innerHTML || '(no .faq-q)')
+    // a replaced word must exist inside a .faq-q row
+    const span = page.locator('.faq-q [data-contexto="true"]').first()
+    res.injectedInQuestion = await span.count()
+    if (!res.injectedInQuestion) { res.failures.push('no replaced word inside .faq-q to click'); }
+    else {
+      await span.click()
+      await page.waitForTimeout(300)
+      const state = await page.evaluate(() => ({ opens: window.__faqOpens || 0, open: !!document.querySelector('.faq.open') }))
+      res.faqOpens = state.opens
+      if (state.opens < 1 || !state.open) res.failures.push('delegated click swallowed — FAQ did not expand')
+    }
+  } catch (e) {
+    res.failures.push('exception: ' + String(e).slice(0, 160))
+  } finally {
+    if (res.consoleErrors.length) res.failures.push(`${res.consoleErrors.length} console error(s)`)
+    await page.close()
+  }
+  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] delegated-click: injectedInQuestion=${res.injectedInQuestion} faqOpens=${res.faqOpens ?? '-'} ${res.failures.join('; ')}`)
+  return res
+}
+
 async function run() {
   makeTestBuild()
   fs.mkdirSync(SHOTS, { recursive: true })
@@ -313,6 +351,7 @@ async function run() {
   const uiResults = []
   uiResults.push(await runOnboarding(context))
   uiResults.push(await runPopup(context))
+  uiResults.push(await runDelegatedClick(context))
   results.push(...uiResults)
 
   await context.close()

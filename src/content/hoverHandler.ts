@@ -121,9 +121,17 @@ function findContextoSpan(target: EventTarget | null): HTMLElement | null {
 // Clickable host elements whose click must never be swallowed by the unknown-word
 // toggle. A managed span is a plain <span>, so a closest() match is always a
 // genuine interactive ancestor (link, button, menu item, etc.).
+// Interactive ancestors whose click must never be touched. Beyond the standard
+// HTML/ARIA controls, this also catches JS-delegated widgets that look like plain
+// <div>s but carry click behavior — e.g. Google's `jsaction` (used by the "People
+// also ask" accordion) and any tab-focusable custom control (`tabindex>=0`).
 const INTERACTIVE_ANCESTOR_SELECTOR =
-  'a[href], button, summary, label, select, [role="button"], [role="link"], ' +
-  '[role="menuitem"], [role="tab"], [role="option"], [contenteditable], [onclick]'
+  'a[href], button, summary, label, select, input, textarea, ' +
+  '[role="button"], [role="link"], [role="menuitem"], [role="menuitemcheckbox"], ' +
+  '[role="menuitemradio"], [role="tab"], [role="option"], [role="checkbox"], ' +
+  '[role="radio"], [role="switch"], [role="combobox"], [role="treeitem"], ' +
+  '[contenteditable]:not([contenteditable="false"]), [onclick], [jsaction], ' +
+  '[tabindex]:not([tabindex="-1"])'
 
 function isInsideInteractive(span: HTMLElement): boolean {
   return span.closest(INTERACTIVE_ANCESTOR_SELECTOR) !== null
@@ -291,8 +299,10 @@ export function setupHoverHandler(): void {
       hideTooltip()
       return
     }
-    event.preventDefault()
-    event.stopPropagation()
+    // Mark the word unknown, but do NOT preventDefault/stopPropagation: swallowing
+    // the click breaks pages that wire interactivity through event delegation on a
+    // high-up container (Google jsaction, React synthetic events, etc.) — the host
+    // handler would never receive the event. Marking works regardless of bubbling.
     handleSpanClick(target)
   })
 

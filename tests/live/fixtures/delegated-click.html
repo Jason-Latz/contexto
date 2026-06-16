@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Delegated-click dropdown fixture (Google "People also ask" style)</title>
+    <style>
+      body { font: 16px/1.6 system-ui, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
+      .faq-q { cursor: pointer; padding: 12px 0; border-top: 1px solid #ddd; font-weight: 600; }
+      .faq-a { display: none; padding: 0 0 12px; color: #444; }
+      .faq.open .faq-a { display: block; }
+    </style>
+  </head>
+  <body>
+    <h1>Frequently asked questions</h1>
+    <p>
+      The following questions explore the world, the water, and the city around us. A teacher
+      and a student often discuss the book, the house, and the school where people learn about
+      the river and the mountain. Each question below expands when you click on it, the same way
+      a search engine shows answers. Read the article and open every panel to see the system
+      respond to your clicks without any trouble at all.
+    </p>
+    <p>
+      The city by the river is full of life every morning. A woman sells bread and fruit near
+      the church, a man reads the news under a tree, and the children walk to school across the
+      bridge. The water is cold, the air is clear, and the music from the market fills the
+      street. People talk about the weather, the price of coffee, and the long road ahead.
+      A doctor, a teacher, and a farmer share a table and a story about the old days in the town.
+    </p>
+
+    <!-- These question rows are plain <div>s with NO role/onclick — interactivity is wired by a
+         single delegated listener on `document`, exactly like Google's jsaction accordion. -->
+    <div class="faq" data-faq="1">
+      <div class="faq-q" jsname="pcRaIe">What is the world made of?</div>
+      <div class="faq-a">The world is made of water, land, and the air that surrounds the city.</div>
+    </div>
+    <div class="faq" data-faq="2">
+      <div class="faq-q" jsname="pcRaIe">Where does the river meet the city?</div>
+      <div class="faq-a">The river meets the city near the old bridge by the market square.</div>
+    </div>
+    <div class="faq" data-faq="3">
+      <div class="faq-q" jsname="pcRaIe">Why does the student read the book?</div>
+      <div class="faq-a">The student reads the book to learn about the house and the school.</div>
+    </div>
+
+    <script>
+      // Delegated click handler attached HIGH on `document` (above <body>). If a content
+      // script swallows the click with stopPropagation on document.body, this never fires.
+      window.__faqOpens = 0
+      document.addEventListener('click', function (e) {
+        const q = e.target.closest && e.target.closest('.faq-q')
+        if (!q) return
+        const faq = q.closest('.faq')
+        faq.classList.toggle('open')
+        window.__faqOpens++
+        window.__lastFaq = faq.getAttribute('data-faq')
+      })
+    </script>
+  </body>
+</html>
