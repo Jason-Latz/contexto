@@ -1,47 +1,9 @@
 /* =========================================================================
-   Contexto landing — two small behaviors:
-   1. Act one reveal: stagger-fade the four serif lines in (reduced-motion safe)
-   2. Act two dial: the live density self-demo (reference implementation)
+   Contexto landing — the live density self-demo (reference implementation).
    No frameworks, no network. Plain ES5-friendly JS.
    ========================================================================= */
 
-/* ---- Act one: stagger-fade the reveal lines ---- */
-(function () {
-  var el = document.getElementById("ctx-reveal");
-  if (!el) return;
-  var reduce =
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (reduce) {
-    el.classList.add("in"); // CSS shows lines immediately with no transition
-    return;
-  }
-
-  function show() {
-    el.classList.add("in");
-  }
-
-  // Reveal when scrolled into view; if already in view on load, reveal now.
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            show();
-            io.disconnect();
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    io.observe(el);
-  } else {
-    show();
-  }
-})();
-
-/* ---- Act two: the dial-in self-demo (known-good reference behavior) ---- */
+/* ---- The dial-in self-demo (known-good reference behavior) ---- */
 (function () {
   var root = document.getElementById("ctx-live");
   if (!root) return;
