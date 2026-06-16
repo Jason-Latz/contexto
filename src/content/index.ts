@@ -2,7 +2,7 @@ import { loadLanguagePack } from '../language/loader.js'
 import { collectTextNodes } from './domWalker.js'
 import { extractPageCandidates, injectReplacements, restoreReplacements } from './injector.js'
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
-import { loadLexicon, getLexiconForStorage, isDirty, clearDirty } from '../store/lexiconStore.js'
+import { loadLexicon, flushLexiconMerge, isDirty } from '../store/lexiconStore.js'
 import {
   areQuizzesEnabled,
   areReplacementsEnabled,
@@ -65,11 +65,11 @@ async function flushStorage(): Promise<void> {
   }
   if (!isDirty()) return
   try {
-    await chrome.storage.local.set({
-      contexto_lexicon: getLexiconForStorage(),
-      contexto_session: getSessionForStorage(),
-    })
-    clearDirty()
+    // Merge-write only the lemmas this tab changed (flushLexiconMerge clears them)
+    // so a passive flush can't revert lemmas the popup changed in another context.
+    // The session store is page-scoped, so it is still written whole.
+    await flushLexiconMerge()
+    await chrome.storage.local.set({ contexto_session: getSessionForStorage() })
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)

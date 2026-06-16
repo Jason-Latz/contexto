@@ -47,6 +47,29 @@ cd site && python3 -m http.server
 
 The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**.
 
+## Popup review features (2026-06)
+
+The popup "Unknown Words" card is a review surface for saved-unknown words:
+
+- **Spanish-first chips** — each chip leads with the Spanish target and reveals the
+  English source + gloss inline on hover/focus (English also on `aria-label`); words
+  with no usable target fall back to an English-only chip.
+- **Mark known = soft remove** — the ✓ clears `selfMarkedUnknown` only (does NOT set
+  `selfMarkedKnown`), so the word leaves the list but stays eligible for replacement;
+  an aria-live Undo restores it with its original save time.
+- **Practice** — `src/popup/PracticePanel.ts` body-swaps the card into a MeaningRecall
+  quiz over saved-unknown words only, ordered stalest-first by
+  `src/engine/reviewQueue.ts` (`max(lastReviewedAt, selfMarkedUnknownAt)`).
+  Independent of the global Quizzes toggle.
+
+Conventions to preserve:
+- `LexiconEntry.lastReviewedAt` is the review-staleness signal, stamped by
+  `applyQuizResult` (not `lastSeenAt`, which is passive page exposure).
+- All lexicon writes go through `lexiconStore.flushLexiconMerge()` (dirty-lemma
+  merge-on-fresh-read) — popup AND the content-script flushes — so concurrent
+  contexts can't clobber each other's untouched lemmas. Don't reintroduce whole-map
+  `getLexiconForStorage()` writes.
+
 ## Current state
 
 - Landing site is built on branch **`site/landing`** (not pushed, not deployed).

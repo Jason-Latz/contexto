@@ -11,6 +11,7 @@ const PREPOPULATE_SEEN_COUNT = 3
 const DEFAULT_ENTRY: Readonly<LexiconEntry> = {
   seenCount: 0,
   lastSeenAt: 0,
+  lastReviewedAt: 0,
   srsInterval: 0,
   srsEaseFactor: 2.5,
   srsRepetitions: 0,
@@ -29,24 +30,52 @@ let lexicon: Map<string, LexiconEntry> = new Map()
 // True when the in-memory lexicon has unsaved changes.
 let dirty = false
 
+// The exact lemmas changed since the last flush. flushLexiconMerge() writes ONLY
+// these onto a fresh read of storage, so a popup write can't clobber a concurrent
+// content-script write (and vice-versa) for lemmas neither of them touched.
+const dirtyLemmas = new Set<string>()
+
+// Mark a single lemma as having unsaved changes.
+function touch(englishLemma: string): void {
+  dirty = true
+  dirtyLemmas.add(englishLemma)
+}
+
+// Serialises every storage read/replace (loadLexicon) and merge-write
+// (flushLexiconMerge) within this JS context, so a load can't interleave with a
+// write's read-modify-write and clear dirty flags for values it never persisted.
+let writeChain: Promise<void> = Promise.resolve()
+
 function makeDefaultEntry(): LexiconEntry {
   return { ...DEFAULT_ENTRY, recallHistory: [] }
 }
 
-function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
+// Exported for migration tests. Upgrades a raw stored entry (possibly written by
+// an older version missing newer fields) to a complete LexiconEntry, filling
+// defaults for any absent field so the in-memory shape is always consistent.
+export function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
   return {
     ...makeDefaultEntry(),
     ...raw,
     recallHistory: Array.isArray(raw.recallHistory) ? raw.recallHistory : [],
+    lastReviewedAt: raw.lastReviewedAt ?? 0,
     selfMarkedKnown: raw.selfMarkedKnown ?? false,
     selfMarkedUnknown: raw.selfMarkedUnknown ?? false,
     selfMarkedUnknownAt: raw.selfMarkedUnknownAt ?? 0,
   }
 }
 
-// Load persisted lexicon data from chrome.storage.local into memory.
-// Safe to call multiple times — subsequent calls are a no-op if already loaded.
-export async function loadLexicon(): Promise<void> {
+// Read persisted lexicon data from chrome.storage.local and REPLACE the in-memory
+// map. Not idempotent — every call re-reads and overwrites, discarding any unflushed
+// changes — so it must run once at startup before any mutation. Serialised through
+// writeChain so it cannot interleave with an in-flight merge-write.
+export function loadLexicon(): Promise<void> {
+  const run = writeChain.then(() => doLoad())
+  writeChain = run.catch(() => {})
+  return run
+}
+
+async function doLoad(): Promise<void> {
   const result = await chrome.storage.local.get(STORAGE_KEY)
   const raw = result[STORAGE_KEY] as Record<string, Partial<LexiconEntry>> | undefined
   if (raw) {
@@ -72,7 +101,7 @@ export function recordSeen(englishLemma: string): void {
     entry.lifecycleState = WordLifecycleState.Learning
   }
   lexicon.set(englishLemma, entry)
-  dirty = true
+  touch(englishLemma)
 }
 
 // Mark or unmark a word as self-known. This legacy flag excludes words from
@@ -85,7 +114,7 @@ export function markKnown(englishLemma: string, known: boolean): void {
     entry.selfMarkedUnknownAt = 0
   }
   lexicon.set(englishLemma, entry)
-  dirty = true
+  touch(englishLemma)
 }
 
 // Mark or unmark a word as user-unknown. Unknown words stay in replacement
@@ -103,7 +132,7 @@ export function markUnknown(englishLemma: string, unknown: boolean): void {
     }
   }
   lexicon.set(englishLemma, entry)
-  dirty = true
+  touch(englishLemma)
 }
 
 // Pre-populate lemmas with a baseline seenCount to reflect assumed prior exposure.
@@ -113,16 +142,16 @@ export function prepopulate(lemmas: string[]): void {
   for (const lemma of lemmas) {
     if (!lexicon.has(lemma)) {
       lexicon.set(lemma, { ...makeDefaultEntry(), seenCount: PREPOPULATE_SEEN_COUNT })
+      touch(lemma)
     }
   }
-  dirty = true
 }
 
 // Overwrite a single lexicon entry. Used by wordLifecycle.ts after applying a
 // quiz result — keeps all direct store mutations inside this module.
 export function updateEntry(englishLemma: string, entry: LexiconEntry): void {
   lexicon.set(englishLemma, entry)
-  dirty = true
+  touch(englishLemma)
 }
 
 // Serialise the in-memory lexicon for writing to chrome.storage.local.
@@ -131,5 +160,50 @@ export function getLexiconForStorage(): Record<string, LexiconEntry> {
   return Object.fromEntries(lexicon)
 }
 
+// The entries for lemmas changed since the last flush. Used by flushLexiconMerge
+// (and exposed for tests) so writers persist only what they touched.
+export function getDirtyEntries(): Record<string, LexiconEntry> {
+  const out: Record<string, LexiconEntry> = {}
+  for (const lemma of dirtyLemmas) {
+    const entry = lexicon.get(lemma)
+    if (entry) out[lemma] = entry
+  }
+  return out
+}
+
+// Persist only the dirty lemmas, merged onto a FRESH read of storage. This is the
+// clobber-safe write path shared by the popup (mark-known, quiz results) and the
+// content script (passive flushes): because each writer overlays only the lemmas it
+// changed, a concurrent writer's untouched lemmas survive instead of being reverted
+// by a whole-map overwrite. Rejects to the caller on storage failure but keeps the
+// chain alive for the next flush. No-op when nothing is dirty.
+export function flushLexiconMerge(): Promise<void> {
+  const run = writeChain.then(() => doMergeWrite())
+  writeChain = run.catch(() => {})
+  return run
+}
+
+async function doMergeWrite(): Promise<void> {
+  if (!dirty) return
+  const pending = getDirtyEntries()
+  const pendingLemmas = Object.keys(pending)
+  if (pendingLemmas.length === 0) {
+    clearDirty()
+    return
+  }
+
+  const result = await chrome.storage.local.get(STORAGE_KEY)
+  const stored = (result[STORAGE_KEY] ?? {}) as Record<string, LexiconEntry>
+  await chrome.storage.local.set({ [STORAGE_KEY]: { ...stored, ...pending } })
+
+  // Clear only the lemmas actually written; anything dirtied during the await
+  // stays pending for the next flush.
+  for (const lemma of pendingLemmas) dirtyLemmas.delete(lemma)
+  dirty = dirtyLemmas.size > 0
+}
+
 export function isDirty(): boolean { return dirty }
-export function clearDirty(): void { dirty = false }
+export function clearDirty(): void {
+  dirty = false
+  dirtyLemmas.clear()
+}

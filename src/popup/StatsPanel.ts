@@ -41,11 +41,17 @@ function computeStats(
   }
 }
 
+// Handle returned to the popup so a later action (mark-known, practice) can update
+// a live count without rebuilding the whole panel.
+export interface StatsPanelHandle {
+  setSavedUnknown(count: number): void
+}
+
 export function renderStatsPanel(
   container: HTMLElement,
   lexicon: Record<string, LexiconEntry>,
   session: SessionStore,
-): void {
+): StatsPanelHandle {
   const stats = computeStats(lexicon, session)
 
   const section = document.createElement('div')
@@ -62,6 +68,9 @@ export function renderStatsPanel(
     ['In learning queue', stats.totalLearning],
   ]
 
+  // Captured so setSavedUnknown can update the "Saved unknown" value in place.
+  let savedUnknownValue: HTMLSpanElement | null = null
+
   for (const [label, value] of rows) {
     const row = document.createElement('div')
     row.className = 'stat-row'
@@ -72,6 +81,7 @@ export function renderStatsPanel(
     const val = document.createElement('span')
     val.className = 'stat-value'
     val.textContent = String(value)
+    if (label === 'Saved unknown') savedUnknownValue = val
 
     row.appendChild(lbl)
     row.appendChild(val)
@@ -79,4 +89,10 @@ export function renderStatsPanel(
   }
 
   container.appendChild(section)
+
+  return {
+    setSavedUnknown(count: number): void {
+      if (savedUnknownValue) savedUnknownValue.textContent = String(count)
+    },
+  }
 }

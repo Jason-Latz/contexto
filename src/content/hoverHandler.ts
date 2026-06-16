@@ -1,7 +1,6 @@
 import { setUnknown } from '../engine/wordLifecycle.js'
 import {
-  clearDirty,
-  getLexiconForStorage,
+  flushLexiconMerge,
   isDirty,
 } from '../store/lexiconStore.js'
 import { getSessionForStorage } from '../store/sessionStore.js'
@@ -209,11 +208,11 @@ async function flushUserMark(): Promise<void> {
   if (!isExtensionContextAvailable()) return
 
   try {
-    await chrome.storage.local.set({
-      contexto_lexicon: getLexiconForStorage(),
-      contexto_session: getSessionForStorage(),
-    })
-    clearDirty()
+    // Merge-write only the lemmas changed here so this per-click save can't revert
+    // a mark-known/quiz change the popup made to a different lemma. Session is
+    // page-scoped and still written whole.
+    await flushLexiconMerge()
+    await chrome.storage.local.set({ contexto_session: getSessionForStorage() })
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) return
     console.warn('[Contexto] Failed to save unknown-word mark:', err)

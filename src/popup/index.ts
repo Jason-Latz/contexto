@@ -1,7 +1,14 @@
 import type { LexiconEntry } from '../types/index.js'
+import {
+  loadLexicon,
+  getEntry,
+  markUnknown,
+  updateEntry,
+  flushLexiconMerge,
+} from '../store/lexiconStore.js'
 import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
-import { renderUnknownWordsList } from './UnknownWordsList.js'
+import { renderUnknownWordsList, type UnknownWordsListHandlers } from './UnknownWordsList.js'
 
 const LEXICON_KEY  = 'contexto_lexicon'
 const SESSION_KEY  = 'contexto_session'
@@ -26,11 +33,15 @@ async function init(): Promise<void> {
   const session  = (stored[SESSION_KEY]  ?? {}) as SessionStore
   const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
 
+  // Load the lexicon store so mark-known / practice writes go through the
+  // clobber-safe merge path instead of overwriting the whole map.
+  await loadLexicon()
+
   renderLanguagePanel(root)
   renderFeatureToggles(root, settings)
 
   // Stats — session word count, unknown words, learning queue size.
-  renderStatsPanel(root, lexicon, session)
+  const statsHandle = renderStatsPanel(root, lexicon, session)
 
   // Density slider — reads and writes chrome.storage.local directly.
   await renderDensitySlider(root)
@@ -41,7 +52,28 @@ async function init(): Promise<void> {
   const sessionLemmas = new Set(
     (session.wordsSeen ?? []).map(w => w.englishLemma),
   )
-  await renderUnknownWordsList(root, lexicon, sessionLemmas)
+
+  const handlers: UnknownWordsListHandlers = {
+    // Soft-remove: drop from the review list without permanently excluding the
+    // word from replacement (markUnknown(false) leaves selfMarkedKnown untouched).
+    onMarkKnown: async (lemma) => {
+      markUnknown(lemma, false)
+      await flushLexiconMerge()
+    },
+    // Restore with the ORIGINAL save time so the word returns to its old slot.
+    onRestore: async (lemma, markedAt) => {
+      updateEntry(lemma, {
+        ...getEntry(lemma),
+        selfMarkedUnknown: true,
+        selfMarkedUnknownAt: markedAt,
+        selfMarkedKnown: false,
+      })
+      await flushLexiconMerge()
+    },
+    onUnknownTotalChange: (total) => statsHandle.setSavedUnknown(total),
+  }
+
+  await renderUnknownWordsList(root, lexicon, sessionLemmas, handlers)
 }
 
 init().catch((err) => {
