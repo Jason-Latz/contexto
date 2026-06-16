@@ -110,6 +110,9 @@ export enum WordLifecycleState {
 export interface LexiconEntry {
   seenCount: number;           // times this word has been displayed as a replacement
   lastSeenAt: number;          // Unix timestamp ms; 0 if never shown
+  lastReviewedAt: number;      // Unix timestamp ms of the last quiz/review; 0 if never reviewed.
+                               // Distinct from lastSeenAt (passive page exposure) — this is the
+                               // staleness signal for the popup's "practice stale words" review.
   srsInterval: number;         // SM-2 interval in days (0 until first quiz)
   srsEaseFactor: number;       // SM-2 ease factor (initialised to 2.5)
   srsRepetitions: number;      // SM-2 consecutive correct repetitions (determines interval schedule)

@@ -11,6 +11,7 @@ const PREPOPULATE_SEEN_COUNT = 3
 const DEFAULT_ENTRY: Readonly<LexiconEntry> = {
   seenCount: 0,
   lastSeenAt: 0,
+  lastReviewedAt: 0,
   srsInterval: 0,
   srsEaseFactor: 2.5,
   srsRepetitions: 0,
@@ -33,11 +34,15 @@ function makeDefaultEntry(): LexiconEntry {
   return { ...DEFAULT_ENTRY, recallHistory: [] }
 }
 
-function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
+// Exported for migration tests. Upgrades a raw stored entry (possibly written by
+// an older version missing newer fields) to a complete LexiconEntry, filling
+// defaults for any absent field so the in-memory shape is always consistent.
+export function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
   return {
     ...makeDefaultEntry(),
     ...raw,
     recallHistory: Array.isArray(raw.recallHistory) ? raw.recallHistory : [],
+    lastReviewedAt: raw.lastReviewedAt ?? 0,
     selfMarkedKnown: raw.selfMarkedKnown ?? false,
     selfMarkedUnknown: raw.selfMarkedUnknown ?? false,
     selfMarkedUnknownAt: raw.selfMarkedUnknownAt ?? 0,

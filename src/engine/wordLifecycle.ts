@@ -94,10 +94,14 @@ export function applyQuizResult(englishLemma: string, correct: boolean): void {
   const recallHistory = [...entry.recallHistory, correct].slice(-RECALL_HISTORY_CAP)
 
   // Build the updated entry, then derive its new state from the final field values.
+  // lastReviewedAt is stamped here — the single chokepoint every quiz flows through
+  // (popup practice and the on-page banner both call applyQuizResult) — so it is the
+  // staleness signal for "words the user hasn't been quizzed on in a while".
   const updated: LexiconEntry = {
     ...entry,
     ...sm2Result,
     recallHistory,
+    lastReviewedAt: Date.now(),
     lifecycleState: computeLifecycleState({ ...entry, ...sm2Result, recallHistory }),
   }
 
