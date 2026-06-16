@@ -41,6 +41,11 @@ function touch(englishLemma: string): void {
   dirtyLemmas.add(englishLemma)
 }
 
+// Serialises every storage read/replace (loadLexicon) and merge-write
+// (flushLexiconMerge) within this JS context, so a load can't interleave with a
+// write's read-modify-write and clear dirty flags for values it never persisted.
+let writeChain: Promise<void> = Promise.resolve()
+
 function makeDefaultEntry(): LexiconEntry {
   return { ...DEFAULT_ENTRY, recallHistory: [] }
 }
@@ -60,9 +65,17 @@ export function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
   }
 }
 
-// Load persisted lexicon data from chrome.storage.local into memory.
-// Safe to call multiple times — subsequent calls are a no-op if already loaded.
-export async function loadLexicon(): Promise<void> {
+// Read persisted lexicon data from chrome.storage.local and REPLACE the in-memory
+// map. Not idempotent — every call re-reads and overwrites, discarding any unflushed
+// changes — so it must run once at startup before any mutation. Serialised through
+// writeChain so it cannot interleave with an in-flight merge-write.
+export function loadLexicon(): Promise<void> {
+  const run = writeChain.then(() => doLoad())
+  writeChain = run.catch(() => {})
+  return run
+}
+
+async function doLoad(): Promise<void> {
   const result = await chrome.storage.local.get(STORAGE_KEY)
   const raw = result[STORAGE_KEY] as Record<string, Partial<LexiconEntry>> | undefined
   if (raw) {
@@ -157,10 +170,6 @@ export function getDirtyEntries(): Record<string, LexiconEntry> {
   }
   return out
 }
-
-// Serialises merge-writes within this JS context so two overlapping
-// read-modify-write cycles can't interleave.
-let writeChain: Promise<void> = Promise.resolve()
 
 // Persist only the dirty lemmas, merged onto a FRESH read of storage. This is the
 // clobber-safe write path shared by the popup (mark-known, quiz results) and the
