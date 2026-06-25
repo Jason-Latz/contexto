@@ -6,20 +6,25 @@
 
 ## Product contract
 
-Contexto is a Chrome extension for passive Spanish immersion: it swaps a
+Contexto is a Chrome extension for passive language immersion: it swaps a
 user-controlled percentage of eligible English words on any web page for their
-Spanish equivalents, showing the English source + definition on hover and
-saving click-to-mark unknown words for export. Fully on-device — no runtime
-network calls.
+equivalents in the chosen target language (**Spanish, German, French, or
+Italian**), showing the English source + definition on hover and saving
+click-to-mark unknown words for export. Fully on-device — no runtime network
+calls.
 
 **Naming:** the repo folder is `Textum`, but the product is **Contexto**.
 
 ## Architecture map
 
 - `src/` — extension source (content scripts, popup logic, word injector).
-- `pipeline/` + `scripts/` — data tooling for building/validating the language pack.
-- `public/language-packs/` — the bundled Spanish pack (`es.json`) shipped at runtime.
-- `popup/` — popup UI source.
+- `src/language/` — per-language grammar adapters (`{spanish,german,french,italian}Adapter.ts`),
+  shared article detection (`articles.ts`), dispatch (`replacement.ts`), and the
+  `registry.ts` source of truth for supported languages + allowed genders.
+- `pipeline/import_wikt/` — Wiktextract → pack importer (de/fr/it). `pipeline/import_es/` —
+  the original FreeDict-based Spanish importer. `scripts/` — validate/QA tooling.
+- `public/language-packs/` — bundled packs (`es/de/fr/it.json`), one loaded at runtime.
+- `popup/` — popup UI source (incl. the target-language picker).
 - `dist/` — build output (gitignored); what you load unpacked in Chrome.
 - `release/` — packaged `.zip` for the store (gitignored).
 - `site/` — the **NEW** static landing site (deploys to Vercel, root dir = `site/`).
@@ -35,7 +40,9 @@ npm run build      # build extension into dist/
 npm test           # TS unit tests + python pipeline tests
 npm run typecheck  # tsc --noEmit
 npm run package    # build + zip into release/
-npm run validate:language-packs
+npm run validate:language-packs            # validates es/de/fr/it
+npm run build:language-pack -- --language de   # rebuild a de/fr/it pack from its Wiktextract cache
+npm run test:live-multilang                # headed: screenshot de/fr/it replacement (needs `npm run build` first)
 ```
 
 Site (static, no build step):
@@ -47,13 +54,31 @@ cd site && python3 -m http.server
 
 The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**.
 
+## Multi-language (de/fr/it) — 2026-06
+
+- **Picker:** popup target-language selector (`src/popup/LanguagePicker.ts`) persists
+  `settings.targetLanguage`; the content script loads `language-packs/<lang>.json` and
+  dispatches grammar via `buildReplacement(activeTargetLanguage, …)`.
+- **Grammar adapters** render articles/gender/plural per language: German der/die/das +
+  ein/eine + **neuter** + noun **capitalization**; French le/la/l'/les + élision; Italian
+  il/lo/la/l'/i/gli/le + un/uno/una/un'. Spanish unchanged. Covered by per-language tests.
+- **Data:** de/fr/it packs are built by `pipeline/import_wikt` by INVERTING a kaikki
+  target-language Wiktextract extract (gloss→word), giving authoritative gender + plural.
+  Extracts cache under `pipeline/data/wikt-cache/` (gitignored; re-download from kaikki.org).
+  ≥50k entries each; all `medium` tier so the rare long-tail renders and the common band is
+  gated (mirrors Spanish). `enZipf` MUST match `qa_language_pack.py` (re-QA must be a no-op).
+- **Adding a language:** add it to `TargetLanguage`, `src/language/registry.ts`,
+  `GENDERS_BY_LANGUAGE` in the validator, a `<lang>Adapter.ts` + dispatch entry, and build
+  the pack. The loader/injector/popup are already language-generic.
+
 ## Popup review features (2026-06)
 
 The popup "Unknown Words" card is a review surface for saved-unknown words:
 
-- **Spanish-first chips** — each chip leads with the Spanish target and reveals the
-  English source + gloss inline on hover/focus (English also on `aria-label`); words
-  with no usable target fall back to an English-only chip.
+- **Target-first chips** — each chip leads with the active language's target and reveals
+  the English source + gloss inline on hover/focus (English also on `aria-label`); words
+  with no usable target fall back to an English-only chip. Practice + chips load the
+  active-language pack and tag target text with the right BCP-47 `lang`.
 - **Mark known = soft remove** — the ✓ clears `selfMarkedUnknown` only (does NOT set
   `selfMarkedKnown`), so the word leaves the list but stays eligible for replacement;
   an aria-live Undo restores it with its original save time.
@@ -72,7 +97,9 @@ Conventions to preserve:
 
 ## Current state
 
-- Landing site is built on branch **`site/landing`** (not pushed, not deployed).
-- Translation-accuracy curation is in progress in `batch.json` / `decisions.json`
-  (do not commit those alongside site work).
+- **German, French, Italian shipped** (branch `overnight/multilang-de-fr-it`): ≥50k-entry
+  packs + grammar adapters + popup picker. Adversarial accuracy audit ≈91–93% on the rendered
+  band (see `MORNING_REPORT.md`). es unchanged.
+- Landing site is built on branch **`site/landing`** (not pushed, not deployed). Still
+  Spanish-only copy — update for the new languages before launch.
 - Chrome Web Store submission is pending the steps in `MORNING-CHECKLIST.md`.
