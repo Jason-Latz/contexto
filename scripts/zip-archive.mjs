@@ -1,5 +1,6 @@
 import { readdir, readFile, stat } from 'node:fs/promises'
 import { join, posix, relative, sep } from 'node:path'
+import { deflateRawSync } from 'node:zlib'
 
 const CRC_TABLE = new Uint32Array(256)
 for (let n = 0; n < 256; n++) {
@@ -76,21 +77,26 @@ export class ZipArchive {
       const checksum = crc32(file.data)
       const { time, day } = dosDateTime(file.modifiedAt)
 
+      // DEFLATE each entry (method 8). The CRC + uncompressed size describe the
+      // ORIGINAL bytes; compressed size is the deflated length. The bundled packs
+      // are ~10x smaller deflated (matters for the Web Store upload).
+      const body = deflateRawSync(file.data, { level: 9 })
+
       const localHeader = Buffer.concat([
-        u32(0x04034b50), u16(20), u16(0x0800), u16(0), u16(time), u16(day),
-        u32(checksum), u32(file.data.length), u32(file.data.length),
+        u32(0x04034b50), u16(20), u16(0x0800), u16(8), u16(time), u16(day),
+        u32(checksum), u32(body.length), u32(file.data.length),
         u16(name.length), u16(0), name,
       ])
 
       const centralHeader = Buffer.concat([
-        u32(0x02014b50), u16(20), u16(20), u16(0x0800), u16(0), u16(time), u16(day),
-        u32(checksum), u32(file.data.length), u32(file.data.length),
+        u32(0x02014b50), u16(20), u16(20), u16(0x0800), u16(8), u16(time), u16(day),
+        u32(checksum), u32(body.length), u32(file.data.length),
         u16(name.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset), name,
       ])
 
-      localParts.push(localHeader, file.data)
+      localParts.push(localHeader, body)
       centralParts.push(centralHeader)
-      offset += localHeader.length + file.data.length
+      offset += localHeader.length + body.length
     }
 
     const central = Buffer.concat(centralParts)
