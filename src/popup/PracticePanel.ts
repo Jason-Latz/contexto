@@ -3,11 +3,11 @@
  *
  * Opened from the Unknown Words card. Quizzes ONLY words the user saved as unknown,
  * ordered by orderUnknownByStaleness so the longest-untouched words come first, and
- * filtered to those with a usable Spanish target (no blank/unanswerable cards). Each
- * answer runs applyQuizResult (which stamps lastReviewedAt, advancing staleness) and
- * is persisted through the clobber-safe merge-write.
+ * filtered to those with a usable target (no blank/unanswerable cards). Each answer
+ * runs applyQuizResult (which stamps lastReviewedAt, advancing staleness) and is
+ * persisted through the clobber-safe merge-write.
  *
- * Flashcard format: show the Spanish word, reveal the English meaning + gloss on
+ * Flashcard format: show the target word, reveal the English meaning + gloss on
  * demand, then the user self-grades know / don't-know (which maps to a correct /
  * incorrect SM-2 result). The in-memory lexicon store is the source of truth (loaded
  * once at popup init and kept current by mutations), so the panel does NOT re-read
@@ -18,6 +18,8 @@ import { getLexiconForStorage, getEntry, flushLexiconMerge } from '../store/lexi
 import { applyQuizResult } from '../engine/wordLifecycle.js'
 import { orderUnknownByStaleness } from '../engine/reviewQueue.js'
 import { loadLanguagePack, lookup } from '../language/loader.js'
+import { getLanguageInfo } from '../language/registry.js'
+import type { TargetLanguage } from '../types/index.js'
 
 // Cap one practice run so a long backlog doesn't become an endless session.
 const MAX_BATCH = 10
@@ -26,8 +28,8 @@ export interface PracticePanelOptions {
   onClose: () => void
 }
 
-// Saved-unknown lemmas that can actually be practiced (resolve to a usable Spanish
-// target), stalest-first. Shared by the count and the queue so the two can't drift.
+// Saved-unknown lemmas that can actually be practiced (resolve to a usable target),
+// stalest-first. Shared by the count and the queue so the two can't drift.
 function practiceableLemmas(): string[] {
   return orderUnknownByStaleness(getLexiconForStorage())
     .filter(lemma => Boolean(lookup(lemma)?.target))
@@ -38,10 +40,17 @@ export function countPracticeable(): number {
   return practiceableLemmas().length
 }
 
-export async function openPracticePanel(host: HTMLElement, options: PracticePanelOptions): Promise<void> {
+export async function openPracticePanel(
+  host: HTMLElement,
+  activeLanguage: TargetLanguage,
+  options: PracticePanelOptions,
+): Promise<void> {
+  // BCP-47 tag for the active language, applied to rendered target text.
+  const targetLang = getLanguageInfo(activeLanguage).htmlLang
+
   // Pack is normally already loaded by the list render; this is a defensive no-op.
   try {
-    await loadLanguagePack('es')
+    await loadLanguagePack(activeLanguage)
   } catch {
     // If the pack can't load, the queue below is empty and we show the empty state.
   }
@@ -151,7 +160,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
     clearContent()
     content.appendChild(textEl('p', 'practice-prompt', 'Do you know this word?'))
     const term = textEl('p', 'practice-term', target)
-    term.lang = 'es'
+    term.lang = targetLang
     content.appendChild(term)
 
     const showBtn = document.createElement('button')
@@ -167,7 +176,7 @@ export async function openPracticePanel(host: HTMLElement, options: PracticePane
   function renderBack(lemma: string, target: string, gloss: string): void {
     clearContent()
     const term = textEl('p', 'practice-term', target)
-    term.lang = 'es'
+    term.lang = targetLang
     content.appendChild(term)
 
     const answer = document.createElement('div')

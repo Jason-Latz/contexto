@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Contexto",
   "version": "0.1.0",
-  "description": "Learn Spanish while you read — Contexto swaps select English words for their Spanish equivalents on any page. Fully offline.",
+  "description": "Learn Spanish, German, French or Italian as you read — Contexto swaps select English words for your chosen language. Fully offline.",
 
   "permissions": [
     "storage"

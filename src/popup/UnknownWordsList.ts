@@ -1,6 +1,7 @@
 import { loadLanguagePack, lookup } from '../language/loader.js'
+import { getLanguageInfo } from '../language/registry.js'
 import { openPracticePanel, countPracticeable } from './PracticePanel.js'
-import type { LexiconEntry, NounTranslationEntry, TranslationEntry } from '../types/index.js'
+import type { LexiconEntry, NounTranslationEntry, TargetLanguage, TranslationEntry } from '../types/index.js'
 
 type Filter = 'all' | 'session'
 
@@ -42,13 +43,18 @@ export async function renderUnknownWordsList(
   lexicon: Record<string, LexiconEntry>,
   sessionLemmas: ReadonlySet<string>,
   handlers: UnknownWordsListHandlers,
+  activeLanguage: TargetLanguage,
 ): Promise<void> {
-  // The pack is only needed to enrich exports with the Spanish target/gloss; a
-  // load failure must not blank the user's saved-words list or the popup.
+  // BCP-47 tag for the active language, applied to rendered target text so
+  // speech/spellcheck pick the right language.
+  const targetLang = getLanguageInfo(activeLanguage).htmlLang
+
+  // The pack is only needed to enrich exports with the target/gloss; a load
+  // failure must not blank the user's saved-words list or the popup.
   try {
-    await loadLanguagePack('es')
+    await loadLanguagePack(activeLanguage)
   } catch (err) {
-    console.warn('[Contexto] Language pack unavailable in popup; showing saved words without Spanish enrichment:', err)
+    console.warn('[Contexto] Language pack unavailable in popup; showing saved words without target enrichment:', err)
   }
 
   // Mutable model — mark-known removes from here; Undo re-inserts.
@@ -242,7 +248,7 @@ export async function renderUnknownWordsList(
     }
 
     for (const word of words) {
-      list.appendChild(buildChip(word, chipEl => handleMarkKnown(word, chipEl)))
+      list.appendChild(buildChip(word, targetLang, chipEl => handleMarkKnown(word, chipEl)))
     }
   }
 
@@ -265,7 +271,7 @@ export async function renderUnknownWordsList(
     bodyWrap.style.display = 'none'
     // The card title becomes the panel's single eyebrow while practising.
     title.textContent = 'Practice'
-    void openPracticePanel(section, {
+    void openPracticePanel(section, activeLanguage, {
       onClose: () => {
         title.textContent = 'Unknown Words'
         bodyWrap.style.display = ''
@@ -293,13 +299,14 @@ function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord
     .sort(compareUnknown)
 }
 
-// Build one review chip. When the word resolves to a usable Spanish target the chip
-// leads with the SPANISH word and reveals the English source + gloss inline on hover
-// or keyboard focus (the English meaning also rides on the body's aria-label so it is
+// Build one review chip. When the word resolves to a usable target the chip leads
+// with the TARGET word and reveals the English source + gloss inline on hover or
+// keyboard focus (the English meaning also rides on the body's aria-label so it is
 // not hover-only for screen-reader users). When there is no usable target — a missing
 // or low-confidence entry, or a failed pack load — the chip falls back to showing the
-// English lemma exactly as before, with no reveal.
-function buildChip(word: UnknownWord, onMarkKnown: (chipEl: HTMLElement) => void): HTMLElement {
+// English lemma exactly as before, with no reveal. `targetLang` is the active
+// language's BCP-47 tag, applied to the target text for speech/spellcheck.
+function buildChip(word: UnknownWord, targetLang: string, onMarkKnown: (chipEl: HTMLElement) => void): HTMLElement {
   const entry = lookup(word.lemma)
   const target = entry?.target ?? ''
 
@@ -325,7 +332,7 @@ function buildChip(word: UnknownWord, onMarkKnown: (chipEl: HTMLElement) => void
 
     const targetEl = document.createElement('span')
     targetEl.className = 'word-chip__target'
-    targetEl.lang = 'es'
+    targetEl.lang = targetLang
     targetEl.textContent = target
     body.appendChild(targetEl)
 

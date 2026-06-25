@@ -1,4 +1,5 @@
-import type { LexiconEntry } from '../types/index.js'
+import type { LexiconEntry, TargetLanguage } from '../types/index.js'
+import { isTargetLanguage } from '../language/registry.js'
 import {
   loadLexicon,
   getEntry,
@@ -8,6 +9,7 @@ import {
 } from '../store/lexiconStore.js'
 import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
+import { renderLanguagePicker } from './LanguagePicker.js'
 import { renderUnknownWordsList, type UnknownWordsListHandlers } from './UnknownWordsList.js'
 
 const LEXICON_KEY  = 'contexto_lexicon'
@@ -22,7 +24,16 @@ interface PopupSettings {
   replacementsEnabled?: boolean
   quizzesEnabled?: boolean
   blockedDomains?: string[]
+  targetLanguage?: TargetLanguage
   [key: string]: unknown
+}
+
+const DEFAULT_TARGET_LANGUAGE: TargetLanguage = 'es'
+
+function readTargetLanguage(settings: PopupSettings): TargetLanguage {
+  return isTargetLanguage(settings.targetLanguage)
+    ? settings.targetLanguage
+    : DEFAULT_TARGET_LANGUAGE
 }
 
 async function init(): Promise<void> {
@@ -37,7 +48,17 @@ async function init(): Promise<void> {
   // clobber-safe merge path instead of overwriting the whole map.
   await loadLexicon()
 
-  renderLanguagePanel(root)
+  let activeLanguage = readTargetLanguage(settings)
+
+  renderLanguagePicker(root, activeLanguage, {
+    // Persist the choice, then rebuild the language-dependent panels so the
+    // Practice + Unknown Words cards immediately reflect the new pack.
+    onChange: async (language) => {
+      activeLanguage = language
+      await updateSettings({ targetLanguage: language })
+      await renderLanguageDependentPanels()
+    },
+  })
   renderFeatureToggles(root, settings)
 
   // Stats — session word count, unknown words, learning queue size.
@@ -73,7 +94,18 @@ async function init(): Promise<void> {
     onUnknownTotalChange: (total) => statsHandle.setSavedUnknown(total),
   }
 
-  await renderUnknownWordsList(root, lexicon, sessionLemmas, handlers)
+  // Container the language-dependent Unknown Words / Practice panels live in, so
+  // a language switch can rebuild them in place without re-rendering the popup.
+  const languagePanels = document.createElement('div')
+  languagePanels.className = 'lang-dependent'
+  root.appendChild(languagePanels)
+
+  async function renderLanguageDependentPanels(): Promise<void> {
+    while (languagePanels.firstChild) languagePanels.removeChild(languagePanels.firstChild)
+    await renderUnknownWordsList(languagePanels, lexicon, sessionLemmas, handlers, activeLanguage)
+  }
+
+  await renderLanguageDependentPanels()
 }
 
 init().catch((err) => {
@@ -86,23 +118,6 @@ init().catch((err) => {
     root.appendChild(notice)
   }
 })
-
-function renderLanguagePanel(container: HTMLElement): void {
-  const section = document.createElement('div')
-  section.className = 'section'
-
-  const title = document.createElement('div')
-  title.className = 'section-title'
-  title.textContent = 'Target Language'
-
-  const value = document.createElement('div')
-  value.className = 'stat-value'
-  value.textContent = 'Spanish'
-
-  section.appendChild(title)
-  section.appendChild(value)
-  container.appendChild(section)
-}
 
 async function updateSettings(patch: Partial<PopupSettings>): Promise<void> {
   const stored = await chrome.storage.local.get(SETTINGS_KEY)
