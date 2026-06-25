@@ -2,11 +2,18 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const PACKS = ['es']
+const PACKS = ['es', 'de', 'fr', 'it']
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
 const VALID_POS = new Set(['noun', 'adverb', 'adjective', 'verb', 'expression', 'function'])
 const VALID_CONFIDENCE = new Set(['high', 'medium', 'low'])
-const VALID_SPANISH_GENDER = new Set(['masculine', 'feminine'])
+// Allowed noun genders per target language. German adds neuter; the romance
+// languages are masculine/feminine only. Mirrors src/language/registry.ts.
+const GENDERS_BY_LANGUAGE = {
+  es: new Set(['masculine', 'feminine']),
+  fr: new Set(['masculine', 'feminine']),
+  it: new Set(['masculine', 'feminine']),
+  de: new Set(['masculine', 'feminine', 'neuter']),
+}
 const VALID_FUNCTION_SUBTYPE = new Set(['preposition', 'conjunction', 'determiner', 'pronoun'])
 const SIZE_WARNING_GZIP_BYTES = 10 * 1024 * 1024
 
@@ -88,9 +95,10 @@ function validateEntry(key, entry, targetLanguage) {
     requireString(sourceId, `${key}.sourceIds[${index}]`)
   }
 
-  if (targetLanguage === 'es' && entry.partOfSpeech === 'noun') {
-    if (!VALID_SPANISH_GENDER.has(entry.gender)) {
-      fail(`${key}.gender must be masculine or feminine`)
+  if (entry.partOfSpeech === 'noun') {
+    const allowed = GENDERS_BY_LANGUAGE[targetLanguage] ?? GENDERS_BY_LANGUAGE.es
+    if (!allowed.has(entry.gender)) {
+      fail(`${key}.gender must be one of ${[...allowed].join('/')}`)
     }
     requireStandaloneTarget(entry.plural, `${key}.plural`)
   }
