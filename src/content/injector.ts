@@ -1,7 +1,7 @@
 import nlp from 'compromise'
-import { lookup } from '../language/loader.js'
+import { getActiveTargetLanguage, lookup } from '../language/loader.js'
 import { scanExpressions } from './expressionScanner.js'
-import { buildSpanishReplacement } from '../language/spanishAdapter.js'
+import { buildReplacement } from '../language/replacement.js'
 import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
 import type { CandidateToken, ExpressionMatch, TranslationEntry, WordSeen } from '../types/index.js'
 import { getEntry, recordSeen } from '../store/lexiconStore.js'
@@ -617,7 +617,7 @@ export function injectReplacements(
       continue
     }
 
-    const replacement = buildSpanishReplacement(entry, text, token.start, token.isPlural)
+    const replacement = buildReplacement(getActiveTargetLanguage(), entry, text, token.start, token.isPlural)
     const originalEnglish = text.slice(replacement.replacementStart, token.end)
     const displayText = matchCapitalization(originalEnglish, replacement.displayText)
     const span = buildSpan(displayText, originalEnglish, entry)

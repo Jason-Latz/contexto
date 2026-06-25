@@ -1,37 +1,7 @@
 import type { NounTranslationEntry, TranslationEntry } from '../types/index.js'
+import { type ReplacementResult, detectArticle, firstWord } from './articles.js'
 
-export interface ReplacementResult {
-  displayText: string
-  replacementStart: number
-  baseTarget: string
-}
-
-type ArticleKind = 'definite' | 'indefinite' | null
-
-interface DetectedArticle {
-  kind: ArticleKind
-  // Offset in `text` where the replacement span should begin, so the English
-  // article ("the "/"a "/"an ") is consumed by the Spanish replacement.
-  start: number
-}
-
-// Detect a leading English article in ONE pass. Deriving both the article kind
-// and the consumed-character offset from the same match keeps them in agreement —
-// a previous split between a 10-char and a 15-char window left "the el perro" on
-// the page. The leading (^|\W) boundary also prevents words like "breathe" or
-// "banana" from registering a false "the"/"a".
-function detectArticle(text: string, wordStart: number): DetectedArticle {
-  const lookback = text.slice(Math.max(0, wordStart - 16), wordStart)
-  const match = lookback.match(/(^|\W)(the|an|a)(\s+)$/i)
-  if (!match) return { kind: null, start: wordStart }
-
-  const article = match[2].toLowerCase()
-  const consumed = match[2].length + match[3].length
-  return {
-    kind: article === 'the' ? 'definite' : 'indefinite',
-    start: wordStart - consumed,
-  }
-}
+export type { ReplacementResult } from './articles.js'
 
 // Feminine singular nouns beginning with a STRESSED "a"/"ha" take the masculine
 // singular article (el agua, un arma) even though they remain feminine for
@@ -45,9 +15,9 @@ const STRESSED_A_FEMININE = new Set([
 
 function takesMasculineSingularForm(target: string, gender: NounTranslationEntry['gender']): boolean {
   if (gender !== 'feminine') return false
-  const firstWord = target.trim().toLowerCase().split(/\s+/)[0] ?? ''
-  if (/^h?[áà]/.test(firstWord)) return true
-  return STRESSED_A_FEMININE.has(firstWord)
+  const first = firstWord(target).toLowerCase()
+  if (/^h?[áà]/.test(first)) return true
+  return STRESSED_A_FEMININE.has(first)
 }
 
 function definiteArticle(

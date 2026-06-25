@@ -60,6 +60,13 @@ export function getActiveLanguagePack(): LanguagePack | null {
   return activePack
 }
 
+// The target language of the currently loaded pack. Drives per-language grammar
+// dispatch at the replacement site so it always matches the pack actually loaded
+// (rather than the settings value, which can change before the new pack loads).
+export function getActiveTargetLanguage(): TargetLanguage {
+  return activePack?.targetLanguage ?? DEFAULT_TARGET_LANGUAGE
+}
+
 export function lookup(englishLemma: string): TranslationEntry | null {
   return entries?.get(englishLemma.toLowerCase()) ?? null
 }
