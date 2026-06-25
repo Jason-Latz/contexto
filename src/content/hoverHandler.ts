@@ -1,4 +1,5 @@
 import { setUnknown } from '../engine/wordLifecycle.js'
+import { getActiveLanguagePack } from '../language/loader.js'
 import {
   flushLexiconMerge,
   isDirty,
@@ -45,6 +46,13 @@ function makeTipLine(style: string): HTMLElement {
   const el = document.createElement('div')
   el.setAttribute('style', style)
   return el
+}
+
+// Display name of the currently loaded pack ("Spanish"/"German"/…), used to label
+// the target line so the tooltip matches the active language rather than always
+// saying "Spanish". Falls back to Spanish before any pack has loaded.
+function activeLanguageName(): string {
+  return getActiveLanguagePack()?.displayName ?? 'Spanish'
 }
 
 function getOrCreateTooltip(): HTMLElement {
@@ -162,7 +170,7 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
     tipGlossEl.style.display = gloss ? 'block' : 'none'
   }
   if (tipTargetEl) {
-    tipTargetEl.textContent = translated ? `Spanish · ${translated}` : ''
+    tipTargetEl.textContent = translated ? `${activeLanguageName()} · ${translated}` : ''
     tipTargetEl.style.display = translated ? 'block' : 'none'
     tipTargetEl.style.color = isUnknown ? TIP_MARK : TIP_ACCENT
   }
@@ -335,7 +343,7 @@ export function formatTooltipText(
   translated: string,
   gloss: string,
 ): string {
-  return `${source}\n${gloss}\nSpanish: ${translated}\nClick to save as unknown`
+  return `${source}\n${gloss}\n${activeLanguageName()}: ${translated}\nClick to save as unknown`
 }
 
 export function formatSavedUnknownTooltipText(
@@ -344,5 +352,5 @@ export function formatSavedUnknownTooltipText(
   translated: string,
   gloss: string,
 ): string {
-  return `${source}\n${gloss}\nSpanish: ${translated}\nSaved as unknown · click to remove`
+  return `${source}\n${gloss}\n${activeLanguageName()}: ${translated}\nSaved as unknown · click to remove`
 }

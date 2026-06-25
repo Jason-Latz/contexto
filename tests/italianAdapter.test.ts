@@ -57,6 +57,17 @@ test('Italian with no article renders the bare noun', () => {
   assert.equal(buildItalianReplacement(dog, 'dogs everywhere', 0, true).displayText, 'cani')
 })
 
+test('Italian treats semivowel i+vowel like a consonant (lo iodio, la iena)', () => {
+  const iodine = noun('iodine', 'iodio', 'iodi', 'masculine')
+  const hyena = noun('hyena', 'iena', 'iene', 'feminine')
+  assert.equal(buildItalianReplacement(iodine, 'the iodine', 4, false).displayText, 'lo iodio')
+  assert.equal(buildItalianReplacement(iodine, 'a iodine', 2, false).displayText, 'uno iodio')
+  assert.equal(buildItalianReplacement(iodine, 'the iodines', 4, true).displayText, 'gli iodi')
+  assert.equal(buildItalianReplacement(hyena, 'the hyena', 4, false).displayText, 'la iena')
+  assert.equal(buildItalianReplacement(hyena, 'a hyena', 2, false).displayText, 'una iena')
+  assert.equal(buildItalianReplacement(hyena, 'the hyenas', 4, true).displayText, 'le iene')
+})
+
 test('Italian non-noun entries pass through unchanged', () => {
   const adj: TranslationEntry = {
     source: 'fast', target: 'veloce', partOfSpeech: 'adjective',

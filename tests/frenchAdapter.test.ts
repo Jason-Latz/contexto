@@ -47,6 +47,15 @@ test('French with no article renders the bare noun', () => {
   assert.equal(buildFrenchReplacement(book, 'books everywhere', 0, true).displayText, 'livres')
 })
 
+test('French aspirated h blocks élision (le héros), mute h still élides (l’hôtel)', () => {
+  const hero = noun('hero', 'héros', 'héros', 'masculine')
+  const bean = noun('bean', 'haricot', 'haricots', 'masculine')
+  const hotel = noun('hotel', 'hôtel', 'hôtels', 'masculine')
+  assert.equal(buildFrenchReplacement(hero, 'the hero left', 4, false).displayText, 'le héros')
+  assert.equal(buildFrenchReplacement(bean, 'the bean', 4, false).displayText, 'le haricot')
+  assert.equal(buildFrenchReplacement(hotel, 'the hotel', 4, false).displayText, "l'hôtel")
+})
+
 test('French non-noun entries pass through unchanged', () => {
   const adj: TranslationEntry = {
     source: 'fast', target: 'rapide', partOfSpeech: 'adjective',

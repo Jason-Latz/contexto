@@ -114,7 +114,7 @@ export async function renderUnknownWordsList(
     downloadText(
       exportFilename('contexto-unknown-words', 'csv'),
       'text/csv;charset=utf-8',
-      buildCsv(wordsForFilter()),
+      buildCsv(wordsForFilter(), getLanguageInfo(activeLanguage).displayName),
     )
   })
 
@@ -419,9 +419,9 @@ function getNounEntry(entry: TranslationEntry | null): NounTranslationEntry | nu
   return entry?.partOfSpeech === 'noun' ? entry : null
 }
 
-function buildCsv(words: readonly UnknownWord[]): string {
+function buildCsv(words: readonly UnknownWord[], languageName: string): string {
   const rows = toExportRows(words)
-  const header = ['English', 'Spanish', 'Part of speech', 'Gloss', 'Gender', 'Plural', 'Added at']
+  const header = ['English', languageName, 'Part of speech', 'Gloss', 'Gender', 'Plural', 'Added at']
   return [
     header.map(escapeCsvCell).join(','),
     ...rows.map(row => [

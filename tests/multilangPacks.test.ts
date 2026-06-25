@@ -9,6 +9,7 @@ import {
   lookup,
 } from '../src/language/loader.js'
 import { buildReplacement } from '../src/language/replacement.js'
+import { formatTooltipText } from '../src/content/hoverHandler.js'
 import type { TargetLanguage } from '../src/types/index.js'
 
 const root = pathToFileURL(process.cwd() + '/public/').href
@@ -65,6 +66,13 @@ test('French pack élides l’ before a vowel from real data', async () => {
   assert.equal(render('fr', 'water', 'the water rose', 4), "l'eau")
   assert.equal(render('fr', 'house', 'the house stood', 4), 'la maison')
   assert.equal(render('fr', 'book', 'the book fell', 4), 'le livre')
+})
+
+test('hover tooltip labels the target line with the ACTIVE language, not always Spanish', async () => {
+  await loadLanguagePack('de')
+  assert.match(formatTooltipText('the dog', 'dog', 'der Hund', 'a domestic animal'), /German: der Hund/)
+  await loadLanguagePack('es')
+  assert.match(formatTooltipText('the dog', 'dog', 'el perro', 'a domestic animal'), /Spanish: el perro/)
 })
 
 test('Italian pack picks lo / l’ from real data', async () => {
