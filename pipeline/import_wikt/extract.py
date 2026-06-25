@@ -34,6 +34,22 @@ _PHRASE_STOPWORDS = {
     "one", "type", "kind", "form", "way", "act", "person", "used",
 }
 
+# English function words must never become content entries even when a target-side
+# word glosses them (German "je" glosses "the" in "je … desto"). Filtered from both
+# single-word sources and multi-word expression pieces.
+_ENGLISH_FUNCTION_WORDS = {
+    "the", "a", "an", "and", "or", "but", "nor", "so", "yet", "of", "to", "in", "on",
+    "at", "by", "for", "with", "from", "into", "onto", "upon", "as", "than", "then",
+    "that", "this", "these", "those", "it", "its", "he", "him", "his", "she", "her",
+    "hers", "they", "them", "their", "we", "us", "our", "you", "your", "yours", "i",
+    "me", "my", "mine", "who", "whom", "whose", "which", "what", "when", "where",
+    "why", "how", "do", "does", "did", "done", "be", "is", "am", "are", "was", "were",
+    "been", "being", "have", "has", "had", "having", "will", "would", "shall",
+    "should", "can", "could", "may", "might", "must", "not", "no", "if", "because",
+    "while", "although", "though", "whether", "etc", "oneself", "itself", "himself",
+    "herself", "themselves", "myself", "yourself",
+}
+
 # Sense tags that mark a translation as non-standard — penalised so the common,
 # neutral target wins the inversion for a given English lemma.
 _RESTRICTED_TAGS = {
@@ -82,6 +98,19 @@ def _plural_of(rec: dict) -> str | None:
     return None
 
 
+# French plurals are regular enough to derive when Wiktextract has no plural form,
+# recovering nouns that would otherwise be dropped. Single-word targets only.
+def _derive_french_plural(target: str) -> str:
+    low = target.lower()
+    if low.endswith(("s", "x", "z")):
+        return target  # invariable
+    if low.endswith("al") and len(target) > 2:
+        return target[:-2] + "aux"  # journal → journaux
+    if low.endswith(("eau", "au", "eu")):
+        return target + "x"  # bateau → bateaux
+    return target + "s"
+
+
 def _is_form_of(sense: dict) -> bool:
     if sense.get("form_of") or sense.get("alt_of"):
         return True
@@ -100,10 +129,13 @@ def _clean_pieces(gloss: str):
         if not g:
             continue
         words = g.split()
-        if len(words) == 1 and _SINGLE_WORD.fullmatch(g):
-            yield g, 1
-        elif 2 <= len(words) <= 3 and _PHRASE.fullmatch(g) and not (_PHRASE_STOPWORDS & set(words)):
-            yield g, len(words)
+        if len(words) == 1:
+            if len(g) > 1 and _SINGLE_WORD.fullmatch(g) and g not in _ENGLISH_FUNCTION_WORDS:
+                yield g, 1
+        elif 2 <= len(words) <= 3 and _PHRASE.fullmatch(g):
+            blocked = _PHRASE_STOPWORDS | _ENGLISH_FUNCTION_WORDS
+            if not (blocked & set(words)) and all(len(w) > 1 for w in words):
+                yield g, len(words)
 
 
 def _valid_target(target: str) -> bool:
@@ -112,7 +144,7 @@ def _valid_target(target: str) -> bool:
     return not target.startswith("-") and not target.endswith("-")
 
 
-def iter_candidates(path: str, target_freq) -> Iterator[Candidate]:
+def iter_candidates(path: str, target_freq, language: str) -> Iterator[Candidate]:
     """Stream `path`, yielding en→target Candidates. `target_freq(word)->zipf`."""
     with open(path, encoding="utf-8") as handle:
         for line in handle:
@@ -133,10 +165,17 @@ def iter_candidates(path: str, target_freq) -> Iterator[Candidate]:
             if not _valid_target(target):
                 continue
 
+            # A target longer than three words is an idiom/definition, never a clean
+            # inline replacement ("blindsided" → a six-word reflexive phrase). Drop it.
+            if len(target.split()) > 3:
+                continue
+
             gender = plural = None
             if content_pos == "noun":
                 gender = _gender_of(rec)
                 plural = _plural_of(rec)
+                if gender and not plural and language == "fr" and " " not in target:
+                    plural = _derive_french_plural(target)
                 if not (gender and plural):
                     continue
 

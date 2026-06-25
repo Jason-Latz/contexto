@@ -10,6 +10,8 @@
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit",
     "import:es": "python3 -m pipeline.import_es.build --target-count 50000",
     "qa:language-pack": "python3 scripts/qa_language_pack.py",
+    "build:language-pack": "python3 -m pipeline.import_wikt.build",
+    "test:live-multilang": "node tests/live/run-multilang.mjs",
     "merge:language-pack-fragments": "node scripts/merge-language-pack-fragments.mjs",
     "validate:language-packs": "node scripts/validate-language-packs.mjs",
     "test": "rm -rf .test-build && node node_modules/typescript/bin/tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js && python3 -m unittest discover pipeline/import_es/tests",

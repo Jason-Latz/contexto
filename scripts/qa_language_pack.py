@@ -18,8 +18,8 @@ verification (no API cost), so coverage of the common band can grow over time.
 
 Run:  pip install wordfreq  &&  python scripts/qa_language_pack.py
 """
+import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -29,9 +29,7 @@ except ImportError:
     sys.exit("wordfreq is required: pip install wordfreq")
 
 ROOT = Path(__file__).resolve().parent.parent
-PACK = ROOT / "public" / "language-packs" / "es.json"
 POLY = ROOT / "pipeline" / "data" / "polysemous.json"
-VERIFY_OUT = ROOT / "imports" / "language-packs" / "es" / "common-words-to-verify.json"
 
 CONTENT_POS = {"noun", "adverb", "adjective", "verb", "expression"}
 
@@ -56,12 +54,24 @@ FIXES = {
 
 
 def load_polysemous():
+    if not POLY.exists():
+        return set()
     raw = json.loads(POLY.read_text())
     return {w.lower() for w in raw}
 
 
 def main():
-    data = json.loads(PACK.read_text())
+    parser = argparse.ArgumentParser(description="Annotate a language pack with quality signals.")
+    parser.add_argument("--language", default="es")
+    args = parser.parse_args()
+    language = args.language
+
+    pack_path = ROOT / "public" / "language-packs" / f"{language}.json"
+    verify_out = ROOT / "imports" / "language-packs" / language / "common-words-to-verify.json"
+    # The curated FIXES are Spanish targets; only apply them to the Spanish pack.
+    fixes = FIXES if language == "es" else {}
+
+    data = json.loads(pack_path.read_text())
     entries = data["entries"]
     poly = load_polysemous()
 
@@ -75,8 +85,8 @@ def main():
         source = entry.get("source", key).lower()
 
         # Apply curated fixes (correct target, promote to high).
-        if source in FIXES:
-            fix = FIXES[source]
+        if source in fixes:
+            fix = fixes[source]
             entry["target"] = fix["target"]
             if "gender" in fix:
                 entry["gender"] = fix["gender"]
@@ -112,11 +122,11 @@ def main():
                 "enZipf": entry["enZipf"],
             })
 
-    PACK.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    pack_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
     verify_batch.sort(key=lambda e: -e["enZipf"])
-    VERIFY_OUT.parent.mkdir(parents=True, exist_ok=True)
-    VERIFY_OUT.write_text(json.dumps(verify_batch, ensure_ascii=False, indent=2) + "\n")
+    verify_out.parent.mkdir(parents=True, exist_ok=True)
+    verify_out.write_text(json.dumps(verify_batch, ensure_ascii=False, indent=2) + "\n")
 
     total = len(entries)
     print(f"entries:            {total}")
@@ -124,7 +134,7 @@ def main():
     print(f"eligible (content): {eligible_count}")
     print(f"dropped function:   {dropped_function}")
     print(f"dropped polysemous: {dropped_polysemous}")
-    print(f"common-band verify batch: {len(verify_batch)} -> {VERIFY_OUT.relative_to(ROOT)}")
+    print(f"common-band verify batch: {len(verify_batch)} -> {verify_out.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

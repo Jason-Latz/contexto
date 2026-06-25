@@ -30,11 +30,12 @@ LANGUAGES = {
 COMMON_BAND_ZIPF = 5.0  # mirrors scripts/qa_language_pack.py
 
 
+# English frequency of the source (the runtime's known-words / common-band lever).
+# wordfreq scores multi-word phrases natively, so the same call is used for single
+# words and expressions — and it MUST match scripts/qa_language_pack.py so that
+# re-running QA over a generated pack is a no-op.
 def _en_zipf(source: str) -> float:
-    words = source.split()
-    if len(words) == 1:
-        return round(zipf_frequency(source, "en"), 2)
-    return round(max(zipf_frequency(w, "en") for w in words), 2)
+    return round(zipf_frequency(source, "en"), 2)
 
 
 def _clean_gloss(gloss: str, source: str) -> str:
@@ -55,7 +56,7 @@ def collect(language: str, extract_path: Path) -> dict[str, Candidate]:
         return cache[word]
 
     best: dict[str, Candidate] = {}
-    for cand in iter_candidates(str(extract_path), target_freq):
+    for cand in iter_candidates(str(extract_path), target_freq, target_lang):
         # Drop non-English / junk source pieces: a real English lemma is known to
         # wordfreq. This also filters mis-split foreign glosses.
         if _en_zipf(cand.source) <= 0:
