@@ -1,10 +1,15 @@
 // ---------- Language pack schema ----------
 
 export type SourceLanguage = 'en'
-export type TargetLanguage = 'es'
+export type TargetLanguage = 'es' | 'de' | 'fr' | 'it'
 export type PartOfSpeech = 'noun' | 'adverb' | 'adjective' | 'verb' | 'expression' | 'function'
 export type EntryConfidence = 'high' | 'medium' | 'low'
-export type SpanishGender = 'masculine' | 'feminine'
+// Grammatical gender across all supported target languages. Spanish, French and
+// Italian use masculine/feminine; German adds neuter. Per-language validation
+// enforces the allowed subset (see scripts/validate-language-packs.mjs).
+export type Gender = 'masculine' | 'feminine' | 'neuter'
+/** @deprecated use {@link Gender} — kept as an alias for older Spanish-only call sites. */
+export type SpanishGender = Gender
 export type FunctionSubtype = 'preposition' | 'conjunction' | 'determiner' | 'pronoun'
 
 export interface LanguagePackSource {
@@ -34,7 +39,7 @@ interface BaseTranslationEntry {
 
 export interface NounTranslationEntry extends BaseTranslationEntry {
   partOfSpeech: 'noun'
-  gender: SpanishGender
+  gender: Gender
   plural: string
 }
 
