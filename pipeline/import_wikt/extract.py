@@ -35,6 +35,12 @@ _PHRASE_STOPWORDS = {
     "its", "their", "his", "her", "your", "our", "not", "no", "any", "some",
     "such", "etc", "eg", "ie", "esp", "especially", "something", "someone",
     "one", "type", "kind", "form", "way", "act", "person", "used",
+    # Adverb/connective markers that signal a definitional fragment cut from a
+    # longer gloss ("produce again", "either meat", "sometimes also milk") rather
+    # than a real lexical phrase — these dragged the expression tier's accuracy.
+    "again", "also", "either", "neither", "other", "another", "sometimes",
+    "often", "usually", "mainly", "mostly", "rather", "very", "too", "then",
+    "thus", "hence", "therefore", "still", "just", "only", "even", "more", "most",
 }
 
 # English function words must never become content entries even when a target-side

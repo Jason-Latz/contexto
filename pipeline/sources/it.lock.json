@@ -6,22 +6,22 @@
       "name": "kaikki.org Italian Wiktextract extraction",
       "url": "https://kaikki.org/dictionary/Italian/index.html",
       "license": "CC-BY-SA 4.0 and GFDL",
-      "fetchedAt": "2026-06-25T06:38:28+00:00",
+      "fetchedAt": "2026-06-25T06:48:41+00:00",
       "notes": "English→target entries inverted from target-language Wiktionary senses; gender + plural taken from the headword's grammatical forms."
     }
   },
   "counts": {
     "language": "it",
-    "entries": 59984,
+    "entries": 58592,
     "byPartOfSpeech": {
       "adverb": 2361,
       "adjective": 13929,
       "noun": 23269,
       "verb": 3283,
-      "expression": 17142
+      "expression": 15750
     },
-    "commonBand(enZipf>=5)": 2158,
-    "rawBytes": 20950679,
-    "gzipBytes": 2066192
+    "commonBand(enZipf>=5)": 1934,
+    "rawBytes": 20469895,
+    "gzipBytes": 2017847
   }
 }
