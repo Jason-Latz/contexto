@@ -97,9 +97,9 @@ Conventions to preserve:
 
 ## Current state
 
-- **German, French, Italian shipped** (branch `overnight/multilang-de-fr-it`): ≥50k-entry
-  packs + grammar adapters + popup picker. Adversarial accuracy audit ≈91–93% on the rendered
-  band (see `MORNING_REPORT.md`). es unchanged.
+- **German, French, Italian shipped**: ≥55k-entry packs (de 57.4k · fr 55.8k · it 58.6k) +
+  grammar adapters + popup picker. Adversarial accuracy audit 94–96% on the rendered band
+  (see `MORNING_REPORT.md`). es unchanged.
 - Landing site is built on branch **`site/landing`** (not pushed, not deployed). Still
   Spanish-only copy — update for the new languages before launch.
 - Chrome Web Store submission is pending the steps in `MORNING-CHECKLIST.md`.
