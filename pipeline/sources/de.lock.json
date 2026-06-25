@@ -6,22 +6,22 @@
       "name": "kaikki.org German Wiktextract extraction",
       "url": "https://kaikki.org/dictionary/German/index.html",
       "license": "CC-BY-SA 4.0 and GFDL",
-      "fetchedAt": "2026-06-25T06:22:16+00:00",
+      "fetchedAt": "2026-06-25T06:38:13+00:00",
       "notes": "English→target entries inverted from target-language Wiktionary senses; gender + plural taken from the headword's grammatical forms."
     }
   },
   "counts": {
     "language": "de",
-    "entries": 53591,
+    "entries": 57720,
     "byPartOfSpeech": {
       "adverb": 934,
-      "noun": 18487,
-      "adjective": 10103,
-      "verb": 908,
-      "expression": 23159
+      "noun": 18020,
+      "verb": 3190,
+      "adjective": 10071,
+      "expression": 25505
     },
-    "commonBand(enZipf>=5)": 1932,
-    "rawBytes": 19144090,
-    "gzipBytes": 2167794
+    "commonBand(enZipf>=5)": 2409,
+    "rawBytes": 20510743,
+    "gzipBytes": 2321076
   }
 }
