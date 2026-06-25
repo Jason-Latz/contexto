@@ -17,6 +17,9 @@ POS_MAP = {"noun": "noun", "verb": "verb", "adj": "adjective", "adv": "adverb"}
 _PARENS = re.compile(r"\([^)]*\)")
 _BRACKETS = re.compile(r"\[[^\]]*\]")
 _ARTICLE = re.compile(r"^(a|an|the)\s+", re.I)
+# Leading English infinitive marker on verb glosses ("to run" → "run") — without
+# this the "to" stopword would block the whole gloss and the verb would be lost.
+_INFINITIVE = re.compile(r"^to\s+")
 # Glosses are frequently synonym lists ("dog; hound", "big, large"): split them.
 _SPLIT = re.compile(r"\s*[;,/]\s*|\s+\bor\b\s+")
 _SINGLE_WORD = re.compile(r"[a-z][a-z'-]*")
@@ -125,7 +128,7 @@ def _clean_pieces(gloss: str):
     """Yield (lemma, n_words) for each clean English piece of a gloss."""
     base = _BRACKETS.sub("", _PARENS.sub("", gloss)).strip().lower()
     for piece in _SPLIT.split(base):
-        g = _ARTICLE.sub("", piece.strip()).strip(" .,;:\"'")
+        g = _INFINITIVE.sub("", _ARTICLE.sub("", piece.strip())).strip(" .,;:\"'")
         if not g:
             continue
         words = g.split()
