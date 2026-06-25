@@ -6,22 +6,22 @@
       "name": "kaikki.org French Wiktextract extraction",
       "url": "https://kaikki.org/dictionary/French/index.html",
       "license": "CC-BY-SA 4.0 and GFDL",
-      "fetchedAt": "2026-06-25T06:06:47+00:00",
+      "fetchedAt": "2026-06-25T06:23:02+00:00",
       "notes": "English→target entries inverted from target-language Wiktionary senses; gender + plural taken from the headword's grammatical forms."
     }
   },
   "counts": {
     "language": "fr",
-    "entries": 51143,
+    "entries": 52045,
     "byPartOfSpeech": {
-      "noun": 23287,
-      "adjective": 11276,
-      "verb": 856,
-      "expression": 13558,
-      "adverb": 2166
+      "adverb": 2123,
+      "noun": 24671,
+      "adjective": 11114,
+      "verb": 826,
+      "expression": 13311
     },
-    "commonBand(enZipf>=5)": 7806,
-    "rawBytes": 18137224,
-    "gzipBytes": 1810265
+    "commonBand(enZipf>=5)": 1681,
+    "rawBytes": 18474635,
+    "gzipBytes": 1901802
   }
 }
