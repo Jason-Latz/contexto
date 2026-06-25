@@ -16,3 +16,4 @@ decisions.json
 tests/live/screenshots/
 tests/live/.user-data/
 tests/live/.dist-test/
+MORNING_REPORT.svg
