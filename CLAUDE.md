@@ -22,8 +22,11 @@ calls.
   shared article detection (`articles.ts`), dispatch (`replacement.ts`), and the
   `registry.ts` source of truth for supported languages + allowed genders.
 - `pipeline/import_wikt/` — Wiktextract → pack importer (de/fr/it). `pipeline/import_es/` —
-  the original FreeDict-based Spanish importer. `scripts/` — validate/QA tooling.
-- `public/language-packs/` — bundled packs (`es/de/fr/it.json`), one loaded at runtime.
+  the original FreeDict-based Spanish importer. `pipeline/import_tail/` — builds the niche
+  **tail** shards from the English Wiktextract translation tables. `scripts/` — validate/QA
+  tooling (`stream_en_translations.py` reduces the 3GB English dump to a small cache).
+- `public/language-packs/` — bundled shards per language: `<lang>.json` (**core**, eager) +
+  `<lang>.tail.json` (**niche tail**, lazy). Only the active language's shards load at runtime.
 - `popup/` — popup UI source (incl. the target-language picker).
 - `dist/` — build output (gitignored); what you load unpacked in Chrome.
 - `release/` — packaged `.zip` for the store (gitignored).
@@ -40,9 +43,15 @@ npm run build      # build extension into dist/
 npm test           # TS unit tests + python pipeline tests
 npm run typecheck  # tsc --noEmit
 npm run package    # build + zip into release/
-npm run validate:language-packs            # validates es/de/fr/it
-npm run build:language-pack -- --language de   # rebuild a de/fr/it pack from its Wiktextract cache
+npm run validate:language-packs            # validates es/de/fr/it core + *.tail shards
+npm run build:language-pack -- --language de   # rebuild a de/fr/it core pack from its Wiktextract cache
 npm run test:live-multilang                # headed: screenshot de/fr/it replacement (needs `npm run build` first)
+
+# Niche tail shards (public/language-packs/<lang>.tail.json):
+curl -s --compressed https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl \
+  | python3 scripts/stream_en_translations.py pipeline/data/en-tr-cache.jsonl   # ~13 min, one-time
+python3 -m pipeline.import_tail.build --language es --wikt-extract pipeline/data/kaikki-es.jsonl
+node tests/live/run-perf.mjs               # headed: multi-site core-vs-aggressive perf (needs build)
 ```
 
 Site (static, no build step):
@@ -71,6 +80,34 @@ The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**
   `GENDERS_BY_LANGUAGE` in the validator, a `<lang>Adapter.ts` + dispatch entry, and build
   the pack. The loader/injector/popup are already language-generic.
 
+## Vocabulary tiers — core + niche tail (2026-07)
+
+Each language ships two shards. **This is the performance design: getting to a large
+vocabulary without slowing the default page load.**
+
+- **core** (`<lang>.json`) — curated, frequency-ranked, high/medium-confidence. Loaded
+  eagerly on every page (as before). This is what gets injected by default.
+- **tail** (`<lang>.tail.json`) — niche, `low`-confidence long-tail words (real English
+  words gated on `/usr/share/dict/words` OR wordfreq, `enZipf < 5.0`, deduped vs core).
+  **Quarantined:** lazy-loaded and only when **Aggressive Mode** is on, so a default page
+  never fetches/parses it and its words are never injected. Quarantine is enforced entirely
+  in `src/language/loader.ts` — `lookup()` only consults the tail Map when it's loaded; the
+  injector is unchanged. `loadLanguagePack(lang, includeTail)`; toggling aggressive mode
+  reconciles the tail in place on the open tab.
+- **Aggressive Mode** = `settings.aggressiveMode` (default off) + popup toggle. Coverage:
+  es 88.1k · de 73.2k · fr 72.1k · it 68.9k (core+tail). Perf cost of the tail: ~+4.5% inject
+  time, ~+10MB heap, only when opted in (see `tests/live/run-perf.mjs`).
+- **Data ceiling:** 100k/language is NOT reachable from free offline Wiktextract/FreeDict
+  with quality gating (the remainder is non-dictionary junk). To push higher, add another
+  independent source dictionary (e.g. FreeDict eng-deu/fra/ita, as es already stacks FreeDict
+  core + Spanish Wiktextract tail) — not a paid API.
+
+Conventions to preserve:
+- Tail entries are `confidence: "low"`, `frequencyRank` offset by 1,000,000 (sort after core),
+  `enZipf < 5.0`. Never let tail keys overlap core (the validator enforces disjointness).
+- Don't inject the tail by default — the whole point is quarantine. Keep the core shard the
+  eager one; keep the tail lazy.
+
 ## Popup review features (2026-06)
 
 The popup "Unknown Words" card is a review surface for saved-unknown words:
@@ -97,9 +134,12 @@ Conventions to preserve:
 
 ## Current state
 
-- **German, French, Italian shipped**: ≥55k-entry packs (de 57.4k · fr 55.8k · it 58.6k) +
-  grammar adapters + popup picker. Adversarial accuracy audit 94–96% on the rendered band
-  (see `MORNING_REPORT.md`). es unchanged.
+- **Niche tail + Aggressive Mode shipped (2026-07):** each language pack now has a
+  lazy-loaded, quarantined tail shard. core+tail = es 88.1k · de 73.2k · fr 72.1k · it 68.9k.
+  Default page load + injection unchanged (core-only). See "Vocabulary tiers" above.
+- **German, French, Italian shipped**: ≥55k-entry core packs (de 57.4k · fr 55.8k · it 58.6k) +
+  grammar adapters + popup picker. Adversarial accuracy audit 94–96% on the rendered band. es
+  core unchanged (FreeDict).
 - Landing site is built on branch **`site/landing`** (not pushed, not deployed). Still
   Spanish-only copy — update for the new languages before launch.
 - Chrome Web Store submission is pending the steps in `MORNING-CHECKLIST.md`.
