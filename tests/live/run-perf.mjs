@@ -141,6 +141,9 @@ async function run() {
     }
     rows.push({ site, ...perMode })
     const c = perMode.core, a = perMode.aggressive
+    // Aggressive mode should never inject FEWER words than core — if it does, the
+    // tail silently failed to load (or its expressions aren't wired in).
+    if (a.count < c.count) { failures++; console.log(`  ! ${site}: aggressive (${a.count}) < core (${c.count}) — tail not adding coverage`) }
     console.log(
       `${site.padEnd(26)} core: ${String(c.count).padStart(4)} repl / ${String(c.ms).padStart(5)}ms / ${c.heap}MB` +
       `   aggressive: ${String(a.count).padStart(4)} repl / ${String(a.ms).padStart(5)}ms / ${a.heap}MB`,

@@ -4,6 +4,7 @@ import test from 'node:test'
 import { pathToFileURL } from 'node:url'
 import {
   getActiveLanguagePack,
+  getExpressionKeys,
   loadLanguagePack,
   lookup,
   isTailLoaded,
@@ -23,6 +24,7 @@ globalThis.chrome = {
 // A source lemma that cannot exist in the real German core pack, so its presence
 // in lookup() is proof the (synthetic) tail shard was loaded and consulted.
 const TAIL_SOURCE = 'zzznichetailword'
+const TAIL_EXPRESSION = 'zzz niche phrase'
 const SYNTHETIC_DE_TAIL = JSON.stringify({
   version: '2026-07-01',
   sourceLanguage: 'en',
@@ -36,6 +38,17 @@ const SYNTHETIC_DE_TAIL = JSON.stringify({
       partOfSpeech: 'adverb',
       sourceGloss: 'a niche test word',
       frequencyRank: 1_000_001,
+      confidence: 'low',
+      sourceIds: ['test'],
+      enZipf: 0,
+      eligible: true,
+    },
+    [TAIL_EXPRESSION]: {
+      source: TAIL_EXPRESSION,
+      target: 'nischenphrase',
+      partOfSpeech: 'expression',
+      sourceGloss: 'a niche test expression',
+      frequencyRank: 1_000_002,
       confidence: 'low',
       sourceIds: ['test'],
       enZipf: 0,
@@ -70,6 +83,7 @@ test('the niche tail is quarantined by default and lazy-loaded only in aggressiv
   assert.equal(isTailLoaded(), false)
   assert.equal(tailFetchCount, 0, 'tail shard must NOT be fetched on a default page load')
   assert.equal(lookup(TAIL_SOURCE), null, 'tail word must not be injectable by default')
+  assert.equal(getExpressionKeys().includes(TAIL_EXPRESSION), false, 'tail expression quarantined by default')
 
   // 2) Aggressive ON: the tail is fetched exactly once and its words resolve.
   await loadLanguagePack('de', true)
@@ -78,11 +92,15 @@ test('the niche tail is quarantined by default and lazy-loaded only in aggressiv
   const tailEntry = lookup(TAIL_SOURCE)
   assert.ok(tailEntry, 'tail word IS injectable in aggressive mode')
   assert.equal(tailEntry?.target, 'nischenwort')
+  // Tail EXPRESSIONS must be scannable too (not dead weight) — they inject only
+  // via getExpressionEntries, which must draw from the tail when it is loaded.
+  assert.equal(getExpressionKeys().includes(TAIL_EXPRESSION), true, 'tail expression scannable in aggressive mode')
 
   // 3) Aggressive OFF again: the tail is dropped, re-quarantining its words.
   await loadLanguagePack('de', false)
   assert.equal(isTailLoaded(), false)
   assert.equal(lookup(TAIL_SOURCE), null, 're-quarantined when aggressive mode turns off')
+  assert.equal(getExpressionKeys().includes(TAIL_EXPRESSION), false, 'tail expression re-quarantined when off')
 })
 
 test('a missing tail shard is tolerated (aggressive mode degrades to core-only)', async () => {

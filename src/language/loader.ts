@@ -59,6 +59,10 @@ async function loadTailShard(targetLanguage: TargetLanguage): Promise<void> {
   if (tailLoadedFor === targetLanguage && tailEntries !== null) return
 
   const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.tail.json`))
+  // Any change to the tail invalidates the cached expression list (it draws from
+  // the tail when loaded).
+  expressionEntries = null
+
   if (!response.ok) {
     tailEntries = new Map()
     tailLoadedFor = targetLanguage
@@ -106,9 +110,11 @@ export async function loadLanguagePack(
 
   if (includeTail) {
     await loadTailShard(targetLanguage)
-  } else {
+  } else if (tailEntries !== null) {
+    // Dropping the tail also invalidates the cached expression list.
     tailEntries = null
     tailLoadedFor = null
+    expressionEntries = null
   }
 }
 
@@ -143,10 +149,16 @@ export function getExpressionEntries(): Array<[string, ExpressionTranslationEntr
   if (!entries) return []
   if (expressionEntries) return expressionEntries
 
+  // Core expressions always; tail expressions too when the tail is loaded
+  // (aggressive mode) so niche multi-word entries are actually scannable rather
+  // than dead weight. The cache is invalidated whenever the tail loads/unloads.
   expressionEntries = []
-  for (const [key, entry] of entries) {
-    if (entry.partOfSpeech === 'expression') {
-      expressionEntries.push([key, entry])
+  const maps = tailEntries ? [entries, tailEntries] : [entries]
+  for (const map of maps) {
+    for (const [key, entry] of map) {
+      if (entry.partOfSpeech === 'expression') {
+        expressionEntries.push([key, entry as ExpressionTranslationEntry])
+      }
     }
   }
   return expressionEntries

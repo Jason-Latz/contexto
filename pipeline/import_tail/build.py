@@ -372,8 +372,14 @@ def build(language: str, cache_path: Path, target_count: int,
     core_sources = load_core_sources(language)
     core_count = len(core_sources)
 
-    de_meta = german_metadata() if language == "de" else {}
-    if de_meta:
+    de_meta: dict[str, tuple[str | None, str | None]] = {}
+    if language == "de":
+        # German plurals are irregular, so they come from the authoritative on-disk
+        # dump — without it every German tail noun would be silently dropped.
+        if not GERMAN_DUMP.exists():
+            sys.exit(f"German tail needs the German Wiktextract dump at {GERMAN_DUMP} "
+                     f"(re-download from kaikki.org); refusing to build a noun-less de tail.")
+        de_meta = german_metadata()
         print(f"  german plural map: {len(de_meta)} nouns", file=sys.stderr, flush=True)
 
     best = collect_english(language, cache_path, core_sources, de_meta)
