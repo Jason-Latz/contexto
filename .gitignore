@@ -17,3 +17,5 @@ tests/live/screenshots/
 tests/live/.user-data/
 tests/live/.dist-test/
 MORNING_REPORT.svg
+tests/live/fixtures/perf/
+tests/live/perf-results.json

@@ -41,10 +41,20 @@ GERMAN_DUMP = PROJECT_ROOT / "pipeline" / "data" / "kaikki.jsonl"
 
 DISPLAY = {"es": "Spanish", "de": "German", "fr": "French", "it": "Italian"}
 
+# The system word list, loaded once in build(); used by is_real_word().
+_DICT_WORDS: set[str] = set()
+
 # frequencyRank offset: tail ranks start here so every tail word sorts AFTER every
 # core word (cores are ranked 1..~60k), keeping the runtime's freqScore≈0 for tail
 # and guaranteeing rank uniqueness within the shard.
 RANK_OFFSET = 1_000_000
+
+# The tail is for NICHE vocabulary. Sources at/above this English-frequency (Zipf)
+# are common words that (a) belong in core, not a niche shard, and (b) can never be
+# rendered anyway — the injector's isReplaceable() gate blocks non-"high" entries at
+# enZipf >= 5.0 (MEDIUM_OK_ZIPF). Excluding them here is pure dead-weight/junk removal
+# with zero runtime behavior change, and it drops the "the"/"or"/"it" leakage.
+NICHE_MAX_ZIPF = 5.0
 
 # Translation tags that mark a form we don't want as a lemma headword: regional
 # variants, dead registers, and inflected (plural) forms.
@@ -57,6 +67,16 @@ _SKIP_TAGS = {
 
 _GENDERS = ("masculine", "feminine", "neuter")
 _SINGLE_WORD = re.compile(r"[a-z][a-z'-]*")
+_PHRASE = re.compile(r"[a-z][a-z' -]*")
+
+# Function words that, as part of a multi-word English source, mark it as a
+# definitional fragment rather than a real lexical expression. A source phrase
+# containing any of these is dropped from the expression tier.
+_EXPR_STOPWORDS = {
+    "a", "an", "the", "of", "to", "and", "or", "but", "with", "from", "into",
+    "for", "by", "at", "on", "in", "as", "that", "which", "is", "are", "be",
+    "not", "no", "any", "some", "such", "etc", "one", "someone", "something",
+}
 
 
 def load_dict_words() -> set[str]:
@@ -117,13 +137,29 @@ def valid_target(target: str) -> bool:
         return False
     if len(target.split()) > 3:
         return False
+    # Reject annotation/abbreviation/definitional leakage that Wiktextract sometimes
+    # bakes into a translation: bare abbreviations ("comp.", "w.-c.", "dr."), gloss
+    # notes ("adj.: leer"), parenthetical scientific names ("Kranich (B. pavonina)"),
+    # and "for example …"/"such as …" fragments.
+    if any(ch in target for ch in ".():;/"):
+        return False
+    low = target.lower()
+    if "for example" in low or "such as" in low or "e. g" in low:
+        return False
     return any(ch.isalpha() for ch in target)
 
 
 # --- plural derivation (nouns only) --------------------------------------------
 
+_ES_ACUTE_N = {"á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u"}
+
+
 def _derive_es_plural(target: str) -> str:
     low = target.lower()
+    # Oxytone words ending in an accented vowel + n (canción, calderón, común) drop
+    # the written accent and add -es: canción→canciones, calderón→calderones.
+    if len(low) >= 2 and low[-1] == "n" and low[-2] in _ES_ACUTE_N:
+        return target[:-2] + _ES_ACUTE_N[low[-2]] + "nes"
     if low.endswith("z"):
         return target[:-1] + "ces"
     if low.endswith(("s", "x")):
@@ -131,7 +167,7 @@ def _derive_es_plural(target: str) -> str:
     if low[-1] in "aeiou":
         return target + "s"
     if low[-1] in "áéíóú":
-        return target + "es"
+        return target + "s"  # café→cafés, sofá→sofás
     return target + "es"
 
 
@@ -180,12 +216,21 @@ def clean_gloss(gloss: str, source: str) -> str:
     return text or source
 
 
+def is_real_word(word: str) -> bool:
+    """Real English lexical item: in the system dictionary OR known to wordfreq.
+    Junk/foreign fragments are in neither. `_DICT_WORDS` is set once in build()."""
+    return word in _DICT_WORDS or zipf_frequency(word, "en") > 0
+
+
 # --- candidate collection ------------------------------------------------------
 
-class TailCandidate:
-    __slots__ = ("source", "pos", "target", "gender", "plural", "gloss", "score")
+EN_SOURCE_ID = "wiktextract-en-translations"
 
-    def __init__(self, source, pos, target, gender, plural, gloss, score):
+
+class TailCandidate:
+    __slots__ = ("source", "pos", "target", "gender", "plural", "gloss", "score", "source_id")
+
+    def __init__(self, source, pos, target, gender, plural, gloss, score, source_id):
         self.source = source
         self.pos = pos
         self.target = target
@@ -193,14 +238,36 @@ class TailCandidate:
         self.plural = plural
         self.gloss = gloss
         self.score = score
+        self.source_id = source_id
 
 
-def collect(language: str, cache_path: Path, words: set[str],
-            core_sources: set[str]) -> dict[str, TailCandidate]:
-    de_meta = german_metadata() if language == "de" else {}
-    if language == "de":
-        print(f"  german plural map: {len(de_meta)} nouns", file=sys.stderr, flush=True)
+# Classify an English source string into a tail part-of-speech, or None to drop
+# it. Single real words keep their dictionary POS; 2-3 word real phrases (no
+# leading/definitional function words) become the "expression" tier the product's
+# expression scanner already supports; everything else is dropped.
+def _source_pos(source: str, rec_pos: str | None) -> str | None:
+    n = len(source.split())
+    if n == 1:
+        if len(source) < 2 or not _SINGLE_WORD.fullmatch(source):
+            return None
+        if not is_real_word(source):
+            return None
+        return rec_pos if rec_pos in ("noun", "verb", "adjective", "adverb") else None
+    if 2 <= n <= 3:
+        if not _PHRASE.fullmatch(source):
+            return None
+        parts = source.split()
+        if _EXPR_STOPWORDS & set(parts):
+            return None
+        if not all(is_real_word(w) for w in parts):
+            return None
+        return "expression"
+    return None
 
+
+def collect_english(language: str, cache_path: Path, core_sources: set[str],
+                    de_meta: dict[str, tuple[str | None, str | None]]) -> dict[str, TailCandidate]:
+    """Tail candidates from the English-Wiktextract translation cache."""
     _tf: dict[str, float] = {}
 
     def target_freq(word: str) -> float:
@@ -220,19 +287,13 @@ def collect(language: str, cache_path: Path, words: set[str],
                 continue
 
             source = (rec.get("w") or "").strip().lower()
-            if len(source) < 2 or not _SINGLE_WORD.fullmatch(source):
-                continue
             if source in core_sources:
                 continue
-            # "Real English word" gate: in the system dictionary OR known to
-            # wordfreq. Junk/foreign gloss fragments are in neither and dropped;
-            # this admits both niche dictionary words AND common words that the
-            # core's target-language source simply never covered.
-            if source not in words and zipf_frequency(source, "en") <= 0:
+            pos = _source_pos(source, rec.get("pos"))
+            if pos is None:
                 continue
-            pos = rec.get("pos")
-            if pos not in ("noun", "verb", "adjective", "adverb"):
-                continue
+            if zipf_frequency(source, "en") >= NICHE_MAX_ZIPF:
+                continue  # common word — belongs in core, never rendered from the tail
 
             gloss = clean_gloss(rec.get("g") or "", source)
 
@@ -255,21 +316,78 @@ def collect(language: str, cache_path: Path, words: set[str],
                         continue  # schema requires a standalone plural for nouns
 
                 n_words = len(target.split())
-                # Prefer: single-word targets, then more common targets. (All that
-                # reach here are standard — restricted tags already filtered.)
                 score = target_freq(target.split()[0]) - 0.5 * (n_words - 1)
-
                 current = best.get(source)
                 if current is None or score > current.score:
-                    best[source] = TailCandidate(source, pos, target, gender, plural, gloss, score)
+                    best[source] = TailCandidate(source, pos, target, gender, plural,
+                                                 gloss, score, EN_SOURCE_ID)
     return best
 
 
-def build(language: str, cache_path: Path, target_count: int) -> tuple[dict, dict]:
-    words = load_dict_words()
+def collect_wikt(language: str, extract_path: Path,
+                 core_sources: set[str]) -> dict[str, TailCandidate]:
+    """Extra tail candidates from a target-language Wiktextract dump, inverted the
+    same way the core pipeline does (authoritative gender/plural). Used to reach
+    coverage the English translation tables miss — most valuable for Spanish, whose
+    core came from FreeDict, not Wiktextract."""
+    from pipeline.import_wikt.extract import iter_candidates
+
+    _tf: dict[str, float] = {}
+
+    def target_freq(word: str) -> float:
+        if word not in _tf:
+            _tf[word] = zipf_frequency(word, language)
+        return _tf[word]
+
+    best: dict[str, TailCandidate] = {}
+    for cand in iter_candidates(str(extract_path), target_freq, language):
+        source = cand.source
+        if source in core_sources:
+            continue
+        if zipf_frequency(source, "en") >= NICHE_MAX_ZIPF:
+            continue  # common word — belongs in core, never rendered from the tail
+        # Apply the same source gate as the English collector: expressions must be
+        # clean 2-3 word phrases; everything else a single real word of that POS.
+        expected = None if cand.part_of_speech == "expression" else cand.part_of_speech
+        classified = _source_pos(source, expected)
+        if cand.part_of_speech == "expression":
+            if classified != "expression":
+                continue
+        elif classified != cand.part_of_speech:
+            continue
+        if not valid_target(cand.target):
+            continue
+        current = best.get(source)
+        if current is None or cand.score > current.score:
+            best[source] = TailCandidate(source, cand.part_of_speech, cand.target,
+                                         cand.gender, cand.plural, cand.gloss, cand.score,
+                                         f"wiktextract-{language}")
+    return best
+
+
+def build(language: str, cache_path: Path, target_count: int,
+          wikt_extract: Path | None) -> tuple[dict, dict]:
+    global _DICT_WORDS
+    _DICT_WORDS = load_dict_words()
     core_sources = load_core_sources(language)
     core_count = len(core_sources)
-    best = collect(language, cache_path, words, core_sources)
+
+    de_meta = german_metadata() if language == "de" else {}
+    if de_meta:
+        print(f"  german plural map: {len(de_meta)} nouns", file=sys.stderr, flush=True)
+
+    best = collect_english(language, cache_path, core_sources, de_meta)
+    en_count = len(best)
+
+    # Merge in a target-language Wiktextract inversion (authoritative gender/plural)
+    # for sources the English tables missed. Only ADDS new sources — never overwrites
+    # an English-tables candidate — so the two sources compose without conflict.
+    wikt_count = 0
+    if wikt_extract is not None:
+        for source, cand in collect_wikt(language, wikt_extract, core_sources).items():
+            if source not in best:
+                best[source] = cand
+                wikt_count += 1
 
     # Rank the tail common-first (English frequency), then alphabetically. Cap so
     # core + tail does not exceed the target; keep the most useful (common) first.
@@ -287,7 +405,7 @@ def build(language: str, cache_path: Path, target_count: int) -> tuple[dict, dic
             "sourceGloss": cand.gloss,
             "frequencyRank": RANK_OFFSET + i,
             "confidence": "low",
-            "sourceIds": ["wiktextract-en-translations"],
+            "sourceIds": [cand.source_id],
             "enZipf": round(zipf_frequency(cand.source, "en"), 2),
             "eligible": True,
         }
@@ -298,22 +416,31 @@ def build(language: str, cache_path: Path, target_count: int) -> tuple[dict, dic
         pos_counts[cand.pos] = pos_counts.get(cand.pos, 0) + 1
 
     fetched_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    sources = {
+        EN_SOURCE_ID: {
+            "name": "kaikki.org English Wiktextract translation tables",
+            "url": "https://kaikki.org/dictionary/English/index.html",
+            "license": "CC-BY-SA 4.0 and GFDL",
+            "fetchedAt": fetched_at,
+            "notes": "Low-confidence niche 'tail' shard: real English words (in "
+                     "/usr/share/dict/words or wordfreq) missing from the core pack, "
+                     "pointing at a standard translation from the English translation tables.",
+        },
+    }
+    if wikt_count:
+        sources[f"wiktextract-{language}"] = {
+            "name": f"kaikki.org {DISPLAY[language]} Wiktextract extraction",
+            "url": f"https://kaikki.org/dictionary/{DISPLAY[language]}/index.html",
+            "license": "CC-BY-SA 4.0 and GFDL",
+            "fetchedAt": fetched_at,
+            "notes": "Extra tail coverage inverted from target-language Wiktionary senses.",
+        }
     pack = {
         "version": fetched_at[:10],
         "sourceLanguage": "en",
         "targetLanguage": language,
         "displayName": DISPLAY[language],
-        "sources": {
-            "wiktextract-en-translations": {
-                "name": "kaikki.org English Wiktextract translation tables",
-                "url": "https://kaikki.org/dictionary/English/index.html",
-                "license": "CC-BY-SA 4.0 and GFDL",
-                "fetchedAt": fetched_at,
-                "notes": "Low-confidence niche 'tail' shard: real English words (gated on "
-                         "/usr/share/dict/words) missing from the core pack, pointing at a "
-                         "standard translation from the English translation tables.",
-            },
-        },
+        "sources": sources,
         "entries": entries,
     }
     report = {
@@ -322,6 +449,8 @@ def build(language: str, cache_path: Path, target_count: int) -> tuple[dict, dic
         "tailEntries": len(entries),
         "corePlusTail": core_count + len(entries),
         "tailByPartOfSpeech": pos_counts,
+        "tailFromEnglishTables": en_count,
+        "tailAddedFromWiktextract": wikt_count,
         "tailCandidatesAvailable": len(best),
     }
     return pack, report
@@ -332,12 +461,16 @@ def main() -> None:
     parser.add_argument("--language", required=True, choices=sorted(DISPLAY))
     parser.add_argument("--cache", type=Path, default=PROJECT_ROOT / "pipeline" / "data" / "en-tr-cache.jsonl")
     parser.add_argument("--target-count", type=int, default=100000)
+    parser.add_argument("--wikt-extract", type=Path, default=None,
+                        help="optional target-language Wiktextract JSONL to merge for extra coverage")
     args = parser.parse_args()
 
     if not args.cache.exists():
         sys.exit(f"translation cache not found: {args.cache}")
+    if args.wikt_extract is not None and not args.wikt_extract.exists():
+        sys.exit(f"wiktextract dump not found: {args.wikt_extract}")
 
-    pack, report = build(args.language, args.cache, args.target_count)
+    pack, report = build(args.language, args.cache, args.target_count, args.wikt_extract)
     out = PACKS / f"{args.language}.tail.json"
     out.write_text(json.dumps(pack, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
