@@ -22,13 +22,15 @@ const SHOTS = path.join(__dirname, 'screenshots')
 const FIXDIR = path.join(__dirname, 'fixtures', 'perf')
 
 const LANG = 'es' // measured in the shipping default language
+// Real content-heavy pages saved as local fixtures (offline + deterministic).
+// (A JS-rendered page like a news site has no readable text in its static HTML,
+// so it is not a useful injection/perf fixture.)
 const SITES = [
   'wikipedia-photosynthesis',
   'wikipedia-roman-empire',
   'gutenberg-alice',
   'pg-essay',
   'mdn-array',
-  'bbc-science',
 ].filter((name) => fs.existsSync(path.join(FIXDIR, `${name}.html`)))
 
 function makeTestBuild() {
@@ -119,16 +121,20 @@ async function run() {
       }, settingsFor(aggressive))
 
       const page = await context.newPage()
+      // Only the EXTENSION's own errors matter; real-page fixtures loaded over
+      // file:// emit unrelated console noise (blocked external resources, CSP).
       const consoleErrors = []
-      page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 160)) })
+      page.on('console', (m) => {
+        if (m.type() === 'error' && m.text().includes('Contexto')) consoleErrors.push(m.text().slice(0, 160))
+      })
       await page.goto(url, { waitUntil: 'load' })
       const { ms, count } = await measureInjection(page)
       const heap = await heapMB(page)
       perMode[mode] = { ms, count, heap, errors: consoleErrors.length }
 
-      // One before/after screenshot pair on the flagship page for the report.
-      if (site === 'wikipedia-photosynthesis') {
-        await page.screenshot({ path: path.join(SHOTS, `perf-${mode}.png`), fullPage: false })
+      // Injection proof on two distinct real pages (aggressive mode) for the report.
+      if (aggressive && (site === 'wikipedia-photosynthesis' || site === 'gutenberg-alice')) {
+        await page.screenshot({ path: path.join(SHOTS, `inject-${site}.png`), fullPage: false })
       }
       if (mode === 'core' && (count === 0 || consoleErrors.length > 0)) failures++
       await page.close()
