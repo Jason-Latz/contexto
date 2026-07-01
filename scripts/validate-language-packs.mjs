@@ -134,46 +134,74 @@ function assertUniqueFrequencyRanks(entries, language) {
   }
 }
 
-async function validatePack(language) {
-  const file = join(ROOT, 'public', 'language-packs', `${language}.json`)
+async function validatePackFile(language, file, label) {
   const raw = await readFile(file, 'utf8')
-  assertNoDuplicateEntryKeys(raw, language)
+  assertNoDuplicateEntryKeys(raw, label)
 
   const pack = JSON.parse(raw)
 
-  if (pack.sourceLanguage !== 'en') fail(`${language}: sourceLanguage must be en`)
-  if (pack.targetLanguage !== language) fail(`${language}: targetLanguage mismatch`)
-  requireString(pack.version, `${language}.version`)
-  requireString(pack.displayName, `${language}.displayName`)
+  if (pack.sourceLanguage !== 'en') fail(`${label}: sourceLanguage must be en`)
+  if (pack.targetLanguage !== language) fail(`${label}: targetLanguage mismatch`)
+  requireString(pack.version, `${label}.version`)
+  requireString(pack.displayName, `${label}.displayName`)
 
   if (!pack.sources || typeof pack.sources !== 'object' || Array.isArray(pack.sources)) {
-    fail(`${language}: sources must be an object`)
+    fail(`${label}: sources must be an object`)
   }
   for (const [sourceId, source] of Object.entries(pack.sources)) {
-    requireString(source.name, `${language}.sources.${sourceId}.name`)
-    requireString(source.url, `${language}.sources.${sourceId}.url`)
-    requireString(source.license, `${language}.sources.${sourceId}.license`)
+    requireString(source.name, `${label}.sources.${sourceId}.name`)
+    requireString(source.url, `${label}.sources.${sourceId}.url`)
+    requireString(source.license, `${label}.sources.${sourceId}.license`)
   }
 
   if (!pack.entries || typeof pack.entries !== 'object' || Array.isArray(pack.entries)) {
-    fail(`${language}: entries must be an object`)
+    fail(`${label}: entries must be an object`)
   }
 
   for (const [key, entry] of Object.entries(pack.entries)) {
     validateEntry(key, entry, language)
   }
 
-  assertUniqueFrequencyRanks(pack.entries, language)
+  assertUniqueFrequencyRanks(pack.entries, label)
 
   const rawBytes = Buffer.byteLength(raw)
   const gzipBytes = (await import('node:zlib')).gzipSync(raw).byteLength
   if (gzipBytes > SIZE_WARNING_GZIP_BYTES) {
-    console.warn(`WARN ${language}: gzip size ${gzipBytes} bytes exceeds ${SIZE_WARNING_GZIP_BYTES}`)
+    console.warn(`WARN ${label}: gzip size ${gzipBytes} bytes exceeds ${SIZE_WARNING_GZIP_BYTES}`)
   }
 
-  console.log(`OK ${language}: ${Object.keys(pack.entries).length} entries (${rawBytes} bytes raw, ${gzipBytes} bytes gzip)`)
+  console.log(`OK ${label}: ${Object.keys(pack.entries).length} entries (${rawBytes} bytes raw, ${gzipBytes} bytes gzip)`)
+  return pack
+}
+
+async function fileExists(path) {
+  try {
+    await readFile(path)
+    return true
+  } catch {
+    return false
+  }
+}
+
+async function validateLanguage(language) {
+  const coreFile = join(ROOT, 'public', 'language-packs', `${language}.json`)
+  const core = await validatePackFile(language, coreFile, language)
+
+  // The niche tail shard is optional (a language may not have one yet). When
+  // present it is validated the same way, and its keys must be disjoint from
+  // core so lookup() never has an ambiguous entry across the two shards.
+  const tailFile = join(ROOT, 'public', 'language-packs', `${language}.tail.json`)
+  if (await fileExists(tailFile)) {
+    const tail = await validatePackFile(language, tailFile, `${language}.tail`)
+    const coreKeys = new Set(Object.keys(core.entries))
+    const overlap = Object.keys(tail.entries).filter((key) => coreKeys.has(key))
+    if (overlap.length > 0) {
+      fail(`${language}.tail: ${overlap.length} keys overlap core (e.g. ${overlap.slice(0, 5).join(', ')})`)
+    }
+    console.log(`OK ${language}: core+tail = ${Object.keys(core.entries).length + Object.keys(tail.entries).length} entries`)
+  }
 }
 
 for (const language of PACKS) {
-  await validatePack(language)
+  await validateLanguage(language)
 }

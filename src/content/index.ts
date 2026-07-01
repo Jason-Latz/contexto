@@ -7,6 +7,7 @@ import {
   areQuizzesEnabled,
   areReplacementsEnabled,
   getTargetLanguage,
+  isAggressiveMode,
   isOnboarded,
   loadSettings,
 } from '../store/settingsStore.js'
@@ -36,6 +37,7 @@ interface RuntimeSettings {
   density?: number
   replacementsEnabled?: boolean
   quizzesEnabled?: boolean
+  aggressiveMode?: boolean
   blockedDomains?: string[]
 }
 
@@ -227,7 +229,8 @@ async function startReplacementPipeline(): Promise<void> {
     if (countPageWords() < MIN_PAGE_WORD_COUNT) return
 
     // Load runtime data only after the user-facing replacement toggle is enabled.
-    await loadLanguagePack(getTargetLanguage())
+    // Aggressive mode additionally loads the quarantined niche tail shard.
+    await loadLanguagePack(getTargetLanguage(), isAggressiveMode())
     await loadLexicon()
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
@@ -293,6 +296,12 @@ async function refreshReplacementPipeline(): Promise<void> {
       return
     }
 
+    // Reconcile the loaded pack with the current aggressive-mode setting: this
+    // lazy-loads the niche tail when it was just turned on, or drops it when
+    // turned off, so the re-render below injects the right vocabulary set.
+    await loadLanguagePack(getTargetLanguage(), isAggressiveMode())
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
+
     mutationObserver?.disconnect()
     mutationObserver = null
 
@@ -342,6 +351,8 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
   const densityChanged =
     typeof settings.density === 'number' &&
     settings.density !== previousSettings.density
+  const aggressiveModeChanged =
+    (settings.aggressiveMode ?? false) !== (previousSettings.aggressiveMode ?? false)
   const blockedDomainsChanged =
     JSON.stringify(settings.blockedDomains ?? []) !==
     JSON.stringify(previousSettings.blockedDomains ?? [])
@@ -359,7 +370,7 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
   // A blocked/unblocked domain must take effect on the open tab immediately, the
   // same way a density change does — the refresh re-runs the domain check, so a
   // newly blocked current page is cleared and an unblocked one is re-rendered.
-  if (densityChanged || blockedDomainsChanged) {
+  if (densityChanged || blockedDomainsChanged || aggressiveModeChanged) {
     requestReplacementRefresh()
   }
 

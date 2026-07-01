@@ -10,17 +10,31 @@ import { assertExtensionContextAvailable } from '../utils/extensionContext.js'
 const DEFAULT_TARGET_LANGUAGE: TargetLanguage = 'es'
 const MIN_CONFIDENCE: EntryConfidence[] = ['high', 'medium']
 
+// The eager "core" shard (public/language-packs/<lang>.json): the curated,
+// frequency-ranked, high/medium-confidence vocabulary. Loaded on every page.
 let activePack: LanguagePack | null = null
 let entries: Map<string, TranslationEntry> | null = null
 let expressionEntries: Array<[string, ExpressionTranslationEntry]> | null = null
+
+// The lazy "tail" shard (public/language-packs/<lang>.tail.json): the niche,
+// low-confidence long-tail vocabulary. QUARANTINED — it is only fetched/parsed
+// when aggressive mode is on, so a default page load never touches it (keeping
+// per-tab memory + parse cost at the core baseline) and, because lookup() only
+// consults it when loaded, tail words are never injected unless the user opts in.
+let tailEntries: Map<string, TranslationEntry> | null = null
+let tailLoadedFor: TargetLanguage | null = null
 
 function isStandaloneTarget(target: string): boolean {
   const trimmed = target.trim()
   return !trimmed.startsWith('-') && !trimmed.endsWith('-')
 }
 
-function isUsableEntry(entry: TranslationEntry): boolean {
-  if (!MIN_CONFIDENCE.includes(entry.confidence)) return false
+// `allowLowConfidence` is set for the tail shard, whose entries are all `low`
+// confidence by construction (that IS the tier). Structural requirements — a
+// standalone target, and gender+plural for nouns so the grammar adapters can
+// inflect — still apply so anything the injector renders is well-formed.
+function isUsableEntry(entry: TranslationEntry, allowLowConfidence = false): boolean {
+  if (!allowLowConfidence && !MIN_CONFIDENCE.includes(entry.confidence)) return false
   if (!isStandaloneTarget(entry.target)) return false
 
   if (entry.partOfSpeech === 'noun') {
@@ -30,30 +44,77 @@ function isUsableEntry(entry: TranslationEntry): boolean {
   return Boolean(entry.target)
 }
 
-export async function loadLanguagePack(
-  targetLanguage: TargetLanguage = DEFAULT_TARGET_LANGUAGE,
-): Promise<void> {
-  if (activePack?.targetLanguage === targetLanguage && entries !== null) return
+function buildEntryMap(pack: LanguagePack, allowLowConfidence: boolean): Map<string, TranslationEntry> {
+  return new Map(
+    Object.entries(pack.entries)
+      .filter(([, entry]) => isUsableEntry(entry, allowLowConfidence))
+      .map(([key, entry]) => [key.toLowerCase(), entry]),
+  )
+}
 
-  assertExtensionContextAvailable()
+// Fetch + parse the quarantined tail shard for `targetLanguage`. A missing tail
+// file is not an error — a language may simply have no tail yet — so it yields an
+// empty tail rather than throwing.
+async function loadTailShard(targetLanguage: TargetLanguage): Promise<void> {
+  if (tailLoadedFor === targetLanguage && tailEntries !== null) return
 
-  const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
+  const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.tail.json`))
   if (!response.ok) {
-    throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
+    tailEntries = new Map()
+    tailLoadedFor = targetLanguage
+    return
   }
 
   const pack = (await response.json()) as LanguagePack
   if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
-    throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
+    throw new Error(`[Contexto] Invalid tail pack metadata for ${targetLanguage}`)
   }
 
-  activePack = pack
-  entries = new Map(
-    Object.entries(pack.entries)
-      .filter(([, entry]) => isUsableEntry(entry))
-      .map(([key, entry]) => [key.toLowerCase(), entry]),
-  )
-  expressionEntries = null
+  tailEntries = buildEntryMap(pack, true)
+  tailLoadedFor = targetLanguage
+}
+
+// Load the active language. `includeTail` (aggressive mode) additionally fetches
+// the quarantined tail shard; when false the tail is dropped so its niche words
+// stop being eligible for injection immediately.
+export async function loadLanguagePack(
+  targetLanguage: TargetLanguage = DEFAULT_TARGET_LANGUAGE,
+  includeTail = false,
+): Promise<void> {
+  const coreReady = activePack?.targetLanguage === targetLanguage && entries !== null
+
+  if (!coreReady) {
+    assertExtensionContextAvailable()
+
+    const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
+    if (!response.ok) {
+      throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
+    }
+
+    const pack = (await response.json()) as LanguagePack
+    if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
+      throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
+    }
+
+    activePack = pack
+    entries = buildEntryMap(pack, false)
+    expressionEntries = null
+    // A fresh core invalidates any previously-loaded tail (wrong language).
+    tailEntries = null
+    tailLoadedFor = null
+  }
+
+  if (includeTail) {
+    await loadTailShard(targetLanguage)
+  } else {
+    tailEntries = null
+    tailLoadedFor = null
+  }
+}
+
+// True when the quarantined tail shard is currently loaded (aggressive mode).
+export function isTailLoaded(): boolean {
+  return tailEntries !== null
 }
 
 export function getActiveLanguagePack(): LanguagePack | null {
@@ -68,7 +129,10 @@ export function getActiveTargetLanguage(): TargetLanguage {
 }
 
 export function lookup(englishLemma: string): TranslationEntry | null {
-  return entries?.get(englishLemma.toLowerCase()) ?? null
+  const key = englishLemma.toLowerCase()
+  // Core is authoritative; the tail (only present in aggressive mode) is a
+  // fallback so a niche word missing from core can still be found/injected.
+  return entries?.get(key) ?? tailEntries?.get(key) ?? null
 }
 
 export function getExpressionKeys(): string[] {

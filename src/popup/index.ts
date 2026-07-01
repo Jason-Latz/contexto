@@ -128,9 +128,10 @@ async function updateSettings(patch: Partial<PopupSettings>): Promise<void> {
 }
 
 function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSettings): void {
-  const settings: Required<Pick<PopupSettings, 'replacementsEnabled' | 'quizzesEnabled'>> = {
+  const settings = {
     replacementsEnabled: initialSettings.replacementsEnabled ?? true,
     quizzesEnabled: initialSettings.quizzesEnabled ?? false,
+    aggressiveMode: (initialSettings.aggressiveMode as boolean | undefined) ?? false,
   }
 
   const section = document.createElement('div')
@@ -161,8 +162,21 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
     },
   )
 
+  // Aggressive mode injects the quarantined niche "tail" vocabulary (rare,
+  // low-confidence words). Off by default — opting in trades precision for reach.
+  const aggressiveToggle = buildToggleRow(
+    'Aggressive Mode',
+    settings.aggressiveMode,
+    async enabled => {
+      settings.aggressiveMode = enabled
+      await updateSettings({ aggressiveMode: enabled })
+    },
+    'Also swap rare niche words (larger vocabulary, lower accuracy).',
+  )
+
   rows.appendChild(replacementToggle)
   rows.appendChild(quizToggle)
+  rows.appendChild(aggressiveToggle)
   section.appendChild(title)
   section.appendChild(rows)
   container.appendChild(section)
@@ -172,6 +186,7 @@ function buildToggleRow(
   labelText: string,
   initialEnabled: boolean,
   onChange: (enabled: boolean) => Promise<void>,
+  hintText?: string,
 ): HTMLDivElement {
   let enabled = initialEnabled
 
@@ -181,6 +196,19 @@ function buildToggleRow(
   const label = document.createElement('span')
   label.className = 'toggle-label'
   label.textContent = labelText
+
+  // Optional secondary line under the label, for toggles that need a word of
+  // explanation (e.g. aggressive mode). Kept inside the label cell so the On/Off
+  // button stays vertically centered against the label+hint block.
+  if (hintText) {
+    const wrap = document.createElement('span')
+    const hint = document.createElement('span')
+    hint.className = 'toggle-hint'
+    hint.textContent = hintText
+    wrap.appendChild(label)
+    wrap.appendChild(hint)
+    row.appendChild(wrap)
+  }
 
   const button = document.createElement('button')
   button.type = 'button'
@@ -199,7 +227,8 @@ function buildToggleRow(
   })
 
   render()
-  row.appendChild(label)
+  // When there's a hint the label is already inside a wrapper appended above.
+  if (!hintText) row.appendChild(label)
   row.appendChild(button)
   return row
 }

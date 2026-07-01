@@ -16,6 +16,10 @@ interface Settings {
   density: number
   replacementsEnabled: boolean
   quizzesEnabled: boolean
+  // Aggressive mode: also inject the quarantined niche "tail" vocabulary
+  // (public/language-packs/<lang>.tail.json). Off by default — the tail is
+  // low-confidence long-tail words, so opting in trades precision for coverage.
+  aggressiveMode: boolean
   blockedDomains: string[]
   // Per-hostname decisions made on the high-stakes banner.
   // true = user allowed replacements; false = user paused for that domain.
@@ -33,6 +37,7 @@ function makeDefaultSettings(): Settings {
     density: LEVEL_DENSITY.beginner,
     replacementsEnabled: true,
     quizzesEnabled: false,
+    aggressiveMode: false,
     blockedDomains: [],
     domainDecisions: {},
   }
@@ -50,6 +55,7 @@ export async function loadSettings(): Promise<void> {
       targetLanguage: raw.targetLanguage ?? 'es',
       replacementsEnabled: raw.replacementsEnabled ?? true,
       quizzesEnabled: raw.quizzesEnabled ?? false,
+      aggressiveMode: raw.aggressiveMode ?? false,
       blockedDomains: raw.blockedDomains ?? [],
       domainDecisions: raw.domainDecisions ?? {},
     }
@@ -103,6 +109,15 @@ export function areReplacementsEnabled(): boolean {
 
 export function areQuizzesEnabled(): boolean {
   return settings.quizzesEnabled
+}
+
+export function isAggressiveMode(): boolean {
+  return settings.aggressiveMode
+}
+
+// Toggle aggressive mode (inject the quarantined niche tail) and persist.
+export async function setAggressiveMode(enabled: boolean): Promise<void> {
+  await persistSettings({ aggressiveMode: enabled })
 }
 
 // Update the stored density and persist immediately.
