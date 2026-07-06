@@ -7,13 +7,12 @@ import {
   areReplacementsEnabled,
   getTargetLanguage,
   isAggressiveMode,
-  isOnboarded,
   loadSettings,
 } from '../store/settingsStore.js'
 import { initSession, getSessionForStorage } from '../store/sessionStore.js'
 import { computeDensity } from '../engine/proficiencyModel.js'
 import { selectTokens } from '../engine/wordSelector.js'
-import { showLevelPicker } from '../onboarding/LevelPicker.js'
+import { ensureFirstRunInit } from './firstRun.js'
 import { setupMutationObserver, type MutationObserverHandle } from './mutationObserver.js'
 import {
   isExtensionContextAvailable,
@@ -224,13 +223,12 @@ async function startReplacementPipeline(): Promise<void> {
     recordedApprovedLemmas = new Set()
     rankedPageLemmas = []
 
-    // If the user has not completed onboarding, show the level picker overlay
-    // and wait for it to finish before proceeding. The picker saves the level
-    // and pre-populates the lexicon.
-    if (!isOnboarded()) {
-      await showLevelPicker()
-      if (!isCurrentReplacementPipelineRun(runVersion)) return
-    }
+    // First run: silently apply the intermediate defaults and seed the lexicon,
+    // then proceed straight to replacement on this very page load. Must run
+    // after the pack + lexicon loads above (prepopulation reads the pack's top
+    // lemmas and merges onto the loaded lexicon). No-op once onboarded.
+    await ensureFirstRunInit()
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     const rendered = await renderReplacementPass(
       undefined,

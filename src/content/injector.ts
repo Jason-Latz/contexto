@@ -232,7 +232,7 @@ const MEDIUM_OK_ZIPF = 5.0
 // Skip-what-you-know floor: a learner already knows the most common words, so
 // words at/above the level's English-frequency (Zipf) floor are not replaced —
 // the tool spends its replacements on rarer vocabulary worth learning. No level
-// set (e.g. before onboarding, or in tests) means no floor. Starting values;
+// set (e.g. before first-run init, or in tests) means no floor. Starting values;
 // tune to taste.
 const LEVEL_FLOOR: Record<OnboardingLevel, number> = {
   beginner: 7.5,
@@ -250,7 +250,7 @@ function isReplaceable(entry: TranslationEntry): boolean {
 }
 
 // The English-frequency ceiling above which words are assumed already known and
-// are skipped, based on the current onboarding level.
+// are skipped, based on the current level.
 function knownWordCeiling(): number {
   const level = getLevel()
   return level ? LEVEL_FLOOR[level] : Infinity

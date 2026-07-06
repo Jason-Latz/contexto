@@ -33,8 +33,6 @@ const SKIP_SELECTORS: readonly string[] = [
   '[data-contexto]',
   '[data-contexto-ui]',
   '#contexto-tooltip',
-  '#contexto-onboarding',
-  '#contexto-calibration',
   // Elements explicitly tagged as non-English — skip to avoid double-translation
   '[lang]:not([lang^="en"])',
 ]

@@ -2,7 +2,7 @@ import type { OnboardingLevel, TargetLanguage } from '../types/index.js'
 
 const STORAGE_KEY = 'contexto_settings'
 
-// Density defaults per onboarding level — user-adjustable in Phase 4 popup.
+// Density defaults per level; user-adjustable via the popup slider.
 const LEVEL_DENSITY: Record<OnboardingLevel, number> = {
   beginner:     0.05,
   intermediate: 0.15,
@@ -80,8 +80,9 @@ export function isOnboarded(): boolean {
   return settings.onboarded
 }
 
-// Mark onboarding complete for the given level.
-// Sets density to the level default and persists immediately.
+// Mark first-run initialization complete for the given level.
+// Sets density to the level default and persists immediately. Called by the
+// silent first-run init (ensureFirstRunInit) with the default level.
 export async function completeOnboarding(level: OnboardingLevel): Promise<void> {
   await persistSettings({
     onboarded: true,
@@ -94,7 +95,7 @@ export function getDensity(): number {
   return settings.density
 }
 
-// The learner's onboarding level, or null before onboarding. Drives the
+// The learner's level, or null before first-run init completes. Drives the
 // skip-what-you-know frequency floor in candidate selection.
 export function getLevel(): OnboardingLevel | null {
   return settings.level
@@ -118,12 +119,6 @@ export async function setAggressiveMode(enabled: boolean): Promise<void> {
 // already be clamped by the caller.
 export async function setDensity(density: number): Promise<void> {
   await persistSettings({ density })
-}
-
-// Return the configured density for a specific level, regardless of current state.
-// Used by LevelPicker to show a preview before the user confirms.
-export function getLevelDensity(level: OnboardingLevel): number {
-  return LEVEL_DENSITY[level]
 }
 
 export function getTargetLanguage(): TargetLanguage {
