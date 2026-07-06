@@ -21,7 +21,7 @@ Features:
 - Choose-your-level onboarding (Beginner, Intermediate, Advanced).
 - Save words you don't know with one click, then export them to CSV (Excel/Sheets) or Quizlet-ready TSV.
 - Per-domain blocking for sites you'd rather read untouched.
-- Optional review quizzes, off by default.
+- On-demand practice in the popup: flashcard review of your saved unknown words, never a pop-up on the page.
 
 Contexto is designed to feel quiet and academic rather than game-like. It uses local language packs, stores learning state on your device, and makes no runtime translation API calls.
 

@@ -110,6 +110,11 @@ Conventions to preserve:
 
 ## Popup review features (2026-06)
 
+Quizzing is on-demand only, via the popup Practice panel. The auto-popping quiz
+banner (`src/quiz/`), its "Quizzes" toggle (`settings.quizzesEnabled`), and the
+post-quiz density auto-adjustment were removed in 2026-07: the core loop is
+passive exposure plus click-to-save, and quizzes must never interrupt reading.
+
 The popup "Unknown Words" card is a review surface for saved-unknown words:
 
 - **Target-first chips** — each chip leads with the active language's target and reveals
@@ -119,10 +124,10 @@ The popup "Unknown Words" card is a review surface for saved-unknown words:
 - **Mark known = soft remove** — the ✓ clears `selfMarkedUnknown` only (does NOT set
   `selfMarkedKnown`), so the word leaves the list but stays eligible for replacement;
   an aria-live Undo restores it with its original save time.
-- **Practice** — `src/popup/PracticePanel.ts` body-swaps the card into a MeaningRecall
-  quiz over saved-unknown words only, ordered stalest-first by
+- **Practice**: `src/popup/PracticePanel.ts` body-swaps the card into a self-graded
+  flashcard quiz (target word, reveal English + gloss, know / don't-know) over
+  saved-unknown words only, ordered stalest-first by
   `src/engine/reviewQueue.ts` (`max(lastReviewedAt, selfMarkedUnknownAt)`).
-  Independent of the global Quizzes toggle.
 
 Conventions to preserve:
 - `LexiconEntry.lastReviewedAt` is the review-staleness signal, stamped by
