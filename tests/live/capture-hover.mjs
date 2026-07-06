@@ -27,7 +27,7 @@ await (await sw(context)).evaluate(async () => {
   await chrome.storage.local.clear()
   await chrome.storage.local.set({ contexto_settings: {
     onboarded: true, level: 'advanced', targetLanguage: 'es', density: 0.9,
-    replacementsEnabled: true, quizzesEnabled: false, aggressiveMode: true,
+    replacementsEnabled: true, aggressiveMode: true,
     blockedDomains: [], domainDecisions: {},
   } })
 })

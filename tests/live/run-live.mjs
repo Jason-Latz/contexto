@@ -66,7 +66,6 @@ function settingsFor(s) {
       targetLanguage: 'es',
       density: s.density,
       replacementsEnabled: true,
-      quizzesEnabled: false,
       blockedDomains: [],
       domainDecisions: {},
     },
@@ -129,7 +128,7 @@ async function runPopup(context) {
   // seed a couple of saved "unknown" words so exports have content
   await sw.evaluate(async () => {
     await chrome.storage.local.set({
-      contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: ['example.com'], domainDecisions: {} },
+      contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, blockedDomains: ['example.com'], domainDecisions: {} },
       contexto_lexicon: { dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000000000 }, house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000001000 } },
     })
   })
@@ -196,7 +195,7 @@ async function runDelegatedClick(context) {
   const sw = await getServiceWorker(context)
   await sw.evaluate(async () => {
     await chrome.storage.local.clear()
-    await chrome.storage.local.set({ contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.95, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: [], domainDecisions: {} } })
+    await chrome.storage.local.set({ contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.95, replacementsEnabled: true, blockedDomains: [], domainDecisions: {} } })
   })
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })

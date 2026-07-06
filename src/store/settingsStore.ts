@@ -15,7 +15,6 @@ interface Settings {
   targetLanguage: TargetLanguage
   density: number
   replacementsEnabled: boolean
-  quizzesEnabled: boolean
   // Aggressive mode: also inject the quarantined niche "tail" vocabulary
   // (public/language-packs/<lang>.tail.json). Off by default — the tail is
   // low-confidence long-tail words, so opting in trades precision for coverage.
@@ -36,7 +35,6 @@ function makeDefaultSettings(): Settings {
     targetLanguage: 'es',
     density: LEVEL_DENSITY.beginner,
     replacementsEnabled: true,
-    quizzesEnabled: false,
     aggressiveMode: false,
     blockedDomains: [],
     domainDecisions: {},
@@ -54,7 +52,6 @@ export async function loadSettings(): Promise<void> {
       ...raw,
       targetLanguage: raw.targetLanguage ?? 'es',
       replacementsEnabled: raw.replacementsEnabled ?? true,
-      quizzesEnabled: raw.quizzesEnabled ?? false,
       aggressiveMode: raw.aggressiveMode ?? false,
       blockedDomains: raw.blockedDomains ?? [],
       domainDecisions: raw.domainDecisions ?? {},
@@ -107,10 +104,6 @@ export function areReplacementsEnabled(): boolean {
   return settings.replacementsEnabled
 }
 
-export function areQuizzesEnabled(): boolean {
-  return settings.quizzesEnabled
-}
-
 export function isAggressiveMode(): boolean {
   return settings.aggressiveMode
 }
@@ -121,8 +114,8 @@ export async function setAggressiveMode(enabled: boolean): Promise<void> {
 }
 
 // Update the stored density and persist immediately.
-// Called by QuizBanner (post-quiz adjustment) and the popup DensitySlider
-// (manual override). Value is expected to already be clamped by the caller.
+// Called by the popup DensitySlider (manual override). Value is expected to
+// already be clamped by the caller.
 export async function setDensity(density: number): Promise<void> {
   await persistSettings({ density })
 }

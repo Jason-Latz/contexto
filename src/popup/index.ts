@@ -22,7 +22,6 @@ interface SessionStore {
 
 interface PopupSettings {
   replacementsEnabled?: boolean
-  quizzesEnabled?: boolean
   blockedDomains?: string[]
   targetLanguage?: TargetLanguage
   [key: string]: unknown
@@ -130,7 +129,6 @@ async function updateSettings(patch: Partial<PopupSettings>): Promise<void> {
 function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSettings): void {
   const settings = {
     replacementsEnabled: initialSettings.replacementsEnabled ?? true,
-    quizzesEnabled: initialSettings.quizzesEnabled ?? false,
     aggressiveMode: (initialSettings.aggressiveMode as boolean | undefined) ?? false,
   }
 
@@ -153,15 +151,6 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
     },
   )
 
-  const quizToggle = buildToggleRow(
-    'Quizzes',
-    settings.quizzesEnabled,
-    async enabled => {
-      settings.quizzesEnabled = enabled
-      await updateSettings({ quizzesEnabled: enabled })
-    },
-  )
-
   // Aggressive mode injects the quarantined niche "tail" vocabulary (rare,
   // low-confidence words). Off by default — opting in trades precision for reach.
   const aggressiveToggle = buildToggleRow(
@@ -175,7 +164,6 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
   )
 
   rows.appendChild(replacementToggle)
-  rows.appendChild(quizToggle)
   rows.appendChild(aggressiveToggle)
   section.appendChild(title)
   section.appendChild(rows)

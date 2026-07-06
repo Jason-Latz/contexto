@@ -32,7 +32,6 @@ const SKIP_SELECTORS: readonly string[] = [
   // Contexto-managed UI and replacement spans must never be translated.
   '[data-contexto]',
   '[data-contexto-ui]',
-  '[data-contexto-quiz]',
   '#contexto-tooltip',
   '#contexto-onboarding',
   '#contexto-calibration',

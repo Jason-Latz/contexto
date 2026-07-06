@@ -154,8 +154,7 @@ function matchCapitalization(source: string, replacement: string): string {
 // ---------- Sentence context extraction ----------
 
 // Extract the sentence that contains the character at `charOffset` from `text`,
-// trimmed and capped at 200 characters. Used to populate WordSeen.sentenceContext
-// for the Phase 3 contextual quiz.
+// trimmed and capped at 200 characters. Used to populate WordSeen.sentenceContext.
 function extractSentenceContext(text: string, charOffset: number): string {
   // Sentence boundaries: newlines or .!? followed by whitespace (or end of string).
   // Split into segments and find the one that contains charOffset.
@@ -639,7 +638,7 @@ export function injectReplacements(
             recordSeen(token.lemma)
             const wordSeen: WordSeen = {
               englishLemma:    token.lemma,
-              surfaceForm:     token.word,   // exact surface form for contextual quiz blanking
+              surfaceForm:     token.word,   // exact surface form as it appeared on the page
               targetWord:      targetDisplayed,
               sourceGloss:     entry.sourceGloss,
               sentenceContext: extractSentenceContext(text, token.start),

@@ -2,13 +2,12 @@ import type { WordSeen } from '../types/index.js'
 
 // In-memory only — session state is not read back from storage on page load.
 // It IS flushed alongside the lexicon store on visibilitychange / 3-minute
-// interval so the Phase 3 quiz system can access recent WordSeen objects.
+// interval so the popup can show session stats and filter by this session.
 
 interface Session {
   pageUrl: string
   startedAt: number
   wordsSeen: WordSeen[]
-  revealCount: number   // total replacements shown this session (for proficiency model)
 }
 
 let session: Session = makeSession()
@@ -22,7 +21,6 @@ function makeSession(): Session {
     pageUrl: getCurrentPageUrl(),
     startedAt: Date.now(),
     wordsSeen: [],
-    revealCount: 0,
   }
 }
 
@@ -32,18 +30,9 @@ export function initSession(): void {
 }
 
 // Record a single word replacement. Called by the injector after each successful
-// span injection so Phase 3 has sentence context for the contextual quiz format.
+// span injection so the popup's session stats and session filter stay accurate.
 export function recordWordSeen(entry: WordSeen): void {
   session.wordsSeen.push(entry)
-  session.revealCount++
-}
-
-export function getRevealCount(): number {
-  return session.revealCount
-}
-
-export function getWordsSeen(): readonly WordSeen[] {
-  return session.wordsSeen
 }
 
 // Serialise session for writing to chrome.storage.local alongside the lexicon.

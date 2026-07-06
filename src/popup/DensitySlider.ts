@@ -1,5 +1,4 @@
 // Minimum and maximum density values the user can set via the slider.
-// These match the proficiency model's clamping range.
 const MIN_DENSITY = 0.00  // 0%
 const MAX_DENSITY = 1.00  // 100%
 const STORAGE_WRITE_THROTTLE_MS = 150
