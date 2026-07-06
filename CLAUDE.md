@@ -115,6 +115,13 @@ banner (`src/quiz/`), its "Quizzes" toggle (`settings.quizzesEnabled`), and the
 post-quiz density auto-adjustment were removed in 2026-07: the core loop is
 passive exposure plus click-to-save, and quizzes must never interrupt reading.
 
+First run is silent: there is no onboarding overlay (the old `src/onboarding/`
+level picker was removed in 2026-07). On the first content-script run,
+`ensureFirstRunInit` (`src/content/firstRun.ts`) applies intermediate defaults
+(density 0.15, top-1500 lemma prepopulation) and sets `settings.onboarded`, so
+the very first page visited gets replacements. The level concept stays internal
+(known-words floor); existing users keep their chosen level.
+
 The popup "Unknown Words" card is a review surface for saved-unknown words:
 
 - **Target-first chips** — each chip leads with the active language's target and reveals

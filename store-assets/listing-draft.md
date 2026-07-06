@@ -18,7 +18,7 @@ Features:
 
 - Switch target language anytime — Spanish, German, French, or Italian.
 - A live density slider — from a few words to nearly every eligible word — that updates the page instantly, no reload.
-- Choose-your-level onboarding (Beginner, Intermediate, Advanced).
+- Works instantly: no setup or onboarding, sensible defaults from the first page you visit.
 - Save words you don't know with one click, then export them to CSV (Excel/Sheets) or Quizlet-ready TSV.
 - Per-domain blocking for sites you'd rather read untouched.
 - On-demand practice in the popup: flashcard review of your saved unknown words, never a pop-up on the page.
