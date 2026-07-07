@@ -3,7 +3,8 @@ import { getActiveTargetLanguage, lookup } from '../language/loader.js'
 import { scanExpressions } from './expressionScanner.js'
 import { buildReplacement } from '../language/replacement.js'
 import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
-import type { CandidateToken, ExpressionMatch, TranslationEntry, WordSeen } from '../types/index.js'
+import { cleanGloss, posLabel } from './hoverCard.js'
+import type { CandidateToken, ExpressionMatch, NounTranslationEntry, TranslationEntry } from '../types/index.js'
 import { getEntry, recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
 import { getLevel } from '../store/settingsStore.js'
@@ -151,45 +152,20 @@ function matchCapitalization(source: string, replacement: string): string {
   )
 }
 
-// ---------- Sentence context extraction ----------
-
-// Extract the sentence that contains the character at `charOffset` from `text`,
-// trimmed and capped at 200 characters. Used to populate WordSeen.sentenceContext.
-function extractSentenceContext(text: string, charOffset: number): string {
-  // Sentence boundaries: newlines or .!? followed by whitespace (or end of string).
-  // Split into segments and find the one that contains charOffset.
-  const boundary = /[.!?]\s+|\n+/g
-  let segStart = 0
-  let context = text  // fallback: entire text
-
-  let match: RegExpExecArray | null
-  while ((match = boundary.exec(text)) !== null) {
-    const segEnd = match.index + match[0].length
-    if (segEnd > charOffset) {
-      // charOffset falls in the segment [segStart, segEnd)
-      context = text.slice(segStart, segEnd).trim()
-      break
-    }
-    segStart = segEnd
-  }
-
-  // If no boundary was crossed, the offset is in the last segment
-  if (segStart <= charOffset && boundary.lastIndex === 0) {
-    context = text.slice(segStart).trim()
-  }
-
-  // Cap at 200 characters
-  if (context.length > 200) {
-    context = context.slice(0, 197) + '…'
-  }
-
-  return context
-}
-
 // ---------- Span construction ----------
 
+// The citation form a learner should memorise: definite article + singular
+// ("la casa", "das Haus"). Rendered through the active language's own adapter
+// (the synthetic "the x" context triggers its definite-article path) so
+// stressed-a Spanish feminines, German capitalization, and fr/it élision all
+// come out right without duplicating any grammar here.
+function nounCitationForm(entry: NounTranslationEntry): string {
+  return buildReplacement(getActiveTargetLanguage(), entry, 'the x', 4, false).displayText
+}
+
 // Build a <span> element that displays `displayText` and carries the original
-// English word as a data attribute for the hover handler.
+// English word plus what the entry can teach (gloss, part of speech, and for
+// nouns the citation form/gender/plural) as data attributes for the hover card.
 function buildSpan(
   displayText: string,
   originalEnglish: string,
@@ -201,7 +177,13 @@ function buildSpan(
   span.setAttribute('data-source', originalEnglish)
   span.setAttribute('data-target', displayText)
   span.setAttribute('data-base-target', entry.target)
-  span.setAttribute('data-gloss', entry.sourceGloss)
+  span.setAttribute('data-gloss', cleanGloss(entry.sourceGloss))
+  span.setAttribute('data-pos', posLabel(entry))
+  if (entry.partOfSpeech === 'noun') {
+    span.setAttribute('data-article-form', nounCitationForm(entry))
+    if (entry.gender) span.setAttribute('data-gender', entry.gender)
+    if (entry.plural) span.setAttribute('data-plural', entry.plural)
+  }
   span.setAttribute('style', baseSpanStyle())
   return span
 }
@@ -590,14 +572,7 @@ export function injectReplacements(
       recordExposure: shouldRecordExposure(options, lemma)
         ? () => {
             recordSeen(lemma)
-            recordWordSeen({
-              englishLemma: lemma,
-              surfaceForm: match.original,
-              targetWord: match.entry.target,
-              sourceGloss: match.entry.sourceGloss,
-              sentenceContext: extractSentenceContext(text, match.start),
-              seenAt: Date.now(),
-            })
+            recordWordSeen({ englishLemma: lemma, seenAt: Date.now() })
           }
         : undefined,
     })
@@ -625,7 +600,6 @@ export function injectReplacements(
     // can save the correct lexicon key for unknown-word review.
     attachLemma(span, token.lemma)
 
-    const targetDisplayed = span.textContent ?? entry.target
     candidates.push({
       start: replacement.replacementStart,
       end: token.end,
@@ -636,15 +610,7 @@ export function injectReplacements(
             // Record only replacements that survive overlap filtering so stats
             // match what the reader actually saw on the page.
             recordSeen(token.lemma)
-            const wordSeen: WordSeen = {
-              englishLemma:    token.lemma,
-              surfaceForm:     token.word,   // exact surface form as it appeared on the page
-              targetWord:      targetDisplayed,
-              sourceGloss:     entry.sourceGloss,
-              sentenceContext: extractSentenceContext(text, token.start),
-              seenAt:          Date.now(),
-            }
-            recordWordSeen(wordSeen)
+            recordWordSeen({ englishLemma: token.lemma, seenAt: Date.now() })
           }
         : undefined,
     })

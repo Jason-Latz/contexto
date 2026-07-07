@@ -10,6 +10,7 @@ import {
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
 import { baseSpanStyle, unknownSpanStyle, spanHoverFill } from './spanStyles.js'
+import { composeTargetGrammar } from './hoverCard.js'
 
 // The data attribute written by injector.ts to identify Contexto-managed spans.
 const CONTEXTO_ATTR = 'data-contexto'
@@ -29,8 +30,12 @@ const UNKNOWN_ATTR = 'data-contexto-unknown'
 
 let tooltip: HTMLElement | null = null
 let tipSourceEl: HTMLElement | null = null
+let tipSourceTextEl: HTMLElement | null = null
+let tipPosEl: HTMLElement | null = null
 let tipGlossEl: HTMLElement | null = null
 let tipTargetEl: HTMLElement | null = null
+let tipTargetMainEl: HTMLElement | null = null
+let tipTargetMetaEl: HTMLElement | null = null
 let tipHintEl: HTMLElement | null = null
 let activeSpan: HTMLElement | null = null
 let isHoverHandlerSetup = false
@@ -76,10 +81,27 @@ function getOrCreateTooltip(): HTMLElement {
     'display: none',
   ].join('; '))
 
-  // Structured hierarchy: English source (lead) · gloss (muted) · Spanish (accent) · hint (eyebrow).
+  // Structured hierarchy: English source + part of speech (lead) · gloss (muted)
+  // · target citation form + grammar meta (accent) · hint (eyebrow).
   tipSourceEl = makeTipLine('font-size: 13px; font-weight: 600; color: #eef2f6;')
+  tipSourceTextEl = document.createElement('span')
+  tipPosEl = document.createElement('span')
+  tipPosEl.setAttribute('style',
+    'font-weight: 400; font-size: 11px; font-style: italic; color: ' + TIP_HINT + '; margin-left: 6px;')
+  tipSourceEl.appendChild(tipSourceTextEl)
+  tipSourceEl.appendChild(tipPosEl)
+
   tipGlossEl  = makeTipLine('font-size: 12px; color: ' + TIP_MUTED + '; margin-top: 2px;')
-  tipTargetEl = makeTipLine('font-size: 13px; font-weight: 600; margin-top: 6px; color: ' + TIP_ACCENT + ';')
+
+  tipTargetEl = makeTipLine('font-size: 13px; font-weight: 600; margin-top: 6px;')
+  tipTargetMainEl = document.createElement('span')
+  tipTargetMainEl.setAttribute('style', 'color: ' + TIP_ACCENT + ';')
+  tipTargetMetaEl = document.createElement('span')
+  tipTargetMetaEl.setAttribute('style',
+    'font-weight: 400; font-size: 11px; color: ' + TIP_HINT + ';')
+  tipTargetEl.appendChild(tipTargetMainEl)
+  tipTargetEl.appendChild(tipTargetMetaEl)
+
   tipHintEl   = makeTipLine(
     'font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: ' + TIP_HINT +
     '; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08);',
@@ -163,16 +185,29 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
   const source = target.getAttribute('data-source') ?? ''
   const translated = target.getAttribute('data-target') ?? ''
   const gloss = target.getAttribute('data-gloss') ?? ''
+  const pos = target.getAttribute('data-pos') ?? ''
+  const grammar = composeTargetGrammar({
+    translated,
+    baseTarget: target.getAttribute('data-base-target'),
+    articleForm: target.getAttribute('data-article-form'),
+    gender: target.getAttribute('data-gender'),
+    plural: target.getAttribute('data-plural'),
+  })
 
-  if (tipSourceEl) tipSourceEl.textContent = source
+  if (tipSourceTextEl) tipSourceTextEl.textContent = source
+  if (tipPosEl) tipPosEl.textContent = pos
   if (tipGlossEl) {
     tipGlossEl.textContent = gloss
     tipGlossEl.style.display = gloss ? 'block' : 'none'
   }
-  if (tipTargetEl) {
-    tipTargetEl.textContent = translated ? `${activeLanguageName()} · ${translated}` : ''
+  if (tipTargetEl && tipTargetMainEl && tipTargetMetaEl) {
+    tipTargetMainEl.textContent = translated
+      ? `${activeLanguageName()} · ${grammar.targetDisplay}`
+      : ''
+    const meta = [grammar.genderHint, grammar.pluralHint].filter(Boolean).join(' · ')
+    tipTargetMetaEl.textContent = meta ? ` · ${meta}` : ''
     tipTargetEl.style.display = translated ? 'block' : 'none'
-    tipTargetEl.style.color = isUnknown ? TIP_MARK : TIP_ACCENT
+    tipTargetMainEl.style.color = isUnknown ? TIP_MARK : TIP_ACCENT
   }
   if (tipHintEl) {
     tipHintEl.textContent = isUnknown
@@ -332,9 +367,11 @@ export function getSessionUnknownMarkCount(): number {
   return sessionUnknownMarkCount
 }
 
-// Plain-text representation of the tooltip contents. The on-screen tooltip is
-// built as structured DOM (see showTooltip); these helpers produce the same
-// information as a single string for tests and assistive/plain-text contexts.
+// Plain-text summary of the tooltip's core content (source · gloss · target ·
+// hint). The on-screen tooltip is structured DOM (see showTooltip) and also
+// renders grammar metadata (part of speech, gender, plural, composed in
+// hoverCard.ts); these helpers keep a stable single-string form for tests and
+// assistive/plain-text contexts.
 // `lemma` is accepted for signature stability but no longer shown — the source
 // surface form already conveys the word, so the duplicated "(lemma)" was dropped.
 export function formatTooltipText(
