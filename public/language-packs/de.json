@@ -31665,7 +31665,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "find difficult": {
       "source": "find difficult",
@@ -31799,9 +31799,9 @@
     },
     "down below": {
       "source": "down below",
-      "target": "untenherum",
+      "target": "unten",
       "partOfSpeech": "expression",
-      "sourceGloss": "down below, down there",
+      "sourceGloss": "down below, down there (in or toward a lower place)",
       "frequencyRank": 2369,
       "confidence": "medium",
       "sourceIds": [
@@ -31955,7 +31955,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "hold true": {
       "source": "hold true",
@@ -31972,9 +31972,9 @@
     },
     "conditions": {
       "source": "conditions",
-      "target": "Auflage",
+      "target": "Bedingung",
       "partOfSpeech": "noun",
-      "sourceGloss": "condition or conditions (for example, as placed on a parolee)",
+      "sourceGloss": "condition, requirement, term (something stipulated or required)",
       "frequencyRank": 2382,
       "confidence": "medium",
       "sourceIds": [
@@ -31983,7 +31983,7 @@
       "enZipf": 4.98,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Auflagen"
+      "plural": "Bedingungen"
     },
     "central point": {
       "source": "central point",
@@ -32069,7 +32069,7 @@
       "source": "leaving",
       "target": "Austritt",
       "partOfSpeech": "noun",
-      "sourceGloss": "leaving",
+      "sourceGloss": "leaving (formal withdrawal from an organization or membership)",
       "frequencyRank": 2389,
       "confidence": "medium",
       "sourceIds": [
@@ -32147,9 +32147,9 @@
     },
     "car park": {
       "source": "car park",
-      "target": "Garage",
+      "target": "Parkhaus",
       "partOfSpeech": "expression",
-      "sourceGloss": "car park, parking garage (building, often with multiple storeys, for vehicles to park in)",
+      "sourceGloss": "car park, parking garage (multi-storey building for vehicles to park in)",
       "frequencyRank": 2395,
       "confidence": "medium",
       "sourceIds": [
@@ -32535,11 +32535,11 @@
         "wiktextract-de"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "production line": {
       "source": "production line",
-      "target": "Produktionskette",
+      "target": "Produktionslinie",
       "partOfSpeech": "expression",
       "sourceGloss": "production chain; production line, supply chain",
       "frequencyRank": 2425,
@@ -32606,9 +32606,9 @@
     },
     "special issue": {
       "source": "special issue",
-      "target": "Sonderbriefmarke",
+      "target": "Sonderausgabe",
       "partOfSpeech": "expression",
-      "sourceGloss": "commemorative stamp, special issue",
+      "sourceGloss": "special issue (special edition of a publication)",
       "frequencyRank": 2430,
       "confidence": "medium",
       "sourceIds": [
@@ -32671,7 +32671,7 @@
     },
     "private room": {
       "source": "private room",
-      "target": "Separee",
+      "target": "Privatzimmer",
       "partOfSpeech": "expression",
       "sourceGloss": "private room (room accessible only to those who have reserved it)",
       "frequencyRank": 2435,
@@ -32758,7 +32758,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "ten-part": {
       "source": "ten-part",
@@ -32775,7 +32775,7 @@
     },
     "film history": {
       "source": "film history",
-      "target": "filmgeschichtlich",
+      "target": "Filmgeschichte",
       "partOfSpeech": "expression",
       "sourceGloss": "film history",
       "frequencyRank": 2443,
@@ -32801,9 +32801,9 @@
     },
     "low price": {
       "source": "low price",
-      "target": "Tiefstkurs",
+      "target": "Niedrigpreis",
       "partOfSpeech": "expression",
-      "sourceGloss": "low price; bottom (the lowest price level reached by a security or currency within a defined period)",
+      "sourceGloss": "low price (an inexpensive price)",
       "frequencyRank": 2445,
       "confidence": "medium",
       "sourceIds": [
@@ -32840,7 +32840,7 @@
     },
     "young boy": {
       "source": "young boy",
-      "target": "Steppke",
+      "target": "Junge",
       "partOfSpeech": "expression",
       "sourceGloss": "young boy",
       "frequencyRank": 2448,
@@ -32853,7 +32853,7 @@
     },
     "speed up": {
       "source": "speed up",
-      "target": "anziehen",
+      "target": "beschleunigen",
       "partOfSpeech": "expression",
       "sourceGloss": "to speed up; to sprint",
       "frequencyRank": 2449,
@@ -32866,9 +32866,9 @@
     },
     "numbers": {
       "source": "numbers",
-      "target": "Zahlenbedeutung",
+      "target": "Zahlen",
       "partOfSpeech": "noun",
-      "sourceGloss": "meaning or significance of a number or numbers",
+      "sourceGloss": "numbers (plural of number; numerical figures)",
       "frequencyRank": 2450,
       "confidence": "medium",
       "sourceIds": [
@@ -32877,7 +32877,7 @@
       "enZipf": 4.98,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Zahlenbedeutungen"
+      "plural": "Zahlen"
     },
     "sold": {
       "source": "sold",
@@ -32954,7 +32954,7 @@
     },
     "agree": {
       "source": "agree",
-      "target": "einigen",
+      "target": "zustimmen",
       "partOfSpeech": "verb",
       "sourceGloss": "to agree, to reach an agreement",
       "frequencyRank": 2456,
@@ -32982,7 +32982,7 @@
     },
     "movement": {
       "source": "movement",
-      "target": "Gang",
+      "target": "Bewegung",
       "partOfSpeech": "noun",
       "sourceGloss": "motion, movement, progress, way, going",
       "frequencyRank": 2458,
@@ -32992,8 +32992,8 @@
       ],
       "enZipf": 4.97,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "Gänge"
+      "gender": "feminine",
+      "plural": "Bewegungen"
     },
     "clean": {
       "source": "clean",
@@ -33083,9 +33083,9 @@
     },
     "city council": {
       "source": "city council",
-      "target": "Stadt",
+      "target": "Stadtrat",
       "partOfSpeech": "expression",
-      "sourceGloss": "city, town, town council, city council (a governing body of people elected to oversee management of a municipality)",
+      "sourceGloss": "city council (the elected governing/legislative body of a city)",
       "frequencyRank": 2465,
       "confidence": "medium",
       "sourceIds": [
@@ -33206,9 +33206,9 @@
     },
     "fall line": {
       "source": "fall line",
-      "target": "Fall Line",
+      "target": "Falllinie",
       "partOfSpeech": "expression",
-      "sourceGloss": "fall line",
+      "sourceGloss": "fall line (the line of steepest descent down a slope)",
       "frequencyRank": 2474,
       "confidence": "medium",
       "sourceIds": [
@@ -33314,9 +33314,9 @@
     },
     "art song": {
       "source": "art song",
-      "target": "Volkslied",
+      "target": "Kunstlied",
       "partOfSpeech": "expression",
-      "sourceGloss": "popular song; folk song; art song",
+      "sourceGloss": "art song (a classical composition for voice and piano, typically setting a poem, e.g. a Schubert Lied)",
       "frequencyRank": 2482,
       "confidence": "medium",
       "sourceIds": [
@@ -33431,9 +33431,9 @@
     },
     "economic system": {
       "source": "economic system",
-      "target": "Wirtschaftsweise",
+      "target": "Wirtschaftssystem",
       "partOfSpeech": "expression",
-      "sourceGloss": "economic system",
+      "sourceGloss": "economic system (the way a society organizes production and distribution, e.g. capitalism, socialism)",
       "frequencyRank": 2491,
       "confidence": "medium",
       "sourceIds": [
@@ -33654,9 +33654,9 @@
     },
     "canada": {
       "source": "canada",
-      "target": "Quebecer",
+      "target": "Kanada",
       "partOfSpeech": "adjective",
-      "sourceGloss": "of, from or relating to the province of Quebec, Canada",
+      "sourceGloss": "Canada (country in North America)",
       "frequencyRank": 2508,
       "confidence": "medium",
       "sourceIds": [
@@ -33933,7 +33933,7 @@
       "source": "train",
       "target": "Zug",
       "partOfSpeech": "noun",
-      "sourceGloss": "procession (larger group moving together along a common route)",
+      "sourceGloss": "train (railway vehicle; a connected line of railroad cars)",
       "frequencyRank": 2529,
       "confidence": "medium",
       "sourceIds": [
@@ -33942,7 +33942,7 @@
       "enZipf": 4.96,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Züge"
+      "plural": "Zuege"
     },
     "coach": {
       "source": "coach",
@@ -33989,9 +33989,9 @@
     },
     "card game": {
       "source": "card game",
-      "target": "Karten",
+      "target": "Kartenspiel",
       "partOfSpeech": "expression",
-      "sourceGloss": "card game",
+      "sourceGloss": "card game (a game played with playing cards)",
       "frequencyRank": 2533,
       "confidence": "medium",
       "sourceIds": [
@@ -34164,7 +34164,7 @@
     },
     "market price": {
       "source": "market price",
-      "target": "Kurs",
+      "target": "Marktpreis",
       "partOfSpeech": "expression",
       "sourceGloss": "exchange rate, market price",
       "frequencyRank": 2546,
@@ -34374,7 +34374,7 @@
     },
     "calling": {
       "source": "calling",
-      "target": "Einberufung",
+      "target": "Berufung",
       "partOfSpeech": "noun",
       "sourceGloss": "calling",
       "frequencyRank": 2562,
@@ -34385,7 +34385,7 @@
       "enZipf": 4.96,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Einberufungen"
+      "plural": "Berufungen"
     },
     "seven times": {
       "source": "seven times",
@@ -34480,7 +34480,7 @@
     },
     "blue-black": {
       "source": "blue-black",
-      "target": "dunkelblau",
+      "target": "blauschwarz",
       "partOfSpeech": "adjective",
       "sourceGloss": "blue-black",
       "frequencyRank": 2570,
@@ -34554,7 +34554,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "class hour": {
       "source": "class hour",
@@ -34649,7 +34649,7 @@
     },
     "end table": {
       "source": "end table",
-      "target": "Nebentisch",
+      "target": "Beistelltisch",
       "partOfSpeech": "expression",
       "sourceGloss": "side table, occasional table, end table",
       "frequencyRank": 2583,
@@ -34844,9 +34844,9 @@
     },
     "model  car": {
       "source": "model  car",
-      "target": "Automodell",
+      "target": "Modellauto",
       "partOfSpeech": "expression",
-      "sourceGloss": "model (replica) car",
+      "sourceGloss": "model (replica) car; a miniature or toy car",
       "frequencyRank": 2598,
       "confidence": "medium",
       "sourceIds": [
@@ -34935,9 +34935,9 @@
     },
     "ball game": {
       "source": "ball game",
-      "target": "Schnack",
+      "target": "Ballspiel",
       "partOfSpeech": "expression",
-      "sourceGloss": "a matter, subject, ball game, kettle of fish",
+      "sourceGloss": "a game played with a ball",
       "frequencyRank": 2605,
       "confidence": "medium",
       "sourceIds": [
@@ -35022,7 +35022,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "game ball": {
       "source": "game ball",
@@ -35039,9 +35039,9 @@
     },
     "unit": {
       "source": "unit",
-      "target": "Einer",
+      "target": "Einheit",
       "partOfSpeech": "noun",
-      "sourceGloss": "unit, unitsʼ place, onesʼ place (the numbers 0 to 9, possibly as part of a larger number or fraction)",
+      "sourceGloss": "unit (a single thing, or a standard quantity of measurement)",
       "frequencyRank": 2613,
       "confidence": "medium",
       "sourceIds": [
@@ -35049,8 +35049,8 @@
       ],
       "enZipf": 4.95,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "Einer"
+      "gender": "feminine",
+      "plural": "Einheiten"
     },
     "german": {
       "source": "german",
@@ -35082,9 +35082,9 @@
     },
     "claim": {
       "source": "claim",
-      "target": "Recht",
+      "target": "Anspruch",
       "partOfSpeech": "noun",
-      "sourceGloss": "title, claim",
+      "sourceGloss": "claim, entitlement, demand",
       "frequencyRank": 2616,
       "confidence": "medium",
       "sourceIds": [
@@ -35092,8 +35092,8 @@
       ],
       "enZipf": 4.95,
       "eligible": true,
-      "gender": "neuter",
-      "plural": "Rechte"
+      "gender": "masculine",
+      "plural": "Ansprüche"
     },
     "fear": {
       "source": "fear",
@@ -35211,7 +35211,7 @@
       "source": "fit",
       "target": "richtig",
       "partOfSpeech": "adjective",
-      "sourceGloss": "right, fit, appropriate",
+      "sourceGloss": "suitable, appropriate, fitting",
       "frequencyRank": 2625,
       "confidence": "medium",
       "sourceIds": [
@@ -35383,7 +35383,7 @@
     },
     "building site": {
       "source": "building site",
-      "target": "Bau",
+      "target": "Baustelle",
       "partOfSpeech": "expression",
       "sourceGloss": "building site, construction site (place where such constructing takes place)",
       "frequencyRank": 2637,
@@ -35433,13 +35433,13 @@
         "wiktextract-de"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "pass away": {
       "source": "pass away",
-      "target": "verlassen",
+      "target": "sterben",
       "partOfSpeech": "expression",
-      "sourceGloss": "to leave, to abandon; to depart, to forsake",
+      "sourceGloss": "to die, to pass away",
       "frequencyRank": 2641,
       "confidence": "medium",
       "sourceIds": [
@@ -35506,7 +35506,7 @@
     },
     "sold out": {
       "source": "sold out",
-      "target": "aus",
+      "target": "ausverkauft",
       "partOfSpeech": "expression",
       "sourceGloss": "gone, sold out, out of",
       "frequencyRank": 2646,
@@ -35521,7 +35521,7 @@
       "source": "write under",
       "target": "unterschreiben",
       "partOfSpeech": "expression",
-      "sourceGloss": "to write under or below something",
+      "sourceGloss": "to sign (one's name on a document)",
       "frequencyRank": 2647,
       "confidence": "medium",
       "sourceIds": [
@@ -35610,9 +35610,9 @@
     },
     "information science": {
       "source": "information science",
-      "target": "Informatiker",
+      "target": "Informatik",
       "partOfSpeech": "expression",
-      "sourceGloss": "information technician, person specialized in information technology / information science (male or of unspecified ge…",
+      "sourceGloss": "computer science, informatics (the field)",
       "frequencyRank": 2654,
       "confidence": "medium",
       "sourceIds": [
