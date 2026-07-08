@@ -46,7 +46,7 @@ function settingsFor(code) {
   return {
     contexto_settings: {
       onboarded: true, level: 'advanced', targetLanguage: code, density: 0.95,
-      replacementsEnabled: true, quizzesEnabled: false, blockedDomains: [], domainDecisions: {},
+      replacementsEnabled: true, blockedDomains: [], domainDecisions: {},
     },
   }
 }

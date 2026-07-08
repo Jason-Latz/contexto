@@ -4,18 +4,15 @@ import { extractPageCandidates, injectReplacements, restoreReplacements } from '
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
 import { loadLexicon, flushLexiconMerge, isDirty } from '../store/lexiconStore.js'
 import {
-  areQuizzesEnabled,
   areReplacementsEnabled,
   getTargetLanguage,
   isAggressiveMode,
-  isOnboarded,
   loadSettings,
 } from '../store/settingsStore.js'
 import { initSession, getSessionForStorage } from '../store/sessionStore.js'
 import { computeDensity } from '../engine/proficiencyModel.js'
 import { selectTokens } from '../engine/wordSelector.js'
-import { showLevelPicker } from '../onboarding/LevelPicker.js'
-import { startQuizTimer, stopQuizTimer } from '../quiz/QuizBanner.js'
+import { ensureFirstRunInit } from './firstRun.js'
 import { setupMutationObserver, type MutationObserverHandle } from './mutationObserver.js'
 import {
   isExtensionContextAvailable,
@@ -36,7 +33,6 @@ const SETTINGS_KEY = 'contexto_settings'
 interface RuntimeSettings {
   density?: number
   replacementsEnabled?: boolean
-  quizzesEnabled?: boolean
   aggressiveMode?: boolean
   blockedDomains?: string[]
 }
@@ -45,7 +41,6 @@ let mutationObserver: MutationObserverHandle | null = null
 let isReplacementPipelineActive = false
 let isReplacementPipelineRunning = false
 let pendingReplacementRefresh = false
-let lastEligibleCount = 0
 let activeApprovedLemmas: ReadonlySet<string> = new Set()
 let recordedApprovedLemmas = new Set<string>()
 let rankedPageLemmas: string[] = []
@@ -81,14 +76,6 @@ async function flushStorage(): Promise<void> {
   }
 }
 
-function syncQuizTimer(quizzesEnabled: boolean): void {
-  if (quizzesEnabled) {
-    startQuizTimer(lastEligibleCount)
-  } else {
-    stopQuizTimer()
-  }
-}
-
 function runQueuedReplacementRefresh(): void {
   if (!pendingReplacementRefresh || isReplacementPipelineRunning) return
 
@@ -115,7 +102,6 @@ function isCurrentReplacementPipelineRun(runVersion: number): boolean {
 }
 
 function deactivateReplacementPipeline(restoreDom: boolean, flush = true): void {
-  stopQuizTimer()
   mutationObserver?.disconnect()
   mutationObserver = null
   if (restoreDom) restoreReplacements(document)
@@ -124,7 +110,6 @@ function deactivateReplacementPipeline(restoreDom: boolean, flush = true): void 
   recordedApprovedLemmas = new Set()
   rankedPageLemmas = []
   isReplacementPipelineActive = false
-  lastEligibleCount = 0
   if (flush) void flushStorage()
 }
 
@@ -183,7 +168,6 @@ async function renderReplacementPass(
   // that once a lemma is chosen it is replaced in every text node, not just
   // the first node where it happened to beat the per-node density cap.
   const pageCandidates = extractPageCandidates(textNodes)
-  lastEligibleCount = pageCandidates.length
   const density = computeDensity()
   const maxReplacements = Math.floor(density * pageCandidates.length)
   const rankedLemmas = updateRankedPageLemmas(pageCandidates)
@@ -239,13 +223,12 @@ async function startReplacementPipeline(): Promise<void> {
     recordedApprovedLemmas = new Set()
     rankedPageLemmas = []
 
-    // If the user has not completed onboarding, show the level picker overlay
-    // and wait for it to finish before proceeding. The picker saves the level
-    // and pre-populates the lexicon.
-    if (!isOnboarded()) {
-      await showLevelPicker()
-      if (!isCurrentReplacementPipelineRun(runVersion)) return
-    }
+    // First run: silently apply the intermediate defaults and seed the lexicon,
+    // then proceed straight to replacement on this very page load. Must run
+    // after the pack + lexicon loads above (prepopulation reads the pack's top
+    // lemmas and merges onto the loaded lexicon). No-op once onboarded.
+    await ensureFirstRunInit()
+    if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     const rendered = await renderReplacementPass(
       undefined,
@@ -255,7 +238,6 @@ async function startReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    syncQuizTimer(areQuizzesEnabled())
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -322,7 +304,6 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    syncQuizTimer(areQuizzesEnabled())
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -347,7 +328,6 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
   if (extensionContextInvalidated) return
 
   const replacementsEnabled = settings.replacementsEnabled ?? true
-  const quizzesEnabled = settings.quizzesEnabled ?? false
   const densityChanged =
     typeof settings.density === 'number' &&
     settings.density !== previousSettings.density
@@ -372,12 +352,6 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
   // newly blocked current page is cleared and an unblocked one is re-rendered.
   if (densityChanged || blockedDomainsChanged || aggressiveModeChanged) {
     requestReplacementRefresh()
-  }
-
-  if (quizzesEnabled) {
-    startQuizTimer(lastEligibleCount)
-  } else {
-    stopQuizTimer()
   }
 }
 

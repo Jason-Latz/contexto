@@ -101,8 +101,8 @@ export interface CandidateToken {
 
 // ---------- Lexicon store ----------
 
-// Word lifecycle states. Phase 2 uses only Unseen and Learning;
-// the remaining states are driven by quiz results in Phase 3.
+// Word lifecycle states. Passive exposure uses only Unseen and Learning;
+// the remaining states are driven by popup practice quiz results.
 export enum WordLifecycleState {
   Unseen    = 'unseen',
   Learning  = 'learning',
@@ -131,14 +131,10 @@ export interface LexiconEntry {
 // ---------- Session store ----------
 
 // A record of a single word replacement made during the current page session.
-// sentenceContext is trimmed to the sentence containing the word, capped at 200 chars,
-// and stored for use by the Phase 3 contextual quiz.
+// Deliberately minimal: the popup reads only englishLemma (session stats and
+// the session filter), so nothing else is captured per injection.
 export interface WordSeen {
   englishLemma: string;
-  surfaceForm: string;      // the exact surface form as it appeared on the page (e.g. "dogs")
-  targetWord: string;       // the displayed target-language form, including an article if shown
-  sourceGloss: string;
-  sentenceContext: string;
   seenAt: number;           // Unix timestamp ms
 }
 

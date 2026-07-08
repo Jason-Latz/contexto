@@ -164,25 +164,6 @@ export function getExpressionEntries(): Array<[string, ExpressionTranslationEntr
   return expressionEntries
 }
 
-export function sampleLemmas(n: number, exclude: ReadonlySet<string>): string[] {
-  if (!entries) return []
-
-  const candidates: string[] = []
-  for (const [lemma, entry] of entries) {
-    if (entry.partOfSpeech === 'expression') continue
-    if (exclude.has(lemma)) continue
-    candidates.push(lemma)
-  }
-
-  const result: string[] = []
-  for (let i = 0; i < n && i < candidates.length; i++) {
-    const j = i + Math.floor(Math.random() * (candidates.length - i))
-    ;[candidates[i], candidates[j]] = [candidates[j], candidates[i]]
-    result.push(candidates[i])
-  }
-  return result
-}
-
 export function getTopNLemmas(n: number): string[] {
   if (!entries) return []
 

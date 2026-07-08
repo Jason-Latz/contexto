@@ -9,8 +9,8 @@ Contexto is a Chrome extension for passive language immersion. It replaces a use
 - Runtime network calls: none
 - Supported replacements: content words (nouns, verbs, adjectives, adverbs) and fixed
   expressions, selected by English frequency and verification — see [Quality & word selection](#quality--word-selection)
-- User controls: live density slider, choose-your-level onboarding, click-to-save
-  unknown words, CSV / Quizlet-TSV export, per-domain blocking, optional review quizzes (off by default)
+- User controls: live density slider, click-to-save unknown words, CSV / Quizlet-TSV
+  export, per-domain blocking (no onboarding: sensible defaults apply on install)
 - Deferred: live translation APIs, notifications, nudges, and full morphology-aware inflection
 
 ## Development

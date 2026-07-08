@@ -42,12 +42,13 @@ test('setAggressiveMode persists across a reload', async () => {
 })
 
 test('setAggressiveMode is merge-safe — it does not clobber other fields', async () => {
-  // Simulate the popup having just written an unrelated field to storage.
-  store[SETTINGS_KEY] = { quizzesEnabled: true, density: 0.42, aggressiveMode: false }
+  // Simulate the popup having just written unrelated fields to storage.
+  // Both are non-default values, so surviving proves the merge read storage.
+  store[SETTINGS_KEY] = { replacementsEnabled: false, density: 0.42, aggressiveMode: false }
   await setAggressiveMode(true)
 
   const persisted = store[SETTINGS_KEY] as Record<string, unknown>
   assert.equal(persisted.aggressiveMode, true)
-  assert.equal(persisted.quizzesEnabled, true, 'quizzesEnabled must survive the aggressive-mode write')
+  assert.equal(persisted.replacementsEnabled, false, 'replacementsEnabled must survive the aggressive-mode write')
   assert.equal(persisted.density, 0.42, 'density must survive the aggressive-mode write')
 })

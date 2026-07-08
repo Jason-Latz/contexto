@@ -66,7 +66,6 @@ function settingsFor(s) {
       targetLanguage: 'es',
       density: s.density,
       replacementsEnabled: true,
-      quizzesEnabled: false,
       blockedDomains: [],
       domainDecisions: {},
     },
@@ -92,33 +91,42 @@ async function extId(context) {
   return new URL(sw.url()).host
 }
 
-// C1 — onboarding: with no seeded settings, the LevelPicker overlay must appear,
-// accept a level, tear down, and injection must follow.
-async function runOnboarding(context) {
-  const res = { name: 'onboarding', failures: [], consoleErrors: [] }
+// C1 — first run: with no seeded settings there must be NO onboarding overlay;
+// the content script silently applies the intermediate defaults, prepopulates
+// the lexicon, and injects replacements on that very first page load.
+async function runFirstRun(context) {
+  const res = { name: 'first-run', failures: [], consoleErrors: [] }
   const sw = await getServiceWorker(context)
   await sw.evaluate(async () => { await chrome.storage.local.clear() })
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })
   try {
     await page.goto(fileUrl(path.join(FIX, 'article-light.html')), { waitUntil: 'domcontentloaded' })
-    await page.waitForSelector('#contexto-onboarding', { timeout: 8000 })
-    await page.screenshot({ path: path.join(SHOTS, 'onboarding.png') })
-    const btn = page.locator('#contexto-onboarding button', { hasText: /Advanced/i }).first()
-    await btn.click()
-    await page.waitForTimeout(2000)
-    const gone = await page.locator('#contexto-onboarding').count()
-    if (gone !== 0) res.failures.push('overlay did not tear down')
+    await page.waitForSelector('[data-contexto="true"]', { timeout: 8000 })
+    await page.screenshot({ path: path.join(SHOTS, 'first-run.png') })
+    if (await page.locator('#contexto-onboarding').count() !== 0) {
+      res.failures.push('onboarding overlay rendered (should not exist)')
+    }
     const spans = await page.locator('[data-contexto="true"]').count()
     res.spanCount = spans
-    if (spans === 0) res.failures.push('no injection after onboarding')
+    if (spans === 0) res.failures.push('no injection on the first page load')
+    const stored = await sw.evaluate(async () =>
+      chrome.storage.local.get(['contexto_settings', 'contexto_lexicon']))
+    const s = stored.contexto_settings ?? {}
+    if (s.onboarded !== true) res.failures.push('onboarded flag not persisted')
+    if (s.level !== 'intermediate') res.failures.push(`level=${s.level} (expected intermediate)`)
+    if (s.density !== 0.15) res.failures.push(`density=${s.density} (expected 0.15)`)
+    res.lexiconCount = Object.keys(stored.contexto_lexicon ?? {}).length
+    if (res.lexiconCount < 1500) {
+      res.failures.push(`lexicon prepopulated with ${res.lexiconCount} entries (expected >= 1500)`)
+    }
   } catch (e) {
     res.failures.push('exception: ' + String(e).slice(0, 160))
   } finally {
     if (res.consoleErrors.length) res.failures.push(`${res.consoleErrors.length} console error(s)`)
     await page.close()
   }
-  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] onboarding: spans=${res.spanCount} ${res.failures.join('; ')}`)
+  console.log(`[${res.failures.length ? 'FAIL' : 'ok'}] first-run: spans=${res.spanCount} lexicon=${res.lexiconCount} ${res.failures.join('; ')}`)
   return res
 }
 
@@ -129,7 +137,7 @@ async function runPopup(context) {
   // seed a couple of saved "unknown" words so exports have content
   await sw.evaluate(async () => {
     await chrome.storage.local.set({
-      contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: ['example.com'], domainDecisions: {} },
+      contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, blockedDomains: ['example.com'], domainDecisions: {} },
       contexto_lexicon: { dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000000000 }, house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000001000 } },
     })
   })
@@ -196,7 +204,7 @@ async function runDelegatedClick(context) {
   const sw = await getServiceWorker(context)
   await sw.evaluate(async () => {
     await chrome.storage.local.clear()
-    await chrome.storage.local.set({ contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.95, replacementsEnabled: true, quizzesEnabled: false, blockedDomains: [], domainDecisions: {} } })
+    await chrome.storage.local.set({ contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.95, replacementsEnabled: true, blockedDomains: [], domainDecisions: {} } })
   })
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') res.consoleErrors.push(m.text().slice(0, 160)) })
@@ -347,9 +355,9 @@ async function run() {
                 `${res.failures.join('; ')}${res.warnings.length ? ' | ' + res.warnings.join('; ') : ''}`)
   }
 
-  // UI scenarios (onboarding + popup) — criteria C1/C2
+  // UI scenarios (silent first run + popup) — criteria C1/C2
   const uiResults = []
-  uiResults.push(await runOnboarding(context))
+  uiResults.push(await runFirstRun(context))
   uiResults.push(await runPopup(context))
   uiResults.push(await runDelegatedClick(context))
   results.push(...uiResults)

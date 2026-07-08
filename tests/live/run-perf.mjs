@@ -55,7 +55,7 @@ function settingsFor(aggressive) {
   return {
     contexto_settings: {
       onboarded: true, level: 'advanced', targetLanguage: LANG, density: 0.95,
-      replacementsEnabled: true, quizzesEnabled: false, aggressiveMode: aggressive,
+      replacementsEnabled: true, aggressiveMode: aggressive,
       blockedDomains: [], domainDecisions: {},
     },
   }

@@ -3,7 +3,7 @@ import { WordLifecycleState } from '../types/index.js'
 
 const STORAGE_KEY = 'contexto_lexicon'
 
-// Baseline seenCount applied to pre-populated words during onboarding.
+// Baseline seenCount applied to pre-populated words during first-run init.
 // High enough to depress novelty scores (noveltyScore = 1/(1+seenCount)),
 // but not so high that the words are permanently deprioritised.
 const PREPOPULATE_SEEN_COUNT = 3
@@ -136,8 +136,9 @@ export function markUnknown(englishLemma: string, unknown: boolean): void {
 }
 
 // Pre-populate lemmas with a baseline seenCount to reflect assumed prior exposure.
-// Called once during onboarding based on the user's chosen proficiency level.
-// Skips words that already have a lexicon entry (e.g. from a previous session).
+// Called by the silent first-run init (ensureFirstRunInit) with the top lemmas
+// for the default level. Skips words that already have a lexicon entry (e.g.
+// from a previous session or a concurrent tab's first-run init).
 export function prepopulate(lemmas: string[]): void {
   for (const lemma of lemmas) {
     if (!lexicon.has(lemma)) {
