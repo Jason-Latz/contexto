@@ -26645,9 +26645,9 @@
     },
     "feet": {
       "source": "feet",
-      "target": "bas",
+      "target": "pied",
       "partOfSpeech": "noun",
-      "sourceGloss": "socks; stockings; feet",
+      "sourceGloss": "feet (the body parts at the ends of the legs)",
       "frequencyRank": 1967,
       "confidence": "medium",
       "sourceIds": [
@@ -26656,7 +26656,7 @@
       "enZipf": 4.99,
       "eligible": true,
       "gender": "masculine",
-      "plural": "bas"
+      "plural": "pieds"
     },
     "consider": {
       "source": "consider",
@@ -26776,7 +26776,7 @@
     },
     "kid": {
       "source": "kid",
-      "target": "drôle",
+      "target": "gamin",
       "partOfSpeech": "noun",
       "sourceGloss": "child, kid, lad",
       "frequencyRank": 1976,
@@ -26787,7 +26787,7 @@
       "enZipf": 4.99,
       "eligible": true,
       "gender": "masculine",
-      "plural": "drôles"
+      "plural": "gamins"
     },
     "down below": {
       "source": "down below",
@@ -27008,7 +27008,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "military court": {
       "source": "military court",
@@ -27073,7 +27073,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "get ahead": {
       "source": "get ahead",
@@ -27099,7 +27099,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "match point": {
       "source": "match point",
@@ -27142,9 +27142,9 @@
     },
     "law society": {
       "source": "law society",
-      "target": "bâtonnier",
+      "target": "barreau",
       "partOfSpeech": "expression",
-      "sourceGloss": "the president of a bar association or law society",
+      "sourceGloss": "bar association; professional body of lawyers",
       "frequencyRank": 2004,
       "confidence": "medium",
       "sourceIds": [
@@ -27216,7 +27216,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "after-effect": {
       "source": "after-effect",
@@ -27257,7 +27257,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "go through hell": {
       "source": "go through hell",
@@ -27309,7 +27309,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "off-note": {
       "source": "off-note",
@@ -27382,7 +27382,7 @@
     },
     "minute": {
       "source": "minute",
-      "target": "instant",
+      "target": "minute",
       "partOfSpeech": "noun",
       "sourceGloss": "instant, minute, moment",
       "frequencyRank": 2022,
@@ -27392,8 +27392,8 @@
       ],
       "enZipf": 4.98,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "instants"
+      "gender": "feminine",
+      "plural": "minutes"
     },
     "absolutely": {
       "source": "absolutely",
@@ -27419,13 +27419,13 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.98,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "hors-séries"
     },
     "significant": {
       "source": "significant",
-      "target": "d'importance",
+      "target": "important",
       "partOfSpeech": "adjective",
       "sourceGloss": "important, significant",
       "frequencyRank": 2025,
@@ -27542,7 +27542,7 @@
     },
     "additional": {
       "source": "additional",
-      "target": "extra",
+      "target": "supplémentaire",
       "partOfSpeech": "adjective",
       "sourceGloss": "extra, additional",
       "frequencyRank": 2034,
@@ -27555,7 +27555,7 @@
     },
     "quick": {
       "source": "quick",
-      "target": "pressé",
+      "target": "rapide",
       "partOfSpeech": "adjective",
       "sourceGloss": "quick, eager, impatient",
       "frequencyRank": 2035,
@@ -27748,7 +27748,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "oil company": {
       "source": "oil company",
@@ -27843,7 +27843,7 @@
     },
     "future wife": {
       "source": "future wife",
-      "target": "prétendue",
+      "target": "fiancée",
       "partOfSpeech": "expression",
       "sourceGloss": "fiancée, future wife",
       "frequencyRank": 2057,
@@ -27943,7 +27943,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "speed up": {
       "source": "speed up",
@@ -27997,7 +27997,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "break-even point": {
       "source": "break-even point",
@@ -28079,7 +28079,7 @@
     },
     "young boy": {
       "source": "young boy",
-      "target": "loulou",
+      "target": "garçon",
       "partOfSpeech": "expression",
       "sourceGloss": "young boy",
       "frequencyRank": 2075,
@@ -28101,7 +28101,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.98,
-      "eligible": true
+      "eligible": false
     },
     "press together": {
       "source": "press together",
@@ -28312,7 +28312,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.97,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Québécois"
     },
@@ -28391,9 +28391,9 @@
     },
     "statement": {
       "source": "statement",
-      "target": "communiqué",
+      "target": "déclaration",
       "partOfSpeech": "noun",
-      "sourceGloss": "communiqué, statement",
+      "sourceGloss": "statement, declaration",
       "frequencyRank": 2097,
       "confidence": "medium",
       "sourceIds": [
@@ -28401,8 +28401,8 @@
       ],
       "enZipf": 4.97,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "communiqués"
+      "gender": "feminine",
+      "plural": "déclarations"
     },
     "high-risk": {
       "source": "high-risk",
@@ -28441,7 +28441,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "action plan": {
       "source": "action plan",
@@ -28458,7 +28458,7 @@
     },
     "paper money": {
       "source": "paper money",
-      "target": "monnaie-papier",
+      "target": "papier-monnaie",
       "partOfSpeech": "expression",
       "sourceGloss": "paper money (cash in the form of banknotes)",
       "frequencyRank": 2102,
@@ -28532,7 +28532,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "city council": {
       "source": "city council",
@@ -28709,7 +28709,7 @@
     },
     "drop out": {
       "source": "drop out",
-      "target": "flancher",
+      "target": "abandonner",
       "partOfSpeech": "expression",
       "sourceGloss": "to drop out; pussy out; wuss out; chicken out; back down",
       "frequencyRank": 2121,
@@ -28744,11 +28744,11 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "cross over": {
       "source": "cross over",
-      "target": "trépasser",
+      "target": "traverser",
       "partOfSpeech": "expression",
       "sourceGloss": "to cross over; to pass away (to die)",
       "frequencyRank": 2124,
@@ -28858,9 +28858,9 @@
     },
     "collection": {
       "source": "collection",
-      "target": "ensemble",
+      "target": "collection",
       "partOfSpeech": "noun",
-      "sourceGloss": "set, grouping, aggregate, collection, body (a coming together of elements forming a whole, a unified or interrelated…",
+      "sourceGloss": "collection (of art, stamps, objects)",
       "frequencyRank": 2132,
       "confidence": "medium",
       "sourceIds": [
@@ -28868,8 +28868,8 @@
       ],
       "enZipf": 4.96,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "ensembles"
+      "gender": "feminine",
+      "plural": "collections"
     },
     "subject": {
       "source": "subject",
@@ -29024,9 +29024,9 @@
     },
     "gun": {
       "source": "gun",
-      "target": "canon",
+      "target": "pistolet",
       "partOfSpeech": "noun",
-      "sourceGloss": "cannon, (big) gun",
+      "sourceGloss": "firearm, handgun",
       "frequencyRank": 2144,
       "confidence": "medium",
       "sourceIds": [
@@ -29035,7 +29035,7 @@
       "enZipf": 4.96,
       "eligible": true,
       "gender": "masculine",
-      "plural": "canons"
+      "plural": "pistolets"
     },
     "ability": {
       "source": "ability",
@@ -29069,9 +29069,9 @@
     },
     "definitely": {
       "source": "definitely",
-      "target": "sans faute",
+      "target": "certainement",
       "partOfSpeech": "adverb",
-      "sourceGloss": "without fail, for sure, definitely",
+      "sourceGloss": "certainly, definitely (emphatic certainty)",
       "frequencyRank": 2147,
       "confidence": "medium",
       "sourceIds": [
@@ -29175,7 +29175,7 @@
       "source": "costs",
       "target": "dépens",
       "partOfSpeech": "noun",
-      "sourceGloss": "costs",
+      "sourceGloss": "costs, expenses",
       "frequencyRank": 2155,
       "confidence": "medium",
       "sourceIds": [
@@ -29184,7 +29184,7 @@
       "enZipf": 4.96,
       "eligible": true,
       "gender": "masculine",
-      "plural": "dépens"
+      "plural": "coûts"
     },
     "worth taking": {
       "source": "worth taking",
@@ -29242,7 +29242,7 @@
       "source": "american football",
       "target": "football",
       "partOfSpeech": "expression",
-      "sourceGloss": "American football",
+      "sourceGloss": "American football (the sport)",
       "frequencyRank": 2160,
       "confidence": "medium",
       "sourceIds": [
@@ -29301,7 +29301,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "market price": {
       "source": "market price",
@@ -29314,7 +29314,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "military leave": {
       "source": "military leave",
@@ -29472,7 +29472,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "make white-hot": {
       "source": "make white-hot",
@@ -29498,7 +29498,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "hot guy": {
       "source": "hot guy",
@@ -29668,9 +29668,9 @@
     },
     "letter": {
       "source": "letter",
-      "target": "présente",
+      "target": "lettre",
       "partOfSpeech": "noun",
-      "sourceGloss": "the letter, document etc. that the reader is reading",
+      "sourceGloss": "letter (a written message)",
       "frequencyRank": 2192,
       "confidence": "medium",
       "sourceIds": [
@@ -29679,7 +29679,7 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "feminine",
-      "plural": "présentes"
+      "plural": "lettres"
     },
     "author": {
       "source": "author",
@@ -30075,7 +30075,7 @@
       "source": "nobody",
       "target": "moins-que-rien",
       "partOfSpeech": "noun",
-      "sourceGloss": "a nobody, a nonentity, chopped liver (unimportant person)",
+      "sourceGloss": "nobody, worthless person",
       "frequencyRank": 2221,
       "confidence": "medium",
       "sourceIds": [
@@ -30084,7 +30084,7 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "masculine",
-      "plural": "moins-que-riens"
+      "plural": "moins-que-rien"
     },
     "re-education": {
       "source": "re-education",
@@ -30142,9 +30142,9 @@
     },
     "named": {
       "source": "named",
-      "target": "nominé",
+      "target": "nommé",
       "partOfSpeech": "adjective",
-      "sourceGloss": "nominated, named",
+      "sourceGloss": "named, called",
       "frequencyRank": 2226,
       "confidence": "medium",
       "sourceIds": [
@@ -30177,13 +30177,13 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "mind-reading": {
       "source": "mind-reading",
-      "target": "voyance",
+      "target": "télépathie",
       "partOfSpeech": "noun",
-      "sourceGloss": "mind-reading",
+      "sourceGloss": "mind-reading, telepathy",
       "frequencyRank": 2229,
       "confidence": "medium",
       "sourceIds": [
@@ -30192,13 +30192,13 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "feminine",
-      "plural": "voyances"
+      "plural": "télépathies"
     },
     "clean up": {
       "source": "clean up",
-      "target": "assainir",
+      "target": "nettoyer",
       "partOfSpeech": "expression",
-      "sourceGloss": "to clean up",
+      "sourceGloss": "to clean up, to tidy",
       "frequencyRank": 2230,
       "confidence": "medium",
       "sourceIds": [
@@ -30209,7 +30209,7 @@
     },
     "dad": {
       "source": "dad",
-      "target": "vieux",
+      "target": "papa",
       "partOfSpeech": "noun",
       "sourceGloss": "dad",
       "frequencyRank": 2231,
@@ -30220,7 +30220,7 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "masculine",
-      "plural": "vieux"
+      "plural": "papas"
     },
     "cross off": {
       "source": "cross off",
@@ -30276,9 +30276,9 @@
     },
     "look ahead": {
       "source": "look ahead",
-      "target": "lorgner",
+      "target": "anticiper",
       "partOfSpeech": "expression",
-      "sourceGloss": "to look ahead (to)",
+      "sourceGloss": "to look ahead (to), to anticipate",
       "frequencyRank": 2236,
       "confidence": "medium",
       "sourceIds": [
@@ -30311,7 +30311,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "long text": {
       "source": "long text",
@@ -30328,7 +30328,7 @@
     },
     "sold out": {
       "source": "sold out",
-      "target": "désassorti",
+      "target": "épuisé",
       "partOfSpeech": "expression",
       "sourceGloss": "sold out (merchandise)",
       "frequencyRank": 2240,
@@ -30341,9 +30341,9 @@
     },
     "opinion": {
       "source": "opinion",
-      "target": "dire",
+      "target": "avis",
       "partOfSpeech": "noun",
-      "sourceGloss": "belief, opinion",
+      "sourceGloss": "opinion, view",
       "frequencyRank": 2241,
       "confidence": "medium",
       "sourceIds": [
@@ -30352,7 +30352,7 @@
       "enZipf": 4.94,
       "eligible": true,
       "gender": "masculine",
-      "plural": "dires"
+      "plural": "avis"
     },
     "north-east": {
       "source": "north-east",
@@ -30367,7 +30367,7 @@
       "enZipf": 4.94,
       "eligible": true,
       "gender": "masculine",
-      "plural": "nord-ests"
+      "plural": "nord-est"
     },
     "by-product": {
       "source": "by-product",
@@ -30401,9 +30401,9 @@
     },
     "majority": {
       "source": "majority",
-      "target": "plupart",
+      "target": "majorité",
       "partOfSpeech": "noun",
-      "sourceGloss": "main part, majority",
+      "sourceGloss": "majority",
       "frequencyRank": 2245,
       "confidence": "medium",
       "sourceIds": [
@@ -30412,7 +30412,7 @@
       "enZipf": 4.94,
       "eligible": true,
       "gender": "feminine",
-      "plural": "pluparts"
+      "plural": "majorités"
     },
     "contract": {
       "source": "contract",
@@ -30431,7 +30431,7 @@
     },
     "opening": {
       "source": "opening",
-      "target": "jour",
+      "target": "ouverture",
       "partOfSpeech": "noun",
       "sourceGloss": "opening, aperture",
       "frequencyRank": 2247,
@@ -30441,14 +30441,14 @@
       ],
       "enZipf": 4.94,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "jours"
+      "gender": "feminine",
+      "plural": "ouvertures"
     },
     "successful": {
       "source": "successful",
       "target": "fort",
       "partOfSpeech": "adjective",
-      "sourceGloss": "(informal) skilled, proficient, successful, sometimes translated \"good\" (often used in reference to academic subjects)",
+      "sourceGloss": "successful, prosperous",
       "frequencyRank": 2248,
       "confidence": "medium",
       "sourceIds": [
@@ -30692,7 +30692,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.94,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "gras-doubles"
     },
@@ -31142,7 +31142,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.94,
-      "eligible": true
+      "eligible": false
     },
     "main road": {
       "source": "main road",
@@ -31194,7 +31194,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.94,
-      "eligible": true
+      "eligible": false
     },
     "pro": {
       "source": "pro",
@@ -31209,7 +31209,7 @@
       "enZipf": 4.94,
       "eligible": true,
       "gender": "masculine",
-      "plural": "cadors"
+      "plural": "pros"
     },
     "fall guy": {
       "source": "fall guy",
@@ -31239,9 +31239,9 @@
     },
     "straight away": {
       "source": "straight away",
-      "target": "rasibus",
+      "target": "immédiatement",
       "partOfSpeech": "expression",
-      "sourceGloss": "right now, straight away",
+      "sourceGloss": "immediately, without delay",
       "frequencyRank": 2307,
       "confidence": "medium",
       "sourceIds": [
@@ -31252,7 +31252,7 @@
     },
     "money box": {
       "source": "money box",
-      "target": "esquipot",
+      "target": "tirelire",
       "partOfSpeech": "expression",
       "sourceGloss": "money box",
       "frequencyRank": 2308,
@@ -31469,7 +31469,7 @@
       "source": "wonder",
       "target": "demander",
       "partOfSpeech": "verb",
-      "sourceGloss": "to wonder",
+      "sourceGloss": "to ask oneself, be curious",
       "frequencyRank": 2323,
       "confidence": "medium",
       "sourceIds": [
@@ -31783,7 +31783,7 @@
     },
     "defense": {
       "source": "defense",
-      "target": "asile",
+      "target": "défense",
       "partOfSpeech": "noun",
       "sourceGloss": "protection, defense",
       "frequencyRank": 2347,
@@ -31793,8 +31793,8 @@
       ],
       "enZipf": 4.93,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "asiles"
+      "gender": "feminine",
+      "plural": "défenses"
     },
     "force field": {
       "source": "force field",
@@ -31924,7 +31924,7 @@
         "wiktextract-fr"
       ],
       "enZipf": 4.93,
-      "eligible": true
+      "eligible": false
     },
     "self-similar": {
       "source": "self-similar",
