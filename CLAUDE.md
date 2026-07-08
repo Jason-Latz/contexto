@@ -151,11 +151,18 @@ Conventions to preserve:
   defaults, top-1500 prepopulate, injects on the first page); deterministic core-loop
   simulation tests added; hover card now teaches gender/article/plural at a glance. Full
   writeup: `docs/overnight-2026-07-07/MORNING_REPORT.md`.
-- **Rendered-band accuracy — corrected numbers (2026-07-07 double-confirmed audit):**
-  **es ~90.4%**, **de ~71.3%** (the earlier "94–96%" was optimistic; German is markedly
-  weaker, dominated by wrong-sense translations). The sampled confirmed errors are fixed
-  (es 51, de 172), but **German needs a systematic sense-selection re-import** — the patch
-  covers only the sampled slice. This is the top open data task.
+- **Rendered-band accuracy — 4-language double-confirmed audits (2026-07-07/08):**
+  **es ~90–100%** (FreeDict-based, solid), but the three **Wiktextract-inverted packs share
+  a systemic wrong-sense problem: de ~71–87%, fr ~85%, it ~85%**. ~390 sampled confirmed
+  errors have been fixed across es/de/fr/it (retarget to the dominant sense with correct
+  gender/plural, or gate when no single word teaches it). Root cause: the gloss→word
+  inversion picks a non-dominant sense. **Top open data task: a sense-ranked re-import for
+  de/fr/it** — the patches cover only the sampled slices, not the whole band.
+- **Two fidelity improvements (2026-07-08):** (1) the popup now strips gloss `#POS`
+  artifacts via the hover card's `cleanGloss` (chips, Practice, CSV/Quizlet export); (2)
+  cognates that render identically to English (~1994 non-noun exact target==source matches)
+  are no longer injected (gated in `isReplaceable`) — identical strings teach nothing, and
+  nouns are exempt since they render with a distinct article.
 - **Niche tail + Aggressive Mode shipped (2026-07):** each language pack now has a
   lazy-loaded, quarantined tail shard. core+tail = es 88.1k · de 73.2k · fr 72.1k · it 68.9k.
   Default page load + injection unchanged (core-only). See "Vocabulary tiers" above.

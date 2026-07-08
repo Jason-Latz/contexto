@@ -95,7 +95,42 @@ machine to get fresh numbers if you want them on record.
 - **Account session limit** paused the run once (reset 7:30am); work resumed cleanly from
   the committed state with no loss.
 
+## Update — 4-language audit + two more improvements (2026-07-08)
+
+A follow-up session extended the audit to **all four languages** and shipped two extension
+improvements. Everything below is on `main`.
+
+### First-ever French and Italian audits
+
+| Pack | Sample | Accuracy | Errors fixed | Source |
+|------|--------|----------|--------------|--------|
+| Spanish | +240 | **100%** | 0 | FreeDict |
+| German | +320 | 86.9% | 42 | Wiktextract |
+| French | 400 | **84.8%** | 61 | Wiktextract |
+| Italian | 400 | **84.5%** | 62 | Wiktextract |
+
+The key discovery: **French and Italian share German's wrong-sense problem** (all ~84–87%),
+while the FreeDict-based Spanish pack is 90–100%. So the defect is **systemic to the
+Wiktextract gloss→word inversion**, not German-specific. 165 more confirmed errors were
+fixed in place. Representative: fr `gun` canon→pistolet, `statement` communiqué→déclaration;
+it `link` tramite→collegamento, `construction` struttura→costruzione; de `car park`
+Garage→Parkhaus, `conditions` Auflage→Bedingung.
+
+**Revised recommendation:** the sense-ranked re-import should cover **de + fr + it**, not
+just German.
+
+### Two fidelity improvements
+
+1. **Popup gloss cleaning** (`a30a9f1`) — the popup chips, Practice flashcards, and exports
+   now strip `#Noun`-style Wiktionary artifacts via the same `cleanGloss` as the hover card.
+2. **Identical-cognate filter** (`b8884ed`) — ~1,994 non-noun entries whose target is spelled
+   exactly like the English source (adjectives like `civil`, `digital`; French heaviest at
+   877) are no longer injected, since showing the reader the same string teaches nothing.
+   Nouns are exempt (they render with an article). Unit-tested + live 7/7.
+
+All green: typecheck · 119 TS tests · 32 python · build · validator (es/de/fr/it).
+
 ## Everything is reversible
 
-All work is nine ordinary commits on `main`. Any single change — including any individual
-pack fix you disagree with — can be reverted in isolation with `git revert`.
+All work is a sequence of small, single-purpose commits on `main`. Any one — including any
+individual pack fix you disagree with — can be reverted in isolation with `git revert`.
