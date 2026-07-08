@@ -149,6 +149,23 @@ test('quality gate shows verified + rare words and hides ineligible words', asyn
   assert.equal(lemmas.has('would'), false)
 })
 
+test('candidate extraction skips non-noun cognates that render identically to English', async () => {
+  await loadLanguagePack('es')
+  globalThis.window = { location: { href: 'https://example.test/article' } } as any
+  const { extractPageCandidates } = await import('../src/content/injector.js')
+  // 'local' → Spanish 'local' (adjective) renders as the same string the reader
+  // already saw, so it teaches nothing and is gated. 'happy' → 'feliz' is a
+  // genuinely different word and stays a candidate. (Nouns are exempt: they
+  // render with an article, e.g. 'la', so they stay visually distinct.)
+  const candidates = extractPageCandidates([
+    { nodeValue: 'The local shop makes people happy every single day.' } as Text,
+  ])
+  const lemmas = new Set(candidates.map((candidate) => candidate.lemma))
+
+  assert.equal(lemmas.has('local'), false)
+  assert.equal(lemmas.has('happy'), true)
+})
+
 test('duplicate imported headwords keep noun sense for plural noun contexts', async () => {
   await loadLanguagePack('es')
   const number = lookup('number')
