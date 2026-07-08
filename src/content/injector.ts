@@ -222,11 +222,21 @@ const LEVEL_FLOOR: Record<OnboardingLevel, number> = {
   advanced: 5.0,
 }
 
+// True when the entry would render exactly as the English source, so a learner
+// sees no foreign word at all. Nouns render with an article ("la nature", "der
+// Link") and stay visually distinct; non-nouns show the bare target, so a target
+// identical to the source (a cognate like "civil", "digital", "mobile") is a
+// wasted slot — the core loop is about DIFFERENT words. Gate it out.
+function rendersIdenticalToSource(entry: TranslationEntry): boolean {
+  return entry.partOfSpeech !== 'noun' && entry.target === entry.source
+}
+
 // An entry may render on the page when it is QA-eligible (content word, not a
 // polysemy quarantine) AND either verified or rare enough to trust. See the
 // QUALITY GATE note on extractPageCandidates.
 function isReplaceable(entry: TranslationEntry): boolean {
   if (entry.eligible !== true) return false
+  if (rendersIdenticalToSource(entry)) return false
   if (entry.confidence === 'high') return true
   return (entry.enZipf ?? 0) < MEDIUM_OK_ZIPF
 }
