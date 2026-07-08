@@ -146,12 +146,21 @@ Conventions to preserve:
 
 ## Current state
 
+- **Core-loop simplicity + fidelity run landed on `main` (2026-07-07):** both pretests
+  removed (level-picker overlay + auto quiz banner); first run is silent (intermediate
+  defaults, top-1500 prepopulate, injects on the first page); deterministic core-loop
+  simulation tests added; hover card now teaches gender/article/plural at a glance. Full
+  writeup: `docs/overnight-2026-07-07/MORNING_REPORT.md`.
+- **Rendered-band accuracy — corrected numbers (2026-07-07 double-confirmed audit):**
+  **es ~90.4%**, **de ~71.3%** (the earlier "94–96%" was optimistic; German is markedly
+  weaker, dominated by wrong-sense translations). The sampled confirmed errors are fixed
+  (es 51, de 172), but **German needs a systematic sense-selection re-import** — the patch
+  covers only the sampled slice. This is the top open data task.
 - **Niche tail + Aggressive Mode shipped (2026-07):** each language pack now has a
   lazy-loaded, quarantined tail shard. core+tail = es 88.1k · de 73.2k · fr 72.1k · it 68.9k.
   Default page load + injection unchanged (core-only). See "Vocabulary tiers" above.
 - **German, French, Italian shipped**: ≥55k-entry core packs (de 57.4k · fr 55.8k · it 58.6k) +
-  grammar adapters + popup picker. Adversarial accuracy audit 94–96% on the rendered band. es
-  core unchanged (FreeDict).
+  grammar adapters + popup picker. es core unchanged (FreeDict).
 - Landing site is built on branch **`site/landing`** (not pushed, not deployed). Still
   Spanish-only copy — update for the new languages before launch.
 - Chrome Web Store submission is pending the steps in `MORNING-CHECKLIST.md`.
