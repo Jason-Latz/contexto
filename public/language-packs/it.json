@@ -26111,9 +26111,9 @@
     },
     "fair": {
       "source": "fair",
-      "target": "bello",
+      "target": "giusto",
       "partOfSpeech": "adjective",
-      "sourceGloss": "nice, fair, fine, pleasant; beautiful (of the weather, etc.)",
+      "sourceGloss": "just, equitable, reasonable ('that's not fair')",
       "frequencyRank": 1935,
       "confidence": "medium",
       "sourceIds": [
@@ -26139,9 +26139,9 @@
     },
     "link": {
       "source": "link",
-      "target": "tramite",
+      "target": "collegamento",
       "partOfSpeech": "noun",
-      "sourceGloss": "intermediary, link",
+      "sourceGloss": "connection / hyperlink",
       "frequencyRank": 1937,
       "confidence": "medium",
       "sourceIds": [
@@ -26150,13 +26150,13 @@
       "enZipf": 4.99,
       "eligible": true,
       "gender": "masculine",
-      "plural": "tramiti"
+      "plural": "collegamenti"
     },
     "social issues": {
       "source": "social issues",
       "target": "sociale",
       "partOfSpeech": "expression",
-      "sourceGloss": "society, social issues (social issues)",
+      "sourceGloss": "social issues/problems of society",
       "frequencyRank": 1938,
       "confidence": "medium",
       "sourceIds": [
@@ -26223,9 +26223,9 @@
     },
     "drop": {
       "source": "drop",
-      "target": "lancio",
+      "target": "goccia",
       "partOfSpeech": "noun",
-      "sourceGloss": "throw, drop, shot",
+      "sourceGloss": "a drop of liquid",
       "frequencyRank": 1943,
       "confidence": "medium",
       "sourceIds": [
@@ -26233,8 +26233,8 @@
       ],
       "enZipf": 4.99,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "lanci"
+      "gender": "feminine",
+      "plural": "gocce"
     },
     "welcome": {
       "source": "welcome",
@@ -26366,7 +26366,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "after-effect": {
       "source": "after-effect",
@@ -26565,7 +26565,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "social problems": {
       "source": "social problems",
@@ -26578,7 +26578,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "after-sales": {
       "source": "after-sales",
@@ -26643,7 +26643,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "eat everything": {
       "source": "eat everything",
@@ -26656,7 +26656,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "immediately": {
       "source": "immediately",
@@ -26755,7 +26755,7 @@
     },
     "half-hour": {
       "source": "half-hour",
-      "target": "mezza",
+      "target": "mezz'ora",
       "partOfSpeech": "noun",
       "sourceGloss": "half-hour",
       "frequencyRank": 1983,
@@ -26766,7 +26766,7 @@
       "enZipf": 4.98,
       "eligible": true,
       "gender": "feminine",
-      "plural": "mezze"
+      "plural": "mezz'ore"
     },
     "sell": {
       "source": "sell",
@@ -26835,7 +26835,7 @@
     },
     "winning": {
       "source": "winning",
-      "target": "vincitore",
+      "target": "vincente",
       "partOfSpeech": "adjective",
       "sourceGloss": "winning, victorious",
       "frequencyRank": 1989,
@@ -26874,7 +26874,7 @@
     },
     "additional": {
       "source": "additional",
-      "target": "bis",
+      "target": "aggiuntivo",
       "partOfSpeech": "adjective",
       "sourceGloss": "additional",
       "frequencyRank": 1992,
@@ -27069,7 +27069,7 @@
     },
     "police force": {
       "source": "police force",
-      "target": "questura",
+      "target": "polizia",
       "partOfSpeech": "expression",
       "sourceGloss": "police force",
       "frequencyRank": 2007,
@@ -27463,9 +27463,9 @@
     },
     "statement": {
       "source": "statement",
-      "target": "rapporto",
+      "target": "dichiarazione",
       "partOfSpeech": "noun",
-      "sourceGloss": "report, statement, account",
+      "sourceGloss": "statement, declaration",
       "frequencyRank": 2037,
       "confidence": "medium",
       "sourceIds": [
@@ -27473,8 +27473,8 @@
       ],
       "enZipf": 4.97,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "rapporti"
+      "gender": "feminine",
+      "plural": "dichiarazioni"
     },
     "sun": {
       "source": "sun",
@@ -27538,9 +27538,9 @@
     },
     "construction": {
       "source": "construction",
-      "target": "struttura",
+      "target": "costruzione",
       "partOfSpeech": "noun",
-      "sourceGloss": "structure, construction, organization, frame, framework, system, fabric",
+      "sourceGloss": "construction, building",
       "frequencyRank": 2042,
       "confidence": "medium",
       "sourceIds": [
@@ -27549,7 +27549,7 @@
       "enZipf": 4.97,
       "eligible": true,
       "gender": "feminine",
-      "plural": "strutture"
+      "plural": "costruzioni"
     },
     "justice": {
       "source": "justice",
@@ -27637,9 +27637,9 @@
     },
     "agree": {
       "source": "agree",
-      "target": "consentire",
+      "target": "concordare",
       "partOfSpeech": "verb",
-      "sourceGloss": "to agree, to assent, to consent",
+      "sourceGloss": "to agree, to concur",
       "frequencyRank": 2049,
       "confidence": "medium",
       "sourceIds": [
@@ -27650,9 +27650,9 @@
     },
     "photo": {
       "source": "photo",
-      "target": "fotografico",
+      "target": "foto",
       "partOfSpeech": "adjective",
-      "sourceGloss": "photograph, photo; photographic",
+      "sourceGloss": "photo, photograph",
       "frequencyRank": 2050,
       "confidence": "medium",
       "sourceIds": [
@@ -27754,7 +27754,7 @@
     },
     "computer": {
       "source": "computer",
-      "target": "calcolatore",
+      "target": "computer",
       "partOfSpeech": "noun",
       "sourceGloss": "computer",
       "frequencyRank": 2058,
@@ -27765,7 +27765,7 @@
       "enZipf": 4.97,
       "eligible": true,
       "gender": "masculine",
-      "plural": "calcolatori"
+      "plural": "computer"
     },
     "code name": {
       "source": "code name",
@@ -27934,7 +27934,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "pass around": {
       "source": "pass around",
@@ -27947,7 +27947,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "bill book": {
       "source": "bill book",
@@ -27986,7 +27986,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.97,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "neomecenatismi"
     },
@@ -28027,7 +28027,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "tax law": {
       "source": "tax law",
@@ -28040,7 +28040,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.97,
-      "eligible": true
+      "eligible": false
     },
     "definitely": {
       "source": "definitely",
@@ -28160,7 +28160,7 @@
       "source": "train",
       "target": "treno",
       "partOfSpeech": "noun",
-      "sourceGloss": "train (connected sequence of people or things)",
+      "sourceGloss": "train (railway vehicle)",
       "frequencyRank": 2088,
       "confidence": "medium",
       "sourceIds": [
@@ -28301,7 +28301,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "ability": {
       "source": "ability",
@@ -28580,7 +28580,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.96,
-      "eligible": true
+      "eligible": false
     },
     "ground level": {
       "source": "ground level",
@@ -28764,7 +28764,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "centre": {
       "source": "centre",
@@ -28918,7 +28918,7 @@
       "source": "lady",
       "target": "Signora",
       "partOfSpeech": "noun",
-      "sourceGloss": "Mrs, Lady",
+      "sourceGloss": "lady, woman",
       "frequencyRank": 2144,
       "confidence": "medium",
       "sourceIds": [
@@ -28927,7 +28927,7 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Signore"
+      "plural": "signore"
     },
     "judge": {
       "source": "judge",
@@ -29000,9 +29000,9 @@
     },
     "developed": {
       "source": "developed",
-      "target": "cresciuto",
+      "target": "sviluppato",
       "partOfSpeech": "adjective",
-      "sourceGloss": "grown-up, grown, developed",
+      "sourceGloss": "developed, advanced",
       "frequencyRank": 2150,
       "confidence": "medium",
       "sourceIds": [
@@ -29013,9 +29013,9 @@
     },
     "named": {
       "source": "named",
-      "target": "nominato",
+      "target": "chiamato",
       "partOfSpeech": "adjective",
-      "sourceGloss": "named",
+      "sourceGloss": "named, called",
       "frequencyRank": 2151,
       "confidence": "medium",
       "sourceIds": [
@@ -29091,15 +29091,15 @@
         "wiktextract-it"
       ],
       "enZipf": 4.95,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "uomini da niente"
     },
     "unit": {
       "source": "unit",
-      "target": "modulo",
+      "target": "unità",
       "partOfSpeech": "noun",
-      "sourceGloss": "unit, module",
+      "sourceGloss": "unit",
       "frequencyRank": 2157,
       "confidence": "medium",
       "sourceIds": [
@@ -29107,8 +29107,8 @@
       ],
       "enZipf": 4.95,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "moduli"
+      "gender": "feminine",
+      "plural": "unità"
     },
     "global": {
       "source": "global",
@@ -29142,7 +29142,7 @@
       "source": "role-playing",
       "target": "gioco delle parti",
       "partOfSpeech": "noun",
-      "sourceGloss": "roles, role-playing",
+      "sourceGloss": "role-playing (game)",
       "frequencyRank": 2160,
       "confidence": "medium",
       "sourceIds": [
@@ -29151,7 +29151,7 @@
       "enZipf": 4.95,
       "eligible": true,
       "gender": "masculine",
-      "plural": "giochi delle parti"
+      "plural": "giochi di ruolo"
     },
     "hard sign": {
       "source": "hard sign",
@@ -29361,7 +29361,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "cross off": {
       "source": "cross off",
@@ -29467,7 +29467,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "find peace": {
       "source": "find peace",
@@ -29493,7 +29493,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.95,
-      "eligible": true
+      "eligible": false
     },
     "anymore": {
       "source": "anymore",
@@ -29510,9 +29510,9 @@
     },
     "rule": {
       "source": "rule",
-      "target": "governo",
+      "target": "regola",
       "partOfSpeech": "noun",
-      "sourceGloss": "government, administration, rule",
+      "sourceGloss": "rule, regulation, norm",
       "frequencyRank": 2188,
       "confidence": "medium",
       "sourceIds": [
@@ -29520,14 +29520,14 @@
       ],
       "enZipf": 4.94,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "governi"
+      "gender": "feminine",
+      "plural": "regole"
     },
     "successful": {
       "source": "successful",
-      "target": "seguito",
+      "target": "riuscito",
       "partOfSpeech": "adjective",
-      "sourceGloss": "popular, successful",
+      "sourceGloss": "successful (alt.: 'di successo')",
       "frequencyRank": 2189,
       "confidence": "medium",
       "sourceIds": [
@@ -29723,9 +29723,9 @@
     },
     "opening": {
       "source": "opening",
-      "target": "inizio",
+      "target": "apertura",
       "partOfSpeech": "noun",
-      "sourceGloss": "opening (of hostilities)",
+      "sourceGloss": "opening, aperture, gap",
       "frequencyRank": 2203,
       "confidence": "medium",
       "sourceIds": [
@@ -29733,8 +29733,8 @@
       ],
       "enZipf": 4.94,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "inizi"
+      "gender": "feminine",
+      "plural": "aperture"
     },
     "physical": {
       "source": "physical",
@@ -29879,7 +29879,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.94,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "correnti"
     },
@@ -30000,7 +30000,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.94,
-      "eligible": true
+      "eligible": false
     },
     "crazy water": {
       "source": "crazy water",
@@ -30184,7 +30184,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.94,
-      "eligible": true
+      "eligible": false
     },
     "cause cut-off": {
       "source": "cause cut-off",
@@ -30277,7 +30277,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.94,
-      "eligible": true
+      "eligible": false
     },
     "food science": {
       "source": "food science",
@@ -30361,9 +30361,9 @@
     },
     "direction": {
       "source": "direction",
-      "target": "governo",
+      "target": "direzione",
       "partOfSpeech": "noun",
-      "sourceGloss": "running, management, direction",
+      "sourceGloss": "direction, way; management",
       "frequencyRank": 2251,
       "confidence": "medium",
       "sourceIds": [
@@ -30371,8 +30371,8 @@
       ],
       "enZipf": 4.93,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "governi"
+      "gender": "feminine",
+      "plural": "direzioni"
     },
     "defense": {
       "source": "defense",
@@ -30391,9 +30391,9 @@
     },
     "approach": {
       "source": "approach",
-      "target": "accesso",
+      "target": "approccio",
       "partOfSpeech": "noun",
-      "sourceGloss": "access, admittance, approach",
+      "sourceGloss": "approach, method, way of dealing with something",
       "frequencyRank": 2253,
       "confidence": "medium",
       "sourceIds": [
@@ -30402,7 +30402,7 @@
       "enZipf": 4.93,
       "eligible": true,
       "gender": "masculine",
-      "plural": "accessi"
+      "plural": "approcci"
     },
     "master": {
       "source": "master",
@@ -30600,7 +30600,7 @@
     },
     "red hot": {
       "source": "red hot",
-      "target": "rosso",
+      "target": "rovente",
       "partOfSpeech": "expression",
       "sourceGloss": "incandescent, red hot",
       "frequencyRank": 2268,
@@ -30791,7 +30791,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.93,
-      "eligible": true
+      "eligible": false
     },
     "times table": {
       "source": "times table",
@@ -30817,7 +30817,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.93,
-      "eligible": true
+      "eligible": false
     },
     "half title": {
       "source": "half title",
@@ -30847,9 +30847,9 @@
     },
     "trump": {
       "source": "trump",
-      "target": "briscola di seme",
+      "target": "briscola",
       "partOfSpeech": "noun",
-      "sourceGloss": "trump (of card games)",
+      "sourceGloss": "trump (card games)",
       "frequencyRank": 2287,
       "confidence": "medium",
       "sourceIds": [
@@ -30858,7 +30858,7 @@
       "enZipf": 4.93,
       "eligible": true,
       "gender": "feminine",
-      "plural": "briscole di seme"
+      "plural": "briscole"
     },
     "ten years old": {
       "source": "ten years old",
@@ -30875,9 +30875,9 @@
     },
     "none": {
       "source": "none",
-      "target": "nisba",
+      "target": "niente",
       "partOfSpeech": "adverb",
-      "sourceGloss": "nix, none",
+      "sourceGloss": "nothing, none",
       "frequencyRank": 2289,
       "confidence": "medium",
       "sourceIds": [
@@ -30912,7 +30912,7 @@
       "enZipf": 4.93,
       "eligible": true,
       "gender": "feminine",
-      "plural": "intredime"
+      "plural": "fine settimana"
     },
     "become natural": {
       "source": "become natural",
@@ -30964,7 +30964,7 @@
         "wiktextract-it"
       ],
       "enZipf": 4.93,
-      "eligible": true
+      "eligible": false
     },
     "running board": {
       "source": "running board",
@@ -30996,9 +30996,9 @@
     },
     "clearly": {
       "source": "clearly",
-      "target": "ovviamente",
+      "target": "chiaramente",
       "partOfSpeech": "adverb",
-      "sourceGloss": "obviously, evidently, clearly",
+      "sourceGloss": "clearly, in a clear manner",
       "frequencyRank": 2298,
       "confidence": "medium",
       "sourceIds": [
@@ -31009,9 +31009,9 @@
     },
     "band": {
       "source": "band",
-      "target": "mano",
+      "target": "banda",
       "partOfSpeech": "noun",
-      "sourceGloss": "band, company (Boccaccio; v. manus)",
+      "sourceGloss": "band (musical group; gang)",
       "frequencyRank": 2299,
       "confidence": "medium",
       "sourceIds": [
@@ -31020,13 +31020,13 @@
       "enZipf": 4.92,
       "eligible": true,
       "gender": "feminine",
-      "plural": "mani"
+      "plural": "bande"
     },
     "organization": {
       "source": "organization",
-      "target": "struttura",
+      "target": "organizzazione",
       "partOfSpeech": "noun",
-      "sourceGloss": "structure, construction, organization, frame, framework, system, fabric",
+      "sourceGloss": "organization, body, association",
       "frequencyRank": 2300,
       "confidence": "medium",
       "sourceIds": [
@@ -31035,7 +31035,7 @@
       "enZipf": 4.92,
       "eligible": true,
       "gender": "feminine",
-      "plural": "strutture"
+      "plural": "organizzazioni"
     },
     "sunday": {
       "source": "sunday",
@@ -31054,9 +31054,9 @@
     },
     "spring": {
       "source": "spring",
-      "target": "fonte",
+      "target": "primavera",
       "partOfSpeech": "noun",
-      "sourceGloss": "source, spring (where a body of water emerges)",
+      "sourceGloss": "spring (season)",
       "frequencyRank": 2302,
       "confidence": "medium",
       "sourceIds": [
@@ -31065,7 +31065,7 @@
       "enZipf": 4.92,
       "eligible": true,
       "gender": "feminine",
-      "plural": "fonti"
+      "plural": "primavere"
     },
     "lack": {
       "source": "lack",
@@ -31112,9 +31112,9 @@
     },
     "effort": {
       "source": "effort",
-      "target": "tentativo",
+      "target": "sforzo",
       "partOfSpeech": "noun",
-      "sourceGloss": "attempt, try, effort, shot, endeavour/endeavor",
+      "sourceGloss": "effort, exertion",
       "frequencyRank": 2306,
       "confidence": "medium",
       "sourceIds": [
@@ -31123,7 +31123,7 @@
       "enZipf": 4.92,
       "eligible": true,
       "gender": "masculine",
-      "plural": "tentativi"
+      "plural": "sforzi"
     },
     "secret": {
       "source": "secret",
@@ -31142,7 +31142,7 @@
       "source": "fan",
       "target": "fan",
       "partOfSpeech": "noun",
-      "sourceGloss": "fan (admirer or follower)",
+      "sourceGloss": "fan (admirer, supporter)",
       "frequencyRank": 2308,
       "confidence": "medium",
       "sourceIds": [
@@ -31151,7 +31151,7 @@
       "enZipf": 4.92,
       "eligible": true,
       "gender": "masculine",
-      "plural": "fans"
+      "plural": "fan"
     },
     "beach": {
       "source": "beach",
@@ -31183,9 +31183,9 @@
     },
     "wear": {
       "source": "wear",
-      "target": "consumo",
+      "target": "usura",
       "partOfSpeech": "noun",
-      "sourceGloss": "consumption, use, expenditure, wear",
+      "sourceGloss": "wear, wear and tear",
       "frequencyRank": 2311,
       "confidence": "medium",
       "sourceIds": [
@@ -31193,8 +31193,8 @@
       ],
       "enZipf": 4.92,
       "eligible": true,
-      "gender": "masculine",
-      "plural": "consumi"
+      "gender": "feminine",
+      "plural": "usure"
     },
     "protect": {
       "source": "protect",
@@ -31399,9 +31399,9 @@
     },
     "house husband": {
       "source": "house husband",
-      "target": "uomo di casa",
+      "target": "casalingo",
       "partOfSpeech": "expression",
-      "sourceGloss": "househusband, house husband",
+      "sourceGloss": "househusband, stay-at-home husband",
       "frequencyRank": 2327,
       "confidence": "medium",
       "sourceIds": [
@@ -31438,9 +31438,9 @@
     },
     "latest": {
       "source": "latest",
-      "target": "dell'ultima ora",
+      "target": "ultimo",
       "partOfSpeech": "adjective",
-      "sourceGloss": "very recent; latest",
+      "sourceGloss": "latest, most recent",
       "frequencyRank": 2330,
       "confidence": "medium",
       "sourceIds": [
@@ -31479,9 +31479,9 @@
     },
     "turn round": {
       "source": "turn round",
-      "target": "rivolgersi",
+      "target": "voltarsi",
       "partOfSpeech": "expression",
-      "sourceGloss": "to turn round, to turn away",
+      "sourceGloss": "to turn round, to turn around",
       "frequencyRank": 2333,
       "confidence": "medium",
       "sourceIds": [
