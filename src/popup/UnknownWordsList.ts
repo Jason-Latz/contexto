@@ -1,6 +1,7 @@
 import { loadLanguagePack, lookup } from '../language/loader.js'
 import { getLanguageInfo } from '../language/registry.js'
 import { openPracticePanel, countPracticeable } from './PracticePanel.js'
+import { cleanGloss } from '../content/hoverCard.js'
 import type { LexiconEntry, NounTranslationEntry, TargetLanguage, TranslationEntry } from '../types/index.js'
 
 type Filter = 'all' | 'session'
@@ -321,7 +322,7 @@ function buildChip(word: UnknownWord, targetLang: string, onMarkKnown: (chipEl: 
     plain.textContent = word.lemma
     chip.appendChild(plain)
   } else {
-    const gloss = entry?.sourceGloss ?? ''
+    const gloss = cleanGloss(entry?.sourceGloss)
     const noun = getNounEntry(entry)
 
     // Focusable body: hover or Tab reveals the English meaning inline.
@@ -407,7 +408,7 @@ function toExportRows(words: readonly UnknownWord[]): ExportRow[] {
       english: word.lemma,
       spanish: entry?.target ?? '',
       partOfSpeech: entry?.partOfSpeech ?? '',
-      gloss: entry?.sourceGloss ?? '',
+      gloss: cleanGloss(entry?.sourceGloss),
       gender: noun?.gender ?? '',
       plural: noun?.plural ?? '',
       addedAt: word.markedAt ? new Date(word.markedAt).toISOString() : '',
