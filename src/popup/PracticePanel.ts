@@ -19,6 +19,7 @@ import { applyQuizResult } from '../engine/wordLifecycle.js'
 import { orderUnknownByStaleness } from '../engine/reviewQueue.js'
 import { loadLanguagePack, lookup } from '../language/loader.js'
 import { getLanguageInfo } from '../language/registry.js'
+import { cleanGloss } from '../content/hoverCard.js'
 import type { TargetLanguage } from '../types/index.js'
 
 // Cap one practice run so a long backlog doesn't become an endless session.
@@ -152,7 +153,7 @@ export async function openPracticePanel(
     }
 
     progress.textContent = `${answered + 1} of ${queue.length}`
-    renderFront(lemma, target, dict?.sourceGloss ?? '')
+    renderFront(lemma, target, cleanGloss(dict?.sourceGloss))
   }
 
   // Front of the card: the Spanish word and a button to reveal the answer.
