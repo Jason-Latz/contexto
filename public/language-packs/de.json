@@ -586,7 +586,7 @@
         "wiktextract-de"
       ],
       "enZipf": 6.03,
-      "eligible": true
+      "eligible": false
     },
     "get about": {
       "source": "get about",
@@ -618,9 +618,9 @@
     },
     "said": {
       "source": "said",
-      "target": "besagt",
+      "target": "gesagt",
       "partOfSpeech": "adjective",
-      "sourceGloss": "said, aforesaid, implied, mentioned",
+      "sourceGloss": "said (past participle of say)",
       "frequencyRank": 46,
       "confidence": "medium",
       "sourceIds": [
@@ -659,7 +659,7 @@
       "source": "most",
       "target": "allermeist",
       "partOfSpeech": "adjective",
-      "sourceGloss": "most; almost all",
+      "sourceGloss": "most (the greatest number or amount of)",
       "frequencyRank": 49,
       "confidence": "medium",
       "sourceIds": [
@@ -709,9 +709,9 @@
     },
     "really": {
       "source": "really",
-      "target": "doch",
+      "target": "wirklich",
       "partOfSpeech": "adverb",
-      "sourceGloss": "used for emphasis; really; just",
+      "sourceGloss": "truly, actually",
       "frequencyRank": 53,
       "confidence": "medium",
       "sourceIds": [
@@ -813,7 +813,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.94,
-      "eligible": true
+      "eligible": false
     },
     "off": {
       "source": "off",
@@ -830,9 +830,9 @@
     },
     "before": {
       "source": "before",
-      "target": "schon",
+      "target": "vorher",
       "partOfSpeech": "adverb",
-      "sourceGloss": "previously, before (at some time in the past; but not: before a certain event)",
+      "sourceGloss": "earlier, previously",
       "frequencyRank": 62,
       "confidence": "medium",
       "sourceIds": [
@@ -869,9 +869,9 @@
     },
     "made": {
       "source": "made",
-      "target": "hergestellt",
+      "target": "gemacht",
       "partOfSpeech": "adjective",
-      "sourceGloss": "produced, made, manufactured",
+      "sourceGloss": "made, done (past participle of make)",
       "frequencyRank": 65,
       "confidence": "medium",
       "sourceIds": [
@@ -910,9 +910,9 @@
     },
     "got": {
       "source": "got",
-      "target": "geworden",
+      "target": "bekommen",
       "partOfSpeech": "adjective",
-      "sourceGloss": "become, got",
+      "sourceGloss": "got, received (past participle of get)",
       "frequencyRank": 68,
       "confidence": "medium",
       "sourceIds": [
@@ -923,9 +923,9 @@
     },
     "many": {
       "source": "many",
-      "target": "lang",
+      "target": "viele",
       "partOfSpeech": "adjective",
-      "sourceGloss": "many (indicating the length of the time in total)",
+      "sourceGloss": "many (a large number of)",
       "frequencyRank": 69,
       "confidence": "medium",
       "sourceIds": [
@@ -999,7 +999,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.91,
-      "eligible": true
+      "eligible": false
     },
     "make out": {
       "source": "make out",
@@ -1061,7 +1061,7 @@
       "source": "first time",
       "target": "Anhieb",
       "partOfSpeech": "expression",
-      "sourceGloss": "first time",
+      "sourceGloss": "the first occasion",
       "frequencyRank": 79,
       "confidence": "medium",
       "sourceIds": [
@@ -1096,13 +1096,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.88,
-      "eligible": true
+      "eligible": false
     },
     "great": {
       "source": "great",
-      "target": "schön",
+      "target": "großartig",
       "partOfSpeech": "adjective",
-      "sourceGloss": "good, great, splendid",
+      "sourceGloss": "very good, excellent, splendid",
       "frequencyRank": 82,
       "confidence": "medium",
       "sourceIds": [
@@ -1113,9 +1113,9 @@
     },
     "down": {
       "source": "down",
-      "target": "nieder",
+      "target": "hinunter",
       "partOfSpeech": "adverb",
-      "sourceGloss": "down",
+      "sourceGloss": "downward, down",
       "frequencyRank": 83,
       "confidence": "medium",
       "sourceIds": [
@@ -1187,7 +1187,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.88,
-      "eligible": true
+      "eligible": false
     },
     "want  out": {
       "source": "want  out",
@@ -1256,9 +1256,9 @@
     },
     "go up": {
       "source": "go up",
-      "target": "auffahren",
+      "target": "hinaufgehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to go up, ascend",
+      "sourceGloss": "to move upward, to ascend",
       "frequencyRank": 94,
       "confidence": "medium",
       "sourceIds": [
@@ -1349,9 +1349,9 @@
     },
     "go there": {
       "source": "go there",
-      "target": "dahinfahren",
+      "target": "hingehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to go there",
+      "sourceGloss": "to go there, to go to that place",
       "frequencyRank": 101,
       "confidence": "medium",
       "sourceIds": [
@@ -1384,15 +1384,15 @@
         "wiktextract-de"
       ],
       "enZipf": 5.84,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "Beste"
     },
     "get back": {
       "source": "get back",
-      "target": "zurückholen",
+      "target": "zurückkommen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to retrieve, to get back",
+      "sourceGloss": "to return, to come back",
       "frequencyRank": 104,
       "confidence": "medium",
       "sourceIds": [
@@ -1444,7 +1444,7 @@
       "source": "up here",
       "target": "rauf",
       "partOfSpeech": "expression",
-      "sourceGloss": "up, up here, upstairs (towards the speaker)",
+      "sourceGloss": "in this elevated place; up where the speaker is",
       "frequencyRank": 108,
       "confidence": "medium",
       "sourceIds": [
@@ -1507,7 +1507,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.82,
-      "eligible": true
+      "eligible": false
     },
     "long": {
       "source": "long",
@@ -1539,9 +1539,9 @@
     },
     "home": {
       "source": "home",
-      "target": "Haus",
+      "target": "Zuhause",
       "partOfSpeech": "noun",
-      "sourceGloss": "home (in various phrases)",
+      "sourceGloss": "the place where one lives",
       "frequencyRank": 115,
       "confidence": "medium",
       "sourceIds": [
@@ -1550,7 +1550,7 @@
       "enZipf": 5.81,
       "eligible": true,
       "gender": "neuter",
-      "plural": "Häuser"
+      "plural": "Zuhause"
     },
     "use": {
       "source": "use",
@@ -1578,7 +1578,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.81,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Ansprüche"
     },
@@ -1593,7 +1593,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.81,
-      "eligible": true
+      "eligible": false
     },
     "day out": {
       "source": "day out",
@@ -1606,13 +1606,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.81,
-      "eligible": true
+      "eligible": false
     },
     "right there": {
       "source": "right there",
       "target": "hier",
       "partOfSpeech": "expression",
-      "sourceGloss": "there; right there; in that place; refers to something that is considered nearby, or can be seen and pointed at",
+      "sourceGloss": "at that exact place",
       "frequencyRank": 120,
       "confidence": "medium",
       "sourceIds": [
@@ -1684,7 +1684,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.79,
-      "eligible": true
+      "eligible": false
     },
     "take up": {
       "source": "take up",
@@ -1701,9 +1701,9 @@
     },
     "take out": {
       "source": "take out",
-      "target": "ausführen",
+      "target": "herausnehmen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take out, to take or lead outside",
+      "sourceGloss": "to take out, to remove (from a place or container)",
       "frequencyRank": 127,
       "confidence": "medium",
       "sourceIds": [
@@ -1723,13 +1723,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.79,
-      "eligible": true
+      "eligible": false
     },
     "three": {
       "source": "three",
       "target": "Drei",
       "partOfSpeech": "noun",
-      "sourceGloss": "three (digit/figure 3)",
+      "sourceGloss": "three (cardinal number)",
       "frequencyRank": 129,
       "confidence": "medium",
       "sourceIds": [
@@ -1770,9 +1770,9 @@
     },
     "state": {
       "source": "state",
-      "target": "Stand",
+      "target": "Staat",
       "partOfSpeech": "noun",
-      "sourceGloss": "standing, state, status, position, situation",
+      "sourceGloss": "state (a polity; country or federal state)",
       "frequencyRank": 132,
       "confidence": "medium",
       "sourceIds": [
@@ -1781,7 +1781,7 @@
       "enZipf": 5.78,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Stände"
+      "plural": "Staaten"
     },
     "think over": {
       "source": "think over",
@@ -1824,9 +1824,9 @@
     },
     "get going": {
       "source": "get going",
-      "target": "kacheln",
+      "target": "loslegen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to get going",
+      "sourceGloss": "to get going, to get started",
       "frequencyRank": 136,
       "confidence": "medium",
       "sourceIds": [
@@ -1863,9 +1863,9 @@
     },
     "between": {
       "source": "between",
-      "target": "dazwischen",
+      "target": "zwischen",
       "partOfSpeech": "adverb",
-      "sourceGloss": "between, in between",
+      "sourceGloss": "between",
       "frequencyRank": 139,
       "confidence": "medium",
       "sourceIds": [
@@ -1941,9 +1941,9 @@
     },
     "better": {
       "source": "better",
-      "target": "bessern",
+      "target": "besser",
       "partOfSpeech": "verb",
-      "sourceGloss": "to improve, to better",
+      "sourceGloss": "better (comparative of good/well)",
       "frequencyRank": 145,
       "confidence": "medium",
       "sourceIds": [
@@ -1980,9 +1980,9 @@
     },
     "little": {
       "source": "little",
-      "target": "etwas",
+      "target": "klein",
       "partOfSpeech": "adverb",
-      "sourceGloss": "a little, a bit",
+      "sourceGloss": "little, small",
       "frequencyRank": 148,
       "confidence": "medium",
       "sourceIds": [
@@ -2034,9 +2034,9 @@
     },
     "since": {
       "source": "since",
-      "target": "seitdem",
+      "target": "seit",
       "partOfSpeech": "adverb",
-      "sourceGloss": "since",
+      "sourceGloss": "since (from a point in time)",
       "frequencyRank": 152,
       "confidence": "medium",
       "sourceIds": [
@@ -2060,9 +2060,9 @@
     },
     "own": {
       "source": "own",
-      "target": "haben",
+      "target": "besitzen",
       "partOfSpeech": "verb",
-      "sourceGloss": "to have; to own (to possess, have ownership of; to possess a certain characteristic)",
+      "sourceGloss": "to own, to possess",
       "frequencyRank": 154,
       "confidence": "medium",
       "sourceIds": [
@@ -2082,13 +2082,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.74,
-      "eligible": true
+      "eligible": false
     },
     "down there": {
       "source": "down there",
       "target": "runter",
       "partOfSpeech": "expression",
-      "sourceGloss": "down, down there, downstairs (away from the speaker)",
+      "sourceGloss": "down there (in a lower place)",
       "frequencyRank": 156,
       "confidence": "medium",
       "sourceIds": [
@@ -2108,7 +2108,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.74,
-      "eligible": true
+      "eligible": false
     },
     "go back": {
       "source": "go back",
@@ -2151,9 +2151,9 @@
     },
     "back-to-back": {
       "source": "back-to-back",
-      "target": "in einem Stück",
+      "target": "hintereinander",
       "partOfSpeech": "adverb",
-      "sourceGloss": "in one piece; not divided into smaller parts",
+      "sourceGloss": "consecutively; one immediately after the other",
       "frequencyRank": 161,
       "confidence": "medium",
       "sourceIds": [
@@ -2166,7 +2166,7 @@
       "source": "new world",
       "target": "neuweltlich",
       "partOfSpeech": "expression",
-      "sourceGloss": "New World",
+      "sourceGloss": "the New World (the Americas); a new world",
       "frequencyRank": 162,
       "confidence": "medium",
       "sourceIds": [
@@ -2186,13 +2186,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.73,
-      "eligible": true
+      "eligible": false
     },
     "during": {
       "source": "during",
-      "target": "durch",
+      "target": "während",
       "partOfSpeech": "adverb",
-      "sourceGloss": "during; throughout; through",
+      "sourceGloss": "during, in the course of",
       "frequencyRank": 164,
       "confidence": "medium",
       "sourceIds": [
@@ -2203,9 +2203,9 @@
     },
     "thing": {
       "source": "thing",
-      "target": "Etwas",
+      "target": "Ding",
       "partOfSpeech": "noun",
-      "sourceGloss": "thing, being",
+      "sourceGloss": "thing, object",
       "frequencyRank": 165,
       "confidence": "medium",
       "sourceIds": [
@@ -2214,7 +2214,7 @@
       "enZipf": 5.72,
       "eligible": true,
       "gender": "neuter",
-      "plural": "Etwas"
+      "plural": "Dinge"
     },
     "game": {
       "source": "game",
@@ -2248,7 +2248,7 @@
       "source": "first day",
       "target": "Einstand",
       "partOfSpeech": "expression",
-      "sourceGloss": "first day, start at a new job or position, debut",
+      "sourceGloss": "first day",
       "frequencyRank": 168,
       "confidence": "medium",
       "sourceIds": [
@@ -2300,7 +2300,7 @@
       "source": "man up",
       "target": "ermannen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to summon courage; to man up",
+      "sourceGloss": "to summon one's courage; to man up (dated, reflexive)",
       "frequencyRank": 172,
       "confidence": "medium",
       "sourceIds": [
@@ -2395,9 +2395,9 @@
     },
     "look out": {
       "source": "look out",
-      "target": "aussehen",
+      "target": "aufpassen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to look out, to watch out",
+      "sourceGloss": "to watch out, be careful",
       "frequencyRank": 179,
       "confidence": "medium",
       "sourceIds": [
@@ -2460,9 +2460,9 @@
     },
     "all around": {
       "source": "all around",
-      "target": "um und um",
+      "target": "rundherum",
       "partOfSpeech": "expression",
-      "sourceGloss": "all around",
+      "sourceGloss": "all around, on all sides",
       "frequencyRank": 184,
       "confidence": "medium",
       "sourceIds": [
@@ -2521,13 +2521,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.7,
-      "eligible": true
+      "eligible": false
     },
     "in-house": {
       "source": "in-house",
-      "target": "heimeigen",
+      "target": "hausintern",
       "partOfSpeech": "adjective",
-      "sourceGloss": "in-house",
+      "sourceGloss": "in-house, internal to the company",
       "frequencyRank": 189,
       "confidence": "medium",
       "sourceIds": [
@@ -2551,9 +2551,9 @@
     },
     "each": {
       "source": "each",
-      "target": "jeweils",
+      "target": "jeder",
       "partOfSpeech": "adverb",
-      "sourceGloss": "each",
+      "sourceGloss": "each, every",
       "frequencyRank": 191,
       "confidence": "medium",
       "sourceIds": [
@@ -2646,9 +2646,9 @@
     },
     "against": {
       "source": "against",
-      "target": "entgegen",
+      "target": "gegen",
       "partOfSpeech": "adverb",
-      "sourceGloss": "against",
+      "sourceGloss": "against, in opposition to",
       "frequencyRank": 198,
       "confidence": "medium",
       "sourceIds": [
@@ -2685,9 +2685,9 @@
     },
     "go off": {
       "source": "go off",
-      "target": "ausfallen",
+      "target": "losgehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to fail, malfunction, to go off",
+      "sourceGloss": "to go off (of an alarm or bomb: to start ringing, to detonate)",
       "frequencyRank": 201,
       "confidence": "medium",
       "sourceIds": [
@@ -2817,9 +2817,9 @@
     },
     "take back": {
       "source": "take back",
-      "target": "wiederholen",
+      "target": "zurücknehmen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to bring back, take back",
+      "sourceGloss": "to take back (an item, a statement); to return, to retract",
       "frequencyRank": 211,
       "confidence": "medium",
       "sourceIds": [
@@ -2869,9 +2869,9 @@
     },
     "ever": {
       "source": "ever",
-      "target": "nur",
+      "target": "jemals",
       "partOfSpeech": "adverb",
-      "sourceGloss": "ever; at all",
+      "sourceGloss": "ever, at any time",
       "frequencyRank": 215,
       "confidence": "medium",
       "sourceIds": [
@@ -2910,9 +2910,9 @@
     },
     "keep": {
       "source": "keep",
-      "target": "bleiben",
+      "target": "behalten",
       "partOfSpeech": "verb",
-      "sourceGloss": "to keep (on); to continue with infinitive ‘doing something’ (see usage notes below)",
+      "sourceGloss": "to keep, to retain (something in one's possession)",
       "frequencyRank": 218,
       "confidence": "medium",
       "sourceIds": [
@@ -2923,9 +2923,9 @@
     },
     "put": {
       "source": "put",
-      "target": "geben",
+      "target": "legen",
       "partOfSpeech": "verb",
-      "sourceGloss": "to present; to put",
+      "sourceGloss": "to put, to lay (something somewhere)",
       "frequencyRank": 219,
       "confidence": "medium",
       "sourceIds": [
@@ -3003,7 +3003,7 @@
       "source": "right here",
       "target": "allhier",
       "partOfSpeech": "expression",
-      "sourceGloss": "right here",
+      "sourceGloss": "right here, exactly here",
       "frequencyRank": 225,
       "confidence": "medium",
       "sourceIds": [
@@ -3014,9 +3014,9 @@
     },
     "go down": {
       "source": "go down",
-      "target": "zu Boden gehen",
+      "target": "hinuntergehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to go down, to be knocked out",
+      "sourceGloss": "to go down, to descend",
       "frequencyRank": 226,
       "confidence": "medium",
       "sourceIds": [
@@ -3040,9 +3040,9 @@
     },
     "get around": {
       "source": "get around",
-      "target": "herumsprechen",
+      "target": "herumkommen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to travel, to get around, to get out (news, gossip, rumours, etc.)",
+      "sourceGloss": "to get around, to travel about",
       "frequencyRank": 228,
       "confidence": "medium",
       "sourceIds": [
@@ -3062,7 +3062,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.65,
-      "eligible": true
+      "eligible": false
     },
     "three people": {
       "source": "three people",
@@ -3075,7 +3075,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.65,
-      "eligible": true
+      "eligible": false
     },
     "money": {
       "source": "money",
@@ -3094,9 +3094,9 @@
     },
     "go through": {
       "source": "go through",
-      "target": "mitmachen",
+      "target": "durchmachen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to experience, to endure, to go through",
+      "sourceGloss": "to go through, to experience, to endure (hardship)",
       "frequencyRank": 232,
       "confidence": "medium",
       "sourceIds": [
@@ -3170,13 +3170,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.64,
-      "eligible": true
+      "eligible": false
     },
     "look good": {
       "source": "look good",
       "target": "aussehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to look good or bad; depending on intonation",
+      "sourceGloss": "to look good",
       "frequencyRank": 238,
       "confidence": "medium",
       "sourceIds": [
@@ -3204,7 +3204,7 @@
       "source": "get high",
       "target": "zudröhnen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to get high",
+      "sourceGloss": "to get (totally) high, to get wasted (slang)",
       "frequencyRank": 240,
       "confidence": "medium",
       "sourceIds": [
@@ -3243,7 +3243,7 @@
       "source": "look after",
       "target": "sorgen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take care of, to care for, to look after",
+      "sourceGloss": "to look after, to care for, to provide for (sorgen für jemanden)",
       "frequencyRank": 243,
       "confidence": "medium",
       "sourceIds": [
@@ -3263,7 +3263,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.63,
-      "eligible": true
+      "eligible": false
     },
     "make love": {
       "source": "make love",
@@ -3280,9 +3280,9 @@
     },
     "give up": {
       "source": "give up",
-      "target": "verzichten",
+      "target": "aufgeben",
       "partOfSpeech": "expression",
-      "sourceGloss": "to give up, to go without, to live without, to make do without, to do without, to forgo, to dispense with",
+      "sourceGloss": "to give up, to quit, to surrender, to abandon",
       "frequencyRank": 246,
       "confidence": "medium",
       "sourceIds": [
@@ -3302,7 +3302,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.63,
-      "eligible": true
+      "eligible": false
     },
     "give out": {
       "source": "give out",
@@ -3373,9 +3373,9 @@
     },
     "left": {
       "source": "left",
-      "target": "link",
+      "target": "links",
       "partOfSpeech": "adjective",
-      "sourceGloss": "left",
+      "sourceGloss": "left; on or toward the left-hand side",
       "frequencyRank": 253,
       "confidence": "medium",
       "sourceIds": [
@@ -3442,7 +3442,7 @@
       "source": "down here",
       "target": "runter",
       "partOfSpeech": "expression",
-      "sourceGloss": "down, down here, downstairs (towards the speaker)",
+      "sourceGloss": "down here; in this lower place",
       "frequencyRank": 258,
       "confidence": "medium",
       "sourceIds": [
@@ -3574,7 +3574,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.61,
-      "eligible": true
+      "eligible": false
     },
     "last year": {
       "source": "last year",
@@ -3587,7 +3587,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.61,
-      "eligible": true
+      "eligible": false
     },
     "work through": {
       "source": "work through",
@@ -3673,7 +3673,7 @@
       "source": "take down",
       "target": "abhängen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take down",
+      "sourceGloss": "to take down (something hanging, such as a picture or laundry)",
       "frequencyRank": 275,
       "confidence": "medium",
       "sourceIds": [
@@ -3684,9 +3684,9 @@
     },
     "end up": {
       "source": "end up",
-      "target": "wandern",
+      "target": "landen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to wander, to migrate, to move spontaneously, to end up (somewhere)",
+      "sourceGloss": "to end up (somewhere), to land",
       "frequencyRank": 276,
       "confidence": "medium",
       "sourceIds": [
@@ -3697,9 +3697,9 @@
     },
     "show up": {
       "source": "show up",
-      "target": "zeigen",
+      "target": "auftauchen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to appear, become apparent, come out, turn out, show up, to be manifested",
+      "sourceGloss": "to show up, to turn up, to appear (arrive or become visible)",
       "frequencyRank": 277,
       "confidence": "medium",
       "sourceIds": [
@@ -3749,9 +3749,9 @@
     },
     "set": {
       "source": "set",
-      "target": "Service",
+      "target": "Set",
       "partOfSpeech": "noun",
-      "sourceGloss": "service, set",
+      "sourceGloss": "a collection of things, often matching; a set",
       "frequencyRank": 281,
       "confidence": "medium",
       "sourceIds": [
@@ -3760,7 +3760,7 @@
       "enZipf": 5.59,
       "eligible": true,
       "gender": "neuter",
-      "plural": "Service"
+      "plural": "Sets"
     },
     "thought": {
       "source": "thought",
@@ -3833,7 +3833,7 @@
       "source": "each time",
       "target": "allemal",
       "partOfSpeech": "expression",
-      "sourceGloss": "all times, each time, every time",
+      "sourceGloss": "each time, every time",
       "frequencyRank": 287,
       "confidence": "medium",
       "sourceIds": [
@@ -3844,9 +3844,9 @@
     },
     "feel up": {
       "source": "feel up",
-      "target": "zur Sache kommen",
+      "target": "befummeln",
       "partOfSpeech": "expression",
-      "sourceGloss": "to feel up or do the deed",
+      "sourceGloss": "to feel up, to grope",
       "frequencyRank": 288,
       "confidence": "medium",
       "sourceIds": [
@@ -3909,9 +3909,9 @@
     },
     "go-between": {
       "source": "go-between",
-      "target": "V-Mann",
+      "target": "Vermittler",
       "partOfSpeech": "noun",
-      "sourceGloss": "contact man, go-between, undercover agent (working for the police or a secret service)",
+      "sourceGloss": "an intermediary, a go-between",
       "frequencyRank": 293,
       "confidence": "medium",
       "sourceIds": [
@@ -3920,7 +3920,7 @@
       "enZipf": 5.58,
       "eligible": true,
       "gender": "masculine",
-      "plural": "V-Männer"
+      "plural": "Vermittler"
     },
     "go around": {
       "source": "go around",
@@ -3995,9 +3995,9 @@
     },
     "top": {
       "source": "top",
-      "target": "Top",
+      "target": "Spitze",
       "partOfSpeech": "noun",
-      "sourceGloss": "a casual women's shirt, often with very short sleeves; a top",
+      "sourceGloss": "the highest part or point; the top",
       "frequencyRank": 299,
       "confidence": "medium",
       "sourceIds": [
@@ -4005,8 +4005,8 @@
       ],
       "enZipf": 5.57,
       "eligible": true,
-      "gender": "neuter",
-      "plural": "Tops"
+      "gender": "feminine",
+      "plural": "Spitzen"
     },
     "public": {
       "source": "public",
@@ -4058,7 +4058,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.57,
-      "eligible": true,
+      "eligible": false,
       "gender": "neuter",
       "plural": "Frauenprobleme"
     },
@@ -4213,7 +4213,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.56,
-      "eligible": true
+      "eligible": false
     },
     "give over": {
       "source": "give over",
@@ -4258,7 +4258,7 @@
       "source": "free up",
       "target": "loseisen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to free up, to acquire (funds, stocks, etc. that suppliers were previously holding back)",
+      "sourceGloss": "to free up, to release (memory, funds, resources)",
       "frequencyRank": 318,
       "confidence": "medium",
       "sourceIds": [
@@ -4271,7 +4271,7 @@
       "source": "take home",
       "target": "heimschleppen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take home",
+      "sourceGloss": "to take home, to bring home",
       "frequencyRank": 319,
       "confidence": "medium",
       "sourceIds": [
@@ -4295,9 +4295,9 @@
     },
     "case": {
       "source": "case",
-      "target": "Mal",
+      "target": "Fall",
       "partOfSpeech": "noun",
-      "sourceGloss": "occasion, case, occurrence",
+      "sourceGloss": "case, instance; matter, affair",
       "frequencyRank": 321,
       "confidence": "medium",
       "sourceIds": [
@@ -4305,8 +4305,8 @@
       ],
       "enZipf": 5.55,
       "eligible": true,
-      "gender": "neuter",
-      "plural": "Male"
+      "gender": "masculine",
+      "plural": "Fälle"
     },
     "today": {
       "source": "today",
@@ -4338,9 +4338,9 @@
     },
     "come off": {
       "source": "come off",
-      "target": "gelingen",
+      "target": "abgehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to turn out well, to work out, to go smoothly, to succeed, to come off",
+      "sourceGloss": "to come off, become detached",
       "frequencyRank": 324,
       "confidence": "medium",
       "sourceIds": [
@@ -4412,7 +4412,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.55,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "Fehlanzeigen"
     },
@@ -4444,9 +4444,9 @@
     },
     "point": {
       "source": "point",
-      "target": "Ort",
+      "target": "Punkt",
       "partOfSpeech": "noun",
-      "sourceGloss": "place, location, point, position",
+      "sourceGloss": "point (dot, spot; item in a discussion; unit of scoring)",
       "frequencyRank": 332,
       "confidence": "medium",
       "sourceIds": [
@@ -4455,7 +4455,7 @@
       "enZipf": 5.54,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Orte"
+      "plural": "Punkte"
     },
     "read": {
       "source": "read",
@@ -4533,7 +4533,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.54,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "Präsenzen"
     },
@@ -4619,9 +4619,9 @@
     },
     "look down": {
       "source": "look down",
-      "target": "niederschlagen",
+      "target": "herabblicken",
       "partOfSpeech": "expression",
-      "sourceGloss": "to cast down (one's eyes), to look down",
+      "sourceGloss": "to look down (also figuratively: to look down on someone)",
       "frequencyRank": 345,
       "confidence": "medium",
       "sourceIds": [
@@ -4660,7 +4660,7 @@
       "source": "four",
       "target": "Vier",
       "partOfSpeech": "noun",
-      "sourceGloss": "four (digit or figure 4)",
+      "sourceGloss": "four (cardinal number)",
       "frequencyRank": 348,
       "confidence": "medium",
       "sourceIds": [
@@ -4673,9 +4673,9 @@
     },
     "hard": {
       "source": "hard",
-      "target": "fest",
+      "target": "hart",
       "partOfSpeech": "adjective",
-      "sourceGloss": "firm; compact; hard",
+      "sourceGloss": "hard, solid (not soft); harsh, tough",
       "frequencyRank": 349,
       "confidence": "medium",
       "sourceIds": [
@@ -4740,9 +4740,9 @@
     },
     "make sure": {
       "source": "make sure",
-      "target": "schauen",
+      "target": "sicherstellen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to watch out, to take care; to make sure, to see to it",
+      "sourceGloss": "to make sure, to ensure",
       "frequencyRank": 354,
       "confidence": "medium",
       "sourceIds": [
@@ -4766,9 +4766,9 @@
     },
     "set out": {
       "source": "set out",
-      "target": "ausziehen",
+      "target": "aufbrechen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to set off, to set out (in order to achieve a higher goal, into war, a period of travels, etc.)",
+      "sourceGloss": "to set out, set off (on a journey)",
       "frequencyRank": 356,
       "confidence": "medium",
       "sourceIds": [
@@ -4792,9 +4792,9 @@
     },
     "thought out": {
       "source": "thought out",
-      "target": "überdacht",
+      "target": "durchdacht",
       "partOfSpeech": "expression",
-      "sourceGloss": "thought through, thought out; (re)considered",
+      "sourceGloss": "thought out, well-conceived; carefully planned",
       "frequencyRank": 358,
       "confidence": "medium",
       "sourceIds": [
@@ -4868,7 +4868,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.53,
-      "eligible": true
+      "eligible": false
     },
     "power": {
       "source": "power",
@@ -4991,7 +4991,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.52,
-      "eligible": true
+      "eligible": false
     },
     "white": {
       "source": "white",
@@ -5008,9 +5008,9 @@
     },
     "believe": {
       "source": "believe",
-      "target": "meinen",
+      "target": "glauben",
       "partOfSpeech": "verb",
-      "sourceGloss": "to opine, to think; to believe; to suppose",
+      "sourceGloss": "to believe; to think something is true",
       "frequencyRank": 374,
       "confidence": "medium",
       "sourceIds": [
@@ -5062,9 +5062,9 @@
     },
     "call": {
       "source": "call",
-      "target": "Besuch",
+      "target": "Anruf",
       "partOfSpeech": "noun",
-      "sourceGloss": "visit, call",
+      "sourceGloss": "a telephone call",
       "frequencyRank": 378,
       "confidence": "medium",
       "sourceIds": [
@@ -5073,7 +5073,7 @@
       "enZipf": 5.51,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Besuche"
+      "plural": "Anrufe"
     },
     "make money": {
       "source": "make money",
@@ -5138,7 +5138,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.51,
-      "eligible": true
+      "eligible": false
     },
     "top up": {
       "source": "top up",
@@ -5190,7 +5190,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.51,
-      "eligible": true
+      "eligible": false
     },
     "old-world": {
       "source": "old-world",
@@ -5203,7 +5203,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.51,
-      "eligible": true
+      "eligible": false
     },
     "one-week": {
       "source": "one-week",
@@ -5222,7 +5222,7 @@
       "source": "old world",
       "target": "altweltlich",
       "partOfSpeech": "expression",
-      "sourceGloss": "old-world, Old World",
+      "sourceGloss": "the Old World (Europe, Africa, and Asia)",
       "frequencyRank": 390,
       "confidence": "medium",
       "sourceIds": [
@@ -5291,9 +5291,9 @@
     },
     "try": {
       "source": "try",
-      "target": "kosten",
+      "target": "versuchen",
       "partOfSpeech": "verb",
-      "sourceGloss": "to taste, try (sample the flavor of something)",
+      "sourceGloss": "to attempt, to try",
       "frequencyRank": 395,
       "confidence": "medium",
       "sourceIds": [
@@ -5313,7 +5313,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.5,
-      "eligible": true
+      "eligible": false
     },
     "take place": {
       "source": "take place",
@@ -5339,7 +5339,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.5,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Startups"
     },
@@ -5354,13 +5354,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.5,
-      "eligible": true
+      "eligible": false
     },
     "start up": {
       "source": "start up",
-      "target": "aufspringen",
+      "target": "starten",
       "partOfSpeech": "expression",
-      "sourceGloss": "to spring/leap to one's feet, to start up, to jump up from something",
+      "sourceGloss": "to start up (an engine, computer, or business)",
       "frequencyRank": 400,
       "confidence": "medium",
       "sourceIds": [
@@ -5371,9 +5371,9 @@
     },
     "actually": {
       "source": "actually",
-      "target": "auch",
+      "target": "tatsächlich",
       "partOfSpeech": "adverb",
-      "sourceGloss": "Used for emphasis.",
+      "sourceGloss": "in fact, really",
       "frequencyRank": 401,
       "confidence": "medium",
       "sourceIds": [
@@ -5384,9 +5384,9 @@
     },
     "line": {
       "source": "line",
-      "target": "Gerade",
+      "target": "Linie",
       "partOfSpeech": "noun",
-      "sourceGloss": "line (infinite one-dimensional figure)",
+      "sourceGloss": "line (a drawn mark, path, or row)",
       "frequencyRank": 402,
       "confidence": "medium",
       "sourceIds": [
@@ -5395,7 +5395,7 @@
       "enZipf": 5.49,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Gerade"
+      "plural": "Linien"
     },
     "later": {
       "source": "later",
@@ -5498,9 +5498,9 @@
     },
     "left over": {
       "source": "left over",
-      "target": "über",
+      "target": "übrig",
       "partOfSpeech": "expression",
-      "sourceGloss": "left over, remaining, replaces übrig in all its predicative instances, including those lexicalized as verb prefixoids.",
+      "sourceGloss": "left over, remaining",
       "frequencyRank": 410,
       "confidence": "medium",
       "sourceIds": [
@@ -5511,9 +5511,9 @@
     },
     "show off": {
       "source": "show off",
-      "target": "produzieren",
+      "target": "angeben",
       "partOfSpeech": "expression",
-      "sourceGloss": "to show off",
+      "sourceGloss": "to show off, to brag",
       "frequencyRank": 411,
       "confidence": "medium",
       "sourceIds": [
@@ -5801,7 +5801,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.48,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Einläufe"
     },
@@ -5859,9 +5859,9 @@
     },
     "home help": {
       "source": "home help",
-      "target": "Spetterin",
+      "target": "Haushaltshilfe",
       "partOfSpeech": "expression",
-      "sourceGloss": "domestic, home help",
+      "sourceGloss": "domestic worker, home help",
       "frequencyRank": 437,
       "confidence": "medium",
       "sourceIds": [
@@ -5881,7 +5881,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.48,
-      "eligible": true
+      "eligible": false
     },
     "general": {
       "source": "general",
@@ -5911,9 +5911,9 @@
     },
     "united": {
       "source": "united",
-      "target": "einig",
+      "target": "vereint",
       "partOfSpeech": "adjective",
-      "sourceGloss": "united",
+      "sourceGloss": "united, joined together as one",
       "frequencyRank": 441,
       "confidence": "medium",
       "sourceIds": [
@@ -5998,7 +5998,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.47,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Zuwächse"
     },
@@ -6013,7 +6013,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.47,
-      "eligible": true
+      "eligible": false
     },
     "put off": {
       "source": "put off",
@@ -6039,7 +6039,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.47,
-      "eligible": true
+      "eligible": false
     },
     "go right through": {
       "source": "go right through",
@@ -6166,9 +6166,9 @@
     },
     "let go": {
       "source": "let go",
-      "target": "abgeben",
+      "target": "loslassen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to give up, relinquish, let go, concede, hand over, etc. (power, money, valuable objects, etc.)",
+      "sourceGloss": "to release one's grip on something",
       "frequencyRank": 460,
       "confidence": "medium",
       "sourceIds": [
@@ -6192,9 +6192,9 @@
     },
     "call up": {
       "source": "call up",
-      "target": "aufrufen",
+      "target": "anrufen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to call up (display data or a file on the screen)",
+      "sourceGloss": "to contact by telephone",
       "frequencyRank": 462,
       "confidence": "medium",
       "sourceIds": [
@@ -6205,9 +6205,9 @@
     },
     "good-looking": {
       "source": "good-looking",
-      "target": "ansehnlich",
+      "target": "gutaussehend",
       "partOfSpeech": "adjective",
-      "sourceGloss": "good-looking",
+      "sourceGloss": "attractive, handsome; pleasant in appearance",
       "frequencyRank": 463,
       "confidence": "medium",
       "sourceIds": [
@@ -6218,9 +6218,9 @@
     },
     "right away": {
       "source": "right away",
-      "target": "drauflos",
+      "target": "sofort",
       "partOfSpeech": "expression",
-      "sourceGloss": "without a concrete plan; right away",
+      "sourceGloss": "immediately, at once",
       "frequencyRank": 464,
       "confidence": "medium",
       "sourceIds": [
@@ -6276,7 +6276,7 @@
       "source": "five",
       "target": "Fünf",
       "partOfSpeech": "noun",
-      "sourceGloss": "five",
+      "sourceGloss": "the cardinal number five",
       "frequencyRank": 468,
       "confidence": "medium",
       "sourceIds": [
@@ -6289,9 +6289,9 @@
     },
     "face": {
       "source": "face",
-      "target": "Seite",
+      "target": "Gesicht",
       "partOfSpeech": "noun",
-      "sourceGloss": "face, side, surface of any three-dimensional object",
+      "sourceGloss": "the front part of the head, with the eyes, nose and mouth",
       "frequencyRank": 469,
       "confidence": "medium",
       "sourceIds": [
@@ -6299,8 +6299,8 @@
       ],
       "enZipf": 5.45,
       "eligible": true,
-      "gender": "feminine",
-      "plural": "Seiten"
+      "gender": "neuter",
+      "plural": "Gesichter"
     },
     "story": {
       "source": "story",
@@ -6395,7 +6395,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.45,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Schwäger"
     },
@@ -6423,7 +6423,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.45,
-      "eligible": true
+      "eligible": false
     },
     "name day": {
       "source": "name day",
@@ -6475,7 +6475,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.45,
-      "eligible": true
+      "eligible": false
     },
     "far out": {
       "source": "far out",
@@ -6488,7 +6488,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.45,
-      "eligible": true
+      "eligible": false
     },
     "important": {
       "source": "important",
@@ -6615,15 +6615,15 @@
         "wiktextract-de"
       ],
       "enZipf": 5.44,
-      "eligible": true,
+      "eligible": false,
       "gender": "masculine",
       "plural": "Gesundheitszustände"
     },
     "run out": {
       "source": "run out",
-      "target": "ablaufen",
+      "target": "ausgehen",
       "partOfSpeech": "expression",
-      "sourceGloss": "run out",
+      "sourceGloss": "to run out, be used up",
       "frequencyRank": 493,
       "confidence": "medium",
       "sourceIds": [
@@ -6634,9 +6634,9 @@
     },
     "take away": {
       "source": "take away",
-      "target": "mitnehmen",
+      "target": "wegnehmen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take away",
+      "sourceGloss": "to take away, take (something) from someone",
       "frequencyRank": 494,
       "confidence": "medium",
       "sourceIds": [
@@ -6686,13 +6686,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.44,
-      "eligible": true
+      "eligible": false
     },
     "looking back": {
       "source": "looking back",
-      "target": "Rückschau",
+      "target": "rückblickend",
       "partOfSpeech": "expression",
-      "sourceGloss": "looking back",
+      "sourceGloss": "looking back, in retrospect",
       "frequencyRank": 498,
       "confidence": "medium",
       "sourceIds": [
@@ -6712,7 +6712,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.44,
-      "eligible": true
+      "eligible": false
     },
     "will-less": {
       "source": "will-less",
@@ -6908,9 +6908,9 @@
     },
     "able": {
       "source": "able",
-      "target": "fit",
+      "target": "fähig",
       "partOfSpeech": "adjective",
-      "sourceGloss": "able, prepared, up to a task (able to perform adequately, in contrast to a prior or possibly future state of inadequacy)",
+      "sourceGloss": "able, capable",
       "frequencyRank": 514,
       "confidence": "medium",
       "sourceIds": [
@@ -6921,9 +6921,9 @@
     },
     "friends": {
       "source": "friends",
-      "target": "befreundet",
+      "target": "Freunde",
       "partOfSpeech": "adjective",
-      "sourceGloss": "friendly, friends",
+      "sourceGloss": "friends (more than one friend)",
       "frequencyRank": 515,
       "confidence": "medium",
       "sourceIds": [
@@ -6936,7 +6936,7 @@
       "source": "called off",
       "target": "abgesagt",
       "partOfSpeech": "expression",
-      "sourceGloss": "postponed; called off, cancelled",
+      "sourceGloss": "called off, cancelled",
       "frequencyRank": 516,
       "confidence": "medium",
       "sourceIds": [
@@ -6986,9 +6986,9 @@
     },
     "set off": {
       "source": "set off",
-      "target": "ausziehen",
+      "target": "aufbrechen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to set off, to set out (in order to achieve a higher goal, into war, a period of travels, etc.)",
+      "sourceGloss": "to set off, set out (begin a journey)",
       "frequencyRank": 520,
       "confidence": "medium",
       "sourceIds": [
@@ -7051,9 +7051,9 @@
     },
     "by-law": {
       "source": "by-law",
-      "target": "Durchführungsverordnung",
+      "target": "Satzung",
       "partOfSpeech": "noun",
-      "sourceGloss": "by-law",
+      "sourceGloss": "a rule or regulation made by a local authority or by an organization for its members",
       "frequencyRank": 525,
       "confidence": "medium",
       "sourceIds": [
@@ -7062,7 +7062,7 @@
       "enZipf": 5.43,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Durchführungsverordnungen"
+      "plural": "Satzungen"
     },
     "good-for-nothing": {
       "source": "good-for-nothing",
@@ -7090,7 +7090,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.43,
-      "eligible": true
+      "eligible": false
     },
     "old school": {
       "source": "old school",
@@ -7129,7 +7129,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.43,
-      "eligible": true
+      "eligible": false
     },
     "shit out": {
       "source": "shit out",
@@ -7155,7 +7155,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.42,
-      "eligible": true
+      "eligible": false
     },
     "talk": {
       "source": "talk",
@@ -7252,9 +7252,9 @@
     },
     "think hard": {
       "source": "think hard",
-      "target": "schwitzen",
+      "target": "grübeln",
       "partOfSpeech": "expression",
-      "sourceGloss": "to think hard; to work hard",
+      "sourceGloss": "to think hard about something; to ponder, brood over",
       "frequencyRank": 540,
       "confidence": "medium",
       "sourceIds": [
@@ -7317,9 +7317,9 @@
     },
     "let down": {
       "source": "let down",
-      "target": "herablassen",
+      "target": "enttäuschen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to let down",
+      "sourceGloss": "to disappoint (someone); to fail to meet expectations",
       "frequencyRank": 545,
       "confidence": "medium",
       "sourceIds": [
@@ -7339,13 +7339,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.42,
-      "eligible": true
+      "eligible": false
     },
     "all together": {
       "source": "all together",
-      "target": "allzumal",
+      "target": "allesamt",
       "partOfSpeech": "expression",
-      "sourceGloss": "all, one and all, all together",
+      "sourceGloss": "all of them together; all without exception",
       "frequencyRank": 547,
       "confidence": "medium",
       "sourceIds": [
@@ -7397,9 +7397,9 @@
     },
     "single": {
       "source": "single",
-      "target": "einfach",
+      "target": "einzeln",
       "partOfSpeech": "adjective",
-      "sourceGloss": "single; one-way",
+      "sourceGloss": "consisting of only one; individual, sole",
       "frequencyRank": 551,
       "confidence": "medium",
       "sourceIds": [
@@ -7477,7 +7477,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.41,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "Seelen"
     },
@@ -7522,9 +7522,9 @@
     },
     "go bad": {
       "source": "go bad",
-      "target": "verkommen",
+      "target": "verderben",
       "partOfSpeech": "expression",
-      "sourceGloss": "to go bad, to decay",
+      "sourceGloss": "to spoil, to go off (especially of food)",
       "frequencyRank": 560,
       "confidence": "medium",
       "sourceIds": [
@@ -7563,9 +7563,9 @@
     },
     "thought through": {
       "source": "thought through",
-      "target": "überdacht",
+      "target": "durchdacht",
       "partOfSpeech": "expression",
-      "sourceGloss": "thought through, thought out; (re)considered",
+      "sourceGloss": "thought through, well thought out; carefully considered",
       "frequencyRank": 563,
       "confidence": "medium",
       "sourceIds": [
@@ -7585,13 +7585,13 @@
         "wiktextract-de"
       ],
       "enZipf": 5.41,
-      "eligible": true
+      "eligible": false
     },
     "business day": {
       "source": "business day",
-      "target": "Handelstag",
+      "target": "Werktag",
       "partOfSpeech": "expression",
-      "sourceGloss": "trading day; business day (a day on which an exchange is open for trading)",
+      "sourceGloss": "a working day; a day on which business is normally conducted (not a weekend or public holiday)",
       "frequencyRank": 565,
       "confidence": "medium",
       "sourceIds": [
@@ -7663,7 +7663,7 @@
         "wiktextract-de"
       ],
       "enZipf": 5.4,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "Uhren"
     },
@@ -7684,9 +7684,9 @@
     },
     "true": {
       "source": "true",
-      "target": "echt",
+      "target": "wahr",
       "partOfSpeech": "adjective",
-      "sourceGloss": "authentic, genuine, true",
+      "sourceGloss": "in accordance with fact or reality",
       "frequencyRank": 572,
       "confidence": "medium",
       "sourceIds": [
@@ -7753,9 +7753,9 @@
     },
     "office": {
       "source": "office",
-      "target": "Amt",
+      "target": "Büro",
       "partOfSpeech": "noun",
-      "sourceGloss": "agency; department; office (state institution responsible for specified concerns)",
+      "sourceGloss": "a room or building where administrative or professional work is done",
       "frequencyRank": 577,
       "confidence": "medium",
       "sourceIds": [
@@ -7764,7 +7764,7 @@
       "enZipf": 5.4,
       "eligible": true,
       "gender": "neuter",
-      "plural": "Ämter"
+      "plural": "Büros"
     },
     "control": {
       "source": "control",
@@ -7813,7 +7813,7 @@
       "source": "take care",
       "target": "kümmern",
       "partOfSpeech": "expression",
-      "sourceGloss": "to take care, to look after",
+      "sourceGloss": "to take care of, to look after (sich kümmern um + accusative)",
       "frequencyRank": 581,
       "confidence": "medium",
       "sourceIds": [
@@ -7919,7 +7919,7 @@
       "source": "many times",
       "target": "zehnmal",
       "partOfSpeech": "expression",
-      "sourceGloss": "very often, many times",
+      "sourceGloss": "on many occasions; frequently",
       "frequencyRank": 589,
       "confidence": "medium",
       "sourceIds": [
@@ -7945,7 +7945,7 @@
       "source": "whole time",
       "target": "stets",
       "partOfSpeech": "expression",
-      "sourceGloss": "always; constantly; the whole time (very often)",
+      "sourceGloss": "throughout the entire period; continuously during that time",
       "frequencyRank": 591,
       "confidence": "medium",
       "sourceIds": [
@@ -7971,7 +7971,7 @@
       "source": "full year",
       "target": "Gesamtjahr",
       "partOfSpeech": "expression",
-      "sourceGloss": "full year",
+      "sourceGloss": "an entire year; the whole year",
       "frequencyRank": 593,
       "confidence": "medium",
       "sourceIds": [
@@ -8036,9 +8036,9 @@
     },
     "university": {
       "source": "university",
-      "target": "Schule",
+      "target": "Universität",
       "partOfSpeech": "noun",
-      "sourceGloss": "school (an institution dedicated to teaching and learning (especially before university); department/institute at a c…",
+      "sourceGloss": "an institution of higher education, typically awarding degrees",
       "frequencyRank": 598,
       "confidence": "medium",
       "sourceIds": [
@@ -8047,7 +8047,7 @@
       "enZipf": 5.39,
       "eligible": true,
       "gender": "feminine",
-      "plural": "Schulen"
+      "plural": "Universitäten"
     },
     "known": {
       "source": "known",
@@ -30962,13 +30962,13 @@
         "wiktextract-de"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "drop": {
       "source": "drop",
-      "target": "Fall",
+      "target": "Tropfen",
       "partOfSpeech": "noun",
-      "sourceGloss": "fall, drop (the act of falling or an instance thereof)",
+      "sourceGloss": "a small rounded quantity of liquid",
       "frequencyRank": 2306,
       "confidence": "medium",
       "sourceIds": [
@@ -30977,7 +30977,7 @@
       "enZipf": 4.99,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Fälle"
+      "plural": "Tropfen"
     },
     "kid": {
       "source": "kid",
@@ -30996,9 +30996,9 @@
     },
     "consider": {
       "source": "consider",
-      "target": "finden",
+      "target": "erwägen",
       "partOfSpeech": "verb",
-      "sourceGloss": "to think, to consider, to find",
+      "sourceGloss": "to think carefully about; to weigh (an option)",
       "frequencyRank": 2308,
       "confidence": "medium",
       "sourceIds": [
@@ -31018,7 +31018,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.99,
-      "eligible": true,
+      "eligible": false,
       "gender": "feminine",
       "plural": "e-Formen"
     },
@@ -31095,9 +31095,9 @@
     },
     "fair": {
       "source": "fair",
-      "target": "gut",
+      "target": "gerecht",
       "partOfSpeech": "adjective",
-      "sourceGloss": "all right, fair, proper (satisfactory)",
+      "sourceGloss": "just; equitable; treating people equally",
       "frequencyRank": 2315,
       "confidence": "medium",
       "sourceIds": [
@@ -31108,9 +31108,9 @@
     },
     "link": {
       "source": "link",
-      "target": "Zusammenhang",
+      "target": "Link",
       "partOfSpeech": "noun",
-      "sourceGloss": "interrelation, correlation, connection, connectivity, relation, nexus, link",
+      "sourceGloss": "a hyperlink; a connection between two things",
       "frequencyRank": 2316,
       "confidence": "medium",
       "sourceIds": [
@@ -31119,7 +31119,7 @@
       "enZipf": 4.99,
       "eligible": true,
       "gender": "masculine",
-      "plural": "Zusammenhänge"
+      "plural": "Links"
     },
     "further education": {
       "source": "further education",
@@ -31262,7 +31262,7 @@
         "wiktextract-de"
       ],
       "enZipf": 4.99,
-      "eligible": true
+      "eligible": false
     },
     "seeing off": {
       "source": "seeing off",
@@ -31448,9 +31448,9 @@
     },
     "beat out": {
       "source": "beat out",
-      "target": "ausschlagen",
+      "target": "ausstechen",
       "partOfSpeech": "expression",
-      "sourceGloss": "to beat out (a fire)",
+      "sourceGloss": "to defeat (a rival) narrowly; to outdo",
       "frequencyRank": 2342,
       "confidence": "medium",
       "sourceIds": [
