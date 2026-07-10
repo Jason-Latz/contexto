@@ -1,4 +1,4 @@
-import { loadLanguagePack } from '../language/loader.js'
+import { getActiveTargetLanguage, isTailLoaded, loadLanguagePack } from '../language/loader.js'
 import { collectTextNodes } from './domWalker.js'
 import { extractPageCandidates, injectReplacements, restoreReplacements } from './injector.js'
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
@@ -64,6 +64,21 @@ function currentRuntimeSettings(): RuntimeSettings {
   }
 }
 
+// The settings a finished render pass actually consumed — NOT whatever is in
+// memory when it happens to finish. A reconcile can call loadSettings() while a
+// pass is still awaiting its pack or walking the DOM, so language and tail are
+// read back from the loader (what truly got loaded) and density is the value the
+// pass was handed. Recording live settings here would let an A -> B -> A toggle
+// leave the page rendered in B while every later diff believes it is in A.
+function renderedRuntimeSettings(density: number): RuntimeSettings {
+  return {
+    density,
+    replacementsEnabled: true,
+    aggressiveMode: isTailLoaded(),
+    blockedDomains: [...getBlockedDomains()],
+    targetLanguage: getActiveTargetLanguage(),
+  }
+}
 
 // Does the difference between two settings snapshots change what this page renders?
 function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): boolean {
@@ -103,10 +118,15 @@ function runQueuedReplacementRefresh(): void {
   if (!pendingReplacementRefresh || isReplacementPipelineRunning) return
 
   pendingReplacementRefresh = false
-  if (isReplacementPipelineActive) {
-    void refreshReplacementPipeline()
-  } else {
+  if (!isReplacementPipelineActive) {
     void startReplacementPipeline()
+    return
+  }
+  // Re-diff now that appliedSettings reflects the render that just landed. A
+  // change queued mid-run may have been undone before the run finished, in which
+  // case there is nothing left to do.
+  if (appliedSettings === null || rendersDifferently(appliedSettings, currentRuntimeSettings())) {
+    void refreshReplacementPipeline()
   }
 }
 
@@ -174,6 +194,7 @@ function updateRankedPageLemmas(pageCandidates: CandidateToken[]): string[] {
 }
 
 async function renderReplacementPass(
+  density: number,
   shouldRecordExposure?: (lemma: string) => boolean,
   isCurrentRun: () => boolean = () => true,
 ): Promise<boolean> {
@@ -191,7 +212,6 @@ async function renderReplacementPass(
   // that once a lemma is chosen it is replaced in every text node, not just
   // the first node where it happened to beat the per-node density cap.
   const pageCandidates = extractPageCandidates(textNodes)
-  const density = computeDensity()
   const maxReplacements = Math.floor(density * pageCandidates.length)
   const rankedLemmas = updateRankedPageLemmas(pageCandidates)
   const approvedLemmas = new Set(rankedLemmas.slice(0, maxReplacements))
@@ -253,7 +273,9 @@ async function startReplacementPipeline(): Promise<void> {
     await ensureFirstRunInit()
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
+    const density = computeDensity()
     const rendered = await renderReplacementPass(
+      density,
       undefined,
       () => isCurrentReplacementPipelineRun(runVersion),
     )
@@ -261,7 +283,7 @@ async function startReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = currentRuntimeSettings()
+    appliedSettings = renderedRuntimeSettings(density)
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -320,7 +342,9 @@ async function refreshReplacementPipeline(): Promise<void> {
       return
     }
 
+    const density = computeDensity()
     const rendered = await renderReplacementPass(
+      density,
       lemma => !recordedApprovedLemmas.has(lemma),
       () => isCurrentReplacementPipelineRun(runVersion),
     )
@@ -328,7 +352,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = currentRuntimeSettings()
+    appliedSettings = renderedRuntimeSettings(density)
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -355,6 +379,14 @@ function applyCurrentSettings(): void {
 
   if (!areReplacementsEnabled()) {
     stopReplacementPipeline()
+    return
+  }
+
+  // Mid-run the applied baseline is still in flux, so there is nothing sound to
+  // diff against yet. Queue unconditionally; runQueuedReplacementRefresh re-diffs
+  // once the run has landed and drops the work if it turned out to be a no-op.
+  if (isReplacementPipelineRunning) {
+    pendingReplacementRefresh = true
     return
   }
 
