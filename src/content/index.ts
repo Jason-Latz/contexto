@@ -7,8 +7,10 @@ import {
   areReplacementsEnabled,
   getBlockedDomains,
   getDensity,
+  getDomainDecision,
   getTargetLanguage,
   isAggressiveMode,
+  isDomainBlocked,
   loadSettings,
 } from '../store/settingsStore.js'
 import { initSession, getSessionForStorage } from '../store/sessionStore.js'
@@ -20,6 +22,7 @@ import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
+import { PAGE_STATUS_MESSAGE, type PageStatus } from '../types/index.js'
 import type { CandidateToken, RuntimeSettings } from '../types/index.js'
 
 // Pages with fewer words than this are too short for meaningful immersion
@@ -47,6 +50,7 @@ let rankedPageLemmas: string[] = []
 let replacementPipelineRunVersion = 0
 let extensionContextInvalidated = false
 let storageFlushInterval: ReturnType<typeof setInterval> | null = null
+let pipelineFailed = false
 
 // The settings this tab has actually rendered with. Change detection diffs
 // against this rather than storage.onChanged's oldValue, so a tab that never
@@ -60,7 +64,8 @@ let contentWatchDebounce: ReturnType<typeof setTimeout> | null = null
 let contentWatchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function countPageWords(): number {
-  return (document.body.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
+  // body can be transiently null (document rewrite); a status query must not throw.
+  return (document.body?.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
 }
 
 // The settings currently in memory, in the shape change detection compares.
@@ -302,6 +307,7 @@ async function startReplacementPipeline(): Promise<void> {
 
   const runVersion = beginReplacementPipelineRun()
   isReplacementPipelineRunning = true
+  pipelineFailed = false
 
   try {
     await loadSettings()
@@ -353,6 +359,7 @@ async function startReplacementPipeline(): Promise<void> {
       return
     }
     console.warn('[Contexto] Startup failed, extension inactive:', err)
+    pipelineFailed = true
     deactivateReplacementPipeline(true)
   } finally {
     isReplacementPipelineRunning = false
@@ -377,6 +384,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
   const runVersion = beginReplacementPipelineRun()
   isReplacementPipelineRunning = true
+  pipelineFailed = false
 
   try {
     await loadSettings()
@@ -424,6 +432,7 @@ async function refreshReplacementPipeline(): Promise<void> {
       return
     }
     console.warn('[Contexto] Live density refresh failed, extension inactive:', err)
+    pipelineFailed = true
     deactivateReplacementPipeline(true)
   } finally {
     isReplacementPipelineRunning = false
@@ -500,6 +509,34 @@ async function reconcileWithStoredSettings(): Promise<void> {
   applyCurrentSettings()
 }
 
+// Describe what Contexto is doing on THIS page, right now, for the popup.
+// Everything is measured live rather than remembered, so the answer can never go
+// stale behind a page that has since grown, shrunk, or been re-rendered.
+function describePageStatus(): PageStatus {
+  const language = getTargetLanguage()
+  const swapped = document.querySelectorAll('[data-contexto="true"]').length
+
+  if (!areReplacementsEnabled()) return { kind: 'off', swapped: 0, language }
+  if (pipelineFailed) return { kind: 'error', swapped: 0, language }
+
+  // Blocked and paused look the same on the page but have different escape
+  // hatches, so the popup needs to tell them apart.
+  const hostname = window.location.hostname.replace(/^www\./, '')
+  if (isDomainBlocked(hostname)) return { kind: 'blocked', swapped: 0, language }
+  if (getDomainDecision(hostname) === false) return { kind: 'paused', swapped: 0, language }
+
+  // Mid-run, or readable content is present but no pass has landed yet (the
+  // content watcher is about to fire). Never report "too short" for a full page.
+  if (isReplacementPipelineRunning) return { kind: 'loading', swapped, language }
+  if (!isReplacementPipelineActive) {
+    return countPageWords() >= MIN_PAGE_WORD_COUNT
+      ? { kind: 'loading', swapped, language }
+      : { kind: 'too-short', swapped: 0, language }
+  }
+
+  return { kind: 'active', swapped, language }
+}
+
 async function main(): Promise<void> {
   // The manifest sets run_at: document_idle, so the DOM is ready by the time
   // this script executes. Guard defensively for edge cases (e.g. dynamic injection).
@@ -514,6 +551,13 @@ async function main(): Promise<void> {
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== 'local' || !changes[SETTINGS_KEY]) return
     void reconcileWithStoredSettings()
+  })
+
+  // Answer the popup's per-page status query. Replies synchronously, so the
+  // listener must not return true.
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if ((message as { type?: string } | null)?.type !== PAGE_STATUS_MESSAGE) return
+    sendResponse(describePageStatus())
   })
 
   // Restored from the bfcache: this DOM predates the restore, and a page in the
