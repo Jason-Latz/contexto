@@ -516,6 +516,15 @@ async function main(): Promise<void> {
     void reconcileWithStoredSettings()
   })
 
+  // Restored from the bfcache: this DOM predates the restore, and a page in the
+  // bfcache is not guaranteed to receive the settings events it slept through.
+  // A frozen background tab does get its queued events on resume (measured), so
+  // this covers only the restore case; it is a no-op on an ordinary navigation,
+  // where `persisted` is false.
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) void reconcileWithStoredSettings()
+  })
+
   // --- Storage write strategy ---
   // Primary: flush on visibilitychange (tab hidden / user navigates away).
   document.addEventListener('visibilitychange', () => {
