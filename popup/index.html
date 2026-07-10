@@ -120,6 +120,47 @@
       margin-bottom: 11px;
     }
 
+    /* Page status — the "is it working?" card. Quiet by default; the dot is the
+       only thing that changes colour, so a working page reads as calm, not loud. */
+    .page-status {
+      padding: 12px 14px;
+    }
+
+    .page-status__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .page-status__dot {
+      flex: none;
+      width: 7px;
+      height: 7px;
+      margin-top: 5px;
+      border-radius: 50%;
+      background: var(--ctx-ink-3);
+    }
+
+    .page-status.is-working .page-status__dot {
+      background: var(--ctx-accent);
+    }
+
+    .page-status__headline {
+      font-size: 12.5px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--ctx-ink);
+    }
+
+    .page-status__hint {
+      margin-top: 3px;
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--ctx-ink-2);
+    }
+
+    .page-status__hint[hidden] { display: none; }
+
     .section-title-with-info {
       position: relative;
       display: flex;

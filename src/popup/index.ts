@@ -10,6 +10,7 @@ import {
 import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
 import { renderLanguagePicker } from './LanguagePicker.js'
+import { renderPageStatus } from './PageStatus.js'
 import { renderUnknownWordsList, type UnknownWordsListHandlers } from './UnknownWordsList.js'
 
 const LEXICON_KEY  = 'contexto_lexicon'
@@ -48,6 +49,11 @@ async function init(): Promise<void> {
   await loadLexicon()
 
   let activeLanguage = readTargetLanguage(settings)
+
+  // First card: what Contexto is doing on the page behind the popup. Answers
+  // "is this thing working?" before the user has to guess from the controls.
+  // Fills in asynchronously — the controls below must never wait on the page.
+  renderPageStatus(root)
 
   renderLanguagePicker(root, activeLanguage, {
     // Persist the choice, then rebuild the language-dependent panels so the
