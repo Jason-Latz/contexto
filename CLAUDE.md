@@ -46,6 +46,7 @@ npm run package    # build + zip into release/
 npm run validate:language-packs            # validates es/de/fr/it core + *.tail shards
 npm run build:language-pack -- --language de   # rebuild a de/fr/it core pack from its Wiktextract cache
 npm run test:live-multilang                # headed: screenshot de/fr/it replacement (needs `npm run build` first)
+npm run test:live-tab-sync                 # headed: settings-sync + page-status gate (needs build); red/green, exits 1
 
 # Niche tail shards (public/language-packs/<lang>.tail.json):
 curl -s --compressed https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl \
@@ -108,6 +109,34 @@ Conventions to preserve:
 - Don't inject the tail by default — the whole point is quarantine. Keep the core shard the
   eager one; keep the tail lazy.
 
+## Live settings sync + page status (2026-07-09)
+
+The content script owns one reconcile path, `reconcileWithStoredSettings()` in
+`src/content/index.ts`: it reloads settings from storage, then `applyCurrentSettings()`
+diffs them against **`appliedSettings`** and re-renders if they differ. It runs from
+`storage.onChanged` and from `pageshow` when `event.persisted` (a bfcache restore).
+
+Conventions to preserve:
+- **`appliedSettings` records what a pass actually RENDERED**, never the live settings
+  at the moment it happened to finish (`renderedRuntimeSettings()` reads the language and
+  tail back from the loader). A settings write can land mid-pass and move them underneath.
+- **A change arriving mid-pass queues unconditionally**; `runQueuedReplacementRefresh()`
+  re-diffs after the pass lands and drops the work if it turned out to be a no-op. Do not
+  "optimise" that into an eager diff, and do not diff against `onChanged`'s `oldValue`.
+- **A too-short page keeps watching.** `watchForReadableContent()` arms a bounded
+  MutationObserver (60s, debounced) so client-rendered pages that fill in after
+  `document_idle` still get injected. Tear it down through `stopContentWatcher()`.
+- **The popup never blocks on the page.** `renderPageStatus()` fires its
+  `chrome.tabs.sendMessage` query without awaiting and races it against a timeout; a
+  wedged tab must never cost the user their controls. `describePageStatus()` computes
+  status live on every query, so it cannot go stale. **No manifest permission is needed**
+  to message an already-injected content script (verified: the error is "Receiving end
+  does not exist", not a permission error).
+
+Measured facts worth not re-deriving: a **frozen** background tab DOES receive its queued
+`storage.onChanged` on resume (so it self-heals), and real **bfcache** is unreachable
+under Playwright because attaching CDP disables it.
+
 ## Popup review features (2026-06)
 
 Quizzing is on-demand only, via the popup Practice panel. The auto-popping quiz
@@ -146,6 +175,13 @@ Conventions to preserve:
 
 ## Current state
 
+- **Beta-tester tab-sync bugs fixed (2026-07-09, uncommitted):** a live language switch now
+  updates every open tab (the settings diff ignored `targetLanguage`); pages that render
+  their content after `document_idle` now translate without toggling the language; the popup
+  leads with a per-page status card saying what Contexto is doing and why. Proven red to
+  green by `npm run test:live-tab-sync` (17 scenarios, headed Chromium). See "Live settings
+  sync + page status" above. Known follow-up: the popup's **"Replaced this session" counter
+  reads a stale 0** until the session store flushes, which undercuts the new status card.
 - **Core-loop simplicity + fidelity run landed on `main` (2026-07-07):** both pretests
   removed (level-picker overlay + auto quiz banner); first run is silent (intermediate
   defaults, top-1500 prepopulate, injects on the first page); deterministic core-loop

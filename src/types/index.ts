@@ -141,3 +141,35 @@ export interface WordSeen {
 // ---------- Settings store ----------
 
 export type OnboardingLevel = 'beginner' | 'intermediate' | 'advanced';
+
+// The subset of settings the content script watches for live changes.
+export interface RuntimeSettings {
+  density?: number
+  replacementsEnabled?: boolean
+  aggressiveMode?: boolean
+  blockedDomains?: string[]
+  targetLanguage?: TargetLanguage
+}
+
+// ---------- Popup <-> content script ----------
+
+// Sent by the popup to the active tab; answered with a PageStatus.
+export const PAGE_STATUS_MESSAGE = 'contexto:page-status'
+
+// Why the current page looks the way it does.
+//   off          replacements are switched off entirely
+//   blocked      this domain is on the user's blocked list
+//   paused       the user chose Keep Paused on this domain's high-stakes banner
+//   too-short    not enough readable text to be worth swapping
+//   loading      a replacement pass is in flight, or content has just arrived
+//   active       the pipeline ran; `swapped` may still be 0 (nothing eligible)
+//   error        the pipeline failed (e.g. the language pack would not load)
+//   unreachable  the popup could not reach a content script on this tab
+export type PageStatusKind =
+  | 'off' | 'blocked' | 'paused' | 'too-short' | 'loading' | 'active' | 'error' | 'unreachable'
+
+export interface PageStatus {
+  kind: PageStatusKind
+  swapped: number
+  language: TargetLanguage
+}
