@@ -5,6 +5,8 @@ import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
 import { loadLexicon, flushLexiconMerge, isDirty } from '../store/lexiconStore.js'
 import {
   areReplacementsEnabled,
+  getBlockedDomains,
+  getDensity,
   getTargetLanguage,
   isAggressiveMode,
   loadSettings,
@@ -18,7 +20,7 @@ import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
-import type { CandidateToken } from '../types/index.js'
+import type { CandidateToken, RuntimeSettings } from '../types/index.js'
 
 // Pages with fewer words than this are too short for meaningful immersion
 // (e.g. error pages, blank tabs, single-widget dashboards).
@@ -29,13 +31,6 @@ const MIN_PAGE_WORD_COUNT = 100
 // The primary flush is on visibilitychange; this is the safety net.
 const FLUSH_INTERVAL_MS = 3 * 60 * 1000  // 3 minutes
 const SETTINGS_KEY = 'contexto_settings'
-
-interface RuntimeSettings {
-  density?: number
-  replacementsEnabled?: boolean
-  aggressiveMode?: boolean
-  blockedDomains?: string[]
-}
 
 let mutationObserver: MutationObserverHandle | null = null
 let isReplacementPipelineActive = false
@@ -48,8 +43,36 @@ let replacementPipelineRunVersion = 0
 let extensionContextInvalidated = false
 let storageFlushInterval: ReturnType<typeof setInterval> | null = null
 
+// The settings this tab has actually rendered with. Change detection diffs
+// against this rather than storage.onChanged's oldValue, so a tab that never
+// received an event — frozen in the background, or restored from the bfcache —
+// still converges the next time it is shown.
+let appliedSettings: RuntimeSettings | null = null
+
 function countPageWords(): number {
   return (document.body.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
+}
+
+// The settings currently in memory, in the shape change detection compares.
+function currentRuntimeSettings(): RuntimeSettings {
+  return {
+    density: getDensity(),
+    replacementsEnabled: areReplacementsEnabled(),
+    aggressiveMode: isAggressiveMode(),
+    blockedDomains: [...getBlockedDomains()],
+    targetLanguage: getTargetLanguage(),
+  }
+}
+
+
+// Does the difference between two settings snapshots change what this page renders?
+function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): boolean {
+  return (
+    next.density !== previous.density ||
+    (next.targetLanguage ?? 'es') !== (previous.targetLanguage ?? 'es') ||
+    (next.aggressiveMode ?? false) !== (previous.aggressiveMode ?? false) ||
+    JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? [])
+  )
 }
 
 // Write the lexicon and session stores together in one storage call.
@@ -238,6 +261,7 @@ async function startReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
+    appliedSettings = currentRuntimeSettings()
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -304,6 +328,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
+    appliedSettings = currentRuntimeSettings()
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -324,20 +349,11 @@ function stopReplacementPipeline(): void {
   isReplacementPipelineRunning = false
 }
 
-function handleSettingsChange(settings: RuntimeSettings, previousSettings: RuntimeSettings): void {
+// Bring this page in line with the settings currently in memory.
+function applyCurrentSettings(): void {
   if (extensionContextInvalidated) return
 
-  const replacementsEnabled = settings.replacementsEnabled ?? true
-  const densityChanged =
-    typeof settings.density === 'number' &&
-    settings.density !== previousSettings.density
-  const aggressiveModeChanged =
-    (settings.aggressiveMode ?? false) !== (previousSettings.aggressiveMode ?? false)
-  const blockedDomainsChanged =
-    JSON.stringify(settings.blockedDomains ?? []) !==
-    JSON.stringify(previousSettings.blockedDomains ?? [])
-
-  if (!replacementsEnabled) {
+  if (!areReplacementsEnabled()) {
     stopReplacementPipeline()
     return
   }
@@ -347,12 +363,43 @@ function handleSettingsChange(settings: RuntimeSettings, previousSettings: Runti
     return
   }
 
-  // A blocked/unblocked domain must take effect on the open tab immediately, the
-  // same way a density change does — the refresh re-runs the domain check, so a
-  // newly blocked current page is cleared and an unblocked one is re-rendered.
-  if (densityChanged || blockedDomainsChanged || aggressiveModeChanged) {
+  // A language switch, a blocked/unblocked domain, or a density change must take
+  // effect on the open tab immediately — the refresh reloads the pack, re-runs the
+  // domain check, and re-renders. Diffing against what this page actually rendered
+  // (rather than against an event's oldValue) means a tab that never saw the write
+  // still converges.
+  if (appliedSettings === null || rendersDifferently(appliedSettings, currentRuntimeSettings())) {
     requestReplacementRefresh()
   }
+}
+
+// Re-read settings from storage, then reconcile the page against them.
+//
+// This is the single entry point for every settings change, which keeps the
+// in-memory store authoritative for readers like describePageStatus(). It also
+// covers the events a page never receives: Chrome does not replay
+// storage.onChanged for a tab that was frozen in the background or held in the
+// bfcache, so such a tab can be arbitrarily stale by the time the user looks at
+// it again. Running this whenever the page is shown closes that gap.
+async function reconcileWithStoredSettings(): Promise<void> {
+  if (extensionContextInvalidated) return
+  if (!isExtensionContextAvailable()) {
+    shutdownInvalidatedContext(true)
+    return
+  }
+
+  try {
+    await loadSettings()
+  } catch (err) {
+    if (isExtensionContextInvalidatedError(err)) {
+      shutdownInvalidatedContext(true)
+      return
+    }
+    console.warn('[Contexto] Could not re-read settings:', err)
+    return
+  }
+
+  applyCurrentSettings()
 }
 
 async function main(): Promise<void> {
@@ -368,10 +415,7 @@ async function main(): Promise<void> {
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== 'local' || !changes[SETTINGS_KEY]) return
-    handleSettingsChange(
-      (changes[SETTINGS_KEY].newValue ?? {}) as RuntimeSettings,
-      (changes[SETTINGS_KEY].oldValue ?? {}) as RuntimeSettings,
-    )
+    void reconcileWithStoredSettings()
   })
 
   // --- Storage write strategy ---

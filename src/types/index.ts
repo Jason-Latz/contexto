@@ -141,3 +141,13 @@ export interface WordSeen {
 // ---------- Settings store ----------
 
 export type OnboardingLevel = 'beginner' | 'intermediate' | 'advanced';
+
+// The subset of settings the content script watches for live changes.
+export interface RuntimeSettings {
+  density?: number
+  replacementsEnabled?: boolean
+  aggressiveMode?: boolean
+  blockedDomains?: string[]
+  targetLanguage?: TargetLanguage
+}
+
