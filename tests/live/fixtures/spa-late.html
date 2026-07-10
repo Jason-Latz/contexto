@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Late-rendering app shell</title>
+  <style>
+    body { font: 17px/1.6 Georgia, serif; max-width: 40rem; margin: 3rem auto; color: #1a1a1a; }
+  </style>
+</head>
+<body>
+  <!-- An app shell that is under the 100-word readable-content threshold at
+       document_idle, then renders its article a moment later — the shape of
+       every client-rendered page (SPA route, lazy hydration, slow feed). -->
+  <div id="root">Loading…</div>
+  <script>
+    const ARTICLE = `
+      <h1>The quiet history of the kitchen table</h1>
+      <p>The table stands at the center of the house, and the family gathers around it each
+      evening without thinking very much about the wood. A carpenter cut the boards in a
+      workshop near the river, and the smell of sawdust followed him home every night for
+      thirty years. His daughter remembers the sound of the plane against the grain.</p>
+      <p>Every morning the mother places bread and fruit on the surface, and the children
+      argue about the weather and the news before they leave for school. The father reads a
+      letter from his brother, who moved to another city to find work in a factory. The dog
+      sleeps beneath the chair, waiting for a piece of meat to fall onto the floor.</p>
+      <p>When the war arrived, the family hid money under the table and covered it with a
+      cloth. A soldier came to the door and asked for water, and the mother gave him bread
+      as well, because her own son was fighting somewhere near the mountains. The table
+      survived the fire that destroyed the neighbor's house across the narrow street.</p>
+      <p>Now the grandchildren eat at the same table, and nobody remembers the carpenter or
+      the river or the workshop. The wood carries the marks of a hundred knives and the
+      rings of a thousand cups of coffee. A child draws a picture of a horse on the paper
+      and presses so hard that the pencil leaves a scar in the surface forever.</p>
+      <p>The house will be sold in the spring, and the family must decide what to keep. The
+      table is too heavy for the truck and too large for the new apartment near the station.
+      Someone suggests burning it for firewood during the last cold week of the year, and
+      the room becomes very quiet, because the table has always been the room itself.</p>`
+    // Render well after document_idle — the content script has already run and
+    // decided the page was too short.
+    setTimeout(() => { document.getElementById('root').innerHTML = ARTICLE }, 2500)
+  </script>
+</body>
+</html>
