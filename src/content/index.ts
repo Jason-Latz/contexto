@@ -32,6 +32,11 @@ const MIN_PAGE_WORD_COUNT = 100
 const FLUSH_INTERVAL_MS = 3 * 60 * 1000  // 3 minutes
 const SETTINGS_KEY = 'contexto_settings'
 
+// How long to keep watching a too-short page for content that arrives late, and
+// how long the DOM must settle before we pay for another innerText measurement.
+const CONTENT_WATCH_TIMEOUT_MS = 60 * 1000
+const CONTENT_WATCH_DEBOUNCE_MS = 500
+
 let mutationObserver: MutationObserverHandle | null = null
 let isReplacementPipelineActive = false
 let isReplacementPipelineRunning = false
@@ -48,6 +53,11 @@ let storageFlushInterval: ReturnType<typeof setInterval> | null = null
 // received an event — frozen in the background, or restored from the bfcache —
 // still converges the next time it is shown.
 let appliedSettings: RuntimeSettings | null = null
+
+// Watches a too-short page for content that arrives after document_idle.
+let contentWatcher: MutationObserver | null = null
+let contentWatchDebounce: ReturnType<typeof setTimeout> | null = null
+let contentWatchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function countPageWords(): number {
   return (document.body.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
@@ -88,6 +98,52 @@ function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): b
     (next.aggressiveMode ?? false) !== (previous.aggressiveMode ?? false) ||
     JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? [])
   )
+}
+
+function stopContentWatcher(): void {
+  contentWatcher?.disconnect()
+  contentWatcher = null
+  if (contentWatchDebounce !== null) {
+    clearTimeout(contentWatchDebounce)
+    contentWatchDebounce = null
+  }
+  if (contentWatchTimeout !== null) {
+    clearTimeout(contentWatchTimeout)
+    contentWatchTimeout = null
+  }
+}
+
+// A client-rendered page is often under MIN_PAGE_WORD_COUNT at document_idle and
+// fills in a moment later. The SPA MutationObserver is only attached after a
+// successful render pass, so without this watcher such a page is never
+// reconsidered and stays untranslated for the life of the tab.
+//
+// Bounded on both axes: it disconnects at the first successful start, and gives
+// up after CONTENT_WATCH_TIMEOUT_MS (measuring the page one last time first, in
+// case a never-quiet DOM kept starving the debounce).
+function watchForReadableContent(): void {
+  if (contentWatcher !== null || extensionContextInvalidated) return
+
+  // countPageWords() forces a layout, so only measure once the DOM has settled.
+  contentWatcher = new MutationObserver(() => {
+    if (contentWatchDebounce !== null) clearTimeout(contentWatchDebounce)
+    contentWatchDebounce = setTimeout(() => {
+      contentWatchDebounce = null
+      if (countPageWords() < MIN_PAGE_WORD_COUNT) return
+      stopContentWatcher()
+      void startReplacementPipeline()
+    }, CONTENT_WATCH_DEBOUNCE_MS)
+  })
+  // characterData too: some frameworks mount empty text nodes and fill them in
+  // place, which produces no childList mutation at all.
+  contentWatcher.observe(document.body, { childList: true, subtree: true, characterData: true })
+
+  contentWatchTimeout = setTimeout(() => {
+    contentWatchTimeout = null
+    const readable = countPageWords() >= MIN_PAGE_WORD_COUNT
+    stopContentWatcher()
+    if (readable) void startReplacementPipeline()
+  }, CONTENT_WATCH_TIMEOUT_MS)
 }
 
 // Write the lexicon and session stores together in one storage call.
@@ -163,6 +219,7 @@ function shutdownInvalidatedContext(restoreDom: boolean): void {
   pendingReplacementRefresh = false
   isReplacementPipelineRunning = false
   replacementPipelineRunVersion++
+  stopContentWatcher()
 
   if (storageFlushInterval !== null) {
     clearInterval(storageFlushInterval)
@@ -252,8 +309,14 @@ async function startReplacementPipeline(): Promise<void> {
 
     if (!areReplacementsEnabled()) return
 
-    // Silently exit on pages with too little content — no readable immersion possible.
-    if (countPageWords() < MIN_PAGE_WORD_COUNT) return
+    // Silently exit on pages with too little content — no readable immersion
+    // possible yet. Keep watching: a client-rendered page fills in later.
+    if (countPageWords() < MIN_PAGE_WORD_COUNT) {
+      watchForReadableContent()
+      return
+    }
+    // The page is readable, so any watcher armed by an earlier run is done.
+    stopContentWatcher()
 
     // Load runtime data only after the user-facing replacement toggle is enabled.
     // Aggressive mode additionally loads the quarantined niche tail shard.
@@ -337,8 +400,10 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     // Dynamic pages can shrink below the readable-content threshold; after a
     // live restore, stop cleanly instead of leaving a no-op observer attached.
+    // Keep watching in case the next route brings the content back.
     if (countPageWords() < MIN_PAGE_WORD_COUNT) {
       deactivateReplacementPipeline(false)
+      watchForReadableContent()
       return
     }
 
@@ -369,6 +434,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 function stopReplacementPipeline(): void {
   pendingReplacementRefresh = false
   replacementPipelineRunVersion++
+  stopContentWatcher()
   deactivateReplacementPipeline(true)
   isReplacementPipelineRunning = false
 }
