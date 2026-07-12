@@ -137,3 +137,4 @@
   written; CLAUDE.md + auto-memory updated. Remaining: de-126 (~45 candidates) then
   final apply/commit; morning perf pass `node tests/live/run-perf.mjs` when a display
   is available.
+- ~12:15 CDT — de-126 recovered (+17 words, 0 disputes). FINAL: +3,169 words (de 2,450 / it 447 / es 272), de core+tail 75,690. Run COMPLETE; tree clean; all gates green.

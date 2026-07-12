@@ -175,8 +175,8 @@ Conventions to preserve:
 
 ## Current state
 
-- **Overnight multi-source vocab run landed (2026-07-12):** +3,152 panel-verified tail
-  words (de +2,433 · it +447 · es +272; fr 0 — failed its error-rate panel bar, by
+- **Overnight multi-source vocab run landed (2026-07-12):** +3,169 panel-verified tail
+  words (de +2,450 · it +447 · es +272; fr 0 — failed its error-rate panel bar, by
   design). Four offline sources integrated under `pipeline/sources/` (FreeDict eng-X,
   Apertium, OMW sense-ranked, Wikidata lexemes as gender/plural authority) plus a
   reusable gold-gated adjudication engine in `pipeline/analysis/` (queue builders,

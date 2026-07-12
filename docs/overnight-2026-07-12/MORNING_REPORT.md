@@ -2,7 +2,7 @@
 
 ## Headline
 
-**+3,152 new verified words shipped to main** (de +2,433 · it +447 · es +272), every one
+**+3,169 new verified words shipped to main** (de +2,450 · it +447 · es +272), every one
 backed by at least two independent dictionaries, morphology from an authoritative source
 (never a model), and a three-stage LLM chain (adjudicator, refuter, judge) whose output
 was measured at **1.18% error by an independent Opus panel** before anything shipped.
@@ -22,7 +22,7 @@ All gates green after shipping: validator (4 languages), typecheck, 124/124 node
 | lang | before | after | delta |
 |------|--------|-------|-------|
 | es | 88,092 | 88,364 | +272 |
-| de | 73,240 | 75,673 | +2,433 |
+| de | 73,240 | 75,690 | +2,450 |
 | fr | 72,132 | 72,132 | 0 (panel-blocked) |
 | it | 68,856 | 69,303 | +447 |
 
