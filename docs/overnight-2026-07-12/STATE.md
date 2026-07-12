@@ -31,7 +31,35 @@
 - 04:10 CDT — Committing Phase 0 scripts + docs (build_omw.py held back until repaired).
   Launching phase1-prep workflow: OMW repair, Wikidata morphology verify (+ es purity),
   evidence-merge builder (pipeline/analysis/merge_evidence.py), gold calibration.
-- NEXT (on prep completion or 05:10 wake): read calibration numbers; if confirm-bucket
-  precision is high, commit prep, then launch the Phase 1 adjudication mega-workflow on
-  the flagged/ambiguous residual (sonnet proposer/refuter -> opus escalation).
-  Do NOT ship any pack change before gold calibration numbers exist.
+- 04:47 CDT — Phase 1 prep COMPLETE (wf_d9b001fa-42f, 4 agents). Committed 72d0475,
+  fa58c9b, 7a36803. Findings:
+  - OMW bug was UPSTREAM (French WOLF wordnet pools targets across senses). Fixed via
+    cross-sense pooling filter in build_omw.py; fr -9.2% rows, self-verify clean
+    (fr 2/30 both unrelated one-off WOLF garbage; it/es 0/30).
+  - Wikidata lexemes: de/fr trustworthy, it usable-with-care (~0.15-0.2% contamination),
+    es has real pt contamination (~67% of 87 flagged; near-miss misspellings like
+    lagosta/beleza). 356 contamination candidates listed in
+    pipeline/data/qa_wikidata_lexeme_contamination_candidates.jsonl — apply as a
+    DENYLIST when using wikidata-es as morphology authority.
+  - Evidence merge: 302,320 entries bucketed (see notes in journal wf_d9b001fa-42f).
+    de structurally CANNOT get flag-retarget (no OMW German) — its wrong-sense errors
+    hide in ambiguous/confirm; the LLM engine must carry de via entr sense buckets +
+    slim-de glosses. Slim wikt caches built: wikt-cache/slim-{de,fr,it}.jsonl.
+  - CALIBRATION (opus, pipeline/data/evidence/calibration-report.md): AUTO-APPLY
+    NOTHING. confirm FP 4.25% (>2% bar), flag-retarget precision only 12% (alternatives
+    are usually synonyms of a fine target), morphology flags weak at tiny n. de/fr/it
+    uncalibrated (40 gold rows each). => Deterministic layer = evidence enrichment only;
+    ALL shipping decisions go through the LLM engine, which must first PASS THE GOLD
+    GATE (falseKeep<2% AND falseChange<2% vs gold).
+- 04:55 CDT — Authored the Phase 1/2 mega-workflow:
+  **docs/overnight-2026-07-12/phase1-adjudication.workflow.js** — queues (audit+mint+
+  gold, resume-aware) -> gold gate (2 attempts, opus retest) -> interleaved fan-out
+  (340 batches x 45, adjudicator->refuter->opus judge) -> per-lang apply (sole pack
+  writer, invariants + provenance enforced) -> full gates. Re-launch the SAME file for
+  each subsequent run; queues exclude already-adjudicated keys. If a run dies at the
+  usage limit, just relaunch (or resumeFromRunId).
+- NEXT (05:10 wake): launch Workflow({scriptPath: "docs/overnight-2026-07-12/
+  phase1-adjudication.workflow.js"}) (absolute: /Users/jason/Downloads/CS Classes/
+  Projects/Textum/docs/...). On completion: review gate + applies + gates, commit pack
+  changes per language, re-arm the next reset sleeper (~10:10 CDT), relaunch the same
+  script while moreWorkRemains. Morning: MORNING_REPORT.md per PLAN.md Phase 3.
