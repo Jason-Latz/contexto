@@ -58,8 +58,35 @@
   writer, invariants + provenance enforced) -> full gates. Re-launch the SAME file for
   each subsequent run; queues exclude already-adjudicated keys. If a run dies at the
   usage limit, just relaunch (or resumeFromRunId).
-- NEXT (05:10 wake): launch Workflow({scriptPath: "docs/overnight-2026-07-12/
-  phase1-adjudication.workflow.js"}) (absolute: /Users/jason/Downloads/CS Classes/
-  Projects/Textum/docs/...). On completion: review gate + applies + gates, commit pack
-  changes per language, re-arm the next reset sleeper (~10:10 CDT), relaunch the same
-  script while moreWorkRemains. Morning: MORNING_REPORT.md per PLAN.md Phase 3.
+- 04:44 CDT — Mega-workflow LAUNCHED early (used the window's last minutes): runId
+  **wf_9e2f8021-090**. Continuation is DATA-LEVEL (verdict files + applied markers +
+  queues excluding adjudicated keys): if a run dies, relaunch the same scriptPath
+  FRESH — do NOT resumeFromRunId across a limit death (a cached compare-gold result
+  could carry stale partial-data metrics).
+- 05:12 CDT — Woke on reset timer; new 5h window. Workflow SURVIVED the boundary:
+  queues built (audit de 70.9k / es 82.8k / fr 70.1k / it 66.9k; mint de 5,927 /
+  it 1,201 / fr 704 / es 587; gold 399 blind + answers), 9/9 gold batches through
+  adjudicator+refuter, compare agent pending. NOTE for morning: mint queues are small —
+  the >=2-independent-source vote filter is the binding constraint on new words, not
+  compute (~8.4k candidates from a 212k universe). If more volume is wanted, the lever
+  is counting (en-tr-cache + target-lang wiktextract gloss-match) as an agreement pair,
+  or importing another source — quality bar stays.
+- Next sleeper armed for ~10:11 CDT (Monitor bykjykgs0).
+- 05:25 CDT — wf_9e2f8021-090 COMPLETED: **GOLD GATE FAILED, correctly shipped NOTHING**
+  (pooled agreement 57.4%, falseKeep 46.2%, falseChange 18.3%; but de 85%/8.8%,
+  fr 70%/20.6%, it 75%/17.6% at n=40 each; es 49%/21.3% at n=279 dominates the pool).
+  Three suspected artifacts, not necessarily engine failure:
+  (1) es gold slice is verdict-stratified from prior audit runs AND ~390 of those fixes
+  were ALREADY APPLIED to packs 2026-07-07/08 -> "keep" on an already-fixed entry is
+  scored falseKeep (stale gold). (2) Gate metric over-constrained: only CHANGES ship, so
+  the guarding metric is falseChange on the SHIP STRATUM (unanimous chain + conf>=0.8),
+  not raw falseKeep. (3) de/fr/it n=40 too small to certify either way.
+- 05:27 CDT — Launched **phase1b-recalibrate.workflow.js** (runId wf_5d8075d5-dca):
+  Opus postmortem (stale-gold count, failure modes, promptAddendum fed into engine v2
+  prompts at runtime) + representative gold2 (de/fr/it 150, es 120, stratified by band
+  NOT verdict) + engine v2 re-gate (unlock per language: shipFalseChange<2%, n>=15) +
+  mint trial (360 rows -> unanimous chain -> independent Opus panel; unlock:
+  panel error <2%) + auto fan-out of ONLY unlocked paths (mint-first, 300 batches) +
+  strict-stratum apply + full gates. If it returns aborted:'nothing-unlocked', read
+  pipeline/data/evidence/{gold-gate-postmortem,gold2-gate,mint-trial-panel}.md before
+  deciding anything.
