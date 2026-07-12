@@ -250051,6 +250051,265 @@
       "plural": "Zoophyten",
       "enZipf": 0.0,
       "eligible": true
+    },
+    "pharmaceutic": {
+      "source": "pharmaceutic",
+      "target": "pharmazeutisch",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "pharmaceutical",
+      "frequencyRank": 1018277,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "phonendoscope": {
+      "source": "phonendoscope",
+      "target": "Phonendoskop",
+      "partOfSpeech": "noun",
+      "sourceGloss": "phonendoscope",
+      "frequencyRank": 1018278,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr"
+      ],
+      "gender": "neuter",
+      "plural": "Phonendoskope",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "phonetician": {
+      "source": "phonetician",
+      "target": "Phonetiker",
+      "partOfSpeech": "noun",
+      "sourceGloss": "phonetician",
+      "frequencyRank": 1018279,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "Phonetiker",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pieceworker": {
+      "source": "pieceworker",
+      "target": "Akkordarbeiter",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pieceworker",
+      "frequencyRank": 1018280,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "Akkordarbeiter",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pisciculturist": {
+      "source": "pisciculturist",
+      "target": "Fischzüchter",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pisciculturist",
+      "frequencyRank": 1018281,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "Fischzüchter",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "plebiscitary": {
+      "source": "plebiscitary",
+      "target": "plebiszitär",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "plebiscitary",
+      "frequencyRank": 1018282,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "plumbery": {
+      "source": "plumbery",
+      "target": "Klempnerei",
+      "partOfSpeech": "noun",
+      "sourceGloss": "plumbery",
+      "frequencyRank": 1018283,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "Klempnereien",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pornographically": {
+      "source": "pornographically",
+      "target": "pornografisch",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "pornographic",
+      "frequencyRank": 1018284,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "postponable": {
+      "source": "postponable",
+      "target": "aufschiebbar",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "deferrable",
+      "frequencyRank": 1018285,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "poulard": {
+      "source": "poulard",
+      "target": "Poularde",
+      "partOfSpeech": "noun",
+      "sourceGloss": "poulard",
+      "frequencyRank": 1018286,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "Poularden",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prefabricate": {
+      "source": "prefabricate",
+      "target": "vorfertigen",
+      "partOfSpeech": "verb",
+      "sourceGloss": "prefabricate",
+      "frequencyRank": 1018287,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "preordain": {
+      "source": "preordain",
+      "target": "vorherbestimmen",
+      "partOfSpeech": "verb",
+      "sourceGloss": "to predetermine",
+      "frequencyRank": 1018288,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "preservable": {
+      "source": "preservable",
+      "target": "erhaltbar",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "preservable",
+      "frequencyRank": 1018289,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prismatoid": {
+      "source": "prismatoid",
+      "target": "Prismatoid",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prismatoid",
+      "frequencyRank": 1018290,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr"
+      ],
+      "gender": "neuter",
+      "plural": "Prismatoide",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "properness": {
+      "source": "properness",
+      "target": "Korrektheit",
+      "partOfSpeech": "noun",
+      "sourceGloss": "correctness",
+      "frequencyRank": 1018291,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "Korrektheiten",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prosencephalon": {
+      "source": "prosencephalon",
+      "target": "Vorderhirn",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prosencephalon",
+      "frequencyRank": 1018292,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "neuter",
+      "plural": "Vorderhirne",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pseudopodium": {
+      "source": "pseudopodium",
+      "target": "Scheinfüßchen",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pseudopodium",
+      "frequencyRank": 1018293,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "neuter",
+      "plural": "Scheinfüßchen",
+      "enZipf": 0.0,
+      "eligible": true
     }
   }
 }
