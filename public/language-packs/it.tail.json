@@ -142312,6 +142312,7188 @@
       "eligible": true,
       "gender": "feminine",
       "plural": "zimologie"
+    },
+    "nineteen": {
+      "source": "nineteen",
+      "target": "diciannove",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) the cardinal number that is the sum of eighteen and one",
+      "frequencyRank": 1010264,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict",
+        "omw"
+      ],
+      "enZipf": 3.59,
+      "eligible": true
+    },
+    "motherhood": {
+      "source": "motherhood",
+      "target": "maternità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "maternity, motherhood",
+      "frequencyRank": 1010265,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "maternità",
+      "enZipf": 3.37,
+      "eligible": true
+    },
+    "incisiveness": {
+      "source": "incisiveness",
+      "target": "incisività",
+      "partOfSpeech": "noun",
+      "sourceGloss": "incisiveness",
+      "frequencyRank": 1010266,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "incisività",
+      "enZipf": 1.45,
+      "eligible": true
+    },
+    "mycosis": {
+      "source": "mycosis",
+      "target": "micosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mycosis",
+      "frequencyRank": 1010267,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "micosi",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "geostatics": {
+      "source": "geostatics",
+      "target": "geostatica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "geostatics",
+      "frequencyRank": 1010268,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "geostatiche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "leprology": {
+      "source": "leprology",
+      "target": "leprologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "leprology",
+      "frequencyRank": 1010269,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "leprologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "vasodilator": {
+      "source": "vasodilator",
+      "target": "vasodilatatore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vasodilatory",
+      "frequencyRank": 1010270,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "vasodilatatori",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "magistrature": {
+      "source": "magistrature",
+      "target": "magistratura",
+      "partOfSpeech": "noun",
+      "sourceGloss": "magistracy",
+      "frequencyRank": 1010271,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "magistrature",
+      "enZipf": 1.1,
+      "eligible": true
+    },
+    "linstock": {
+      "source": "linstock",
+      "target": "buttafuoco",
+      "partOfSpeech": "noun",
+      "sourceGloss": "linstock (staff for lighting a cannon)",
+      "frequencyRank": 1010272,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "buttafuochi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "oncosis": {
+      "source": "oncosis",
+      "target": "oncosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "oncosis",
+      "frequencyRank": 1010273,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "oncosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "marsupialization": {
+      "source": "marsupialization",
+      "target": "marsupializzazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (surgery) The surgical technique of cutting a slit into a cyst and suturing its edges to form a continuous surface from the exterior to the interior of the cyst, allowing it to drain freely.",
+      "frequencyRank": 1010274,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "marsupializzazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "freshly": {
+      "source": "freshly",
+      "target": "recentemente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "recently, lately, of late",
+      "frequencyRank": 1010275,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.61,
+      "eligible": true
+    },
+    "godsend": {
+      "source": "godsend",
+      "target": "colpo di fortuna",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lucky break, stroke of luck, fluke",
+      "frequencyRank": 1010276,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "colpi di fortuna",
+      "enZipf": 2.78,
+      "eligible": true
+    },
+    "petasus": {
+      "source": "petasus",
+      "target": "petaso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "petasus",
+      "frequencyRank": 1010277,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "petasi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "goldsmithery": {
+      "source": "goldsmithery",
+      "target": "oreficeria",
+      "partOfSpeech": "noun",
+      "sourceGloss": "jeweller's (shop)",
+      "frequencyRank": 1010278,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "oreficerie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lactifuge": {
+      "source": "lactifuge",
+      "target": "lattifugo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lactifugal",
+      "frequencyRank": 1010279,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "lattifughi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hermeneut": {
+      "source": "hermeneut",
+      "target": "ermeneuta",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hermeneut, hermeneutician, hermeneuticist",
+      "frequencyRank": 1010280,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "ermeneuti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "suffragism": {
+      "source": "suffragism",
+      "target": "suffragismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "suffragism",
+      "frequencyRank": 1010281,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "suffragismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "phylogeny": {
+      "source": "phylogeny",
+      "target": "filogenia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (systematics) The evolutionary history of groups of organisms, such as species or clades.",
+      "frequencyRank": 1010282,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "filogenie",
+      "enZipf": 2.5,
+      "eligible": true
+    },
+    "gastralgia": {
+      "source": "gastralgia",
+      "target": "gastralgia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gastralgia, stomach pain",
+      "frequencyRank": 1010283,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "gastralgie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "diarthrosis": {
+      "source": "diarthrosis",
+      "target": "diartrosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "synovial joint, diarthrosis",
+      "frequencyRank": 1010284,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "diartrosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "craftiness": {
+      "source": "craftiness",
+      "target": "astuzia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "astuteness, shrewdness",
+      "frequencyRank": 1010285,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "astuzie",
+      "enZipf": 1.79,
+      "eligible": true
+    },
+    "vizier": {
+      "source": "vizier",
+      "target": "visir",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vizier",
+      "frequencyRank": 1010286,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "visir",
+      "enZipf": 2.6,
+      "eligible": true
+    },
+    "governability": {
+      "source": "governability",
+      "target": "governabilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "governability",
+      "frequencyRank": 1010287,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "governabilità",
+      "enZipf": 1.27,
+      "eligible": true
+    },
+    "collaborationism": {
+      "source": "collaborationism",
+      "target": "collaborazionismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "traitorous cooperation with the enemy; collaborationism",
+      "frequencyRank": 1010288,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "collaborazionismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cistus": {
+      "source": "cistus",
+      "target": "cisto",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rockrose (of genus Cistus)",
+      "frequencyRank": 1010289,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "cisti",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "lipocyte": {
+      "source": "lipocyte",
+      "target": "lipocito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lipocyte",
+      "frequencyRank": 1010290,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "lipociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hydrometrid": {
+      "source": "hydrometrid",
+      "target": "idrometride",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hydrometrid",
+      "frequencyRank": 1010291,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "idrometridi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypophysis": {
+      "source": "hypophysis",
+      "target": "ipofisi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypophysis",
+      "frequencyRank": 1010292,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "ipofisi",
+      "enZipf": 1.27,
+      "eligible": true
+    },
+    "mecopteran": {
+      "source": "mecopteran",
+      "target": "mecottero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mecopteran",
+      "frequencyRank": 1010293,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "mecotteri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "gnathoplasty": {
+      "source": "gnathoplasty",
+      "target": "gnatoplastica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gnathoplasty",
+      "frequencyRank": 1010294,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "gnatoplastiche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "tenderfoot": {
+      "source": "tenderfoot",
+      "target": "novizio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "novice",
+      "frequencyRank": 1010295,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "novizi",
+      "enZipf": 1.91,
+      "eligible": true
+    },
+    "kale": {
+      "source": "kale",
+      "target": "cavolo riccio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "curly kale",
+      "frequencyRank": 1010296,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "cavoli ricci",
+      "enZipf": 3.38,
+      "eligible": true
+    },
+    "oleaster": {
+      "source": "oleaster",
+      "target": "eleagno",
+      "partOfSpeech": "noun",
+      "sourceGloss": "oleaster, silverberry",
+      "frequencyRank": 1010297,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "eleagni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "macruran": {
+      "source": "macruran",
+      "target": "macruro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "macruran",
+      "frequencyRank": 1010298,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "macruri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "immunotoxin": {
+      "source": "immunotoxin",
+      "target": "immunotossina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "immunotoxin",
+      "frequencyRank": 1010299,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "immunotossine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sepsis": {
+      "source": "sepsis",
+      "target": "sepsi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sepsis",
+      "frequencyRank": 1010300,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sepsi",
+      "enZipf": 3.01,
+      "eligible": true
+    },
+    "pragmatics": {
+      "source": "pragmatics",
+      "target": "pragmatica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the study of language use",
+      "frequencyRank": 1010301,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "pragmatiche",
+      "enZipf": 2.27,
+      "eligible": true
+    },
+    "hemiparesis": {
+      "source": "hemiparesis",
+      "target": "emiparesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hemiparesis",
+      "frequencyRank": 1010302,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "emiparesi",
+      "enZipf": 1.49,
+      "eligible": true
+    },
+    "vocalist": {
+      "source": "vocalist",
+      "target": "cantante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "singer",
+      "frequencyRank": 1010303,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cantanti",
+      "enZipf": 3.4,
+      "eligible": true
+    },
+    "auto": {
+      "source": "auto",
+      "target": "macchina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "machine",
+      "frequencyRank": 1010304,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "macchine",
+      "enZipf": 4.48,
+      "eligible": true
+    },
+    "anime": {
+      "source": "anime",
+      "target": "anime",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (uncountable) An artistic style originating in, and associated with, Japanese animation, and that has also been adopted by a comparatively low number of animated works from other countries.",
+      "frequencyRank": 1010305,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "anime",
+      "enZipf": 4.26,
+      "eligible": true
+    },
+    "ego": {
+      "source": "ego",
+      "target": "ego",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ego",
+      "frequencyRank": 1010306,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ego",
+      "enZipf": 4.02,
+      "eligible": true
+    },
+    "utterly": {
+      "source": "utterly",
+      "target": "assolutamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "absolutely, completely, totally, dead",
+      "frequencyRank": 1010307,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 4.02,
+      "eligible": true
+    },
+    "inability": {
+      "source": "inability",
+      "target": "incapacità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "incapacity, incompetence",
+      "frequencyRank": 1010308,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "incapacità",
+      "enZipf": 3.93,
+      "eligible": true
+    },
+    "nonprofit": {
+      "source": "nonprofit",
+      "target": "non a scopo di lucro",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) Not seeking to produce a profit (a financial gain).",
+      "frequencyRank": 1010309,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "enZipf": 3.86,
+      "eligible": true
+    },
+    "overly": {
+      "source": "overly",
+      "target": "troppo",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "too much, too long, too far",
+      "frequencyRank": 1010310,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.83,
+      "eligible": true
+    },
+    "slogan": {
+      "source": "slogan",
+      "target": "slogan",
+      "partOfSpeech": "noun",
+      "sourceGloss": "slogan, specifically",
+      "frequencyRank": 1010311,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "slogan",
+      "enZipf": 3.72,
+      "eligible": true
+    },
+    "residency": {
+      "source": "residency",
+      "target": "residenza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "residence, abode, domicile",
+      "frequencyRank": 1010312,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "residenze",
+      "enZipf": 3.7,
+      "eligible": true
+    },
+    "yuan": {
+      "source": "yuan",
+      "target": "yuan",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (currencies) The basic unit of money in China.",
+      "frequencyRank": 1010313,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "yuan",
+      "enZipf": 3.7,
+      "eligible": true
+    },
+    "allegiance": {
+      "source": "allegiance",
+      "target": "fedeltà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "loyalty, faithfulness, fidelity, trustworthiness, allegiance",
+      "frequencyRank": 1010314,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "fedeltà",
+      "enZipf": 3.69,
+      "eligible": true
+    },
+    "standpoint": {
+      "source": "standpoint",
+      "target": "punto di vista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "point of view, viewpoint",
+      "frequencyRank": 1010315,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "punti di vista",
+      "enZipf": 3.65,
+      "eligible": true
+    },
+    "cocoa": {
+      "source": "cocoa",
+      "target": "cacao",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cocoa",
+      "frequencyRank": 1010316,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cacao",
+      "enZipf": 3.64,
+      "eligible": true
+    },
+    "whisky": {
+      "source": "whisky",
+      "target": "whisky",
+      "partOfSpeech": "noun",
+      "sourceGloss": "whisky, whiskey",
+      "frequencyRank": 1010317,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "whisky",
+      "enZipf": 3.63,
+      "eligible": true
+    },
+    "savannah": {
+      "source": "savannah",
+      "target": "savana",
+      "partOfSpeech": "noun",
+      "sourceGloss": "savanna",
+      "frequencyRank": 1010318,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "savane",
+      "enZipf": 3.62,
+      "eligible": true
+    },
+    "shutdown": {
+      "source": "shutdown",
+      "target": "chiusura",
+      "partOfSpeech": "noun",
+      "sourceGloss": "closure, closing",
+      "frequencyRank": 1010319,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "chiusure",
+      "enZipf": 3.62,
+      "eligible": true
+    },
+    "affinity": {
+      "source": "affinity",
+      "target": "affinità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "affinity",
+      "frequencyRank": 1010320,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "affinità",
+      "enZipf": 3.61,
+      "eligible": true
+    },
+    "longevity": {
+      "source": "longevity",
+      "target": "longevità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "longevity",
+      "frequencyRank": 1010321,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "longevità",
+      "enZipf": 3.55,
+      "eligible": true
+    },
+    "buffet": {
+      "source": "buffet",
+      "target": "buffet",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sideboard",
+      "frequencyRank": 1010322,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "buffet",
+      "enZipf": 3.54,
+      "eligible": true
+    },
+    "volatility": {
+      "source": "volatility",
+      "target": "volatilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "volatility (all senses)",
+      "frequencyRank": 1010323,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "volatilità",
+      "enZipf": 3.49,
+      "eligible": true
+    },
+    "placebo": {
+      "source": "placebo",
+      "target": "placebo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "placebo",
+      "frequencyRank": 1010324,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "placebo",
+      "enZipf": 3.48,
+      "eligible": true
+    },
+    "righteousness": {
+      "source": "righteousness",
+      "target": "rettitudine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rectitude, uprightness",
+      "frequencyRank": 1010325,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "rettitudini",
+      "enZipf": 3.48,
+      "eligible": true
+    },
+    "tequila": {
+      "source": "tequila",
+      "target": "tequila",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tequila",
+      "frequencyRank": 1010326,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "tequila",
+      "enZipf": 3.48,
+      "eligible": true
+    },
+    "memorandum": {
+      "source": "memorandum",
+      "target": "promemoria",
+      "partOfSpeech": "noun",
+      "sourceGloss": "reminder, prompt",
+      "frequencyRank": 1010327,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "promemoria",
+      "enZipf": 3.47,
+      "eligible": true
+    },
+    "statistic": {
+      "source": "statistic",
+      "target": "statistica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "statistics",
+      "frequencyRank": 1010328,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "statistiche",
+      "enZipf": 3.45,
+      "eligible": true
+    },
+    "vitality": {
+      "source": "vitality",
+      "target": "vitalità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vitality, vigour, ebullience",
+      "frequencyRank": 1010329,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "vitalità",
+      "enZipf": 3.41,
+      "eligible": true
+    },
+    "variability": {
+      "source": "variability",
+      "target": "variabilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "variability",
+      "frequencyRank": 1010330,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "variabilità",
+      "enZipf": 3.38,
+      "eligible": true
+    },
+    "bungalow": {
+      "source": "bungalow",
+      "target": "bungalow",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bungalow",
+      "frequencyRank": 1010331,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "bungalow",
+      "enZipf": 3.34,
+      "eligible": true
+    },
+    "relativity": {
+      "source": "relativity",
+      "target": "relatività",
+      "partOfSpeech": "noun",
+      "sourceGloss": "relativity",
+      "frequencyRank": 1010332,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "relatività",
+      "enZipf": 3.34,
+      "eligible": true
+    },
+    "mamma": {
+      "source": "mamma",
+      "target": "mammella",
+      "partOfSpeech": "noun",
+      "sourceGloss": "breast (human)",
+      "frequencyRank": 1010333,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "mammelle",
+      "enZipf": 3.32,
+      "eligible": true
+    },
+    "headphone": {
+      "source": "headphone",
+      "target": "auricolare",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ear; auricular",
+      "frequencyRank": 1010334,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "auricolari",
+      "enZipf": 3.3,
+      "eligible": true
+    },
+    "competency": {
+      "source": "competency",
+      "target": "competenza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "competence",
+      "frequencyRank": 1010335,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "competenze",
+      "enZipf": 3.27,
+      "eligible": true
+    },
+    "youngster": {
+      "source": "youngster",
+      "target": "giovane",
+      "partOfSpeech": "noun",
+      "sourceGloss": "young",
+      "frequencyRank": 1010336,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "giovani",
+      "enZipf": 3.27,
+      "eligible": true
+    },
+    "modernity": {
+      "source": "modernity",
+      "target": "modernità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "modernity",
+      "frequencyRank": 1010337,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "modernità",
+      "enZipf": 3.25,
+      "eligible": true
+    },
+    "throwback": {
+      "source": "throwback",
+      "target": "atavismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "atavism",
+      "frequencyRank": 1010338,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "atavismi",
+      "enZipf": 3.25,
+      "eligible": true
+    },
+    "logistical": {
+      "source": "logistical",
+      "target": "logistico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "logistic",
+      "frequencyRank": 1010339,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.24,
+      "eligible": true
+    },
+    "paternity": {
+      "source": "paternity",
+      "target": "paternità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paternity, fatherhood, parenthood",
+      "frequencyRank": 1010340,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "paternità",
+      "enZipf": 3.24,
+      "eligible": true
+    },
+    "specificity": {
+      "source": "specificity",
+      "target": "specificità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "specificity",
+      "frequencyRank": 1010341,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "specificità",
+      "enZipf": 3.22,
+      "eligible": true
+    },
+    "calibre": {
+      "source": "calibre",
+      "target": "calibro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "caliber, bore",
+      "frequencyRank": 1010342,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "calibri",
+      "enZipf": 3.21,
+      "eligible": true
+    },
+    "marbles": {
+      "source": "marbles",
+      "target": "biglia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "billiard/snooker ball",
+      "frequencyRank": 1010343,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "biglie",
+      "enZipf": 3.19,
+      "eligible": true
+    },
+    "perk": {
+      "source": "perk",
+      "target": "privilegio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "privilege",
+      "frequencyRank": 1010344,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "privilegi",
+      "enZipf": 3.19,
+      "eligible": true
+    },
+    "infertility": {
+      "source": "infertility",
+      "target": "sterilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "barrenness, infertility, sterility, childlessness",
+      "frequencyRank": 1010345,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sterilità",
+      "enZipf": 3.18,
+      "eligible": true
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "target": "dinamo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dynamo, dynamo-electric machine",
+      "frequencyRank": 1010346,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "dinamo",
+      "enZipf": 3.16,
+      "eligible": true
+    },
+    "authorship": {
+      "source": "authorship",
+      "target": "paternità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paternity, fatherhood, parenthood",
+      "frequencyRank": 1010347,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "paternità",
+      "enZipf": 3.15,
+      "eligible": true
+    },
+    "pixie": {
+      "source": "pixie",
+      "target": "folletto",
+      "partOfSpeech": "noun",
+      "sourceGloss": "elf (imp, goblin, fairy; esp: a supernatural being who is a survival in popular form of an ancient Etruscan or Roman deity)",
+      "frequencyRank": 1010348,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "folletti",
+      "enZipf": 3.15,
+      "eligible": true
+    },
+    "actuality": {
+      "source": "actuality",
+      "target": "realtà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "reality",
+      "frequencyRank": 1010349,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "realtà",
+      "enZipf": 3.1,
+      "eligible": true
+    },
+    "archdiocese": {
+      "source": "archdiocese",
+      "target": "arcidiocesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "archdiocese",
+      "frequencyRank": 1010350,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "arcidiocesi",
+      "enZipf": 3.08,
+      "eligible": true
+    },
+    "quorum": {
+      "source": "quorum",
+      "target": "quorum",
+      "partOfSpeech": "noun",
+      "sourceGloss": "quorum (minimum number of members required)",
+      "frequencyRank": 1010351,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "quorum",
+      "enZipf": 3.07,
+      "eligible": true
+    },
+    "lambda": {
+      "source": "lambda",
+      "target": "lambda",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lambda (Greek letter)",
+      "frequencyRank": 1010352,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "lambde",
+      "enZipf": 3.06,
+      "eligible": true
+    },
+    "requiem": {
+      "source": "requiem",
+      "target": "requiem",
+      "partOfSpeech": "noun",
+      "sourceGloss": "requiem",
+      "frequencyRank": 1010353,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "requiem",
+      "enZipf": 3.06,
+      "eligible": true
+    },
+    "tortilla": {
+      "source": "tortilla",
+      "target": "tortilla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) A type of Mexican flatbread made out of cornmeal or flour.",
+      "frequencyRank": 1010354,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "tortille",
+      "enZipf": 3.06,
+      "eligible": true
+    },
+    "wildcat": {
+      "source": "wildcat",
+      "target": "gatto selvatico",
+      "partOfSpeech": "noun",
+      "sourceGloss": "wild cat (type of cat)",
+      "frequencyRank": 1010355,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "gatti selvatici",
+      "enZipf": 3.06,
+      "eligible": true
+    },
+    "streetcar": {
+      "source": "streetcar",
+      "target": "tram",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tram, streetcar, trolley car",
+      "frequencyRank": 1010356,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tram",
+      "enZipf": 3.04,
+      "eligible": true
+    },
+    "fainting": {
+      "source": "fainting",
+      "target": "svenimento",
+      "partOfSpeech": "noun",
+      "sourceGloss": "faint, fainting fit",
+      "frequencyRank": 1010357,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "svenimenti",
+      "enZipf": 3.01,
+      "eligible": true
+    },
+    "ohm": {
+      "source": "ohm",
+      "target": "ohm",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) In the International System of Units, the derived unit of electrical resistance; the electrical resistance of a device across which a potential difference of one volt causes a current of one ampere.",
+      "frequencyRank": 1010358,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "ohm",
+      "enZipf": 3.01,
+      "eligible": true
+    },
+    "yoghurt": {
+      "source": "yoghurt",
+      "target": "yogurt",
+      "partOfSpeech": "noun",
+      "sourceGloss": "yogurt",
+      "frequencyRank": 1010359,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "yogurt",
+      "enZipf": 3.01,
+      "eligible": true
+    },
+    "travesty": {
+      "source": "travesty",
+      "target": "farsa",
+      "partOfSpeech": "noun",
+      "sourceGloss": "farce, masquerade",
+      "frequencyRank": 1010360,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "farse",
+      "enZipf": 3.0,
+      "eligible": true
+    },
+    "onus": {
+      "source": "onus",
+      "target": "onere",
+      "partOfSpeech": "noun",
+      "sourceGloss": "burden",
+      "frequencyRank": 1010361,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "oneri",
+      "enZipf": 2.99,
+      "eligible": true
+    },
+    "stasis": {
+      "source": "stasis",
+      "target": "stasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "stasis",
+      "frequencyRank": 1010362,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "stasi",
+      "enZipf": 2.99,
+      "eligible": true
+    },
+    "facsimile": {
+      "source": "facsimile",
+      "target": "facsimile",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an exact copy or reproduction",
+      "frequencyRank": 1010363,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "facsimile",
+      "enZipf": 2.97,
+      "eligible": true
+    },
+    "practicality": {
+      "source": "practicality",
+      "target": "praticità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "practicality, practicalness",
+      "frequencyRank": 1010364,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "praticità",
+      "enZipf": 2.96,
+      "eligible": true
+    },
+    "brainwashing": {
+      "source": "brainwashing",
+      "target": "lavaggio del cervello",
+      "partOfSpeech": "noun",
+      "sourceGloss": "brain-washing",
+      "frequencyRank": 1010365,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "lavaggi del cervello",
+      "enZipf": 2.93,
+      "eligible": true
+    },
+    "necrosis": {
+      "source": "necrosis",
+      "target": "necrosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "necrosis",
+      "frequencyRank": 1010366,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "necrosi",
+      "enZipf": 2.92,
+      "eligible": true
+    },
+    "radioactivity": {
+      "source": "radioactivity",
+      "target": "radioattività",
+      "partOfSpeech": "noun",
+      "sourceGloss": "radioactivity",
+      "frequencyRank": 1010367,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "radioattività",
+      "enZipf": 2.91,
+      "eligible": true
+    },
+    "windscreen": {
+      "source": "windscreen",
+      "target": "parabrezza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "windscreen/windshield",
+      "frequencyRank": 1010368,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "parabrezza",
+      "enZipf": 2.91,
+      "eligible": true
+    },
+    "reactivity": {
+      "source": "reactivity",
+      "target": "reattività",
+      "partOfSpeech": "noun",
+      "sourceGloss": "reactivity",
+      "frequencyRank": 1010369,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "reattività",
+      "enZipf": 2.89,
+      "eligible": true
+    },
+    "drosophila": {
+      "source": "drosophila",
+      "target": "drosofila",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fruit fly (of genus Drosophila)",
+      "frequencyRank": 1010370,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "drosofile",
+      "enZipf": 2.88,
+      "eligible": true
+    },
+    "kamikaze": {
+      "source": "kamikaze",
+      "target": "kamikaze",
+      "partOfSpeech": "noun",
+      "sourceGloss": "kamikaze",
+      "frequencyRank": 1010371,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "kamikaze",
+      "enZipf": 2.87,
+      "eligible": true
+    },
+    "shamrock": {
+      "source": "shamrock",
+      "target": "trifoglio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "clover",
+      "frequencyRank": 1010372,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "trifogli",
+      "enZipf": 2.87,
+      "eligible": true
+    },
+    "biosynthesis": {
+      "source": "biosynthesis",
+      "target": "biosintesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "biosynthesis",
+      "frequencyRank": 1010373,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "biosintesi",
+      "enZipf": 2.84,
+      "eligible": true
+    },
+    "napalm": {
+      "source": "napalm",
+      "target": "napalm",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) gasoline jelled with aluminum soaps; highly incendiary liquid used in fire bombs and flamethrowers",
+      "frequencyRank": 1010374,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "napalm",
+      "enZipf": 2.84,
+      "eligible": true
+    },
+    "sensuality": {
+      "source": "sensuality",
+      "target": "sensualità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sensuality, sensuousness",
+      "frequencyRank": 1010375,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sensualità",
+      "enZipf": 2.82,
+      "eligible": true
+    },
+    "pathogenesis": {
+      "source": "pathogenesis",
+      "target": "patogenesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pathogenesis",
+      "frequencyRank": 1010376,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "patogenesi",
+      "enZipf": 2.81,
+      "eligible": true
+    },
+    "topographical": {
+      "source": "topographical",
+      "target": "topografico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "topographic",
+      "frequencyRank": 1010377,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.8,
+      "eligible": true
+    },
+    "easement": {
+      "source": "easement",
+      "target": "servitù",
+      "partOfSpeech": "noun",
+      "sourceGloss": "servitude, bondage",
+      "frequencyRank": 1010378,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "servitù",
+      "enZipf": 2.79,
+      "eligible": true
+    },
+    "wherefore": {
+      "source": "wherefore",
+      "target": "perché",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "why",
+      "frequencyRank": 1010379,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "enZipf": 2.79,
+      "eligible": true
+    },
+    "protease": {
+      "source": "protease",
+      "target": "proteasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "protease",
+      "frequencyRank": 1010380,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "proteasi",
+      "enZipf": 2.78,
+      "eligible": true
+    },
+    "angina": {
+      "source": "angina",
+      "target": "angina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "a choking or a suffocation. Usually understood as ellipsis of angina pectoris (heart-related chest pain).",
+      "frequencyRank": 1010381,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "angine",
+      "enZipf": 2.77,
+      "eligible": true
+    },
+    "amenity": {
+      "source": "amenity",
+      "target": "amenità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pleasantness, amenity",
+      "frequencyRank": 1010382,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "amenità",
+      "enZipf": 2.75,
+      "eligible": true
+    },
+    "acropolis": {
+      "source": "acropolis",
+      "target": "Acropoli",
+      "partOfSpeech": "noun",
+      "sourceGloss": "acropolis (elevated part of a city in ancient Greece)",
+      "frequencyRank": 1010383,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "acropoli",
+      "enZipf": 2.73,
+      "eligible": true
+    },
+    "anaesthesia": {
+      "source": "anaesthesia",
+      "target": "anestesia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "anesthesia",
+      "frequencyRank": 1010384,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anestesie",
+      "enZipf": 2.71,
+      "eligible": true
+    },
+    "calumet": {
+      "source": "calumet",
+      "target": "calumet",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a highly decorated ceremonial pipe of Amerindians; smoked on ceremonial occasions (especially as a token of peace)",
+      "frequencyRank": 1010385,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "calumet",
+      "enZipf": 2.71,
+      "eligible": true
+    },
+    "evermore": {
+      "source": "evermore",
+      "target": "eternamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "eternally",
+      "frequencyRank": 1010386,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.67,
+      "eligible": true
+    },
+    "brainwash": {
+      "source": "brainwash",
+      "target": "fare il lavaggio del cervello",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) (psychology) To affect one's mind by using extreme mental pressure or any other mind-affecting process. (e.g. hypnosis)",
+      "frequencyRank": 1010387,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "enZipf": 2.66,
+      "eligible": true
+    },
+    "argumentation": {
+      "source": "argumentation",
+      "target": "argomentazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "argument (statement used to support a proposition)",
+      "frequencyRank": 1010388,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "argomentazioni",
+      "enZipf": 2.65,
+      "eligible": true
+    },
+    "safekeeping": {
+      "source": "safekeeping",
+      "target": "custodia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "care",
+      "frequencyRank": 1010389,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "custodie",
+      "enZipf": 2.64,
+      "eligible": true
+    },
+    "tiptoe": {
+      "source": "tiptoe",
+      "target": "camminare in punta di piedi",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) walk on one's toes",
+      "frequencyRank": 1010390,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "enZipf": 2.64,
+      "eligible": true
+    },
+    "centrality": {
+      "source": "centrality",
+      "target": "centralità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "centrality",
+      "frequencyRank": 1010391,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "centralità",
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "clamor": {
+      "source": "clamor",
+      "target": "clamore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "clamour",
+      "frequencyRank": 1010392,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "clamori",
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "disloyalty": {
+      "source": "disloyalty",
+      "target": "slealtà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unfairness",
+      "frequencyRank": 1010393,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "slealtà",
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "quandary": {
+      "source": "quandary",
+      "target": "dilemma",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dilemma (between two alternatives)",
+      "frequencyRank": 1010394,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "dilemmi",
+      "enZipf": 2.6,
+      "eligible": true
+    },
+    "sulphate": {
+      "source": "sulphate",
+      "target": "solfato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sulfate",
+      "frequencyRank": 1010395,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "solfati",
+      "enZipf": 2.59,
+      "eligible": true
+    },
+    "brutish": {
+      "source": "brutish",
+      "target": "bestiale",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "animal",
+      "frequencyRank": 1010396,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "enZipf": 2.57,
+      "eligible": true
+    },
+    "heredity": {
+      "source": "heredity",
+      "target": "ereditarietà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hereditariness, inheritability",
+      "frequencyRank": 1010397,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "ereditarietà",
+      "enZipf": 2.57,
+      "eligible": true
+    },
+    "solemnity": {
+      "source": "solemnity",
+      "target": "solennità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "solemnity",
+      "frequencyRank": 1010398,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "solennità",
+      "enZipf": 2.54,
+      "eligible": true
+    },
+    "chomp": {
+      "source": "chomp",
+      "target": "masticare in modo rumoroso",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) (intransitive) To bite or chew loudly or heavily.",
+      "frequencyRank": 1010399,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "enZipf": 2.53,
+      "eligible": true
+    },
+    "slicer": {
+      "source": "slicer",
+      "target": "affettatrice",
+      "partOfSpeech": "noun",
+      "sourceGloss": "meat slicer",
+      "frequencyRank": 1010400,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "affettatrici",
+      "enZipf": 2.52,
+      "eligible": true
+    },
+    "anaemia": {
+      "source": "anaemia",
+      "target": "anemia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "anemia",
+      "frequencyRank": 1010401,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anemie",
+      "enZipf": 2.51,
+      "eligible": true
+    },
+    "azimuth": {
+      "source": "azimuth",
+      "target": "azimut",
+      "partOfSpeech": "noun",
+      "sourceGloss": "azimuth",
+      "frequencyRank": 1010402,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "azimut",
+      "enZipf": 2.51,
+      "eligible": true
+    },
+    "nought": {
+      "source": "nought",
+      "target": "zero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "zero",
+      "frequencyRank": 1010403,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "zeri",
+      "enZipf": 2.51,
+      "eligible": true
+    },
+    "angiogenesis": {
+      "source": "angiogenesis",
+      "target": "angiogenesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "angiogenesis",
+      "frequencyRank": 1010404,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "angiogenesi",
+      "enZipf": 2.5,
+      "eligible": true
+    },
+    "discontinuity": {
+      "source": "discontinuity",
+      "target": "discontinuità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fitfulness, irregularity, discontinuity",
+      "frequencyRank": 1010405,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "discontinuità",
+      "enZipf": 2.5,
+      "eligible": true
+    },
+    "benediction": {
+      "source": "benediction",
+      "target": "benedizione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "blessing (pronouncement invoking divine aid)",
+      "frequencyRank": 1010406,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "benedizioni",
+      "enZipf": 2.49,
+      "eligible": true
+    },
+    "biota": {
+      "source": "biota",
+      "target": "biota",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (ecology) The living organisms of a region.",
+      "frequencyRank": 1010407,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "bioti",
+      "enZipf": 2.49,
+      "eligible": true
+    },
+    "sommelier": {
+      "source": "sommelier",
+      "target": "sommelier",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sommelier, wine steward (member of staff at a restaurant who keeps the wine cellar and advises the guests on a choice of wines)",
+      "frequencyRank": 1010408,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "sommelier",
+      "enZipf": 2.48,
+      "eligible": true
+    },
+    "tonality": {
+      "source": "tonality",
+      "target": "tonalità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tonality, hue",
+      "frequencyRank": 1010409,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "tonalità",
+      "enZipf": 2.45,
+      "eligible": true
+    },
+    "cantata": {
+      "source": "cantata",
+      "target": "cantata",
+      "partOfSpeech": "noun",
+      "sourceGloss": "song",
+      "frequencyRank": 1010410,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cantate",
+      "enZipf": 2.44,
+      "eligible": true
+    },
+    "spillage": {
+      "source": "spillage",
+      "target": "fuoriuscita",
+      "partOfSpeech": "noun",
+      "sourceGloss": "leakage, seepage, escape (of gas, water, etc.)",
+      "frequencyRank": 1010411,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "fuoriuscite",
+      "enZipf": 2.44,
+      "eligible": true
+    },
+    "cession": {
+      "source": "cession",
+      "target": "cessione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "transfer (of funds etc.)",
+      "frequencyRank": 1010412,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cessioni",
+      "enZipf": 2.42,
+      "eligible": true
+    },
+    "scrivener": {
+      "source": "scrivener",
+      "target": "scrivano",
+      "partOfSpeech": "noun",
+      "sourceGloss": "scribe",
+      "frequencyRank": 1010413,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "scrivani",
+      "enZipf": 2.42,
+      "eligible": true
+    },
+    "hemophilia": {
+      "source": "hemophilia",
+      "target": "emofilia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "haemophilia",
+      "frequencyRank": 1010414,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "emofilie",
+      "enZipf": 2.41,
+      "eligible": true
+    },
+    "synchrony": {
+      "source": "synchrony",
+      "target": "sincronia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "synchronicity",
+      "frequencyRank": 1010415,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sincronie",
+      "enZipf": 2.4,
+      "eligible": true
+    },
+    "marketability": {
+      "source": "marketability",
+      "target": "commerciabilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "marketability",
+      "frequencyRank": 1010416,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "commerciabilità",
+      "enZipf": 2.39,
+      "eligible": true
+    },
+    "lamia": {
+      "source": "lamia",
+      "target": "lamia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "a type of vault used in rustic buildings",
+      "frequencyRank": 1010417,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "lamie",
+      "enZipf": 2.37,
+      "eligible": true
+    },
+    "quartile": {
+      "source": "quartile",
+      "target": "quartile",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (statistics) Any of the three points that divide an ordered distribution into four parts, each containing a quarter of the population.",
+      "frequencyRank": 1010418,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "quartili",
+      "enZipf": 2.37,
+      "eligible": true
+    },
+    "sulphide": {
+      "source": "sulphide",
+      "target": "solfuro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sulfide",
+      "frequencyRank": 1010419,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "solfuri",
+      "enZipf": 2.37,
+      "eligible": true
+    },
+    "betrayer": {
+      "source": "betrayer",
+      "target": "traditore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "traitor",
+      "frequencyRank": 1010420,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "traditori",
+      "enZipf": 2.35,
+      "eligible": true
+    },
+    "seance": {
+      "source": "seance",
+      "target": "seduta spiritica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "séance",
+      "frequencyRank": 1010421,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sedute spiritiche",
+      "enZipf": 2.35,
+      "eligible": true
+    },
+    "bullfrog": {
+      "source": "bullfrog",
+      "target": "rana toro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "American bullfrog (Lithobates catesbeianus)",
+      "frequencyRank": 1010422,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "rane toro",
+      "enZipf": 2.34,
+      "eligible": true
+    },
+    "baud": {
+      "source": "baud",
+      "target": "baud",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (computer science) a data transmission rate (bits/second) for modems",
+      "frequencyRank": 1010423,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "baud",
+      "enZipf": 2.33,
+      "eligible": true
+    },
+    "alkalinity": {
+      "source": "alkalinity",
+      "target": "alcalinità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "alkalinity",
+      "frequencyRank": 1010424,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "alcalinità",
+      "enZipf": 2.32,
+      "eligible": true
+    },
+    "clod": {
+      "source": "clod",
+      "target": "zolla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lump, tussock, hassock",
+      "frequencyRank": 1010425,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "zolle",
+      "enZipf": 2.32,
+      "eligible": true
+    },
+    "genuineness": {
+      "source": "genuineness",
+      "target": "genuinità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "genuineness, authenticity",
+      "frequencyRank": 1010426,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "genuinità",
+      "enZipf": 2.32,
+      "eligible": true
+    },
+    "amylase": {
+      "source": "amylase",
+      "target": "amilasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "amylase",
+      "frequencyRank": 1010427,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "amilasi",
+      "enZipf": 2.31,
+      "eligible": true
+    },
+    "unfailingly": {
+      "source": "unfailingly",
+      "target": "immancabilmente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "without fail, without doubt, undoubtedly, definitely",
+      "frequencyRank": 1010428,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.3,
+      "eligible": true
+    },
+    "blowfish": {
+      "source": "blowfish",
+      "target": "pesce palla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pufferfish, puffer, globefish (any fish of the family Tetraodontidae), particularly Arothron hispidus",
+      "frequencyRank": 1010429,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "pesci palla",
+      "enZipf": 2.29,
+      "eligible": true
+    },
+    "fecundity": {
+      "source": "fecundity",
+      "target": "fecondità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fertility",
+      "frequencyRank": 1010430,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fecondità",
+      "enZipf": 2.29,
+      "eligible": true
+    },
+    "melange": {
+      "source": "melange",
+      "target": "miscuglio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mixture",
+      "frequencyRank": 1010431,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "miscugli",
+      "enZipf": 2.28,
+      "eligible": true
+    },
+    "zoroastrianism": {
+      "source": "zoroastrianism",
+      "target": "zoroastrismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) system of religion founded in Persia in the 6th century BC by Zoroaster; set forth in the Zend-Avesta; based on concept of struggle between light (good) and dark (evil)",
+      "frequencyRank": 1010432,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "zoroastrismi",
+      "enZipf": 2.26,
+      "eligible": true
+    },
+    "unreality": {
+      "source": "unreality",
+      "target": "irrealtà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "unreality",
+      "frequencyRank": 1010433,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "irrealtà",
+      "enZipf": 2.24,
+      "eligible": true
+    },
+    "abies": {
+      "source": "abies",
+      "target": "abete",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fir, fir tree, particularly the silver fir (Abies alba)",
+      "frequencyRank": 1010434,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "abeti",
+      "enZipf": 2.23,
+      "eligible": true
+    },
+    "malleability": {
+      "source": "malleability",
+      "target": "malleabilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "malleability",
+      "frequencyRank": 1010435,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "malleabilità",
+      "enZipf": 2.19,
+      "eligible": true
+    },
+    "weal": {
+      "source": "weal",
+      "target": "pomfo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "wheal",
+      "frequencyRank": 1010436,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "pomfi",
+      "enZipf": 2.18,
+      "eligible": true
+    },
+    "animism": {
+      "source": "animism",
+      "target": "animismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the doctrine that all natural objects and the universe itself have souls",
+      "frequencyRank": 1010437,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "animismi",
+      "enZipf": 2.14,
+      "eligible": true
+    },
+    "byword": {
+      "source": "byword",
+      "target": "proverbio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "proverb",
+      "frequencyRank": 1010438,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "proverbi",
+      "enZipf": 2.14,
+      "eligible": true
+    },
+    "earache": {
+      "source": "earache",
+      "target": "otalgia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "otalgia",
+      "frequencyRank": 1010439,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "otalgie",
+      "enZipf": 2.14,
+      "eligible": true
+    },
+    "gratefulness": {
+      "source": "gratefulness",
+      "target": "gratitudine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gratitude",
+      "frequencyRank": 1010440,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "gratitudini",
+      "enZipf": 2.13,
+      "eligible": true
+    },
+    "megalopolis": {
+      "source": "megalopolis",
+      "target": "megalopoli",
+      "partOfSpeech": "noun",
+      "sourceGloss": "megalopolis",
+      "frequencyRank": 1010441,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "megalopoli",
+      "enZipf": 2.13,
+      "eligible": true
+    },
+    "wampum": {
+      "source": "wampum",
+      "target": "wampum",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (uncountable) Small cylindrical beads made from polished shells (especially white ones) which have been strung together, formerly used by Native American peoples of eastern North America for various purposes including as jewellery and money, and for record-keeping; (countable, archaic) one such bead.",
+      "frequencyRank": 1010442,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "wampum",
+      "enZipf": 2.1,
+      "eligible": true
+    },
+    "proteinuria": {
+      "source": "proteinuria",
+      "target": "proteinuria",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the presence of excessive protein (chiefly albumin but also globulin) in the urine; usually a symptom of kidney disorder",
+      "frequencyRank": 1010443,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "proteinurie",
+      "enZipf": 2.03,
+      "eligible": true
+    },
+    "lucre": {
+      "source": "lucre",
+      "target": "lucro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "profit, gain",
+      "frequencyRank": 1010444,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "lucri",
+      "enZipf": 2.02,
+      "eligible": true
+    },
+    "compressibility": {
+      "source": "compressibility",
+      "target": "comprimibilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "compressibility",
+      "frequencyRank": 1010445,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "comprimibilità",
+      "enZipf": 2.01,
+      "eligible": true
+    },
+    "immunogenicity": {
+      "source": "immunogenicity",
+      "target": "immunogenicità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "immunogenicity",
+      "frequencyRank": 1010446,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "immunogenicità",
+      "enZipf": 2.01,
+      "eligible": true
+    },
+    "artificiality": {
+      "source": "artificiality",
+      "target": "artificialità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "artificiality, artificialness",
+      "frequencyRank": 1010447,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "artificialità",
+      "enZipf": 2.0,
+      "eligible": true
+    },
+    "unconditioned": {
+      "source": "unconditioned",
+      "target": "incondizionato",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "unreserved, unqualified, unconditional",
+      "frequencyRank": 1010448,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.0,
+      "eligible": true
+    },
+    "gloaming": {
+      "source": "gloaming",
+      "target": "crepuscolo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "twilight",
+      "frequencyRank": 1010449,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "crepuscoli",
+      "enZipf": 1.97,
+      "eligible": true
+    },
+    "sonority": {
+      "source": "sonority",
+      "target": "sonorità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sonority, resonance",
+      "frequencyRank": 1010450,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sonorità",
+      "enZipf": 1.97,
+      "eligible": true
+    },
+    "hollowness": {
+      "source": "hollowness",
+      "target": "cavernosità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hollowness",
+      "frequencyRank": 1010451,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cavernosità",
+      "enZipf": 1.95,
+      "eligible": true
+    },
+    "dentine": {
+      "source": "dentine",
+      "target": "dentina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dentin",
+      "frequencyRank": 1010452,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "dentine",
+      "enZipf": 1.92,
+      "eligible": true
+    },
+    "ontogeny": {
+      "source": "ontogeny",
+      "target": "ontogenesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ontogeny",
+      "frequencyRank": 1010453,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "ontogenesi",
+      "enZipf": 1.92,
+      "eligible": true
+    },
+    "anteroom": {
+      "source": "anteroom",
+      "target": "anticamera",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hall, lobby, waiting room",
+      "frequencyRank": 1010454,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anticamere",
+      "enZipf": 1.91,
+      "eligible": true
+    },
+    "consonantal": {
+      "source": "consonantal",
+      "target": "consonantico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "consonant",
+      "frequencyRank": 1010455,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "homoeopathy": {
+      "source": "homoeopathy",
+      "target": "omeopatia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "homeopathy",
+      "frequencyRank": 1010456,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "omeopatie",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "narcosis": {
+      "source": "narcosis",
+      "target": "narcosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "narcosis",
+      "frequencyRank": 1010457,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "narcosi",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "unawareness": {
+      "source": "unawareness",
+      "target": "inconsapevolezza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ignorance; lack of awareness",
+      "frequencyRank": 1010458,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inconsapevolezze",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "peristalsis": {
+      "source": "peristalsis",
+      "target": "peristalsi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "peristalsis",
+      "frequencyRank": 1010459,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "peristalsi",
+      "enZipf": 1.88,
+      "eligible": true
+    },
+    "fiord": {
+      "source": "fiord",
+      "target": "fiordo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fjord",
+      "frequencyRank": 1010460,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "fiordi",
+      "enZipf": 1.87,
+      "eligible": true
+    },
+    "forebear": {
+      "source": "forebear",
+      "target": "antenato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ancestor, forefather",
+      "frequencyRank": 1010461,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "antenati",
+      "enZipf": 1.87,
+      "eligible": true
+    },
+    "inulin": {
+      "source": "inulin",
+      "target": "inulina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) used to manufacture fructose and in assessing kidney function",
+      "frequencyRank": 1010462,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inuline",
+      "enZipf": 1.83,
+      "eligible": true
+    },
+    "hyaluronidase": {
+      "source": "hyaluronidase",
+      "target": "ialuronidasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hyaluronidase",
+      "frequencyRank": 1010463,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ialuronidasi",
+      "enZipf": 1.82,
+      "eligible": true
+    },
+    "tombola": {
+      "source": "tombola",
+      "target": "tombola",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bingo (when played at home)",
+      "frequencyRank": 1010464,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "tombole",
+      "enZipf": 1.82,
+      "eligible": true
+    },
+    "religiousness": {
+      "source": "religiousness",
+      "target": "religiosità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "religiousness",
+      "frequencyRank": 1010465,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "religiosità",
+      "enZipf": 1.8,
+      "eligible": true
+    },
+    "alimentation": {
+      "source": "alimentation",
+      "target": "alimentazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "nutrition, nourishment, diet, feeding",
+      "frequencyRank": 1010466,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "alimentazioni",
+      "enZipf": 1.72,
+      "eligible": true
+    },
+    "doohickey": {
+      "source": "doohickey",
+      "target": "coso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "thingie, thingo, thingamabob (term used to refer to something or someone whose name one cannot recall)",
+      "frequencyRank": 1010467,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cosi",
+      "enZipf": 1.72,
+      "eligible": true
+    },
+    "spiritism": {
+      "source": "spiritism",
+      "target": "spiritismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "spiritualism",
+      "frequencyRank": 1010468,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "spiritismi",
+      "enZipf": 1.72,
+      "eligible": true
+    },
+    "farad": {
+      "source": "farad",
+      "target": "farad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "farad",
+      "frequencyRank": 1010469,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "farad",
+      "enZipf": 1.7,
+      "eligible": true
+    },
+    "lexicographical": {
+      "source": "lexicographical",
+      "target": "lessicografico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "lexicographic",
+      "frequencyRank": 1010470,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.68,
+      "eligible": true
+    },
+    "pneumoconiosis": {
+      "source": "pneumoconiosis",
+      "target": "pneumoconiosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pneumoconiosis",
+      "frequencyRank": 1010471,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "pneumoconiosi",
+      "enZipf": 1.67,
+      "eligible": true
+    },
+    "ortolan": {
+      "source": "ortolan",
+      "target": "ortolano",
+      "partOfSpeech": "noun",
+      "sourceGloss": "greengrocer",
+      "frequencyRank": 1010472,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ortolani",
+      "enZipf": 1.66,
+      "eligible": true
+    },
+    "anamnesis": {
+      "source": "anamnesis",
+      "target": "anamnesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "anamnesis, medical history, case history",
+      "frequencyRank": 1010473,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anamnesi",
+      "enZipf": 1.65,
+      "eligible": true
+    },
+    "telegrapher": {
+      "source": "telegrapher",
+      "target": "telegrafista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "telegraphist; telegraph operator",
+      "frequencyRank": 1010474,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "telegrafisti",
+      "enZipf": 1.63,
+      "eligible": true
+    },
+    "noncitizen": {
+      "source": "noncitizen",
+      "target": "straniero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "foreign, alien",
+      "frequencyRank": 1010475,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "stranieri",
+      "enZipf": 1.6,
+      "eligible": true
+    },
+    "tramcar": {
+      "source": "tramcar",
+      "target": "tram",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tram, streetcar, trolley car",
+      "frequencyRank": 1010476,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tram",
+      "enZipf": 1.6,
+      "eligible": true
+    },
+    "kinescope": {
+      "source": "kinescope",
+      "target": "cinescopio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cathode-ray tube (originally kinescope)",
+      "frequencyRank": 1010477,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cinescopi",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "onchocerciasis": {
+      "source": "onchocerciasis",
+      "target": "oncocercosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "onchocerciasis",
+      "frequencyRank": 1010478,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "oncocercosi",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "contrabass": {
+      "source": "contrabass",
+      "target": "contrabbasso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "double bass",
+      "frequencyRank": 1010479,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "contrabbassi",
+      "enZipf": 1.58,
+      "eligible": true
+    },
+    "pugilism": {
+      "source": "pugilism",
+      "target": "pugilato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "boxing",
+      "frequencyRank": 1010480,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "pugilati",
+      "enZipf": 1.55,
+      "eligible": true
+    },
+    "depravation": {
+      "source": "depravation",
+      "target": "depravazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "depravity",
+      "frequencyRank": 1010481,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "depravazioni",
+      "enZipf": 1.54,
+      "eligible": true
+    },
+    "arrear": {
+      "source": "arrear",
+      "target": "arretrato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "backward (community, country, etc.)",
+      "frequencyRank": 1010482,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "arretrati",
+      "enZipf": 1.53,
+      "eligible": true
+    },
+    "pirogue": {
+      "source": "pirogue",
+      "target": "piroga",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dugout canoe (or similar)",
+      "frequencyRank": 1010483,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "piroghe",
+      "enZipf": 1.52,
+      "eligible": true
+    },
+    "effluvium": {
+      "source": "effluvium",
+      "target": "effluvio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "scent, perfume (smell)",
+      "frequencyRank": 1010484,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "effluvi",
+      "enZipf": 1.51,
+      "eligible": true
+    },
+    "iconostasis": {
+      "source": "iconostasis",
+      "target": "iconostasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "iconostasis",
+      "frequencyRank": 1010485,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "iconostasi",
+      "enZipf": 1.49,
+      "eligible": true
+    },
+    "ouzel": {
+      "source": "ouzel",
+      "target": "merlo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "blackbird",
+      "frequencyRank": 1010486,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "merli",
+      "enZipf": 1.46,
+      "eligible": true
+    },
+    "luxation": {
+      "source": "luxation",
+      "target": "lussazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dislocation",
+      "frequencyRank": 1010487,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "lussazioni",
+      "enZipf": 1.44,
+      "eligible": true
+    },
+    "suppliant": {
+      "source": "suppliant",
+      "target": "supplicante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "supplicant",
+      "frequencyRank": 1010488,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "supplicanti",
+      "enZipf": 1.44,
+      "eligible": true
+    },
+    "unlawfulness": {
+      "source": "unlawfulness",
+      "target": "illegalità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "illegality, lawlessness, unlawfulness",
+      "frequencyRank": 1010489,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "illegalità",
+      "enZipf": 1.43,
+      "eligible": true
+    },
+    "cysticercosis": {
+      "source": "cysticercosis",
+      "target": "cisticercosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cysticercosis",
+      "frequencyRank": 1010490,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "cisticercosi",
+      "enZipf": 1.42,
+      "eligible": true
+    },
+    "steatite": {
+      "source": "steatite",
+      "target": "steatite",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a soft heavy compact variety of talc having a soapy feel; used to make hearths and tabletops and ornaments",
+      "frequencyRank": 1010491,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "steatiti",
+      "enZipf": 1.42,
+      "eligible": true
+    },
+    "swearword": {
+      "source": "swearword",
+      "target": "parolaccia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "swear word",
+      "frequencyRank": 1010492,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "parolacce",
+      "enZipf": 1.42,
+      "eligible": true
+    },
+    "belligerency": {
+      "source": "belligerency",
+      "target": "belligeranza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "belligerence",
+      "frequencyRank": 1010493,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "belligeranze",
+      "enZipf": 1.41,
+      "eligible": true
+    },
+    "rhumb": {
+      "source": "rhumb",
+      "target": "lossodromia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rhumb line, loxodrome",
+      "frequencyRank": 1010494,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "lossodromie",
+      "enZipf": 1.39,
+      "eligible": true
+    },
+    "villein": {
+      "source": "villein",
+      "target": "servo della gleba",
+      "partOfSpeech": "noun",
+      "sourceGloss": "serf",
+      "frequencyRank": 1010495,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "servi della gleba",
+      "enZipf": 1.36,
+      "eligible": true
+    },
+    "poltroon": {
+      "source": "poltroon",
+      "target": "vigliacco",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cowardly",
+      "frequencyRank": 1010496,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "vigliacchi",
+      "enZipf": 1.35,
+      "eligible": true
+    },
+    "assiduity": {
+      "source": "assiduity",
+      "target": "assiduità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "assiduity, regularity, diligence",
+      "frequencyRank": 1010497,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "assiduità",
+      "enZipf": 1.33,
+      "eligible": true
+    },
+    "gliosis": {
+      "source": "gliosis",
+      "target": "gliosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gliosis",
+      "frequencyRank": 1010498,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "gliosi",
+      "enZipf": 1.31,
+      "eligible": true
+    },
+    "understandability": {
+      "source": "understandability",
+      "target": "comprensibilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "comprehensibility, clarity, intelligibility, understandability",
+      "frequencyRank": 1010499,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "comprensibilità",
+      "enZipf": 1.31,
+      "eligible": true
+    },
+    "kettledrum": {
+      "source": "kettledrum",
+      "target": "timpano",
+      "partOfSpeech": "noun",
+      "sourceGloss": "eardrum, tympanum",
+      "frequencyRank": 1010500,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "timpani",
+      "enZipf": 1.28,
+      "eligible": true
+    },
+    "mesencephalon": {
+      "source": "mesencephalon",
+      "target": "mesencefalo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "midbrain",
+      "frequencyRank": 1010501,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "mesencefali",
+      "enZipf": 1.28,
+      "eligible": true
+    },
+    "reviser": {
+      "source": "reviser",
+      "target": "revisore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "any of several forms of editor or reader",
+      "frequencyRank": 1010502,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "revisori",
+      "enZipf": 1.28,
+      "eligible": true
+    },
+    "natality": {
+      "source": "natality",
+      "target": "natalità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "birth rate / birthrate",
+      "frequencyRank": 1010503,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "natalità",
+      "enZipf": 1.27,
+      "eligible": true
+    },
+    "clangor": {
+      "source": "clangor",
+      "target": "clangore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "clangour",
+      "frequencyRank": 1010504,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "clangori",
+      "enZipf": 1.19,
+      "eligible": true
+    },
+    "eyeblink": {
+      "source": "eyeblink",
+      "target": "battito di ciglia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "blink",
+      "frequencyRank": 1010505,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "battiti di ciglia",
+      "enZipf": 1.17,
+      "eligible": true
+    },
+    "asepsis": {
+      "source": "asepsis",
+      "target": "asepsi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "asepsis",
+      "frequencyRank": 1010506,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "asepsi",
+      "enZipf": 1.14,
+      "eligible": true
+    },
+    "incredibility": {
+      "source": "incredibility",
+      "target": "incredibilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "incredibility",
+      "frequencyRank": 1010507,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "incredibilità",
+      "enZipf": 1.11,
+      "eligible": true
+    },
+    "paraparesis": {
+      "source": "paraparesis",
+      "target": "paraparesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paraparesis",
+      "frequencyRank": 1010508,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "paraparesi",
+      "enZipf": 1.1,
+      "eligible": true
+    },
+    "disquietude": {
+      "source": "disquietude",
+      "target": "inquietudine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "restlessness, unrest",
+      "frequencyRank": 1010509,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inquietudini",
+      "enZipf": 1.09,
+      "eligible": true
+    },
+    "finity": {
+      "source": "finity",
+      "target": "finitezza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "finiteness",
+      "frequencyRank": 1010510,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "finitezze",
+      "enZipf": 1.06,
+      "eligible": true
+    },
+    "zwieback": {
+      "source": "zwieback",
+      "target": "fetta biscottata",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rusk",
+      "frequencyRank": 1010511,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fette biscottate",
+      "enZipf": 1.04,
+      "eligible": true
+    },
+    "inapplicability": {
+      "source": "inapplicability",
+      "target": "inapplicabilità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "inapplicability",
+      "frequencyRank": 1010512,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inapplicabilità",
+      "enZipf": 1.01,
+      "eligible": true
+    },
+    "abasia": {
+      "source": "abasia",
+      "target": "abasia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "abasia",
+      "frequencyRank": 1010513,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "abasie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "academism": {
+      "source": "academism",
+      "target": "accademismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "academicism",
+      "frequencyRank": 1010514,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "accademismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "acarus": {
+      "source": "acarus",
+      "target": "acaro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mite",
+      "frequencyRank": 1010515,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "acari",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "acenaphthene": {
+      "source": "acenaphthene",
+      "target": "acenaftene",
+      "partOfSpeech": "noun",
+      "sourceGloss": "acenaphthene",
+      "frequencyRank": 1010516,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "acenafteni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "aeromancy": {
+      "source": "aeromancy",
+      "target": "aeromanzia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "aeromancy",
+      "frequencyRank": 1010517,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "aeromanzie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "affrication": {
+      "source": "affrication",
+      "target": "affricazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "affrication",
+      "frequencyRank": 1010518,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "affricazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "afterbrain": {
+      "source": "afterbrain",
+      "target": "mielencefalo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "afterbrain",
+      "frequencyRank": 1010519,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "mielencefali",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "altercate": {
+      "source": "altercate",
+      "target": "altercare",
+      "partOfSpeech": "verb",
+      "sourceGloss": "to quarrel, to argue",
+      "frequencyRank": 1010520,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "amphibology": {
+      "source": "amphibology",
+      "target": "anfibologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "amphiboly",
+      "frequencyRank": 1010521,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anfibologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "animadversion": {
+      "source": "animadversion",
+      "target": "animavversione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "animadversion",
+      "frequencyRank": 1010522,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "animavversioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "apocope": {
+      "source": "apocope",
+      "target": "apocope",
+      "partOfSpeech": "noun",
+      "sourceGloss": "apocope",
+      "frequencyRank": 1010523,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "apocopi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "apriorism": {
+      "source": "apriorism",
+      "target": "apriorismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "apriorism",
+      "frequencyRank": 1010524,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "apriorismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "backsaw": {
+      "source": "backsaw",
+      "target": "sega a dorso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "backsaw (handsaw that has a reinforcement along its back edge.)",
+      "frequencyRank": 1010525,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "seghe a dorso",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "behoof": {
+      "source": "behoof",
+      "target": "vantaggio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "advantage, vantage",
+      "frequencyRank": 1010526,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "vantaggi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "benzenyl": {
+      "source": "benzenyl",
+      "target": "benzenile",
+      "partOfSpeech": "noun",
+      "sourceGloss": "benzenyl",
+      "frequencyRank": 1010527,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "benzenili",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "benzotrichloride": {
+      "source": "benzotrichloride",
+      "target": "benzotricloruro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "benzotrichloride",
+      "frequencyRank": 1010528,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "benzotricloruri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "bilaterality": {
+      "source": "bilaterality",
+      "target": "bilateralità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "the quality or state of being bilateral",
+      "frequencyRank": 1010529,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "bilateralità",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "biographee": {
+      "source": "biographee",
+      "target": "biografato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "biographee",
+      "frequencyRank": 1010530,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "biografati",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "bookrest": {
+      "source": "bookrest",
+      "target": "leggio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bookrest",
+      "frequencyRank": 1010531,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "leggii",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "branchia": {
+      "source": "branchia",
+      "target": "branchia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gill",
+      "frequencyRank": 1010532,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "branchie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "bronchiole": {
+      "source": "bronchiole",
+      "target": "bronchiolo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bronchiole",
+      "frequencyRank": 1010533,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "bronchioli",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "bullionism": {
+      "source": "bullionism",
+      "target": "bullionismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "bullionism",
+      "frequencyRank": 1010534,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "bullionismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "byronism": {
+      "source": "byronism",
+      "target": "byronismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Byronism",
+      "frequencyRank": 1010535,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "byronismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "calligraphist": {
+      "source": "calligraphist",
+      "target": "calligrafo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "calligrapher, calligraphist",
+      "frequencyRank": 1010536,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "calligrafi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "carbodynamite": {
+      "source": "carbodynamite",
+      "target": "carbodinamite",
+      "partOfSpeech": "noun",
+      "sourceGloss": "carbodynamite",
+      "frequencyRank": 1010537,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "carbodinamiti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cetology": {
+      "source": "cetology",
+      "target": "cetologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "whalelore, cetology",
+      "frequencyRank": 1010538,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "cetologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chapelmaster": {
+      "source": "chapelmaster",
+      "target": "maestro di cappella",
+      "partOfSpeech": "noun",
+      "sourceGloss": "kapellmeister",
+      "frequencyRank": 1010539,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "maestri di cappella",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chiliagon": {
+      "source": "chiliagon",
+      "target": "chiliagono",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chiliagon",
+      "frequencyRank": 1010540,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "chiliagoni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chiliasm": {
+      "source": "chiliasm",
+      "target": "chiliasmo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chiliasm",
+      "frequencyRank": 1010541,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "chiliasmi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chlorophyl": {
+      "source": "chlorophyl",
+      "target": "clorofilla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chlorophyll",
+      "frequencyRank": 1010542,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "clorofille",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chondroblastoma": {
+      "source": "chondroblastoma",
+      "target": "condroblastoma",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chondroblastoma",
+      "frequencyRank": 1010543,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "condroblastomi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chromatism": {
+      "source": "chromatism",
+      "target": "cromatismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "chromatism (all senses)",
+      "frequencyRank": 1010544,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cromatismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cipolin": {
+      "source": "cipolin",
+      "target": "cipollino",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cipolin (marble)",
+      "frequencyRank": 1010545,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "cipollini",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "coagulum": {
+      "source": "coagulum",
+      "target": "coagulo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "clot (of blood etc.)",
+      "frequencyRank": 1010546,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "coaguli",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "colophony": {
+      "source": "colophony",
+      "target": "colofonia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rosin, colophony",
+      "frequencyRank": 1010547,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "colofonie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "compluvium": {
+      "source": "compluvium",
+      "target": "compluvio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "valley",
+      "frequencyRank": 1010548,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "compluvi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "countervair": {
+      "source": "countervair",
+      "target": "controvaio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "counter-vair",
+      "frequencyRank": 1010549,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "controvai",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cuckoopint": {
+      "source": "cuckoopint",
+      "target": "gigaro scuro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "arum (Arum maculatum)",
+      "frequencyRank": 1010550,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "gigari scuri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cutinization": {
+      "source": "cutinization",
+      "target": "cutinizzazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "cutinization",
+      "frequencyRank": 1010551,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "cutinizzazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "deviationism": {
+      "source": "deviationism",
+      "target": "deviazionismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "deviationism",
+      "frequencyRank": 1010552,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "deviazionismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "dextrinase": {
+      "source": "dextrinase",
+      "target": "destrinasi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "dextrinase",
+      "frequencyRank": 1010553,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "destrinasi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "diphenylmethane": {
+      "source": "diphenylmethane",
+      "target": "difenilmetano",
+      "partOfSpeech": "noun",
+      "sourceGloss": "diphenylmethane",
+      "frequencyRank": 1010554,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "difenilmetani",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "dubitation": {
+      "source": "dubitation",
+      "target": "dubbio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "doubtful, uncertain, dubious, questionable",
+      "frequencyRank": 1010555,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "dubbi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "elegist": {
+      "source": "elegist",
+      "target": "elegista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "elegist",
+      "frequencyRank": 1010556,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "elegisti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "encipher": {
+      "source": "encipher",
+      "target": "cifrare",
+      "partOfSpeech": "verb",
+      "sourceGloss": "to abbreviate (a name) using only initials",
+      "frequencyRank": 1010557,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "ephyra": {
+      "source": "ephyra",
+      "target": "efira",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ephyra",
+      "frequencyRank": 1010558,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "efire",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "epicarp": {
+      "source": "epicarp",
+      "target": "epicarpo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "epicarp",
+      "frequencyRank": 1010559,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "epicarpi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "extraordinariness": {
+      "source": "extraordinariness",
+      "target": "straordinarietà",
+      "partOfSpeech": "noun",
+      "sourceGloss": "extraordinariness, exceptionality",
+      "frequencyRank": 1010560,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "straordinarietà",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "eyedrop": {
+      "source": "eyedrop",
+      "target": "collirio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "eyewash",
+      "frequencyRank": 1010561,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "colliri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "fluorate": {
+      "source": "fluorate",
+      "target": "fluorato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fluorate",
+      "frequencyRank": 1010562,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "fluorati",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "fruitarianism": {
+      "source": "fruitarianism",
+      "target": "fruttarismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "fruitarianism",
+      "frequencyRank": 1010563,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "fruttarismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "gallnut": {
+      "source": "gallnut",
+      "target": "noce di galla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gallnut",
+      "frequencyRank": 1010564,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "noci di galla",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "glycolaldehyde": {
+      "source": "glycolaldehyde",
+      "target": "glicolale",
+      "partOfSpeech": "noun",
+      "sourceGloss": "glycolal, glycolaldehyde",
+      "frequencyRank": 1010565,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "glicolali",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "glycolide": {
+      "source": "glycolide",
+      "target": "glicolide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "glycolide",
+      "frequencyRank": 1010566,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "glicolidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "glycolyl": {
+      "source": "glycolyl",
+      "target": "glicolile",
+      "partOfSpeech": "noun",
+      "sourceGloss": "glycolyl",
+      "frequencyRank": 1010567,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "glicolili",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "gonocyte": {
+      "source": "gonocyte",
+      "target": "gonocito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gonocyte",
+      "frequencyRank": 1010568,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "gonociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "gynarchy": {
+      "source": "gynarchy",
+      "target": "ginarchia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "gynarchy",
+      "frequencyRank": 1010569,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ginarchie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hayrack": {
+      "source": "hayrack",
+      "target": "rastrelliera",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hayrack",
+      "frequencyRank": 1010570,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "rastrelliere",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hebetude": {
+      "source": "hebetude",
+      "target": "ebetudine",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hebetude, dullness",
+      "frequencyRank": 1010571,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "ebetudini",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "heliometer": {
+      "source": "heliometer",
+      "target": "eliometro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "heliometer",
+      "frequencyRank": 1010572,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "eliometri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hexoctahedron": {
+      "source": "hexoctahedron",
+      "target": "esacisottaedro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hexoctahedron, hexakis octahedron, hexakisoctahedron",
+      "frequencyRank": 1010573,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "esacisottaedri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hippomancy": {
+      "source": "hippomancy",
+      "target": "ippomanzia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hippomancy",
+      "frequencyRank": 1010574,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ippomanzie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "histiocyte": {
+      "source": "histiocyte",
+      "target": "istiocita",
+      "partOfSpeech": "noun",
+      "sourceGloss": "histiocyte",
+      "frequencyRank": 1010575,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "istiociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "homerist": {
+      "source": "homerist",
+      "target": "omerista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Homerist",
+      "frequencyRank": 1010576,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "omeristi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "huchen": {
+      "source": "huchen",
+      "target": "salmone del Danubio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Danube salmon, huchen (Hucho hucho)",
+      "frequencyRank": 1010577,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "salmoni del Danubio",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypergeusia": {
+      "source": "hypergeusia",
+      "target": "ipergeusia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypergeusia",
+      "frequencyRank": 1010578,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ipergeusie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hyperosmia": {
+      "source": "hyperosmia",
+      "target": "iperosmia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hyperosmia",
+      "frequencyRank": 1010579,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "iperosmie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hyperpyrexia": {
+      "source": "hyperpyrexia",
+      "target": "iperpiressia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hyperpyrexia",
+      "frequencyRank": 1010580,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "iperpiressie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypogeusia": {
+      "source": "hypogeusia",
+      "target": "ipogeusia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypogeusia",
+      "frequencyRank": 1010581,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ipogeusie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypoglobulia": {
+      "source": "hypoglobulia",
+      "target": "ipoglobulia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypoglobulia",
+      "frequencyRank": 1010582,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ipoglobulie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypopyon": {
+      "source": "hypopyon",
+      "target": "ipopion",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypopyon",
+      "frequencyRank": 1010583,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "ipopion",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hypotrochoid": {
+      "source": "hypotrochoid",
+      "target": "ipotrocoide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "hypotrochoid",
+      "frequencyRank": 1010584,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ipotrocoidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "icositetrahedron": {
+      "source": "icositetrahedron",
+      "target": "icositetraedro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "icositetrahedron",
+      "frequencyRank": 1010585,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "icositetraedri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "impluvium": {
+      "source": "impluvium",
+      "target": "impluvio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "impluvium (in Ancient Rome)",
+      "frequencyRank": 1010586,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "impluvi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "impudicity": {
+      "source": "impudicity",
+      "target": "impudicizia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "immodesty",
+      "frequencyRank": 1010587,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "impudicizie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "inhume": {
+      "source": "inhume",
+      "target": "inumare",
+      "partOfSpeech": "verb",
+      "sourceGloss": "to bury, to inhume",
+      "frequencyRank": 1010588,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "insurrectionism": {
+      "source": "insurrectionism",
+      "target": "insurrezionismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "insurrectionism",
+      "frequencyRank": 1010589,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "insurrezionismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "interpilaster": {
+      "source": "interpilaster",
+      "target": "interpilastro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "interpilaster",
+      "frequencyRank": 1010590,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "interpilastri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "isoimmunization": {
+      "source": "isoimmunization",
+      "target": "isoimmunizzazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "isoimmunization",
+      "frequencyRank": 1010591,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "isoimmunizzazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lampyrid": {
+      "source": "lampyrid",
+      "target": "lampiride",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lampyrid",
+      "frequencyRank": 1010592,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "lampiridi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "laryngoplasty": {
+      "source": "laryngoplasty",
+      "target": "laringoplastica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "laryngoplasty",
+      "frequencyRank": 1010593,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "laringoplastiche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "learnedly": {
+      "source": "learnedly",
+      "target": "dottamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "learnedly",
+      "frequencyRank": 1010594,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lemurid": {
+      "source": "lemurid",
+      "target": "lemuride",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lemurid",
+      "frequencyRank": 1010595,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "lemuridi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "leporid": {
+      "source": "leporid",
+      "target": "leporide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "leporid",
+      "frequencyRank": 1010596,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "leporidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "libidinosity": {
+      "source": "libidinosity",
+      "target": "libidinosità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "libidinousness, lustfulness, lasciviousness",
+      "frequencyRank": 1010597,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "libidinosità",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lipophore": {
+      "source": "lipophore",
+      "target": "lipoforo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lipophore",
+      "frequencyRank": 1010598,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "lipofori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "liquefier": {
+      "source": "liquefier",
+      "target": "liquefattore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "liquefier",
+      "frequencyRank": 1010599,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "liquefattori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "logothete": {
+      "source": "logothete",
+      "target": "logoteta",
+      "partOfSpeech": "noun",
+      "sourceGloss": "logothete",
+      "frequencyRank": 1010600,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "logotete",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lymphadenosis": {
+      "source": "lymphadenosis",
+      "target": "linfadenosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "lymphadenosis",
+      "frequencyRank": 1010601,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "linfadenosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "macrocytosis": {
+      "source": "macrocytosis",
+      "target": "macrocitosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "macrocytosis",
+      "frequencyRank": 1010602,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "macrocitosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "mammalogist": {
+      "source": "mammalogist",
+      "target": "mammologo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mammalogist",
+      "frequencyRank": 1010603,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "mammologi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "medism": {
+      "source": "medism",
+      "target": "medismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Medism",
+      "frequencyRank": 1010604,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "medismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "megacosm": {
+      "source": "megacosm",
+      "target": "megacosmo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "megacosm",
+      "frequencyRank": 1010605,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "megacosmi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "melittology": {
+      "source": "melittology",
+      "target": "melittologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "melittology",
+      "frequencyRank": 1010606,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "melittologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "melopoeia": {
+      "source": "melopoeia",
+      "target": "melopeia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "melopoeia",
+      "frequencyRank": 1010607,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "melopeie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "menologium": {
+      "source": "menologium",
+      "target": "menologio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "menologium, a monthly record, particularly in certain Christian contexts",
+      "frequencyRank": 1010608,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "menologi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "mercurate": {
+      "source": "mercurate",
+      "target": "mercurato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mercurate",
+      "frequencyRank": 1010609,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "mercurati",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "merocyte": {
+      "source": "merocyte",
+      "target": "merocito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "merocyte",
+      "frequencyRank": 1010610,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "merociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "metalloplastic": {
+      "source": "metalloplastic",
+      "target": "metalloplastica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "metalloplastic",
+      "frequencyRank": 1010611,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "metalloplastiche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "metaphyte": {
+      "source": "metaphyte",
+      "target": "metafita",
+      "partOfSpeech": "noun",
+      "sourceGloss": "metaphyte",
+      "frequencyRank": 1010612,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "metafite",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "microcytosis": {
+      "source": "microcytosis",
+      "target": "microcitosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "microcytosis",
+      "frequencyRank": 1010613,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "microcitosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "milliequivalent": {
+      "source": "milliequivalent",
+      "target": "milliequivalente",
+      "partOfSpeech": "noun",
+      "sourceGloss": "milliequivalent",
+      "frequencyRank": 1010614,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "milliequivalenti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "millistere": {
+      "source": "millistere",
+      "target": "millistero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "millistere",
+      "frequencyRank": 1010615,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "millisteri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "monocytopoiesis": {
+      "source": "monocytopoiesis",
+      "target": "monocitopoiesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "monocytopoiesis",
+      "frequencyRank": 1010616,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "monocitopoiesi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "monophthongization": {
+      "source": "monophthongization",
+      "target": "monottongazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "monophthongization",
+      "frequencyRank": 1010617,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "monottongazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "motacillid": {
+      "source": "motacillid",
+      "target": "motacillide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "motacillid",
+      "frequencyRank": 1010618,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "motacillidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "motorize": {
+      "source": "motorize",
+      "target": "motorizzare",
+      "partOfSpeech": "verb",
+      "sourceGloss": "to motorize",
+      "frequencyRank": 1010619,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "mucoprotein": {
+      "source": "mucoprotein",
+      "target": "mucoproteina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mucoprotein",
+      "frequencyRank": 1010620,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "mucoproteine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "myoglobulin": {
+      "source": "myoglobulin",
+      "target": "mioglobulina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "myoglobulin",
+      "frequencyRank": 1010621,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "mioglobuline",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "myomorph": {
+      "source": "myomorph",
+      "target": "miomorfo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "myomorph",
+      "frequencyRank": 1010622,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "miomorfi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "myrialitre": {
+      "source": "myrialitre",
+      "target": "mirialitro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "myrialitre",
+      "frequencyRank": 1010623,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "mirialitri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "myringoplasty": {
+      "source": "myringoplasty",
+      "target": "miringoplastica",
+      "partOfSpeech": "noun",
+      "sourceGloss": "myringoplasty",
+      "frequencyRank": 1010624,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "miringoplastiche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "naphthylamine": {
+      "source": "naphthylamine",
+      "target": "naftilammina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "naphthylamine",
+      "frequencyRank": 1010625,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "naftilammine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "necrophobia": {
+      "source": "necrophobia",
+      "target": "necrofobia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "necrophobia",
+      "frequencyRank": 1010626,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "necrofobie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "nematoceran": {
+      "source": "nematoceran",
+      "target": "nematocero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "nematoceran",
+      "frequencyRank": 1010627,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "nematoceri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "neuropter": {
+      "source": "neuropter",
+      "target": "neurottero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "neuropter",
+      "frequencyRank": 1010628,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "neurotteri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "neurorrhaphy": {
+      "source": "neurorrhaphy",
+      "target": "neurorrafia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "neurorrhaphy",
+      "frequencyRank": 1010629,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "neurorrafie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "newtonianism": {
+      "source": "newtonianism",
+      "target": "newtonianismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Newtonianism",
+      "frequencyRank": 1010630,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "newtonianismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "nucleohistone": {
+      "source": "nucleohistone",
+      "target": "nucleoistone",
+      "partOfSpeech": "noun",
+      "sourceGloss": "nucleohistone",
+      "frequencyRank": 1010631,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "nucleoistoni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "optimate": {
+      "source": "optimate",
+      "target": "ottimate",
+      "partOfSpeech": "noun",
+      "sourceGloss": "optimate",
+      "frequencyRank": 1010632,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "ottimati",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "orchil": {
+      "source": "orchil",
+      "target": "oricello",
+      "partOfSpeech": "noun",
+      "sourceGloss": "orchil (all senses)",
+      "frequencyRank": 1010633,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "oricelli",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "otalgia": {
+      "source": "otalgia",
+      "target": "otalgia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "otalgia",
+      "frequencyRank": 1010634,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "otalgie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pancreatopathy": {
+      "source": "pancreatopathy",
+      "target": "pancreopatia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pancreatopathy, pancreatitis",
+      "frequencyRank": 1010635,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "pancreopatie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "panegyrist": {
+      "source": "panegyrist",
+      "target": "panegirista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "panegyrist",
+      "frequencyRank": 1010636,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "panegiristi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "paraphimosis": {
+      "source": "paraphimosis",
+      "target": "parafimosi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paraphimosis",
+      "frequencyRank": 1010637,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "parafimosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "parasang": {
+      "source": "parasang",
+      "target": "parasanga",
+      "partOfSpeech": "noun",
+      "sourceGloss": "parasang",
+      "frequencyRank": 1010638,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "parasanghe",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "paronomasia": {
+      "source": "paronomasia",
+      "target": "paronomasia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "paronomasia",
+      "frequencyRank": 1010639,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "paronomasie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "persianist": {
+      "source": "persianist",
+      "target": "persianista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Persianist",
+      "frequencyRank": 1010640,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "persianisti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "peruke": {
+      "source": "peruke",
+      "target": "parrucca",
+      "partOfSpeech": "noun",
+      "sourceGloss": "wig",
+      "frequencyRank": 1010641,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "parrucche",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pervasion": {
+      "source": "pervasion",
+      "target": "compenetrazione",
+      "partOfSpeech": "noun",
+      "sourceGloss": "interpenetration",
+      "frequencyRank": 1010642,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "compenetrazioni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pettifogger": {
+      "source": "pettifogger",
+      "target": "leguleio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pettyfogger",
+      "frequencyRank": 1010643,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "legulei",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pharyngolaryngitis": {
+      "source": "pharyngolaryngitis",
+      "target": "faringolaringite",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pharyngolaryngitis",
+      "frequencyRank": 1010644,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "faringolaringiti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "phosphorism": {
+      "source": "phosphorism",
+      "target": "fosforismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "phosphorism",
+      "frequencyRank": 1010645,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "fosforismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "phthalimide": {
+      "source": "phthalimide",
+      "target": "ftalimmide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "phthalimide",
+      "frequencyRank": 1010646,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "ftalimmidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "physiocratism": {
+      "source": "physiocratism",
+      "target": "fisiocratismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "physiocratism",
+      "frequencyRank": 1010647,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "fisiocratismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "plumbism": {
+      "source": "plumbism",
+      "target": "saturnismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "saturnism (lead poisoning)",
+      "frequencyRank": 1010648,
+      "confidence": "low",
+      "sourceIds": [
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "saturnismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pluriparity": {
+      "source": "pluriparity",
+      "target": "pluriparità",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pluriparity",
+      "frequencyRank": 1010649,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "pluriparità",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "politicophobia": {
+      "source": "politicophobia",
+      "target": "politofobia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "politicophobia",
+      "frequencyRank": 1010650,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "politofobie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "polychroism": {
+      "source": "polychroism",
+      "target": "policroismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "polychroism",
+      "frequencyRank": 1010651,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "policroismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "porphyrogenite": {
+      "source": "porphyrogenite",
+      "target": "porfirogenito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "porphyrogenite",
+      "frequencyRank": 1010652,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "porfirogeniti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "posology": {
+      "source": "posology",
+      "target": "posologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "posology",
+      "frequencyRank": 1010653,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "posologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "premonitor": {
+      "source": "premonitor",
+      "target": "premonitore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "a forewarner, premonitor",
+      "frequencyRank": 1010654,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "premonitori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "presystole": {
+      "source": "presystole",
+      "target": "presistole",
+      "partOfSpeech": "noun",
+      "sourceGloss": "presystole",
+      "frequencyRank": 1010655,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "presistoli",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pronucleus": {
+      "source": "pronucleus",
+      "target": "pronucleo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pronucleus",
+      "frequencyRank": 1010656,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "pronuclei",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prosecretin": {
+      "source": "prosecretin",
+      "target": "prosecretina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prosecretin",
+      "frequencyRank": 1010657,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "prosecretine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prototherian": {
+      "source": "prototherian",
+      "target": "prototerio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "prototherian",
+      "frequencyRank": 1010658,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "prototeri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pseudohalogen": {
+      "source": "pseudohalogen",
+      "target": "pseudoalogeno",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pseudohalogen",
+      "frequencyRank": 1010659,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "pseudoalogeni",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "psychrometry": {
+      "source": "psychrometry",
+      "target": "psicrometria",
+      "partOfSpeech": "noun",
+      "sourceGloss": "psychrometry",
+      "frequencyRank": 1010660,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "psicrometrie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "punctuator": {
+      "source": "punctuator",
+      "target": "punteggiatore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "punctuator",
+      "frequencyRank": 1010661,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "punteggiatori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pyogenesis": {
+      "source": "pyogenesis",
+      "target": "piogenesi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pyogenesis",
+      "frequencyRank": 1010662,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "piogenesi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pyroantimonate": {
+      "source": "pyroantimonate",
+      "target": "piroantimoniato",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pyroantimonate",
+      "frequencyRank": 1010663,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "piroantimoniati",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pyrophobia": {
+      "source": "pyrophobia",
+      "target": "pirofobia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "pyrophobia",
+      "frequencyRank": 1010664,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "pirofobie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "quacksalver": {
+      "source": "quacksalver",
+      "target": "ciarlatano",
+      "partOfSpeech": "noun",
+      "sourceGloss": "charlatan, quack",
+      "frequencyRank": 1010665,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "ciarlatani",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "rhebok": {
+      "source": "rhebok",
+      "target": "antilope capriolo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "rhebok, grey rhebok, grey rhebuck (Pelea capreolus)",
+      "frequencyRank": 1010666,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "antilopi capriolo",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sabadine": {
+      "source": "sabadine",
+      "target": "sabadina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sabadine",
+      "frequencyRank": 1010667,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "sabadine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "saccharose": {
+      "source": "saccharose",
+      "target": "saccarosio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sucrose",
+      "frequencyRank": 1010668,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "saccarosi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sapphism": {
+      "source": "sapphism",
+      "target": "saffismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sapphism, lesbianism",
+      "frequencyRank": 1010669,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "saffismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sarcology": {
+      "source": "sarcology",
+      "target": "sarcologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sarcology",
+      "frequencyRank": 1010670,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "sarcologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "saturniid": {
+      "source": "saturniid",
+      "target": "saturnide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "saturniid",
+      "frequencyRank": 1010671,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "saturnidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "saturnism": {
+      "source": "saturnism",
+      "target": "saturnismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "saturnism (lead poisoning)",
+      "frequencyRank": 1010672,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "saturnismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "scarabaeid": {
+      "source": "scarabaeid",
+      "target": "scarabeide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "scarabaeid",
+      "frequencyRank": 1010673,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "scarabeidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sciurid": {
+      "source": "sciurid",
+      "target": "sciuride",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sciurid",
+      "frequencyRank": 1010674,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sciuridi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sciuromorph": {
+      "source": "sciuromorph",
+      "target": "sciuromorfo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sciuromorph",
+      "frequencyRank": 1010675,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sciuromorfi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "selenology": {
+      "source": "selenology",
+      "target": "selenologia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "selenology",
+      "frequencyRank": 1010676,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "selenologie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "semicone": {
+      "source": "semicone",
+      "target": "semicono",
+      "partOfSpeech": "noun",
+      "sourceGloss": "semicone",
+      "frequencyRank": 1010677,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "semiconi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "seralbumin": {
+      "source": "seralbumin",
+      "target": "sieroalbumina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "seralbumin",
+      "frequencyRank": 1010678,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "sieroalbumine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sewellel": {
+      "source": "sewellel",
+      "target": "castoro di montagna",
+      "partOfSpeech": "noun",
+      "sourceGloss": "mountain beaver",
+      "frequencyRank": 1010679,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "castori di montagna",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sicilianism": {
+      "source": "sicilianism",
+      "target": "sicilianismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Sicilianism",
+      "frequencyRank": 1010680,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sicilianismi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sphenocephaly": {
+      "source": "sphenocephaly",
+      "target": "sfenocefalia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sphenocephaly",
+      "frequencyRank": 1010681,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "sfenocefalie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "splenocyte": {
+      "source": "splenocyte",
+      "target": "splenocita",
+      "partOfSpeech": "noun",
+      "sourceGloss": "splenocyte",
+      "frequencyRank": 1010682,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "splenociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "sporocyte": {
+      "source": "sporocyte",
+      "target": "sporocito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "sporocyte",
+      "frequencyRank": 1010683,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sporociti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "squacco": {
+      "source": "squacco",
+      "target": "sgarza ciuffetto",
+      "partOfSpeech": "noun",
+      "sourceGloss": "squacco heron (Ardeola ralloides)",
+      "frequencyRank": 1010684,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "sgarze ciuffetto",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "stenocardia": {
+      "source": "stenocardia",
+      "target": "stenocardia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "stenocardia",
+      "frequencyRank": 1010685,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "stenocardie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "steradian": {
+      "source": "steradian",
+      "target": "steradiante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "steradian",
+      "frequencyRank": 1010686,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "steradianti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "stercobilin": {
+      "source": "stercobilin",
+      "target": "stercobilina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "stercobilin",
+      "frequencyRank": 1010687,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "stercobiline",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "strepsipteran": {
+      "source": "strepsipteran",
+      "target": "strepsittero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "strepsipteran",
+      "frequencyRank": 1010688,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "strepsitteri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "structurist": {
+      "source": "structurist",
+      "target": "strutturista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "structurist",
+      "frequencyRank": 1010689,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "strutturisti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "styloglossus": {
+      "source": "styloglossus",
+      "target": "muscolo stiloglosso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "styloglossus muscle, styloglossus",
+      "frequencyRank": 1010690,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "muscoli stiloglossi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "subtracter": {
+      "source": "subtracter",
+      "target": "sottrattore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "subtracter",
+      "frequencyRank": 1010691,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sottrattori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "symphylan": {
+      "source": "symphylan",
+      "target": "sinfilo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "symphylan",
+      "frequencyRank": 1010692,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sinfili",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "synonymity": {
+      "source": "synonymity",
+      "target": "sinonimia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "synonymy",
+      "frequencyRank": 1010693,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sinonimie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "syriarch": {
+      "source": "syriarch",
+      "target": "siriarca",
+      "partOfSpeech": "noun",
+      "sourceGloss": "Syriarch",
+      "frequencyRank": 1010694,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "siriarchi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "tabanid": {
+      "source": "tabanid",
+      "target": "tabanide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tabanid",
+      "frequencyRank": 1010695,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "tabanidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "talpid": {
+      "source": "talpid",
+      "target": "talpide",
+      "partOfSpeech": "noun",
+      "sourceGloss": "talpid",
+      "frequencyRank": 1010696,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "talpidi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "tangoreceptor": {
+      "source": "tangoreceptor",
+      "target": "tangorecettore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tangoreceptor",
+      "frequencyRank": 1010697,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "tangorecettori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thermoresistance": {
+      "source": "thermoresistance",
+      "target": "termoresistenza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "thermoresistance",
+      "frequencyRank": 1010698,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "termoresistenze",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thiazine": {
+      "source": "thiazine",
+      "target": "tiazina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "thiazine",
+      "frequencyRank": 1010699,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "tiazine",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thixotropy": {
+      "source": "thixotropy",
+      "target": "tissotropia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (medicine) The property of certain gels whereby they become fluids when agitated and return to being solid or semi-solid when allowed to stand.",
+      "frequencyRank": 1010700,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "tissotropie",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thurifer": {
+      "source": "thurifer",
+      "target": "turiferario",
+      "partOfSpeech": "noun",
+      "sourceGloss": "thurifer",
+      "frequencyRank": 1010701,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "turiferari",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thysanuran": {
+      "source": "thysanuran",
+      "target": "tisanuro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "thysanuran",
+      "frequencyRank": 1010702,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "tisanuri",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "titanyl": {
+      "source": "titanyl",
+      "target": "titanile",
+      "partOfSpeech": "noun",
+      "sourceGloss": "titanyl",
+      "frequencyRank": 1010703,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "titanili",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "tonsillolith": {
+      "source": "tonsillolith",
+      "target": "tonsillolito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "tonsil stone",
+      "frequencyRank": 1010704,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "tonsilloliti",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "underservant": {
+      "source": "underservant",
+      "target": "sottoservitore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "underservant",
+      "frequencyRank": 1010705,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "sottoservitori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "uranographer": {
+      "source": "uranographer",
+      "target": "uranografo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "uranographer",
+      "frequencyRank": 1010706,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "uranografi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "venereologist": {
+      "source": "venereologist",
+      "target": "venereologo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "venereologist",
+      "frequencyRank": 1010707,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "venereologi",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "vermicide": {
+      "source": "vermicide",
+      "target": "vermicida",
+      "partOfSpeech": "noun",
+      "sourceGloss": "vermicide",
+      "frequencyRank": 1010708,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "feminine",
+      "plural": "vermicide",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "viniculturist": {
+      "source": "viniculturist",
+      "target": "vinicoltore",
+      "partOfSpeech": "noun",
+      "sourceGloss": "viniculturist",
+      "frequencyRank": 1010709,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "vinicoltori",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "whangdoodle": {
+      "source": "whangdoodle",
+      "target": "babau",
+      "partOfSpeech": "noun",
+      "sourceGloss": "ogre",
+      "frequencyRank": 1010710,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "freedict"
+      ],
+      "gender": "masculine",
+      "plural": "babau",
+      "enZipf": 0.0,
+      "eligible": true
     }
   }
 }
