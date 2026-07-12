@@ -14,9 +14,11 @@ function loadVerbose(name: string): Record<string, any> {
   return JSON.parse(readFileSync(`${process.cwd()}/public/language-packs/${name}`, 'utf8')).entries
 }
 
-// Round-trip every entry of two real core packs (es = 2 genders; de = neuter +
-// functions) and assert every runtime-relevant field survives compact -> expand.
-for (const name of ['es.json', 'de.json']) {
+// Round-trip EVERY entry of real packs and assert every runtime-relevant field
+// survives compact -> expand. Cores cover 2/3 genders + functions + high/medium
+// confidence + expressions; tails cover confidence 'low' (code 2), enZipf 0, and
+// niche expression entries — so all tuple positions and code values are exercised.
+for (const name of ['es.json', 'de.json', 'es.tail.json', 'it.tail.json']) {
   test(`${name}: compact -> expand preserves all runtime fields`, () => {
     const entries = loadVerbose(name)
     let checked = 0
@@ -39,7 +41,8 @@ for (const name of ['es.json', 'de.json']) {
       }
       checked++
     }
-    assert.ok(checked > 40000, `expected to check the full pack, got ${checked}`)
+    assert.equal(checked, Object.keys(entries).length)
+    assert.ok(checked > 5000, `expected a substantial pack, got ${checked}`)
   })
 }
 
