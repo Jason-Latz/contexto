@@ -72,7 +72,9 @@ Return rows and your estimated per-band error rate of the ${lang} pack in notes.
 
 const pm = await pmP
 const gold2 = (await goldExpand).filter(Boolean)
-if (!pm || !pm.ok || gold2.length < 4) {
+// pm.ok=false means "the v1 engine genuinely has flaws" — that is exactly why v2 exists.
+// Abort only if the postmortem itself is unusable (no addendum) or gold2 is incomplete.
+if (!pm || !pm.promptAddendum || gold2.length < 4) {
   log('Postmortem or gold expansion failed — stopping for manual review')
   return { aborted: 'postmortem-or-gold2', pm, gold2 }
 }
@@ -132,14 +134,17 @@ log(`Regate: ${g2rows} blind gold2 rows in ${g2batches} batches`)
 await parallel(Array.from({ length: g2batches }, (_, i) => () => runBatch('gold2', 'mixed', i, 'pipeline/data/queues/gold2-mixed.jsonl')))
 
 const regate = await agent(`${COMMON}
-Write/refresh pipeline/analysis/compare_gold2.py: join final/gold2-mixed-*.jsonl (+fixup overrides) against pipeline/data/queues/gold2-answers.jsonl BY KEY. Per language report n, agreement, falseKeepRate (informational only), and the DECISIVE metric shipStratumFalseChangeRate = among changes that satisfy (refuter=="agree" OR judge-ruled) AND confidence>=0.8, the fraction where gold2 says keep. Also report nShipChanges per language. Write pipeline/data/evidence/gold2-gate.{json,md} with confusion matrices + quoted failures. Return perLang = {lang: {n, agreement, falseKeep, shipFalseChange, nShipChanges}}.`,
-  { label: 'gold2:compare', phase: 'Regate', model: 'sonnet', schema: REGATE })
+Write/refresh pipeline/analysis/compare_gold2.py: join final/gold2-mixed-*.jsonl (+fixup overrides) against pipeline/data/queues/gold2-answers.jsonl BY KEY. Per language report n, agreement, falseKeepRate (informational only), and shipStratumFalseChangeRate = among changes that satisfy (refuter=="agree" OR judge-ruled) AND confidence>=0.8, the fraction where gold2 says keep, plus nShipChanges.
+THEN — because gold labels themselves carry ~2-3% noise (the v1 postmortem found 10 gold-label-suspect rows) — re-examine EVERY ship-stratum falseChange disagreement yourself, from the full queue record evidence: is the ENGINE wrong (it changed a genuinely fine entry) or is the GOLD label suspect (the engine's change is actually right, e.g. the current target really does mismatch the entry gloss)? Be honest — do not rescue the engine; when genuinely unclear, count it engine-wrong. Report adjShipFalseChange = engine-wrong ship-stratum changes / nShipChanges, per language.
+Write pipeline/data/evidence/gold2-gate.{json,md} with confusion matrices, every disagreement quoted, and your engine-wrong/gold-suspect classification for each. Return perLang = {lang: {n, agreement, falseKeep, shipFalseChange, adjShipFalseChange, nShipChanges}}.`,
+  { label: 'gold2:compare', phase: 'Regate', model: 'opus', effort: 'high', schema: REGATE })
 
 const auditPass = {}
 if (regate && regate.ok) {
   for (const lang of LANGS) {
     const m = regate.perLang[lang]
-    auditPass[lang] = !!m && m.shipFalseChange < 0.02 && m.nShipChanges >= 15
+    const rate = m && (m.adjShipFalseChange !== undefined ? m.adjShipFalseChange : m.shipFalseChange)
+    auditPass[lang] = !!m && rate < 0.02 && m.nShipChanges >= 15
   }
 }
 log(`Regate verdict: ${JSON.stringify(regate && regate.perLang)}; audit unlock: ${JSON.stringify(auditPass)}`)

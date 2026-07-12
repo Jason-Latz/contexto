@@ -90,3 +90,20 @@
   strict-stratum apply + full gates. If it returns aborted:'nothing-unlocked', read
   pipeline/data/evidence/{gold-gate-postmortem,gold2-gate,mint-trial-panel}.md before
   deciding anything.
+- 05:40 CDT — phase1b run 1 aborted on a SCRIPT bug (postmortem set ok=false to mean
+  "engine v1 has real flaws"; my abort condition read it as "postmortem failed").
+  Postmortem substance (pipeline/data/evidence/gold-gate-postmortem.md):
+  * 52 stale gold rows (fixes already in packs) -> real pooled falseKeep 28.2%, not 46%.
+  * ROOT INSIGHT: adjudicate against the ENTRY GLOSS (the hover contract), not the
+    word's "dominant sense" — all 33 real es misses were this. currentTargetGlosses is
+    CIRCULAR evidence (target's own back-translation), never corroboration.
+  * v1 confident changes corrupt MOST: ship-stratum falseChange 24.2% pooled
+    (es 34.5 / fr 26.7 / de 9.1 / it 9.1). v2 addendum targets synonym-churn,
+    morphology-overgate, no-evidence-overgate, polysemy-overgate.
+  * Representative pack error rates (gold2, Opus-labeled): de ~10.0% uniform across
+    bands; fr ~14.7% overall but 25% in the common band (es/it in journal
+    wf_5d8075d5-dca). Morning-report material.
+  * Gold label noise ~2-3% => gate now uses ADJUDICATED ship-stratum falseChange
+    (compare agent classifies each disagreement engine-wrong vs gold-suspect, opus).
+  Fixed both in phase1b-recalibrate.workflow.js; RESUMED with resumeFromRunId
+  wf_5d8075d5-dca at 05:41 (pm + 4 gold2 agents replay from cache; Regate onward live).
