@@ -46,8 +46,10 @@ export function isCompactPack(pack: LanguagePack | CompactLanguagePack): pack is
 }
 
 // Runtime never reads `sourceIds` (provenance only, kept in the verbose packs for
-// the validator); a single shared empty array satisfies the type at zero per-entry cost.
-const NO_SOURCE_IDS: string[] = []
+// the validator); a single shared, FROZEN empty array satisfies the type at zero
+// per-entry cost — frozen so a stray future `entry.sourceIds.push()` can't corrupt
+// every entry at once.
+const NO_SOURCE_IDS: string[] = Object.freeze([]) as unknown as string[]
 
 export function expandCompactEntry(key: string, t: CompactEntry): TranslationEntry {
   const base = {
