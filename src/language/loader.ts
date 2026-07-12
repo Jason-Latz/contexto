@@ -6,13 +6,22 @@ import type {
   TranslationEntry,
 } from '../types/index.js'
 import { assertExtensionContextAvailable } from '../utils/extensionContext.js'
+import {
+  isCompactPack,
+  expandCompactEntries,
+  type CompactLanguagePack,
+} from './packFormat.js'
+
+// A pack as fetched: either the verbose committed form or the compact form that
+// ships in dist/ (see packFormat.ts). Only the loader deals with the difference.
+type AnyLanguagePack = LanguagePack | CompactLanguagePack
 
 const DEFAULT_TARGET_LANGUAGE: TargetLanguage = 'es'
 const MIN_CONFIDENCE: EntryConfidence[] = ['high', 'medium']
 
 // The eager "core" shard (public/language-packs/<lang>.json): the curated,
 // frequency-ranked, high/medium-confidence vocabulary. Loaded on every page.
-let activePack: LanguagePack | null = null
+let activePack: AnyLanguagePack | null = null
 let entries: Map<string, TranslationEntry> | null = null
 let expressionEntries: Array<[string, ExpressionTranslationEntry]> | null = null
 
@@ -44,9 +53,14 @@ function isUsableEntry(entry: TranslationEntry, allowLowConfidence = false): boo
   return Boolean(entry.target)
 }
 
-function buildEntryMap(pack: LanguagePack, allowLowConfidence: boolean): Map<string, TranslationEntry> {
+// Normalize either pack format into the verbose runtime entry record.
+function entriesOf(pack: AnyLanguagePack): Record<string, TranslationEntry> {
+  return isCompactPack(pack) ? expandCompactEntries(pack) : pack.entries
+}
+
+function buildEntryMap(pack: AnyLanguagePack, allowLowConfidence: boolean): Map<string, TranslationEntry> {
   return new Map(
-    Object.entries(pack.entries)
+    Object.entries(entriesOf(pack))
       .filter(([, entry]) => isUsableEntry(entry, allowLowConfidence))
       .map(([key, entry]) => [key.toLowerCase(), entry]),
   )
@@ -69,7 +83,7 @@ async function loadTailShard(targetLanguage: TargetLanguage): Promise<void> {
     return
   }
 
-  const pack = (await response.json()) as LanguagePack
+  const pack = (await response.json()) as AnyLanguagePack
   if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
     throw new Error(`[Contexto] Invalid tail pack metadata for ${targetLanguage}`)
   }
@@ -95,7 +109,7 @@ export async function loadLanguagePack(
       throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
     }
 
-    const pack = (await response.json()) as LanguagePack
+    const pack = (await response.json()) as AnyLanguagePack
     if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
       throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
     }
@@ -123,7 +137,7 @@ export function isTailLoaded(): boolean {
   return tailEntries !== null
 }
 
-export function getActiveLanguagePack(): LanguagePack | null {
+export function getActiveLanguagePack(): AnyLanguagePack | null {
   return activePack
 }
 
