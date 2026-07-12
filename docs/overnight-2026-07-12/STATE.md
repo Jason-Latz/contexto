@@ -107,3 +107,24 @@
     (compare agent classifies each disagreement engine-wrong vs gold-suspect, opus).
   Fixed both in phase1b-recalibrate.workflow.js; RESUMED with resumeFromRunId
   wf_5d8075d5-dca at 05:41 (pm + 4 gold2 agents replay from cache; Regate onward live).
+- 10:12 CDT — phase1b finished (partially killed by the session limit, reset 10:00).
+  DECISIONS LOCKED BY MEASUREMENT:
+  * AUDIT AUTO-APPLY: FAILED for all four languages. Engine v2 much better (agreement
+    de 92 / fr 92.7 / it 92.7 / es 88.3; falseKeep 11-20%) but adjudicated ship-stratum
+    falseChange 28-38% vs the 2% bar. NO existing entry is auto-changed tonight.
+    Deliverable instead: audit-review-queue.{jsonl,md} for morning human review
+    (gold2's ~70 Opus corrections + engine candidates with measured precision).
+  * MINT: UNLOCKED for de/it/es — independent Opus panel error 1.18% (170 unanimous
+    of 360 trial rows). fr FAILED its per-lang bar: fr ships NO mints.
+  * Fan-out was killed at 49/173 batches (raw verdicts exist for most, refuter/judge
+    missing) — apply/gates never ran, packs UNTOUCHED so far.
+- 10:15 CDT — Launched **phase1c-mint-ship.workflow.js** (runId wf_2b7e5ce5-1b8):
+  inventory batch states -> complete only missing stages (mint de/it/es + minttrial
+  judges) -> apply MINT-ONLY strict stratum (dedupe by key, minttrial wins; NEVER
+  audit files) -> validator+gates -> audit review queue. Expected yield ~47% unanimity
+  of 7,715 de/it/es candidates ≈ ~3,600 new verified words.
+  Next sleeper armed ~15:06 CDT (Monitor b64raqsr4). On phase1c completion: commit
+  packs per language + scripts + review queue, MORNING_REPORT.md, CLAUDE.md current
+  state, memory updates, perf note (tail lazy-loaded; tuple format from last night
+  helps parse). If phase1c dies at a limit: relaunch same scriptPath (data-level
+  resume via inventory).
