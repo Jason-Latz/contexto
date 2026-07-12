@@ -128,3 +128,12 @@
   state, memory updates, perf note (tail lazy-loaded; tuple format from last night
   helps parse). If phase1c dies at a limit: relaunch same scriptPath (data-level
   resume via inventory).
+- ~12:00 CDT — phase1c COMPLETE (wf_2b7e5ce5-1b8: 261 agents, 1 error = de batch 126
+  refuter server-error, being finished by a solo agent now). SHIPPED to main in 7
+  commits (c1871cb..5d253b1): de tail +2,433 · it +447 · es +272 = +3,152 verified
+  words; core packs byte-identical; fr 0 (panel bar). ALL GATES PASS (validator,
+  typecheck, 124 node + 32 py tests, build; compact packs 108.8->30.2MB). Review queue:
+  137 rows (69 gold2-opus + 68 engine, agree/disagree-annotated). MORNING_REPORT.md
+  written; CLAUDE.md + auto-memory updated. Remaining: de-126 (~45 candidates) then
+  final apply/commit; morning perf pass `node tests/live/run-perf.mjs` when a display
+  is available.
