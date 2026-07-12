@@ -525173,6 +525173,4150 @@
       "eligible": true,
       "gender": "masculine",
       "plural": "cimases"
+    },
+    "emergent": {
+      "source": "emergent",
+      "target": "emergente",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) coming into existence",
+      "frequencyRank": 1038092,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.15,
+      "eligible": true
+    },
+    "gramme": {
+      "source": "gramme",
+      "target": "gramo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a metric unit of weight equal to one thousandth of a kilogram",
+      "frequencyRank": 1038093,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "gramos",
+      "enZipf": 1.64,
+      "eligible": true
+    },
+    "savannah": {
+      "source": "savannah",
+      "target": "sabana",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a flat grassland in tropical or subtropical regions",
+      "frequencyRank": 1038094,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sabanas",
+      "enZipf": 3.62,
+      "eligible": true
+    },
+    "birefringent": {
+      "source": "birefringent",
+      "target": "birrefringente",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) relating to or characterized by double refraction",
+      "frequencyRank": 1038095,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.6,
+      "eligible": true
+    },
+    "raggedly": {
+      "source": "raggedly",
+      "target": "andrajosamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in a ragged uneven manner",
+      "frequencyRank": 1038096,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.58,
+      "eligible": true
+    },
+    "maladjustment": {
+      "source": "maladjustment",
+      "target": "inadaptación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the condition of being unable to adapt properly to your environment with resulting emotional instability",
+      "frequencyRank": 1038097,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inadaptaciones",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "jocundity": {
+      "source": "jocundity",
+      "target": "jocundidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a feeling facetious merriment",
+      "frequencyRank": 1038098,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "jocundidades",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "analyser": {
+      "source": "analyser",
+      "target": "analizador",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an instrument that performs analyses",
+      "frequencyRank": 1038099,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "analizadores",
+      "enZipf": 2.19,
+      "eligible": true
+    },
+    "sceptic": {
+      "source": "sceptic",
+      "target": "escéptico",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone who habitually doubts accepted beliefs",
+      "frequencyRank": 1038100,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "escépticos",
+      "enZipf": 2.5,
+      "eligible": true
+    },
+    "bachelorhood": {
+      "source": "bachelorhood",
+      "target": "soltería",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the time of a man's life prior to marriage",
+      "frequencyRank": 1038101,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "solterías",
+      "enZipf": 1.69,
+      "eligible": true
+    },
+    "disproportionately": {
+      "source": "disproportionately",
+      "target": "desproporcionadamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) out of proportion",
+      "frequencyRank": 1038102,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.3,
+      "eligible": true
+    },
+    "saprophagous": {
+      "source": "saprophagous",
+      "target": "saprófago",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) (of certain animals) feeding on dead or decaying animal matter",
+      "frequencyRank": 1038103,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "polyvalent": {
+      "source": "polyvalent",
+      "target": "polivalente",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) containing several antibodies each capable of counteracting a specific antigen",
+      "frequencyRank": 1038104,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.79,
+      "eligible": true
+    },
+    "sulphide": {
+      "source": "sulphide",
+      "target": "sulfuro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a compound of sulphur and some other element that is more electropositive",
+      "frequencyRank": 1038105,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "sulfuros",
+      "enZipf": 2.37,
+      "eligible": true
+    },
+    "caseous": {
+      "source": "caseous",
+      "target": "caseoso",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of damaged or necrotic tissue; cheeselike",
+      "frequencyRank": 1038106,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "downhearted": {
+      "source": "downhearted",
+      "target": "desanimado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) filled with melancholy and despondency",
+      "frequencyRank": 1038107,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.92,
+      "eligible": true
+    },
+    "meiotic": {
+      "source": "meiotic",
+      "target": "meiótico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to meiosis",
+      "frequencyRank": 1038108,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.1,
+      "eligible": true
+    },
+    "librarianship": {
+      "source": "librarianship",
+      "target": "biblioteconomía",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the position of librarian",
+      "frequencyRank": 1038109,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "biblioteconomías",
+      "enZipf": 2.37,
+      "eligible": true
+    },
+    "credulity": {
+      "source": "credulity",
+      "target": "credulidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) tendency to believe readily",
+      "frequencyRank": 1038110,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "credulidades",
+      "enZipf": 2.33,
+      "eligible": true
+    },
+    "allocution": {
+      "source": "allocution",
+      "target": "alocución",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (rhetoric) a formal or authoritative address that advises or exhorts",
+      "frequencyRank": 1038111,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "alocuciones",
+      "enZipf": 1.58,
+      "eligible": true
+    },
+    "straightedge": {
+      "source": "straightedge",
+      "target": "regla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) hand tool consisting of a flat rigid rectangular bar (metal or wood) that can be used to draw straight lines (or test their straightness)",
+      "frequencyRank": 1038112,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "reglas",
+      "enZipf": 1.97,
+      "eligible": true
+    },
+    "reorient": {
+      "source": "reorient",
+      "target": "reorientar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) orient once again, after a disorientation",
+      "frequencyRank": 1038113,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.18,
+      "eligible": true
+    },
+    "carboy": {
+      "source": "carboy",
+      "target": "bombona",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a large bottle for holding corrosive liquids; usually cushioned in a special container",
+      "frequencyRank": 1038114,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "bombonas",
+      "enZipf": 1.59,
+      "eligible": true
+    },
+    "auto": {
+      "source": "auto",
+      "target": "coche",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a motor vehicle with four wheels; usually propelled by an internal combustion engine",
+      "frequencyRank": 1038115,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "coches",
+      "enZipf": 4.48,
+      "eligible": true
+    },
+    "revised": {
+      "source": "revised",
+      "target": "revisado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) improved or brought up to date",
+      "frequencyRank": 1038116,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 4.14,
+      "eligible": true
+    },
+    "harper": {
+      "source": "harper",
+      "target": "arpista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone who plays the harp",
+      "frequencyRank": 1038117,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "arpistas",
+      "enZipf": 4.04,
+      "eligible": true
+    },
+    "aluminum": {
+      "source": "aluminum",
+      "target": "aluminio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a silvery ductile metallic element found primarily in bauxite",
+      "frequencyRank": 1038118,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "aluminios",
+      "enZipf": 4.01,
+      "eligible": true
+    },
+    "geographical": {
+      "source": "geographical",
+      "target": "geográfico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to the science of geography",
+      "frequencyRank": 1038119,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.85,
+      "eligible": true
+    },
+    "steadily": {
+      "source": "steadily",
+      "target": "firmemente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) at a steady rate or pace",
+      "frequencyRank": 1038120,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.84,
+      "eligible": true
+    },
+    "geological": {
+      "source": "geological",
+      "target": "geológico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or based on geology",
+      "frequencyRank": 1038121,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.82,
+      "eligible": true
+    },
+    "hindi": {
+      "source": "hindi",
+      "target": "hindi",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the most widely spoken of modern Indic vernaculars; spoken mostly in the north of India; along with English it is the official language of India; usually written in Devanagari script",
+      "frequencyRank": 1038122,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "hindis",
+      "enZipf": 3.82,
+      "eligible": true
+    },
+    "analytical": {
+      "source": "analytical",
+      "target": "analítico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) using or skilled in using analysis (i.e., separating a whole--intellectual or substantial--into its elemental parts or basic principles)",
+      "frequencyRank": 1038123,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.73,
+      "eligible": true
+    },
+    "flavour": {
+      "source": "flavour",
+      "target": "sabor",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (physics) the six kinds of quarks",
+      "frequencyRank": 1038124,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "sabores",
+      "enZipf": 3.73,
+      "eligible": true
+    },
+    "vale": {
+      "source": "vale",
+      "target": "valle",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a long depression in the surface of the land that usually contains a river",
+      "frequencyRank": 1038125,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "valles",
+      "enZipf": 3.62,
+      "eligible": true
+    },
+    "rhino": {
+      "source": "rhino",
+      "target": "rinoceronte",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) massive powerful herbivorous odd-toed ungulate of southeast Asia and Africa having very thick skin and one or two horns on the snout",
+      "frequencyRank": 1038126,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "rinocerontes",
+      "enZipf": 3.57,
+      "eligible": true
+    },
+    "screenplay": {
+      "source": "screenplay",
+      "target": "guion",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a script for a film including dialogue and descriptions of characters and sets",
+      "frequencyRank": 1038127,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "guiones",
+      "enZipf": 3.54,
+      "eligible": true
+    },
+    "morse": {
+      "source": "morse",
+      "target": "morse",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a telegraph code in which letters and numbers are represented by strings of dots and dashes (short and long signals)",
+      "frequencyRank": 1038128,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "morses",
+      "enZipf": 3.52,
+      "eligible": true
+    },
+    "analyse": {
+      "source": "analyse",
+      "target": "analizar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) consider in detail and subject to an analysis in order to discover essential features or meaning",
+      "frequencyRank": 1038129,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.47,
+      "eligible": true
+    },
+    "thatcher": {
+      "source": "thatcher",
+      "target": "techador",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone skilled in making a roof from plant stalks or foliage",
+      "frequencyRank": 1038130,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "techadores",
+      "enZipf": 3.47,
+      "eligible": true
+    },
+    "marquis": {
+      "source": "marquis",
+      "target": "marqués",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) nobleman (in various countries) ranking above a count",
+      "frequencyRank": 1038131,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "marqueses",
+      "enZipf": 3.45,
+      "eligible": true
+    },
+    "ditto": {
+      "source": "ditto",
+      "target": "ídem",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) a mark used to indicate the word above it should be repeated",
+      "frequencyRank": 1038132,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "omw"
+      ],
+      "enZipf": 3.38,
+      "eligible": true
+    },
+    "noticeably": {
+      "source": "noticeably",
+      "target": "sensiblemente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in a noticeable manner",
+      "frequencyRank": 1038133,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.36,
+      "eligible": true
+    },
+    "westward": {
+      "source": "westward",
+      "target": "hacia el oeste",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) moving toward the west",
+      "frequencyRank": 1038134,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.35,
+      "eligible": true
+    },
+    "supervisory": {
+      "source": "supervisory",
+      "target": "supervisor",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or limited to or involving supervision",
+      "frequencyRank": 1038135,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.32,
+      "eligible": true
+    },
+    "archival": {
+      "source": "archival",
+      "target": "archivístico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or contained in or serving as an archive",
+      "frequencyRank": 1038136,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.28,
+      "eligible": true
+    },
+    "concerted": {
+      "source": "concerted",
+      "target": "concertado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) involving the joint activity of two or more",
+      "frequencyRank": 1038137,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.27,
+      "eligible": true
+    },
+    "patterned": {
+      "source": "patterned",
+      "target": "estampado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having patterns (especially colorful patterns)",
+      "frequencyRank": 1038138,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.25,
+      "eligible": true
+    },
+    "auspices": {
+      "source": "auspices",
+      "target": "auspicio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) kindly endorsement and guidance",
+      "frequencyRank": 1038139,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "auspicios",
+      "enZipf": 3.22,
+      "eligible": true
+    },
+    "fondly": {
+      "source": "fondly",
+      "target": "cariñosamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) with fondness; with love",
+      "frequencyRank": 1038140,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.2,
+      "eligible": true
+    },
+    "grievous": {
+      "source": "grievous",
+      "target": "grave",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) causing fear or anxiety by threatening great harm",
+      "frequencyRank": 1038141,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.18,
+      "eligible": true
+    },
+    "marquee": {
+      "source": "marquee",
+      "target": "pabellón",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) large and often sumptuous tent",
+      "frequencyRank": 1038142,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "pabellones",
+      "enZipf": 3.18,
+      "eligible": true
+    },
+    "sulphur": {
+      "source": "sulphur",
+      "target": "azufre",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an abundant tasteless odorless multivalent nonmetallic element; best known in yellow crystals; occurs in many sulphide and sulphate minerals and even in native form (especially in volcanic regions)",
+      "frequencyRank": 1038143,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "azufres",
+      "enZipf": 3.18,
+      "eligible": true
+    },
+    "adjutant": {
+      "source": "adjutant",
+      "target": "ayudante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an officer who acts as military assistant to a more senior officer",
+      "frequencyRank": 1038144,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ayudantes",
+      "enZipf": 3.12,
+      "eligible": true
+    },
+    "cookery": {
+      "source": "cookery",
+      "target": "cocina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the act of preparing something (as food) by the application of heat",
+      "frequencyRank": 1038145,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cocinas",
+      "enZipf": 3.12,
+      "eligible": true
+    },
+    "craftsmanship": {
+      "source": "craftsmanship",
+      "target": "artesanía",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) skill in an occupation or trade",
+      "frequencyRank": 1038146,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "artesanías",
+      "enZipf": 3.1,
+      "eligible": true
+    },
+    "aloft": {
+      "source": "aloft",
+      "target": "arriba",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) at or on or to the masthead or upper rigging of a ship",
+      "frequencyRank": 1038147,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.08,
+      "eligible": true
+    },
+    "southward": {
+      "source": "southward",
+      "target": "hacia el sur",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) toward the south",
+      "frequencyRank": 1038148,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 3.07,
+      "eligible": true
+    },
+    "bonanza": {
+      "source": "bonanza",
+      "target": "bonanza",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an especially rich vein of precious ore",
+      "frequencyRank": 1038149,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "bonanzas",
+      "enZipf": 3.05,
+      "eligible": true
+    },
+    "seaboard": {
+      "source": "seaboard",
+      "target": "litoral",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the shore of a sea or ocean regarded as a resort",
+      "frequencyRank": 1038150,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "litorales",
+      "enZipf": 3.04,
+      "eligible": true
+    },
+    "streetcar": {
+      "source": "streetcar",
+      "target": "tranvía",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a wheeled vehicle that runs on rails and is propelled by electricity",
+      "frequencyRank": 1038151,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tranvías",
+      "enZipf": 3.04,
+      "eligible": true
+    },
+    "amour": {
+      "source": "amour",
+      "target": "amorío",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a usually secretive or illicit sexual relationship",
+      "frequencyRank": 1038152,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "amoríos",
+      "enZipf": 3.03,
+      "eligible": true
+    },
+    "catchment": {
+      "source": "catchment",
+      "target": "captación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a structure in which water is collected (especially a natural drainage area)",
+      "frequencyRank": 1038153,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "captaciones",
+      "enZipf": 3.02,
+      "eligible": true
+    },
+    "excitation": {
+      "source": "excitation",
+      "target": "excitación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the state of being emotionally aroused and worked up",
+      "frequencyRank": 1038154,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "excitaciones",
+      "enZipf": 3.02,
+      "eligible": true
+    },
+    "anil": {
+      "source": "anil",
+      "target": "añil",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a blue dye obtained from plants or made synthetically",
+      "frequencyRank": 1038155,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "añiles",
+      "enZipf": 3.01,
+      "eligible": true
+    },
+    "largo": {
+      "source": "largo",
+      "target": "largo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (music) a composition or passage that is to be performed in a slow and dignified manner",
+      "frequencyRank": 1038156,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "largos",
+      "enZipf": 2.99,
+      "eligible": true
+    },
+    "tun": {
+      "source": "tun",
+      "target": "tonel",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a large cask especially one holding a volume equivalent to 2 butts or 252 gals",
+      "frequencyRank": 1038157,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "toneles",
+      "enZipf": 2.97,
+      "eligible": true
+    },
+    "hereinafter": {
+      "source": "hereinafter",
+      "target": "de ahora en adelante",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in a subsequent part of this document or statement or matter etc.",
+      "frequencyRank": 1038158,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.95,
+      "eligible": true
+    },
+    "flawlessly": {
+      "source": "flawlessly",
+      "target": "perfectamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in an adroit manner",
+      "frequencyRank": 1038159,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.92,
+      "eligible": true
+    },
+    "permeability": {
+      "source": "permeability",
+      "target": "permeabilidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the property of something that can be pervaded by a liquid (as by osmosis or diffusion)",
+      "frequencyRank": 1038160,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "permeabilidades",
+      "enZipf": 2.92,
+      "eligible": true
+    },
+    "priestly": {
+      "source": "priestly",
+      "target": "sacerdotal",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) associated with the priesthood or priests",
+      "frequencyRank": 1038161,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.92,
+      "eligible": true
+    },
+    "dynamical": {
+      "source": "dynamical",
+      "target": "dinámico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) characterized by action or forcefulness or force of personality",
+      "frequencyRank": 1038162,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.91,
+      "eligible": true
+    },
+    "geometrical": {
+      "source": "geometrical",
+      "target": "geométrico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or determined by geometry",
+      "frequencyRank": 1038163,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.89,
+      "eligible": true
+    },
+    "worrisome": {
+      "source": "worrisome",
+      "target": "preocupante",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) not reassuring; tending to cause anxiety",
+      "frequencyRank": 1038164,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.88,
+      "eligible": true
+    },
+    "brimstone": {
+      "source": "brimstone",
+      "target": "azufre",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an old name for sulfur",
+      "frequencyRank": 1038165,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "azufres",
+      "enZipf": 2.82,
+      "eligible": true
+    },
+    "poetics": {
+      "source": "poetics",
+      "target": "poética",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) study of poetic works",
+      "frequencyRank": 1038166,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "poéticas",
+      "enZipf": 2.82,
+      "eligible": true
+    },
+    "retrospectively": {
+      "source": "retrospectively",
+      "target": "retrospectivamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in a manner contemplative of past events",
+      "frequencyRank": 1038167,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.82,
+      "eligible": true
+    },
+    "blameless": {
+      "source": "blameless",
+      "target": "irreprochable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) free of guilt; not subject to blame",
+      "frequencyRank": 1038168,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.8,
+      "eligible": true
+    },
+    "topographical": {
+      "source": "topographical",
+      "target": "topográfico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) concerned with topography",
+      "frequencyRank": 1038169,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.8,
+      "eligible": true
+    },
+    "adrenalin": {
+      "source": "adrenalin",
+      "target": "adrenalina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a catecholamine secreted by the adrenal medulla in response to stress (trade name Adrenalin); stimulates autonomic nerve action",
+      "frequencyRank": 1038170,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "adrenalinas",
+      "enZipf": 2.77,
+      "eligible": true
+    },
+    "anaesthesia": {
+      "source": "anaesthesia",
+      "target": "anestesia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) loss of bodily sensation with or without loss of consciousness",
+      "frequencyRank": 1038171,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anestesias",
+      "enZipf": 2.71,
+      "eligible": true
+    },
+    "artefact": {
+      "source": "artefact",
+      "target": "artefacto",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a man-made object taken as a whole",
+      "frequencyRank": 1038172,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "artefactos",
+      "enZipf": 2.7,
+      "eligible": true
+    },
+    "granddad": {
+      "source": "granddad",
+      "target": "abuelito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the father of your father or mother",
+      "frequencyRank": 1038173,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "abuelitos",
+      "enZipf": 2.68,
+      "eligible": true
+    },
+    "enrol": {
+      "source": "enrol",
+      "target": "matricular",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) register formally as a participant or member",
+      "frequencyRank": 1038174,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.67,
+      "eligible": true
+    },
+    "mucosa": {
+      "source": "mucosa",
+      "target": "mucosa",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) mucus-secreting membrane lining all body cavities or passages that communicate with the exterior",
+      "frequencyRank": 1038175,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "mucosas",
+      "enZipf": 2.67,
+      "eligible": true
+    },
+    "argumentation": {
+      "source": "argumentation",
+      "target": "argumentación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a course of reasoning aimed at demonstrating a truth or falsehood; the methodical process of logical reasoning",
+      "frequencyRank": 1038176,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "argumentaciones",
+      "enZipf": 2.65,
+      "eligible": true
+    },
+    "proportionately": {
+      "source": "proportionately",
+      "target": "proporcionalmente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) to a proportionate degree",
+      "frequencyRank": 1038177,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.65,
+      "eligible": true
+    },
+    "counterintelligence": {
+      "source": "counterintelligence",
+      "target": "contrainteligencia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) intelligence activities concerned with identifying and counteracting the threat to security posed by hostile intelligence organizations or by individuals engaged in espionage or sabotage or subversion or terrorism",
+      "frequencyRank": 1038178,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "contrainteligencias",
+      "enZipf": 2.64,
+      "eligible": true
+    },
+    "ideation": {
+      "source": "ideation",
+      "target": "ideación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the process of forming and relating ideas",
+      "frequencyRank": 1038179,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "ideaciones",
+      "enZipf": 2.63,
+      "eligible": true
+    },
+    "crewman": {
+      "source": "crewman",
+      "target": "tripulante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any member of a ship's crew",
+      "frequencyRank": 1038180,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tripulantes",
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "militaristic": {
+      "source": "militaristic",
+      "target": "militarista",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) imbued with militarism",
+      "frequencyRank": 1038181,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "stockholder": {
+      "source": "stockholder",
+      "target": "accionista",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone who holds shares of stock in a corporation",
+      "frequencyRank": 1038182,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "accionistas",
+      "enZipf": 2.62,
+      "eligible": true
+    },
+    "denunciation": {
+      "source": "denunciation",
+      "target": "denuncia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a public act of denouncing",
+      "frequencyRank": 1038183,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "denuncias",
+      "enZipf": 2.61,
+      "eligible": true
+    },
+    "southwards": {
+      "source": "southwards",
+      "target": "hacia el sur",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) toward the south",
+      "frequencyRank": 1038184,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.58,
+      "eligible": true
+    },
+    "anaemia": {
+      "source": "anaemia",
+      "target": "anemia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a lack of vitality",
+      "frequencyRank": 1038185,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "anemias",
+      "enZipf": 2.51,
+      "eligible": true
+    },
+    "antiaircraft": {
+      "source": "antiaircraft",
+      "target": "antiaéreo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) artillery designed to shoot upward at airplanes",
+      "frequencyRank": 1038186,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.49,
+      "eligible": true
+    },
+    "apace": {
+      "source": "apace",
+      "target": "rápidamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) with rapid movements",
+      "frequencyRank": 1038187,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.46,
+      "eligible": true
+    },
+    "bloodstained": {
+      "source": "bloodstained",
+      "target": "ensangrentado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) covered with blood",
+      "frequencyRank": 1038188,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.46,
+      "eligible": true
+    },
+    "cesium": {
+      "source": "cesium",
+      "target": "cesio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a soft silver-white ductile metallic element (liquid at normal temperatures); the most electropositive and alkaline metal",
+      "frequencyRank": 1038189,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "cesios",
+      "enZipf": 2.46,
+      "eligible": true
+    },
+    "finery": {
+      "source": "finery",
+      "target": "gala",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) elaborate or showy attire and accessories",
+      "frequencyRank": 1038190,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "galas",
+      "enZipf": 2.46,
+      "eligible": true
+    },
+    "cession": {
+      "source": "cession",
+      "target": "cesión",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the act of ceding",
+      "frequencyRank": 1038191,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cesiones",
+      "enZipf": 2.42,
+      "eligible": true
+    },
+    "fluoridation": {
+      "source": "fluoridation",
+      "target": "fluoración",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the addition of a fluoride to the water supply (to prevent dental decay)",
+      "frequencyRank": 1038192,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fluoraciones",
+      "enZipf": 2.42,
+      "eligible": true
+    },
+    "farmyard": {
+      "source": "farmyard",
+      "target": "corral",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an area adjacent to farm buildings",
+      "frequencyRank": 1038193,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "corrales",
+      "enZipf": 2.41,
+      "eligible": true
+    },
+    "conservatoire": {
+      "source": "conservatoire",
+      "target": "conservatorio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a schoolhouse with special facilities for fine arts",
+      "frequencyRank": 1038194,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "conservatorios",
+      "enZipf": 2.4,
+      "eligible": true
+    },
+    "unwisely": {
+      "source": "unwisely",
+      "target": "imprudentemente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) without good sense or judgment",
+      "frequencyRank": 1038195,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.39,
+      "eligible": true
+    },
+    "warily": {
+      "source": "warily",
+      "target": "cautelosamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) in a wary manner",
+      "frequencyRank": 1038196,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.39,
+      "eligible": true
+    },
+    "apologia": {
+      "source": "apologia",
+      "target": "apología",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a formal written defense of something you believe in strongly",
+      "frequencyRank": 1038197,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "apologías",
+      "enZipf": 2.36,
+      "eligible": true
+    },
+    "unashamedly": {
+      "source": "unashamedly",
+      "target": "desvergonzadamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) without shame",
+      "frequencyRank": 1038198,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.36,
+      "eligible": true
+    },
+    "polycrystalline": {
+      "source": "polycrystalline",
+      "target": "policristalino",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) composed of aggregates of crystals",
+      "frequencyRank": 1038199,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.34,
+      "eligible": true
+    },
+    "sinew": {
+      "source": "sinew",
+      "target": "tendón",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a cord or band of inelastic tissue connecting a muscle with its bony attachment",
+      "frequencyRank": 1038200,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tendones",
+      "enZipf": 2.33,
+      "eligible": true
+    },
+    "docent": {
+      "source": "docent",
+      "target": "docente",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a teacher at some universities",
+      "frequencyRank": 1038201,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "docentes",
+      "enZipf": 2.3,
+      "eligible": true
+    },
+    "altarpiece": {
+      "source": "altarpiece",
+      "target": "retablo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a painted or carved screen placed above and behind an altar or communion table",
+      "frequencyRank": 1038202,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "retablos",
+      "enZipf": 2.29,
+      "eligible": true
+    },
+    "bocce": {
+      "source": "bocce",
+      "target": "bochas",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) Italian bowling played on a long narrow dirt court",
+      "frequencyRank": 1038203,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "bochas",
+      "enZipf": 2.26,
+      "eligible": true
+    },
+    "dissenter": {
+      "source": "dissenter",
+      "target": "disidente",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a person who dissents from some established policy",
+      "frequencyRank": 1038204,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "disidentes",
+      "enZipf": 2.26,
+      "eligible": true
+    },
+    "andante": {
+      "source": "andante",
+      "target": "andante",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a moderately slow tempo (a walking pace)",
+      "frequencyRank": 1038205,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "andantes",
+      "enZipf": 2.25,
+      "eligible": true
+    },
+    "laughingstock": {
+      "source": "laughingstock",
+      "target": "hazmerreír",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a victim of ridicule or pranks",
+      "frequencyRank": 1038206,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "hazmerreír",
+      "enZipf": 2.25,
+      "eligible": true
+    },
+    "lunchroom": {
+      "source": "lunchroom",
+      "target": "comedor",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a restaurant (in a facility) where lunch can be purchased",
+      "frequencyRank": 1038207,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "comedores",
+      "enZipf": 2.25,
+      "eligible": true
+    },
+    "anaemic": {
+      "source": "anaemic",
+      "target": "anémico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) relating to anemia or suffering from anemia",
+      "frequencyRank": 1038208,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.23,
+      "eligible": true
+    },
+    "egoistic": {
+      "source": "egoistic",
+      "target": "egoísta",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) limited to or caring only about yourself and your own needs",
+      "frequencyRank": 1038209,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.2,
+      "eligible": true
+    },
+    "retouch": {
+      "source": "retouch",
+      "target": "retocar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) give retouches to (hair)",
+      "frequencyRank": 1038210,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.19,
+      "eligible": true
+    },
+    "aneurism": {
+      "source": "aneurism",
+      "target": "aneurisma",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a cardiovascular disease characterized by a saclike widening of an artery resulting from weakening of the artery wall",
+      "frequencyRank": 1038211,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "aneurisma",
+      "enZipf": 2.17,
+      "eligible": true
+    },
+    "rhythmical": {
+      "source": "rhythmical",
+      "target": "rítmico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) recurring with measured regularity; - John Galsworthy",
+      "frequencyRank": 1038212,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.14,
+      "eligible": true
+    },
+    "transpiration": {
+      "source": "transpiration",
+      "target": "transpiración",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the passage of gases through fine tubes because of differences in pressure or temperature",
+      "frequencyRank": 1038213,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "transpiraciones",
+      "enZipf": 2.12,
+      "eligible": true
+    },
+    "violoncello": {
+      "source": "violoncello",
+      "target": "violonchelo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a large stringed instrument; seated player holds it upright while playing",
+      "frequencyRank": 1038214,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "violonchelos",
+      "enZipf": 2.07,
+      "eligible": true
+    },
+    "edgewise": {
+      "source": "edgewise",
+      "target": "de lado",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) with the edge forward or on, by, or toward the edge",
+      "frequencyRank": 1038215,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.06,
+      "eligible": true
+    },
+    "honorarium": {
+      "source": "honorarium",
+      "target": "honorarios",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a fee paid for a nominally free service",
+      "frequencyRank": 1038216,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "honorarios",
+      "enZipf": 2.06,
+      "eligible": true
+    },
+    "scallion": {
+      "source": "scallion",
+      "target": "cebolleta",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a young onion before the bulb has enlarged; eaten in salads",
+      "frequencyRank": 1038217,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "cebolletas",
+      "enZipf": 2.05,
+      "eligible": true
+    },
+    "skittle": {
+      "source": "skittle",
+      "target": "bolo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a bowling pin of the type used in playing ninepins or (in England) skittles",
+      "frequencyRank": 1038218,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "bolos",
+      "enZipf": 2.05,
+      "eligible": true
+    },
+    "demarcate": {
+      "source": "demarcate",
+      "target": "demarcar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) separate clearly, as if by boundaries",
+      "frequencyRank": 1038219,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.04,
+      "eligible": true
+    },
+    "interrelationship": {
+      "source": "interrelationship",
+      "target": "interrelación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) mutual or reciprocal relation or relatedness",
+      "frequencyRank": 1038220,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "interrelaciones",
+      "enZipf": 2.04,
+      "eligible": true
+    },
+    "matins": {
+      "source": "matins",
+      "target": "maitines",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the first canonical hour; at daybreak",
+      "frequencyRank": 1038221,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "maitines",
+      "enZipf": 2.04,
+      "eligible": true
+    },
+    "stoat": {
+      "source": "stoat",
+      "target": "armiño",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the ermine in its brown summer coat with black-tipped tail",
+      "frequencyRank": 1038222,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "armiños",
+      "enZipf": 2.04,
+      "eligible": true
+    },
+    "territoriality": {
+      "source": "territoriality",
+      "target": "territorialidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the behavior of a male animal that defines and defends its territory",
+      "frequencyRank": 1038223,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "territorialidades",
+      "enZipf": 2.01,
+      "eligible": true
+    },
+    "irretrievable": {
+      "source": "irretrievable",
+      "target": "irrecuperable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) impossible to recover or recoup or overcome",
+      "frequencyRank": 1038224,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 2.0,
+      "eligible": true
+    },
+    "shrewdness": {
+      "source": "shrewdness",
+      "target": "sagacidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) intelligence manifested by being astute (as in business dealings)",
+      "frequencyRank": 1038225,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sagacidades",
+      "enZipf": 1.99,
+      "eligible": true
+    },
+    "ashlar": {
+      "source": "ashlar",
+      "target": "sillar",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a rectangular block of hewn stone used for building purposes",
+      "frequencyRank": 1038226,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "entr",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "sillares",
+      "enZipf": 1.98,
+      "eligible": true
+    },
+    "sonority": {
+      "source": "sonority",
+      "target": "sonoridad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) having the character of a loud deep sound; the quality of being resonant",
+      "frequencyRank": 1038227,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sonoridades",
+      "enZipf": 1.97,
+      "eligible": true
+    },
+    "administrate": {
+      "source": "administrate",
+      "target": "administrar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) work in an administrative capacity; supervise or be in charge of",
+      "frequencyRank": 1038228,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.95,
+      "eligible": true
+    },
+    "dentine": {
+      "source": "dentine",
+      "target": "dentina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a calcareous material harder and denser than bone that comprises the bulk of a tooth",
+      "frequencyRank": 1038229,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "dentinas",
+      "enZipf": 1.92,
+      "eligible": true
+    },
+    "expressionistic": {
+      "source": "expressionistic",
+      "target": "expresionista",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to expressionism",
+      "frequencyRank": 1038230,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.92,
+      "eligible": true
+    },
+    "domiciliary": {
+      "source": "domiciliary",
+      "target": "domiciliario",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or provided in a domicile",
+      "frequencyRank": 1038231,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.91,
+      "eligible": true
+    },
+    "homoeopathy": {
+      "source": "homoeopathy",
+      "target": "homeopatía",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a method of treating disease with small amounts of remedies that, in large amounts in healthy people, produce symptoms similar to those being treated",
+      "frequencyRank": 1038232,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "homeopatías",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "narcosis": {
+      "source": "narcosis",
+      "target": "narcosis",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) unconsciousness induced by narcotics or anesthesia",
+      "frequencyRank": 1038233,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "narcosis",
+      "enZipf": 1.9,
+      "eligible": true
+    },
+    "thermosetting": {
+      "source": "thermosetting",
+      "target": "termoendurecible",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having the property of becoming permanently hard and rigid when heated or cured",
+      "frequencyRank": 1038234,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.89,
+      "eligible": true
+    },
+    "exudate": {
+      "source": "exudate",
+      "target": "exudado",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a substance that oozes out from plant pores",
+      "frequencyRank": 1038235,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "exudados",
+      "enZipf": 1.88,
+      "eligible": true
+    },
+    "sensationalistic": {
+      "source": "sensationalistic",
+      "target": "sensacionalista",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) typical of tabloids",
+      "frequencyRank": 1038236,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.88,
+      "eligible": true
+    },
+    "fiord": {
+      "source": "fiord",
+      "target": "fiordo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a long narrow inlet of the sea between steep cliffs; common in Norway",
+      "frequencyRank": 1038237,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "fiordos",
+      "enZipf": 1.87,
+      "eligible": true
+    },
+    "quietude": {
+      "source": "quietude",
+      "target": "quietud",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a state of peace and quiet",
+      "frequencyRank": 1038238,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "quietudes",
+      "enZipf": 1.87,
+      "eligible": true
+    },
+    "advisedly": {
+      "source": "advisedly",
+      "target": "deliberadamente",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) with intention; in an intentional manner",
+      "frequencyRank": 1038239,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.83,
+      "eligible": true
+    },
+    "crowfoot": {
+      "source": "crowfoot",
+      "target": "ranúnculo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of various plants of the genus Ranunculus",
+      "frequencyRank": 1038240,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ranúnculos",
+      "enZipf": 1.83,
+      "eligible": true
+    },
+    "predication": {
+      "source": "predication",
+      "target": "predicación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (logic) a declaration of something self-evident; something that can be assumed as the basis for argument",
+      "frequencyRank": 1038241,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "predicaciones",
+      "enZipf": 1.83,
+      "eligible": true
+    },
+    "parasitical": {
+      "source": "parasitical",
+      "target": "parasitario",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of plants or persons; having the nature or habits of a parasite or leech; living off another",
+      "frequencyRank": 1038242,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.82,
+      "eligible": true
+    },
+    "unmovable": {
+      "source": "unmovable",
+      "target": "inamovible",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) not able or intended to be moved",
+      "frequencyRank": 1038243,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.81,
+      "eligible": true
+    },
+    "skywards": {
+      "source": "skywards",
+      "target": "hacia el cielo",
+      "partOfSpeech": "adverb",
+      "sourceGloss": "(en) toward the sky",
+      "frequencyRank": 1038244,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.79,
+      "eligible": true
+    },
+    "chimaera": {
+      "source": "chimaera",
+      "target": "quimera",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (Greek mythology) fire-breathing female monster with a lion's head and a goat's body and a serpent's tail; daughter of Typhon",
+      "frequencyRank": 1038245,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "quimeras",
+      "enZipf": 1.78,
+      "eligible": true
+    },
+    "oligarchical": {
+      "source": "oligarchical",
+      "target": "oligárquico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or supporting or characteristic of an oligarchy",
+      "frequencyRank": 1038246,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.78,
+      "eligible": true
+    },
+    "avidity": {
+      "source": "avidity",
+      "target": "avidez",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a positive feeling of wanting to push ahead with something",
+      "frequencyRank": 1038247,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "avideces",
+      "enZipf": 1.77,
+      "eligible": true
+    },
+    "ropeway": {
+      "source": "ropeway",
+      "target": "teleférico",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a conveyance that transports passengers or freight in carriers suspended from cables and supported by a series of towers",
+      "frequencyRank": 1038248,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "teleféricos",
+      "enZipf": 1.76,
+      "eligible": true
+    },
+    "taenia": {
+      "source": "taenia",
+      "target": "tenia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a narrow headband or strip of ribbon worn as a headband",
+      "frequencyRank": 1038249,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "tenias",
+      "enZipf": 1.72,
+      "eligible": true
+    },
+    "abruptness": {
+      "source": "abruptness",
+      "target": "brusquedad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an abrupt discourteous manner",
+      "frequencyRank": 1038250,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "brusquedades",
+      "enZipf": 1.71,
+      "eligible": true
+    },
+    "catholicity": {
+      "source": "catholicity",
+      "target": "catolicidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the quality of being universal; existing everywhere",
+      "frequencyRank": 1038251,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "catolicidades",
+      "enZipf": 1.68,
+      "eligible": true
+    },
+    "chiasm": {
+      "source": "chiasm",
+      "target": "quiasma",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an intersection or crossing of two tracts in the form of the letter X",
+      "frequencyRank": 1038252,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "quiasmas",
+      "enZipf": 1.68,
+      "eligible": true
+    },
+    "lexicographical": {
+      "source": "lexicographical",
+      "target": "lexicográfico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to lexicography",
+      "frequencyRank": 1038253,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.68,
+      "eligible": true
+    },
+    "camarilla": {
+      "source": "camarilla",
+      "target": "camarilla",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a clique (often secret) that seeks power usually through intrigue",
+      "frequencyRank": 1038254,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "camarillas",
+      "enZipf": 1.67,
+      "eligible": true
+    },
+    "apiculture": {
+      "source": "apiculture",
+      "target": "apicultura",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the cultivation of bees on a commercial scale for the production of honey",
+      "frequencyRank": 1038255,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "apiculturas",
+      "enZipf": 1.65,
+      "eligible": true
+    },
+    "agglomerated": {
+      "source": "agglomerated",
+      "target": "aglomerado",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) clustered together but not coherent",
+      "frequencyRank": 1038256,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.63,
+      "eligible": true
+    },
+    "moldable": {
+      "source": "moldable",
+      "target": "moldeable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) capable of being molded or modeled (especially of earth or clay or other soft material)",
+      "frequencyRank": 1038257,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.63,
+      "eligible": true
+    },
+    "otorhinolaryngology": {
+      "source": "otorhinolaryngology",
+      "target": "otorrinolaringología",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the medical specialty that deals with diseases of the ear, nose and throat",
+      "frequencyRank": 1038258,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "otorrinolaringologías",
+      "enZipf": 1.6,
+      "eligible": true
+    },
+    "tramcar": {
+      "source": "tramcar",
+      "target": "tranvía",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a four-wheeled wagon that runs on tracks in a mine",
+      "frequencyRank": 1038259,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "tranvías",
+      "enZipf": 1.6,
+      "eligible": true
+    },
+    "incommensurable": {
+      "source": "incommensurable",
+      "target": "inconmensurable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) impossible to measure or compare in value or size or excellence",
+      "frequencyRank": 1038260,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.58,
+      "eligible": true
+    },
+    "monogamist": {
+      "source": "monogamist",
+      "target": "monógamo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone who practices monogamy (one spouse at a time)",
+      "frequencyRank": 1038261,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "monógamos",
+      "enZipf": 1.57,
+      "eligible": true
+    },
+    "unsteadiness": {
+      "source": "unsteadiness",
+      "target": "inestabilidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the quality of not being steady or securely fixed in place",
+      "frequencyRank": 1038262,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inestabilidades",
+      "enZipf": 1.57,
+      "eligible": true
+    },
+    "agriculturalist": {
+      "source": "agriculturalist",
+      "target": "agricultor",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) someone concerned with the science or art or business of cultivating the soil",
+      "frequencyRank": 1038263,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "agricultores",
+      "enZipf": 1.56,
+      "eligible": true
+    },
+    "combinatory": {
+      "source": "combinatory",
+      "target": "combinatorio",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) marked by or relating to or resulting from combination",
+      "frequencyRank": 1038264,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.56,
+      "eligible": true
+    },
+    "escarole": {
+      "source": "escarole",
+      "target": "escarola",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) variety of endive having leaves with irregular frilled edges",
+      "frequencyRank": 1038265,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "escarolas",
+      "enZipf": 1.55,
+      "eligible": true
+    },
+    "depravation": {
+      "source": "depravation",
+      "target": "depravación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) moral perversion; impairment of virtue and moral principles",
+      "frequencyRank": 1038266,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "depravaciones",
+      "enZipf": 1.54,
+      "eligible": true
+    },
+    "opalescence": {
+      "source": "opalescence",
+      "target": "opalescencia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the visual property of something having a milky brightness and a play of colors from the surface",
+      "frequencyRank": 1038267,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "opalescencias",
+      "enZipf": 1.53,
+      "eligible": true
+    },
+    "aplasia": {
+      "source": "aplasia",
+      "target": "aplasia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) failure of some tissue or organ to develop",
+      "frequencyRank": 1038268,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "aplasias",
+      "enZipf": 1.52,
+      "eligible": true
+    },
+    "proteinaceous": {
+      "source": "proteinaceous",
+      "target": "proteico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) relating to or of the nature of protein",
+      "frequencyRank": 1038269,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.52,
+      "eligible": true
+    },
+    "alchemic": {
+      "source": "alchemic",
+      "target": "alquímico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) related to or concerned with alchemy",
+      "frequencyRank": 1038270,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.51,
+      "eligible": true
+    },
+    "depilation": {
+      "source": "depilation",
+      "target": "depilación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the act of removing hair (as from an animal skin)",
+      "frequencyRank": 1038271,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "depilaciones",
+      "enZipf": 1.48,
+      "eligible": true
+    },
+    "sentential": {
+      "source": "sentential",
+      "target": "oracional",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to a sentence",
+      "frequencyRank": 1038272,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.47,
+      "eligible": true
+    },
+    "bathyal": {
+      "source": "bathyal",
+      "target": "batial",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) relating to ocean depths between 200 and 2000 meters (corresponds to the continental slope)",
+      "frequencyRank": 1038273,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.46,
+      "eligible": true
+    },
+    "heathenism": {
+      "source": "heathenism",
+      "target": "paganismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of various religions other than Christianity or Judaism or Islamism",
+      "frequencyRank": 1038274,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "paganismos",
+      "enZipf": 1.46,
+      "eligible": true
+    },
+    "sheepherder": {
+      "source": "sheepherder",
+      "target": "pastor de ovejas",
+      "partOfSpeech": "expression",
+      "sourceGloss": "(en) a herder of sheep (on an open range); someone who keeps the sheep together in a flock",
+      "frequencyRank": 1038275,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "enZipf": 1.45,
+      "eligible": true
+    },
+    "luxation": {
+      "source": "luxation",
+      "target": "luxación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) displacement or misalignment of a joint or organ",
+      "frequencyRank": 1038276,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "luxaciones",
+      "enZipf": 1.44,
+      "eligible": true
+    },
+    "totemism": {
+      "source": "totemism",
+      "target": "totemismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) belief in the kinship of a group of people with a common totem",
+      "frequencyRank": 1038277,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "totemismos",
+      "enZipf": 1.42,
+      "eligible": true
+    },
+    "belligerency": {
+      "source": "belligerency",
+      "target": "beligerancia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) hostile or warlike attitude or nature",
+      "frequencyRank": 1038278,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "beligerancias",
+      "enZipf": 1.41,
+      "eligible": true
+    },
+    "anarchical": {
+      "source": "anarchical",
+      "target": "anárquico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) without law or control",
+      "frequencyRank": 1038279,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.39,
+      "eligible": true
+    },
+    "ophthalmia": {
+      "source": "ophthalmia",
+      "target": "oftalmia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) severe conjunctivitis",
+      "frequencyRank": 1038280,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "oftalmias",
+      "enZipf": 1.38,
+      "eligible": true
+    },
+    "rotatory": {
+      "source": "rotatory",
+      "target": "rotatorio",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to or characteristic or causing an axial or orbital turn",
+      "frequencyRank": 1038281,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.38,
+      "eligible": true
+    },
+    "catchword": {
+      "source": "catchword",
+      "target": "reclamo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a word printed at the top of the page of a dictionary or other reference book to indicate the first or last item on that page",
+      "frequencyRank": 1038282,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "reclamos",
+      "enZipf": 1.36,
+      "eligible": true
+    },
+    "apiarist": {
+      "source": "apiarist",
+      "target": "apicultor",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a farmer who keeps bees for their honey",
+      "frequencyRank": 1038283,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "apicultores",
+      "enZipf": 1.34,
+      "eligible": true
+    },
+    "hyperemia": {
+      "source": "hyperemia",
+      "target": "hiperemia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) increased blood in an organ or other body part",
+      "frequencyRank": 1038284,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "hiperemias",
+      "enZipf": 1.34,
+      "eligible": true
+    },
+    "serosa": {
+      "source": "serosa",
+      "target": "serosa",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a thin membrane lining the closed cavities of the body; has two layers with a space between that is filled with serous fluid",
+      "frequencyRank": 1038285,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "serosas",
+      "enZipf": 1.34,
+      "eligible": true
+    },
+    "cruller": {
+      "source": "cruller",
+      "target": "churro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) small friedcake formed into twisted strips and fried; richer than doughnuts",
+      "frequencyRank": 1038286,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "churros",
+      "enZipf": 1.33,
+      "eligible": true
+    },
+    "saltworks": {
+      "source": "saltworks",
+      "target": "salina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a plant where salt is produced commercially",
+      "frequencyRank": 1038287,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "salinas",
+      "enZipf": 1.33,
+      "eligible": true
+    },
+    "gravimetry": {
+      "source": "gravimetry",
+      "target": "gravimetría",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the measurement of specific gravity",
+      "frequencyRank": 1038288,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "gravimetrías",
+      "enZipf": 1.3,
+      "eligible": true
+    },
+    "mesencephalon": {
+      "source": "mesencephalon",
+      "target": "mesencéfalo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the middle portion of the brain",
+      "frequencyRank": 1038289,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "mesencéfalos",
+      "enZipf": 1.28,
+      "eligible": true
+    },
+    "offprint": {
+      "source": "offprint",
+      "target": "separata",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a separately printed article that originally appeared in a larger publication",
+      "frequencyRank": 1038290,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "separatas",
+      "enZipf": 1.28,
+      "eligible": true
+    },
+    "assimilable": {
+      "source": "assimilable",
+      "target": "asimilable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) able to be absorbed and incorporated into body tissues",
+      "frequencyRank": 1038291,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.26,
+      "eligible": true
+    },
+    "myxedema": {
+      "source": "myxedema",
+      "target": "mixedema",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) hypothyroidism marked by dry skin and swellings around lips and nose as well as mental deterioration",
+      "frequencyRank": 1038292,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "mixedemas",
+      "enZipf": 1.26,
+      "eligible": true
+    },
+    "collotype": {
+      "source": "collotype",
+      "target": "fototipia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a photomechanical printing process that uses a glass plate with a gelatin surface that carries the image to be reproduced; can be used with one or more colors",
+      "frequencyRank": 1038293,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fototipias",
+      "enZipf": 1.19,
+      "eligible": true
+    },
+    "condonation": {
+      "source": "condonation",
+      "target": "condonación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a pardon by treating the offender as if the offense had not occurred",
+      "frequencyRank": 1038294,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "condonaciones",
+      "enZipf": 1.19,
+      "eligible": true
+    },
+    "airscrew": {
+      "source": "airscrew",
+      "target": "hélice",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a propeller that rotates to push against air",
+      "frequencyRank": 1038295,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "hélices",
+      "enZipf": 1.18,
+      "eligible": true
+    },
+    "autographic": {
+      "source": "autographic",
+      "target": "autográfico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) written in the author's own handwriting",
+      "frequencyRank": 1038296,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "enZipf": 1.18,
+      "eligible": true
+    },
+    "leucocyte": {
+      "source": "leucocyte",
+      "target": "leucocito",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) blood cells that engulf and digest bacteria and fungi; an important part of the body's defense system",
+      "frequencyRank": 1038297,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "leucocitos",
+      "enZipf": 1.18,
+      "eligible": true
+    },
+    "typification": {
+      "source": "typification",
+      "target": "tipificación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a representational or typifying form or model",
+      "frequencyRank": 1038298,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "tipificaciones",
+      "enZipf": 1.17,
+      "eligible": true
+    },
+    "adaptative": {
+      "source": "adaptative",
+      "target": "adaptativo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having a capacity for adaptation",
+      "frequencyRank": 1038299,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.15,
+      "eligible": true
+    },
+    "hemicycle": {
+      "source": "hemicycle",
+      "target": "hemiciclo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a plane figure with the shape of half a circle",
+      "frequencyRank": 1038300,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "hemiciclos",
+      "enZipf": 1.14,
+      "eligible": true
+    },
+    "apocalyptical": {
+      "source": "apocalyptical",
+      "target": "apocalíptico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) prophetic of devastation or ultimate doom",
+      "frequencyRank": 1038301,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.13,
+      "eligible": true
+    },
+    "erotism": {
+      "source": "erotism",
+      "target": "erotismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a state of anticipation of sexuality",
+      "frequencyRank": 1038302,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "erotismos",
+      "enZipf": 1.13,
+      "eligible": true
+    },
+    "brochette": {
+      "source": "brochette",
+      "target": "brocheta",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a small spit or skewer",
+      "frequencyRank": 1038303,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "brochetas",
+      "enZipf": 1.12,
+      "eligible": true
+    },
+    "isostasy": {
+      "source": "isostasy",
+      "target": "isostasia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) (geology) a general equilibrium of the forces tending to elevate or depress the earth's crust",
+      "frequencyRank": 1038304,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "isostasias",
+      "enZipf": 1.12,
+      "eligible": true
+    },
+    "gastrula": {
+      "source": "gastrula",
+      "target": "gástrula",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) double-walled stage of the embryo resulting from invagination of the blastula; the outer layer of cells is the ectoderm and the inner layer differentiates into the mesoderm and endoderm",
+      "frequencyRank": 1038305,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "gástrulas",
+      "enZipf": 1.11,
+      "eligible": true
+    },
+    "magistrature": {
+      "source": "magistrature",
+      "target": "magistratura",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the position of magistrate",
+      "frequencyRank": 1038306,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "magistraturas",
+      "enZipf": 1.1,
+      "eligible": true
+    },
+    "caruncle": {
+      "source": "caruncle",
+      "target": "carúncula",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an outgrowth on a plant or animal such as a fowl's wattle or a protuberance near the hilum of certain seeds",
+      "frequencyRank": 1038307,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "carúnculas",
+      "enZipf": 1.07,
+      "eligible": true
+    },
+    "pilferer": {
+      "source": "pilferer",
+      "target": "ratero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a thief who steals without using violence",
+      "frequencyRank": 1038308,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "rateros",
+      "enZipf": 1.07,
+      "eligible": true
+    },
+    "nonmaterial": {
+      "source": "nonmaterial",
+      "target": "inmaterial",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) not consisting of matter",
+      "frequencyRank": 1038309,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.06,
+      "eligible": true
+    },
+    "specifiable": {
+      "source": "specifiable",
+      "target": "especificable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) capable of being specified",
+      "frequencyRank": 1038310,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.06,
+      "eligible": true
+    },
+    "instauration": {
+      "source": "instauration",
+      "target": "instauración",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the act of starting something for the first time; introducing something new",
+      "frequencyRank": 1038311,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "instauraciones",
+      "enZipf": 1.05,
+      "eligible": true
+    },
+    "copartnership": {
+      "source": "copartnership",
+      "target": "coparticipación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a partnership in which employees get a share of the profits in addition to their wages",
+      "frequencyRank": 1038312,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "coparticipaciones",
+      "enZipf": 1.04,
+      "eligible": true
+    },
+    "humification": {
+      "source": "humification",
+      "target": "humificación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the process of the formation of humus from plant remains",
+      "frequencyRank": 1038313,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "humificaciones",
+      "enZipf": 1.02,
+      "eligible": true
+    },
+    "biquadratic": {
+      "source": "biquadratic",
+      "target": "bicuadrático",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to the fourth power",
+      "frequencyRank": 1038314,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 1.01,
+      "eligible": true
+    },
+    "academism": {
+      "source": "academism",
+      "target": "academicismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) orthodoxy of a scholastic variety",
+      "frequencyRank": 1038315,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "academicismos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "acarus": {
+      "source": "acarus",
+      "target": "ácaro",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of several mites of the order Acarina",
+      "frequencyRank": 1038316,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ácaros",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "acephalous": {
+      "source": "acephalous",
+      "target": "acéfalo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) lacking a head or a clearly defined head",
+      "frequencyRank": 1038317,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "antimicrobic": {
+      "source": "antimicrobic",
+      "target": "antimicrobiano",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) capable of destroying or inhibiting the growth of disease-causing microorganisms",
+      "frequencyRank": 1038318,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "archaeologic": {
+      "source": "archaeologic",
+      "target": "arqueológico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) related to or dealing with or devoted to archaeology",
+      "frequencyRank": 1038319,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "asyndetic": {
+      "source": "asyndetic",
+      "target": "asindético",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) lacking conjunctions",
+      "frequencyRank": 1038320,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "basophile": {
+      "source": "basophile",
+      "target": "basófilo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a leukocyte with basophilic granules easily stained by basic stains",
+      "frequencyRank": 1038321,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "basófilos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "branchia": {
+      "source": "branchia",
+      "target": "branquia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) respiratory organ of aquatic animals that breathe oxygen dissolved in water",
+      "frequencyRank": 1038322,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "branquias",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "cacophonic": {
+      "source": "cacophonic",
+      "target": "cacofónico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having an unpleasant sound; - John McCarten",
+      "frequencyRank": 1038323,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "categorematic": {
+      "source": "categorematic",
+      "target": "categoremático",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of a term or phrase capable of standing as the subject or (especially) the predicate of a proposition",
+      "frequencyRank": 1038324,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "centrical": {
+      "source": "centrical",
+      "target": "céntrico",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having or situated at or near a center",
+      "frequencyRank": 1038325,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "chlorophyl": {
+      "source": "chlorophyl",
+      "target": "clorofila",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of a group of green pigments found in photosynthetic organisms; there are four naturally occurring forms",
+      "frequencyRank": 1038326,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "clorofilas",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "classicistic": {
+      "source": "classicistic",
+      "target": "clasicista",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of or relating to classicism",
+      "frequencyRank": 1038327,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "collyrium": {
+      "source": "collyrium",
+      "target": "colirio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) lotion consisting of a solution used as a cleanser for the eyes",
+      "frequencyRank": 1038328,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "colirios",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "consanguine": {
+      "source": "consanguine",
+      "target": "consanguíneo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) related by blood",
+      "frequencyRank": 1038329,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "declutch": {
+      "source": "declutch",
+      "target": "desembragar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) disengage the clutch of a car",
+      "frequencyRank": 1038330,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "denumerable": {
+      "source": "denumerable",
+      "target": "numerable",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) that can be counted",
+      "frequencyRank": 1038331,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "devaluate": {
+      "source": "devaluate",
+      "target": "devaluar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) remove the value from; deprive of its value",
+      "frequencyRank": 1038332,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "deviationism": {
+      "source": "deviationism",
+      "target": "desviacionismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) ideological defection from the party line (especially from orthodox communism)",
+      "frequencyRank": 1038333,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "desviacionismos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "dissolvent": {
+      "source": "dissolvent",
+      "target": "disolvente",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a liquid substance capable of dissolving other substances",
+      "frequencyRank": 1038334,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "disolventes",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "encipher": {
+      "source": "encipher",
+      "target": "cifrar",
+      "partOfSpeech": "verb",
+      "sourceGloss": "(en) convert ordinary language into code",
+      "frequencyRank": 1038335,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "eructation": {
+      "source": "eructation",
+      "target": "eructo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a reflex that expels gas noisily from the stomach through the mouth",
+      "frequencyRank": 1038336,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "eructos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "fatuity": {
+      "source": "fatuity",
+      "target": "fatuidad",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a ludicrous folly",
+      "frequencyRank": 1038337,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fatuidades",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "gastralgia": {
+      "source": "gastralgia",
+      "target": "gastralgia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an ache localized in the stomach or abdominal region",
+      "frequencyRank": 1038338,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "gastralgias",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hodman": {
+      "source": "hodman",
+      "target": "peón",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a laborer who carries supplies to masons or bricklayers",
+      "frequencyRank": 1038339,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "peones",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hymenopteron": {
+      "source": "hymenopteron",
+      "target": "himenóptero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) insects having two pairs of membranous wings and an ovipositor specialized for stinging or piercing",
+      "frequencyRank": 1038340,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "himenópteros",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "hyperpyrexia": {
+      "source": "hyperpyrexia",
+      "target": "hiperpirexia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) extremely high fever (especially in children)",
+      "frequencyRank": 1038341,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "hiperpirexias",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "immediateness": {
+      "source": "immediateness",
+      "target": "inmediatez",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the quickness of action or occurrence",
+      "frequencyRank": 1038342,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inmediateces",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "inculpation": {
+      "source": "inculpation",
+      "target": "inculpación",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) an accusation that you are responsible for some lapse or misdeed",
+      "frequencyRank": 1038343,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "inculpaciones",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lamellibranch": {
+      "source": "lamellibranch",
+      "target": "lamelibranquio",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) marine or freshwater mollusks having a soft body with platelike gills enclosed within two shells hinged together",
+      "frequencyRank": 1038344,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "lamelibranquios",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "lepidopteron": {
+      "source": "lepidopteron",
+      "target": "lepidóptero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) insect that in the adult state has four wings more or less covered with tiny scales",
+      "frequencyRank": 1038345,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "lepidópteros",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "monorchidism": {
+      "source": "monorchidism",
+      "target": "monorquidia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) failure of one testes to descend into the scrotum",
+      "frequencyRank": 1038346,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "monorquidias",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "myelencephalon": {
+      "source": "myelencephalon",
+      "target": "mielencéfalo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the posterior part of the hindbrain in developing vertebrates; forms the medulla oblongata in adults",
+      "frequencyRank": 1038347,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "mielencéfalos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "neuropteron": {
+      "source": "neuropteron",
+      "target": "neuróptero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) insect having biting mouthparts and four large membranous wings with netlike veins",
+      "frequencyRank": 1038348,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "neurópteros",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "octosyllable": {
+      "source": "octosyllable",
+      "target": "octosílabo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a verse line having eight syllables or a poem of octosyllabic lines",
+      "frequencyRank": 1038349,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "octosílabos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "orthopteron": {
+      "source": "orthopteron",
+      "target": "ortóptero",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of various insects having leathery forewings and membranous hind wings and chewing mouthparts",
+      "frequencyRank": 1038350,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "ortópteros",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "peripteral": {
+      "source": "peripteral",
+      "target": "períptero",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) having columns on all sides",
+      "frequencyRank": 1038351,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "plumbery": {
+      "source": "plumbery",
+      "target": "fontanería",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the occupation of a plumber (installing and repairing pipes and fixtures for water or gas or sewage in a building)",
+      "frequencyRank": 1038352,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "fontanerías",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "poikilothermic": {
+      "source": "poikilothermic",
+      "target": "poiquilotermo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) of animals except birds and mammals; having body temperature that varies with the environment",
+      "frequencyRank": 1038353,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "prevaricator": {
+      "source": "prevaricator",
+      "target": "mentiroso",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a person who has lied or who lies repeatedly",
+      "frequencyRank": 1038354,
+      "confidence": "low",
+      "sourceIds": [
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "mentirosos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "protozoon": {
+      "source": "protozoon",
+      "target": "protozoo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) any of diverse minute acellular or unicellular organisms usually nonphotosynthetic",
+      "frequencyRank": 1038355,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "protozoos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "pyroxylin": {
+      "source": "pyroxylin",
+      "target": "piroxilina",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) highly flammable nitrocellulose used in making collodion and plastics and lacquers",
+      "frequencyRank": 1038356,
+      "confidence": "low",
+      "sourceIds": [
+        "entr",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "piroxilinas",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "rupicolous": {
+      "source": "rupicolous",
+      "target": "rupícola",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) composed of or inscribed on rock",
+      "frequencyRank": 1038357,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "saturnism": {
+      "source": "saturnism",
+      "target": "saturnismo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) toxic condition produced by the absorption of excessive lead into the system",
+      "frequencyRank": 1038358,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "saturnismos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "seminude": {
+      "source": "seminude",
+      "target": "semidesnudo",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) partially clothed",
+      "frequencyRank": 1038359,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "synonymity": {
+      "source": "synonymity",
+      "target": "sinonimia",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the semantic relation that holds between two words that can (in a given context) express the same meaning",
+      "frequencyRank": 1038360,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "sinonimias",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "thermograph": {
+      "source": "thermograph",
+      "target": "termógrafo",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) a thermometer that records temperature variations on a graph as a function of time",
+      "frequencyRank": 1038361,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "masculine",
+      "plural": "termógrafos",
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "untransferable": {
+      "source": "untransferable",
+      "target": "intransferible",
+      "partOfSpeech": "adjective",
+      "sourceGloss": "(en) incapable of being transferred",
+      "frequencyRank": 1038362,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "enZipf": 0.0,
+      "eligible": true
+    },
+    "vulcanology": {
+      "source": "vulcanology",
+      "target": "vulcanología",
+      "partOfSpeech": "noun",
+      "sourceGloss": "(en) the branch of geology that studies volcanoes",
+      "frequencyRank": 1038363,
+      "confidence": "low",
+      "sourceIds": [
+        "apertium",
+        "omw"
+      ],
+      "gender": "feminine",
+      "plural": "vulcanologías",
+      "enZipf": 0.0,
+      "eligible": true
     }
   }
 }
