@@ -96,7 +96,7 @@ vocabulary without slowing the default page load.**
   injector is unchanged. `loadLanguagePack(lang, includeTail)`; toggling aggressive mode
   reconciles the tail in place on the open tab.
 - **Aggressive Mode** = `settings.aggressiveMode` (default off) + popup toggle. Coverage:
-  es 88.1k · de 73.2k · fr 72.1k · it 68.9k (core+tail). Perf cost of the tail: ~+4.5% inject
+  es 88.4k · de 75.7k · fr 72.1k · it 69.3k (core+tail). Perf cost of the tail: ~+4.5% inject
   time, ~+10MB heap, only when opted in (see `tests/live/run-perf.mjs`).
 - **Data ceiling:** 100k/language is NOT reachable from free offline Wiktextract/FreeDict
   with quality gating (the remainder is non-dictionary junk). To push higher, add another
@@ -175,7 +175,19 @@ Conventions to preserve:
 
 ## Current state
 
-- **Beta-tester tab-sync bugs fixed (2026-07-09, uncommitted):** a live language switch now
+- **Overnight multi-source vocab run landed (2026-07-12):** +3,152 panel-verified tail
+  words (de +2,433 · it +447 · es +272; fr 0 — failed its error-rate panel bar, by
+  design). Four offline sources integrated under `pipeline/sources/` (FreeDict eng-X,
+  Apertium, OMW sense-ranked, Wikidata lexemes as gender/plural authority) plus a
+  reusable gold-gated adjudication engine in `pipeline/analysis/` (queue builders,
+  strict-stratum applier + tests, gold scorers). **Audit auto-apply failed its gate**
+  (confident LLM changes measured 28-38% wrong vs gold) so zero existing entries were
+  changed; 137 proposed fixes await review in
+  `docs/overnight-2026-07-12/audit-review-queue.md`. First representative rendered-band
+  error rates (gloss-is-the-contract policy): de 10% · it 12% · fr 14.7% (25% in the
+  common band) · es 16%. Full story + next levers:
+  `docs/overnight-2026-07-12/MORNING_REPORT.md`.
+- **Beta-tester tab-sync bugs fixed (2026-07-09, committed b8084ff):** a live language switch now
   updates every open tab (the settings diff ignored `targetLanguage`); pages that render
   their content after `document_idle` now translate without toggling the language; the popup
   leads with a per-page status card saying what Contexto is doing and why. Proven red to
