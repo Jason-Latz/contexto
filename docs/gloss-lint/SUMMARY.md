@@ -5,28 +5,28 @@ automatically; review and apply through the adjudication flow.
 
 | pack | rows | narrow-domain | templated | synthetic-compound | eligible rows |
 |------|-----:|--------------:|----------:|-------------------:|--------------:|
-| es | 4147 | 783 | 2035 | 3509 | 3368 |
+| es | 1396 | 433 | 158 | 826 | 1104 |
 | de | 538 | 441 | 99 | 0 | 538 |
 | fr | 256 | 215 | 42 | 0 | 256 |
 | it | 172 | 156 | 16 | 0 | 170 |
 
 ## es: top renderable rows
 
-- **state** -> estado · "organized political authority" (zipf 5.78, narrow-domain)
-- **it support** -> soporte técnico · "technical assistance for employees" (zipf 5.51, synthetic-compound)
 - **law** -> ley · "legal rule" (zipf 5.46, narrow-domain)
 - **war** -> guerra · "Organized, large-scale, armed conflict between countries or between national, ethnic, or other sizeable groups, usually but not always involving active engagement of military fo..." (zipf 5.46, narrow-domain)
-- **court** -> tribunal · "institution deciding legal disputes" (zipf 5.41, narrow-domain)
 - **death** -> muerte · "Execution (in the judicial sense)." (zipf 5.4, narrow-domain)
-- **research** -> investigación · "systematic study" (zipf 5.39, narrow-domain)
-- **work order** -> orden de trabajo · "instruction for operational task" (zipf 5.36, synthetic-compound)
-- **work area** -> área de trabajo · "designated operational space" (zipf 5.34, synthetic-compound)
 - **police** -> policía · "A department of local (usually municipal) government responsible for general law enforcement." (zipf 5.33, narrow-domain)
-- **head of state** -> jefe de estado · "state's formal representative" (zipf 5.32, synthetic-compound)
-- **lot number** -> número de lote · "identifier for production batch" (zipf 5.31, synthetic-compound)
 - **fire** -> fuego · "An instance of this chemical reaction, especially when intentionally created and maintained in a specific location to a useful end (such as a campfire or a hearth fire)." (zipf 5.3, narrow-domain)
 - **car part** -> autopieza · "A part that can be fitted to a car, often as a replacement for a worn-out or damaged part." (zipf 5.28, synthetic-compound)
 - **country house** -> casa de campo · "A house serving as a weekend and holiday residence, used as a retreat from city life; traditionally and archetypically in the country, and especially of wealthy owners." (zipf 5.28, synthetic-compound)
+- **go past** -> pasar · "To surpass a boundary; to go by a limit." (zipf 5.28, synthetic-compound)
+- **have fun** -> divertirse · "To enjoy oneself; to experience enjoyable activities." (zipf 5.28, synthetic-compound)
+- **open house** -> jornada de puertas abiertas · "An event during which a facility or institution is open to the public for inspection or tour." (zipf 5.28, synthetic-compound)
+- **turn out** -> resultar · "To end up; to result." (zipf 5.28, synthetic-compound)
+- **go along with** -> acceder · "To acquiesce to or comply with a proposal, despite lacking a desire or value for it." (zipf 5.28, synthetic-compound)
+- **college** -> universidad · "university academic division" (zipf 5.27, narrow-domain)
+- **check out** -> registrar la salida · "To record the departure or withdrawal of someone or something (such as guests, employees, books, etc.)." (zipf 5.27, synthetic-compound)
+- **check up** -> controlar · "To verify through brief investigation or revisit for assurance that there are no problems." (zipf 5.27, synthetic-compound)
 
 ## de: top renderable rows
 

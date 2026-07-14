@@ -265,11 +265,12 @@
       "plural": "archivos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "computer file",
+      "sourceGloss": "A collection of papers collated and archived together.",
       "frequencyRank": 417,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.75,
       "eligible": true
@@ -415,11 +416,12 @@
       "plural": "ventanas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "computer window",
+      "sourceGloss": "An opening, usually covered by one or more panes of clear glass, to allow light and air from outside to enter a building or vehicle.",
       "frequencyRank": 427,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.8,
       "eligible": true
@@ -535,11 +537,12 @@
       "plural": "software",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "computer programs",
+      "sourceGloss": "Encoded computer instructions, usually modifiable (unless stored in some form of unalterable memory such as ROM).",
       "frequencyRank": 435,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.77,
       "eligible": true
@@ -550,11 +553,12 @@
       "plural": "hardware",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "computer equipment",
+      "sourceGloss": "The part of a computer that is fixed and cannot be altered without replacement or physical modification",
       "frequencyRank": 436,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -760,11 +764,12 @@
       "plural": "versiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "software release",
+      "sourceGloss": "A specific form or variation of something.",
       "frequencyRank": 450,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.07,
       "eligible": true
@@ -2440,11 +2445,12 @@
       "plural": "títulos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic qualification",
+      "sourceGloss": "A stage of proficiency or qualification in a course of study, now especially an award bestowed by a university/college, as a certification of academic achievement.",
       "frequencyRank": 562,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.94,
       "eligible": true
@@ -2470,11 +2476,12 @@
       "plural": "investigaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "systematic study",
+      "sourceGloss": "Diligent inquiry or examination to seek or revise facts, principles, theories, applications, etc.",
       "frequencyRank": 564,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.39,
       "eligible": true
@@ -2560,11 +2567,12 @@
       "plural": "oraciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "complete grammatical unit",
+      "sourceGloss": "A grammatically complete series of words consisting of a subject and predicate, even if one or the other is implied.",
       "frequencyRank": 570,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.58,
       "eligible": true
@@ -3175,11 +3183,12 @@
       "plural": "hospitales",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "medical facility",
+      "sourceGloss": "A large medical facility, usually in a building with multiple floors, where seriously ill or injured patients are given extensive medical or surgical treatment.",
       "frequencyRank": 611,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.07,
       "eligible": true
@@ -5137,11 +5146,12 @@
       "plural": "códigos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "system of symbols or software instructions",
+      "sourceGloss": "A body of law, sanctioned by legislation, in which the rules of law to be specifically applied by the courts are set forth in systematic form",
       "confidence": "high",
       "frequencyRank": 710,
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.08,
       "eligible": true
@@ -5422,11 +5432,12 @@
       "plural": "laboratorios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "place for scientific work",
+      "sourceGloss": "A room, building or institution equipped for scientific research, experimentation or analysis.",
       "confidence": "high",
       "frequencyRank": 729,
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.31,
       "eligible": true
@@ -6795,11 +6806,12 @@
       "plural": "referencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "listed scholarly source",
+      "sourceGloss": "A measurement one can compare (some other measurement) to.",
       "frequencyRank": 2703,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.74,
       "eligible": true
@@ -6900,11 +6912,12 @@
       "plural": "conclusiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "final scholarly section",
+      "sourceGloss": "The end, finish, close or last part of something.",
       "frequencyRank": 2711,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.4,
       "eligible": true
@@ -7035,11 +7048,12 @@
       "plural": "conferencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic meeting in academia",
+      "sourceGloss": "A stated meeting of preachers and others, invested with authority to take cognizance of ecclesiastical matters.",
       "frequencyRank": 2724,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.01,
       "eligible": true
@@ -7063,11 +7077,12 @@
       "plural": "publicaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "published scholarly work",
+      "sourceGloss": "An issue of printed or other matter, offered for sale or distribution.",
       "frequencyRank": 2726,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.45,
       "eligible": true
@@ -7093,11 +7108,12 @@
       "plural": "borradores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "preliminary scholarly text",
+      "sourceGloss": "A version of a written work (such as a book or paper) or drawing.",
       "frequencyRank": 2728,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.61,
       "eligible": true
@@ -7228,11 +7244,12 @@
       "plural": "asesores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic guidance professor",
+      "sourceGloss": "One who offers advice.",
       "frequencyRank": 2738,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.01,
       "eligible": true
@@ -7273,11 +7290,12 @@
       "plural": "comités",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic evaluation group",
+      "sourceGloss": "A body of one or more persons convened for the accomplishment of some specific purpose, typically with formal protocols.",
       "frequencyRank": 2741,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.01,
       "eligible": true
@@ -7303,11 +7321,12 @@
       "plural": "facultades",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "university academic division",
+      "sourceGloss": "A division of a university.",
       "frequencyRank": 2743,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.32,
       "eligible": true
@@ -7363,11 +7382,12 @@
       "plural": "profesores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "university academic instructor",
+      "sourceGloss": "A teacher or faculty member at a college or university regardless of formal rank.",
       "frequencyRank": 2750,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.9,
       "eligible": true
@@ -7393,11 +7413,12 @@
       "plural": "instructores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "course teaching academic",
+      "sourceGloss": "One who instructs; a teacher.",
       "frequencyRank": 2752,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.02,
       "eligible": true
@@ -8651,11 +8672,12 @@
       "plural": "argumentos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "central scholarly claim",
+      "sourceGloss": "The independent variable of a function.",
       "frequencyRank": 2925,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.64,
       "eligible": true
@@ -8681,11 +8703,12 @@
       "plural": "evidencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "support for academic claim",
+      "sourceGloss": "Anything admitted by a court to prove or disprove alleged matters of fact in a trial.",
       "frequencyRank": 2927,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.14,
       "eligible": true
@@ -8934,11 +8957,12 @@
       "plural": "editoriales",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic publishing house",
+      "sourceGloss": "A person or (especially) a company who publishes, especially books.",
       "frequencyRank": 2960,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.13,
       "eligible": true
@@ -9024,11 +9048,12 @@
       "plural": "comentarios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "scholarly opinion piece",
+      "sourceGloss": "A series of comments or annotations; especially, a book of explanations or expositions on the whole or a part of some other work.",
       "frequencyRank": 2973,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.19,
       "eligible": true
@@ -9159,11 +9184,12 @@
       "plural": "derechos de autor",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal protection for works",
+      "sourceGloss": "The right by law to be the entity which determines who may publish, copy and distribute a piece of writing, music, picture or other work of authorship.",
       "frequencyRank": 2987,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.24,
       "eligible": true
@@ -9174,11 +9200,12 @@
       "plural": "licencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "permission for scholarly reuse",
+      "sourceGloss": "A legal document giving official permission to do something; a permit.",
       "frequencyRank": 2988,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.52,
       "eligible": true
@@ -9367,11 +9394,12 @@
       "plural": "créditos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "unit of academic coursework",
+      "sourceGloss": "A privilege of delayed payment extended to a buyer or borrower on the seller's or lender's belief that what is given will be repaid.",
       "frequencyRank": 3007,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.0,
       "eligible": true
@@ -9382,11 +9410,12 @@
       "plural": "semestres",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic term division",
+      "sourceGloss": "Half of a school year (US) or academic year such as autumn or spring semester.",
       "frequencyRank": 3009,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.03,
       "eligible": true
@@ -9592,11 +9621,12 @@
       "plural": "becas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic financial award",
+      "sourceGloss": "A grant-in-aid to a student.",
       "frequencyRank": 3042,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.15,
       "eligible": true
@@ -9933,11 +9963,12 @@
       "plural": "talleres",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "interactive academic session",
+      "sourceGloss": "A room, especially one which is not particularly large, used for manufacturing or other light industrial work.",
       "frequencyRank": 3111,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.15,
       "eligible": true
@@ -13405,11 +13436,12 @@
       "plural": "pacientes",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "person receiving medical care",
+      "sourceGloss": "A person or animal that receives health care from a doctor, nurse, dentist, allied health practitioner, or other person educated in health care.",
       "frequencyRank": 3626,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.77,
       "eligible": true
@@ -13840,11 +13872,12 @@
       "plural": "clínicas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "outpatient medical facility",
+      "sourceGloss": "A medical facility, such as a hospital, especially one for the treatment and diagnosis of outpatients.",
       "frequencyRank": 3655,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.21,
       "eligible": true
@@ -14050,11 +14083,12 @@
       "plural": "señales",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "observable medical finding",
+      "sourceGloss": "A clearly visible object, generally flat, bearing a short message in words or pictures.",
       "frequencyRank": 3682,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.08,
       "eligible": true
@@ -16390,11 +16424,12 @@
       "plural": "fármacos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "medicinal chemical substance",
+      "sourceGloss": "Any commodity that lies on hand, or is not salable; an article of slow sale, or in no demand.",
       "frequencyRank": 3953,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.87,
       "eligible": true
@@ -16705,11 +16740,12 @@
       "plural": "cirugías",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "operative medical treatment",
+      "sourceGloss": "The act or process of medical intervention involving incisions to remove, repair, or replace a part of a body",
       "frequencyRank": 3985,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.63,
       "eligible": true
@@ -16810,11 +16846,12 @@
       "plural": "apósitos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "medical wound covering",
+      "sourceGloss": "Material applied to a wound for protection or therapy.",
       "frequencyRank": 3995,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.17,
       "eligible": true
@@ -17905,11 +17942,12 @@
       "plural": "jurisdicciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal authority area",
+      "sourceGloss": "The power, right, or authority to interpret and apply the law.",
       "frequencyRank": 4117,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.1,
       "eligible": true
@@ -18070,11 +18108,12 @@
       "plural": "privilegios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "protected legal right",
+      "sourceGloss": "A particular benefit, advantage, or favor",
       "frequencyRank": 4130,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.2,
       "eligible": true
@@ -18115,11 +18154,12 @@
       "plural": "obligaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "binding legal duty",
+      "sourceGloss": "The act of binding oneself by a social, legal, or moral tie to someone.",
       "frequencyRank": 4133,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.07,
       "eligible": true
@@ -18175,11 +18215,12 @@
       "plural": "multas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "monetary legal penalty",
+      "sourceGloss": "A fee levied as punishment for breaking the law.",
       "frequencyRank": 4137,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.23,
       "eligible": false
@@ -18355,11 +18396,12 @@
       "plural": "tribunales",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "institution deciding legal disputes",
+      "sourceGloss": "The administration of law.",
       "frequencyRank": 4175,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.41,
       "eligible": true
@@ -18505,11 +18547,12 @@
       "plural": "abogados",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "professional legal representative",
+      "sourceGloss": "A lawyer; one who advises or represents others in legal matters as a profession.",
       "frequencyRank": 4195,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.69,
       "eligible": true
@@ -18520,11 +18563,12 @@
       "plural": "abogados",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "licensed legal professional",
+      "sourceGloss": "A professional person with a graduate law degree that qualifies for legal work (such as Juris Doctor)",
       "frequencyRank": 4196,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.67,
       "eligible": true
@@ -18790,11 +18834,12 @@
       "plural": "peticiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "formal legal request",
+      "sourceGloss": "A formal written request made by an individual or a group of people to a sovereign or political authority, often containing many signatures, soliciting some grace, right, mercy,...",
       "frequencyRank": 4221,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -18925,11 +18970,12 @@
       "plural": "foros",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "place for legal hearing",
+      "sourceGloss": "A gathering for the purpose of discussion; a symposium.",
       "frequencyRank": 4231,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.38,
       "eligible": true
@@ -19360,11 +19406,12 @@
       "plural": "custodias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal physical detention",
+      "sourceGloss": "The legal right to take care of something or somebody, especially children.",
       "frequencyRank": 4273,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.22,
       "eligible": true
@@ -19435,11 +19482,12 @@
       "plural": "liberaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "temporary legal release",
+      "sourceGloss": "The process by which a chemical substance is set free.",
       "frequencyRank": 4278,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.09,
       "eligible": true
@@ -19855,11 +19903,12 @@
       "plural": "tentativas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "incomplete criminal effort",
+      "sourceGloss": "The action of trying at something.",
       "frequencyRank": 4320,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.85,
       "eligible": true
@@ -20890,11 +20939,12 @@
       "plural": "divorcios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal dissolution of marriage",
+      "sourceGloss": "The legal dissolution of a marriage.",
       "frequencyRank": 4405,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.36,
       "eligible": true
@@ -20950,11 +21000,12 @@
       "plural": "adopciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal creation of parenthood",
+      "sourceGloss": "The state of being adopted; the acceptance of a child of other parents as if they were one's own child.",
       "frequencyRank": 4412,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.17,
       "eligible": true
@@ -20980,11 +21031,12 @@
       "plural": "quiebras",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal insolvency process",
+      "sourceGloss": "A legally declared or recognized condition of insolvency of a person or organization.",
       "frequencyRank": 4416,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.11,
       "eligible": true
@@ -21070,11 +21122,12 @@
       "plural": "equidades",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "fairness-based legal principles",
+      "sourceGloss": "Fairness, impartiality, or justice as determined in light of \"natural law\" or \"natural right\".",
       "frequencyRank": 4424,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -21100,11 +21153,12 @@
       "plural": "estados",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "organized political authority",
+      "sourceGloss": "A polity or community.",
       "frequencyRank": 4432,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 5.78,
       "eligible": true
@@ -22251,11 +22305,12 @@
       "plural": "ciudadanías",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal membership in state",
+      "sourceGloss": "The state of being a citizen; the status of a citizen.",
       "frequencyRank": 4541,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "kaikki-en"
       ],
       "enZipf": 4.1,
       "eligible": true
@@ -45179,11 +45234,12 @@
       "source": "enter",
       "target": "intro",
       "partOfSpeech": "noun",
-      "sourceGloss": "The \"Enter\" key on a computer keyboard.",
+      "sourceGloss": "A stroke of the Enter key.",
       "frequencyRank": 6260,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "intros",
       "gender": "masculine",
@@ -50067,11 +50123,12 @@
       "source": "norman",
       "target": "normando",
       "partOfSpeech": "noun",
-      "sourceGloss": "A member of the mixed Scandinavian and Frankish peoples who, in the 11th century, were a major military power in Western Europe and who conquered the English in 1066.",
+      "sourceGloss": "A native or inhabitant of Normandy, France.",
       "frequencyRank": 6586,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "normandos",
       "gender": "masculine",
@@ -51357,11 +51414,12 @@
       "source": "republican",
       "target": "republicano",
       "partOfSpeech": "noun",
-      "sourceGloss": "A member or supporter of the Republican Party, the more right-wing of the two main political parties in the United States.",
+      "sourceGloss": "Someone who favors a republic as a form of government.",
       "frequencyRank": 6672,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "republicanos",
       "gender": "masculine",
@@ -54756,11 +54814,12 @@
       "source": "aardwolf",
       "target": "lobo de tierra",
       "partOfSpeech": "noun",
-      "sourceGloss": "A nocturnal, insectivorous mammal, Proteles cristatus, of southern and eastern Africa, related to and resembling the hyena. [First attested in the mid 19th century.]",
+      "sourceGloss": "A nocturnal, insectivorous mammal (Proteles cristatus), having yellowish fur with vertical black stripes, and a long mane down the midline of the neck and back",
       "frequencyRank": 6899,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "lobos de tierra",
       "gender": "masculine",
@@ -63028,11 +63087,12 @@
       "source": "ally",
       "target": "aliado",
       "partOfSpeech": "noun",
-      "sourceGloss": "A person, group, state, etc., which is associated or united by treaty with another for a common (especially military or political) purpose; a confederate.",
+      "sourceGloss": "A person, group, state, etc., which is associated or united by treaty with another for a common (especially military or political) purpose",
       "frequencyRank": 7451,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "aliados",
       "gender": "masculine",
@@ -64573,11 +64633,12 @@
       "source": "amoxicillin",
       "target": "amoxicilina",
       "partOfSpeech": "noun",
-      "sourceGloss": "A moderate-spectrum, bacteriolytic beta-lactam antibiotic C16H19N3O5S closely related to ampicillin and with similar properties, but more readily absorbed when taken orally. It...",
+      "sourceGloss": "A moderate-spectrum, bacteriolytic beta-lactam antibiotic with the formula C₁₆H₁₉N₃O₅S, closely related to ampicillin.",
       "frequencyRank": 7554,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "amoxicilinas",
       "gender": "feminine",
@@ -67719,11 +67780,12 @@
       "source": "anthocyanin",
       "target": "antocianina",
       "partOfSpeech": "noun",
-      "sourceGloss": "Any of many water-soluble red to violet plant pigments related to the flavonoids (more noticeable in autumn after the chlorophyll decomposes)",
+      "sourceGloss": "Any of many water-soluble red to violet plant pigments related to the flavonoids (more noticeable in autumn after its chlorophyll decomposes).",
       "frequencyRank": 7764,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "antocianinas",
       "gender": "feminine",
@@ -73327,11 +73389,12 @@
       "source": "artichoke",
       "target": "alcachofa",
       "partOfSpeech": "noun",
-      "sourceGloss": "A plant related to the thistle with enlarged flower heads eaten as a vegetable while immature, Cynara cardunculus var. scolymus.",
+      "sourceGloss": "A plant related to the thistle with enlarged flower heads eaten as a vegetable while immature, Cynara cardunculus var.",
       "frequencyRank": 8138,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "alcachofas",
       "gender": "feminine",
@@ -79280,11 +79343,12 @@
       "source": "banner",
       "target": "pancarta",
       "partOfSpeech": "noun",
-      "sourceGloss": "A flag or standard used by a military commander, monarch or nation.",
+      "sourceGloss": "A large piece of cloth with a slogan, motto, or emblem carried in a demonstration or other procession or suspended in some conspicuous place.",
       "frequencyRank": 8535,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "pancartas",
       "gender": "feminine",
@@ -82115,11 +82179,12 @@
       "source": "benzyl",
       "target": "bencilo",
       "partOfSpeech": "noun",
-      "sourceGloss": "The univalent radical C6H5-CH2- related to toluene and benzoic acid",
+      "sourceGloss": "The univalent radical C₆H₅-CH₂- related to toluene and benzoic acid",
       "frequencyRank": 8724,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "bencilos",
       "gender": "masculine",
@@ -86973,11 +87038,12 @@
       "source": "bonito",
       "target": "bonito",
       "partOfSpeech": "noun",
-      "sourceGloss": "Any of various marine fish of the genus Sarda that are related to and resemble the tuna, but smaller. [from 16th c.]",
+      "sourceGloss": "Any of various marine fish of the genus Sarda that are related to and resemble the tuna, but smaller.",
       "frequencyRank": 9048,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "bonitos",
       "gender": "masculine",
@@ -91885,11 +91951,12 @@
       "source": "bush",
       "target": "arbusto",
       "partOfSpeech": "noun",
-      "sourceGloss": "A woody plant distinguished from a tree by its multiple stems and lower height, being usually less than six metres tall; a horticultural rather than strictly botanical category.",
+      "sourceGloss": "A woody plant distinguished from a tree by its multiple stems and lower height, being usually less than six metres tall",
       "frequencyRank": 9376,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "arbustos",
       "gender": "masculine",
@@ -95363,11 +95430,12 @@
       "source": "carbon",
       "target": "carbono",
       "partOfSpeech": "noun",
-      "sourceGloss": "The chemical element (symbol C) with an atomic number of 6. It can be found in pure form for example as graphite, a black, shiny and very soft material, or diamond, a colourless...",
+      "sourceGloss": "The chemical element (symbol C) with an atomic number of 6.",
       "frequencyRank": 9608,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "carbonos",
       "gender": "masculine",
@@ -101708,11 +101776,12 @@
       "source": "chive",
       "target": "cebollino",
       "partOfSpeech": "noun",
-      "sourceGloss": "A perennial plant, Allium schoenoprasum, related to the onion.",
+      "sourceGloss": "The leaves of this plant used as a herb.",
       "frequencyRank": 10031,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "cebollinos",
       "gender": "masculine",
@@ -104048,11 +104117,12 @@
       "source": "civilization",
       "target": "civilización",
       "partOfSpeech": "noun",
-      "sourceGloss": "An organized culture encompassing many communities, often on the scale of a nation or a people; a stage or system of social, political, or technical development.",
+      "sourceGloss": "An organized culture encompassing many communities, often on the scale of a nation or a people",
       "frequencyRank": 10187,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "civilizaciones",
       "gender": "feminine",
@@ -104363,11 +104433,12 @@
       "source": "clarion",
       "target": "clarín",
       "partOfSpeech": "noun",
-      "sourceGloss": "A medieval brass instrument chiefly used as a battle signal; related to the trumpet, it had a narrow, straight pipe and a high-pitched, piercing sound.",
+      "sourceGloss": "A medieval brass instrument chiefly used as a battle signal",
       "frequencyRank": 10208,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "clarines",
       "gender": "masculine",
@@ -109821,11 +109892,12 @@
       "source": "computing",
       "target": "informática",
       "partOfSpeech": "noun",
-      "sourceGloss": "The use of a computer or computers.",
+      "sourceGloss": "The study of computers and computer programming.",
       "frequencyRank": 10572,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "informáticas",
       "gender": "feminine",
@@ -114319,11 +114391,12 @@
       "source": "cortisone",
       "target": "cortisona",
       "partOfSpeech": "noun",
-      "sourceGloss": "A corticosteroid hormone, closely related to corticosterone, produced by the adrenal cortex. One of the glucocorticoids, it is also made synthetically for use as an anti-inflamm...",
+      "sourceGloss": "A corticosteroid hormone, closely related to corticosterone, produced by the adrenal cortex.",
       "frequencyRank": 10872,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "cortisonas",
       "gender": "feminine",
@@ -130734,11 +130807,12 @@
       "source": "dock",
       "target": "muelle",
       "partOfSpeech": "noun",
-      "sourceGloss": "Any of the genus Rumex of coarse weedy plants with small green flowers related to buckwheat, especially bitter dock (Rumex obtusifolius), and used as potherbs and in folk medici...",
+      "sourceGloss": "A fixed structure attached to shore to which a vessel is secured when in port; usually for loading and unloading.",
       "frequencyRank": 11967,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "muelles",
       "gender": "masculine",
@@ -135577,11 +135651,12 @@
       "source": "ecomusicology",
       "target": "ecomusicología",
       "partOfSpeech": "noun",
-      "sourceGloss": "The study of music, culture, and nature, related to ecology and the natural environment. A mixture of the fields of ecocriticism and musicology.",
+      "sourceGloss": "The study of music, culture, and nature, related to ecology and the natural environment.",
       "frequencyRank": 12290,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "ecomusicologías",
       "gender": "feminine",
@@ -135952,11 +136027,12 @@
       "source": "edit",
       "target": "edición",
       "partOfSpeech": "noun",
-      "sourceGloss": "A change in the text of a file, a website or the code of software.",
+      "sourceGloss": "A change to the text of a document.",
       "frequencyRank": 12315,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "ediciones",
       "gender": "feminine",
@@ -137347,11 +137423,12 @@
       "source": "element",
       "target": "elemento",
       "partOfSpeech": "noun",
-      "sourceGloss": "A chemical substance made entirely of one such type of atom; any one of the simplest chemical substances that cannot be decomposed in a chemical reaction or by any chemical mean...",
+      "sourceGloss": "One of the simplest or essential parts or principles of which anything consists, or upon which the constitution or fundamental powers of anything are based.",
       "frequencyRank": 12408,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "elementos",
       "gender": "masculine",
@@ -138412,11 +138489,12 @@
       "source": "empire",
       "target": "imperio",
       "partOfSpeech": "noun",
-      "sourceGloss": "A political state, often a monarchy, that has achieved a much greater current size than its initial size by conquering surrounding territories, cities or nations.",
+      "sourceGloss": "A political unit ruled by an emperor or empress.",
       "frequencyRank": 12479,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "imperios",
       "gender": "masculine",
@@ -141907,11 +141985,12 @@
       "source": "ergotamine",
       "target": "ergotamina",
       "partOfSpeech": "noun",
-      "sourceGloss": "An alkaloid, extracted from ergot, that causes constriction of blood vessels and has been used to treat migraine; it is related to lysergic acid.",
+      "sourceGloss": "An alkaloid, extracted from ergot, that causes constriction of blood vessels and has been used to treat migraine",
       "frequencyRank": 12712,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "ergotaminas",
       "gender": "feminine",
@@ -186101,11 +186180,12 @@
       "source": "invasion",
       "target": "invasión",
       "partOfSpeech": "noun",
-      "sourceGloss": "A military action consisting of armed forces of one geopolitical entity entering territory controlled by another such entity, generally with the objective of conquering territor...",
+      "sourceGloss": "A military action consisting of a large armed force of one geopolitical entity entering territory controlled by another such entity, generally with the objective of conquering t...",
       "frequencyRank": 15660,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "invasiones",
       "gender": "feminine",
@@ -190001,11 +190081,12 @@
       "source": "keyboard",
       "target": "teclado",
       "partOfSpeech": "noun",
-      "sourceGloss": "A set of keys laid out in a grid-like pattern, used for typing on a typewriter, computer etc.",
+      "sourceGloss": "A component of many instruments, including the piano, organ, and harpsichord, consisting of usually black and white keys that cause different tones to be produced when struck.",
       "frequencyRank": 15920,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "teclados",
       "gender": "masculine",
@@ -199580,11 +199661,12 @@
       "source": "lucmo",
       "target": "lúcuma",
       "partOfSpeech": "noun",
-      "sourceGloss": "A fruit tree, Pouteria lucuma, from the Andean region of Peru, related to, and often confused with, the canistel.",
+      "sourceGloss": "A fruit tree, Lucuma bifera, from the Andean region of Peru, related to, and often confused with, the canistel.",
       "frequencyRank": 16559,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "lúcumas",
       "gender": "feminine",
@@ -228634,11 +228716,12 @@
       "source": "oxygen",
       "target": "oxígeno",
       "partOfSpeech": "noun",
-      "sourceGloss": "The chemical element (symbol O) with an atomic number of 8 and relative atomic mass of 15.9994. It is a colorless and odorless gas.",
+      "sourceGloss": "The chemical element (symbol O) with an atomic number of 8 and relative atomic mass of 15.9994.",
       "frequencyRank": 18497,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "oxígenos",
       "gender": "masculine",
@@ -244288,11 +244371,12 @@
       "source": "porpoise",
       "target": "marsopa",
       "partOfSpeech": "noun",
-      "sourceGloss": "Any small cetacean of the family Phocoenidae, related to dolphins and whales.",
+      "sourceGloss": "A small cetacean of the family Phocoenidae, related to dolphins and whales.",
       "frequencyRank": 19541,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "marsopas",
       "gender": "feminine",
@@ -248379,11 +248463,12 @@
       "source": "profit",
       "target": "beneficio",
       "partOfSpeech": "noun",
-      "sourceGloss": "Total income or cash flow minus expenditures. The money or other benefit a non-governmental organization or individual receives in exchange for products and services sold at an...",
+      "sourceGloss": "Benefit, positive result obtained.",
       "frequencyRank": 19814,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "beneficios",
       "gender": "masculine",
@@ -258121,11 +258206,12 @@
       "source": "regionalism",
       "target": "regionalismo",
       "partOfSpeech": "noun",
-      "sourceGloss": "Affection, often excessive, for one's own region and to everything related to it.",
+      "sourceGloss": "Regional character, local color.",
       "frequencyRank": 20464,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "regionalismos",
       "gender": "masculine",
@@ -261449,11 +261535,12 @@
       "source": "revolution",
       "target": "revolución",
       "partOfSpeech": "noun",
-      "sourceGloss": "A political upheaval in a government or state characterized by great change.",
+      "sourceGloss": "The popular removal and replacement of a government, especially by sudden violent action.",
       "frequencyRank": 20686,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "revoluciones",
       "gender": "feminine",
@@ -268973,11 +269060,12 @@
       "source": "scientist",
       "target": "científico",
       "partOfSpeech": "noun",
-      "sourceGloss": "One whose activities make use of the scientific method to answer questions regarding the measurable universe. A scientist may be involved in original research, or make use of th...",
+      "sourceGloss": "One whose activities make use of the scientific method to answer questions regarding the measurable universe.",
       "frequencyRank": 21188,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "científicos",
       "gender": "masculine",
@@ -271508,11 +271596,12 @@
       "source": "self-determination",
       "target": "autodeterminación",
       "partOfSpeech": "noun",
-      "sourceGloss": "The political independence of a people",
+      "sourceGloss": "The political independence of a people.",
       "frequencyRank": 21357,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "autodeterminaciones",
       "gender": "feminine",
@@ -275646,11 +275735,12 @@
       "source": "shoebill",
       "target": "picozapato",
       "partOfSpeech": "noun",
-      "sourceGloss": "Balaeniceps rex, a tall wading bird related to the stork, native to tropical African swamps; the sole species of the family Balaenicipitidae.",
+      "sourceGloss": "Balaeniceps rex, a tall wading bird related to the stork, native to tropical African swamps",
       "frequencyRank": 21633,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "picozapatos",
       "gender": "masculine",
@@ -279557,11 +279647,12 @@
       "source": "smartphone",
       "target": "teléfono inteligente",
       "partOfSpeech": "noun",
-      "sourceGloss": "A mobile phone with more advanced features and greater computing capacity than a featurephone.",
+      "sourceGloss": "A mobile phone with more advanced features and greater computing capacity than a feature phone.",
       "frequencyRank": 21894,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "teléfonos inteligentes",
       "gender": "masculine",
@@ -284563,11 +284654,12 @@
       "source": "sponsor",
       "target": "patrocinador",
       "partOfSpeech": "noun",
-      "sourceGloss": "A person or organization with some sort of responsibility for another person or organization, especially where the responsibility has a religious, legal, or financial aspect.",
+      "sourceGloss": "A person or organization that pays all or part of the cost of an event, publication, media program, etc., usually in exchange for advertising.",
       "frequencyRank": 22228,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "patrocinadores",
       "gender": "masculine",
@@ -288292,11 +288384,12 @@
       "source": "stole",
       "target": "estola",
       "partOfSpeech": "noun",
-      "sourceGloss": "A garment consisting of a decorated band worn on the back of the neck, each end hanging over the chest, worn in ecclesiastical settings or sometimes as a part of graduation dress.",
+      "sourceGloss": "A scarf-like garment, often made of fur.",
       "frequencyRank": 22477,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "estolas",
       "gender": "feminine",
@@ -295310,11 +295403,12 @@
       "source": "tactics",
       "target": "táctica",
       "partOfSpeech": "noun",
-      "sourceGloss": "The military science that deals with achieving the objectives set by strategy.",
+      "sourceGloss": "The employment and ordered arrangement of forces in relation to each other.",
       "frequencyRank": 22945,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "tácticas",
       "gender": "feminine",
@@ -307647,11 +307741,12 @@
       "source": "tropomyosin",
       "target": "tropomiosina",
       "partOfSpeech": "noun",
-      "sourceGloss": "A protein involved in muscle contraction. It is related to myosin and occurs together with troponin in the thin filaments of muscle tissue.",
+      "sourceGloss": "A protein involved in muscle contraction and related to myosin, and occurs together with troponin in the thin filaments of muscle tissue.",
       "frequencyRank": 23768,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "tropomiosinas",
       "gender": "feminine",
@@ -316603,11 +316698,12 @@
       "source": "voluntourism",
       "target": "volunturismo",
       "partOfSpeech": "noun",
-      "sourceGloss": "A type of tourism which combines traditional travel and tourism with volunteer work. Travelers are given opportunities to contribute money and/or time to causes related to their...",
+      "sourceGloss": "A type of tourism which combines traditional travel and tourism with volunteer work.",
       "frequencyRank": 24366,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "volunturismos",
       "gender": "masculine",
@@ -316723,11 +316819,12 @@
       "source": "vote",
       "target": "voto",
       "partOfSpeech": "noun",
-      "sourceGloss": "A formalized choice on legally relevant measures such as employment or appointment to office or a proceeding about a legal dispute.",
+      "sourceGloss": "An act or instance of participating in such a choice, e.g., by submitting a ballot.",
       "frequencyRank": 24374,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "votos",
       "gender": "masculine",
@@ -317306,11 +317403,12 @@
       "source": "walrus",
       "target": "morsa",
       "partOfSpeech": "noun",
-      "sourceGloss": "A large Arctic marine mammal related to seals and having long tusks, tough, wrinkled skin, and four flippers, Odobenus rosmarus.",
+      "sourceGloss": "A large Arctic pinniped having long tusks, tough, wrinkled skin, and four flippers, Odobenus rosmarus.",
       "frequencyRank": 24413,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "plural": "morsas",
       "gender": "feminine",
@@ -325028,11 +325126,12 @@
       "source": "athenian",
       "target": "ateniense",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of or related to Athena, the Greek goddess of wisdom, technology, and skillful warfare.",
+      "sourceGloss": "Of or related to Athens, particularly (historical) ancient Athens, its empire, and its people.",
       "frequencyRank": 24935,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.03,
       "eligible": true
@@ -325535,11 +325634,12 @@
       "source": "celsius",
       "target": "Celsius",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Related to a metric temperature scale, originally defined as having the freezing point of water as 0 degrees and its boiling point as 100 degrees, at standard atmospheric pressu...",
+      "sourceGloss": "Relating to the metric temperature scale of said name.",
       "frequencyRank": 24974,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.29,
       "eligible": false
@@ -333491,11 +333591,12 @@
       "source": "anal",
       "target": "anal",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of, related to, intended for or involving the anus. [from Template:SAFESUBST: c.]",
+      "sourceGloss": "Of, related to, intended for or involving the anus.",
       "frequencyRank": 25586,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.94,
       "eligible": true
@@ -335480,11 +335581,12 @@
       "source": "antisymmetric",
       "target": "antisimétrico",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Having the property that, for any two distinct elements of S, at least one is not related to the other via R; equivalently, having the property that, for any x, y ∈ S, if both x...",
+      "sourceGloss": "Having the property that, for any two distinct elements of S, at least one is not related to the other via R",
       "frequencyRank": 25739,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 1.82,
       "eligible": true
@@ -343412,11 +343514,12 @@
       "source": "celestial",
       "target": "celestial",
       "partOfSpeech": "adjective",
-      "sourceGloss": "of or related to Heaven and the divine.",
+      "sourceGloss": "Of, relating to, or located in the sky or outer space, where the Sun, Moon, planets, and stars are visible.",
       "frequencyRank": 26350,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.53,
       "eligible": true
@@ -343802,11 +343905,12 @@
       "source": "charismatic",
       "target": "carismático",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of, related to, or having charisma: having a form of compelling charm which inspires devotion in others due to their strength of character and being full of personality; charmin...",
+      "sourceGloss": "Of, related to, or having charisma: having a form of compelling charm which inspires devotion in others due to their strength of character and being full of personality",
       "frequencyRank": 26380,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.48,
       "eligible": true
@@ -359408,11 +359512,12 @@
       "source": "extortionate",
       "target": "extorsivo",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of, related to, or typifying extortion.",
+      "sourceGloss": "Of, related to, or typifying extortion (“the practice of obtaining money or other property by the use of force or threats”).",
       "frequencyRank": 27580,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 2.32,
       "eligible": true
@@ -361592,11 +361697,12 @@
       "source": "fleshy",
       "target": "carnoso",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of, related to, or resembling flesh.",
+      "sourceGloss": "Having considerable flesh; plump.",
       "frequencyRank": 27748,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 2.99,
       "eligible": true
@@ -376897,11 +377003,12 @@
       "source": "judicial",
       "target": "judicial",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of or relating to the court system or the judicial branch of government.",
+      "sourceGloss": "specified by a civil bill court under the terms of the Land Law (Ireland) Act, 1881",
       "frequencyRank": 28925,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.14,
       "eligible": true
@@ -379711,11 +379818,12 @@
       "source": "low-budget",
       "target": "de bajo presupuesto",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Achieved with a relatively small financial outlay.",
+      "sourceGloss": "Of a project such as a film, achieved with a relatively small financial outlay.",
       "frequencyRank": 29141,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.7,
       "eligible": true
@@ -385873,11 +385981,12 @@
       "source": "nomadic",
       "target": "nómada",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of or related to any habitually wandering person or animal.",
+      "sourceGloss": "Of or relating to nomads.",
       "frequencyRank": 29615,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 3.13,
       "eligible": true
@@ -388943,11 +389052,12 @@
       "source": "over-the-counter",
       "target": "de venta libre",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Legal for sale or distribution without the requirement of a prescription.",
+      "sourceGloss": "Of medicine and other treatments, legal for sale or distribution without the requirement of a prescription.",
       "frequencyRank": 29851,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.55,
       "eligible": true
@@ -400541,11 +400651,12 @@
       "source": "right-wing",
       "target": "derechista",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of political ideologies: typically supporting tradition, social order and property rights, especially conservative, traditionalist, and/or reactionary politics.",
+      "sourceGloss": "Of a view, group, or ideology: emphasizing conservatism, traditional values, free-market capitalism, and limited government intervention.",
       "frequencyRank": 30743,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.59,
       "eligible": true
@@ -420990,11 +421101,12 @@
       "source": "viral",
       "target": "viral",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of or relating to a biological virus.",
+      "sourceGloss": "Caused by a virus.",
       "frequencyRank": 32316,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.08,
       "eligible": true
@@ -470169,11 +470281,12 @@
       "source": "delete",
       "target": "borrar",
       "partOfSpeech": "verb",
-      "sourceGloss": "To remove, get rid of or erase, especially written or printed material, or data on a computer or other device. [from 1600s]",
+      "sourceGloss": "To remove, get rid of or erase, especially written or printed material, or data on a computer or other device.",
       "frequencyRank": 36075,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "kaikki-en"
       ],
       "enZipf": 4.22,
       "eligible": true
