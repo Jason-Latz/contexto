@@ -419,6 +419,48 @@ async function raceBackAndForth(base) {
   await context.close()
 }
 
+// --- The hover card must never translate its own definition text -------------
+// Every hover rewrites the tooltip's inner spans, and that mutation used to be
+// picked up by the SPA observer with the unmarked inner span as the walk root,
+// splicing replacement spans into our own gloss (regression from 124cdd3).
+async function tooltipSelfReplacement(base) {
+  const { context, sw } = await launch('tooltip')
+  await seed(sw, ONBOARDED_ES)
+
+  const page = await context.newPage()
+  await page.goto(`${base}/article-light.html`, { waitUntil: 'domcontentloaded' })
+  await spans(page).first().waitFor({ timeout: 8000 })
+
+  // Hover several spans in rounds — each hover rewrites the tooltip text.
+  const count = Math.min(await spans(page).count(), 3)
+  for (let round = 0; round < 2; round++) {
+    for (let i = 0; i < count; i++) {
+      await spans(page).nth(i).hover()
+      await page.waitForTimeout(150)
+    }
+  }
+  // Wait out the observer's 500 ms debounce with margin, then re-hover so the
+  // tooltip shows content that survived any (buggy) injection pass.
+  await page.waitForTimeout(1200)
+  await spans(page).first().hover()
+
+  const injected = await page.locator('#contexto-tooltip [data-contexto="true"]').count()
+  const { gloss, shown } = await page.evaluate(() => {
+    const span = document.querySelector('[data-contexto="true"]')
+    const tip = document.getElementById('contexto-tooltip')
+    // children[1] is the gloss line (source · gloss · target · hint).
+    return {
+      gloss: span?.getAttribute('data-gloss') ?? '',
+      shown: tip?.children[1]?.textContent ?? '',
+    }
+  })
+  check('TOOLTIP-self', 'Hover card text is never itself translated',
+    injected === 0 && shown === gloss,
+    `${injected} injected span(s) inside tooltip; gloss shown=${JSON.stringify(shown)} expected=${JSON.stringify(gloss)}`)
+
+  await context.close()
+}
+
 async function run() {
   makeTestBuild()
   const { server, base } = await serveFixtures()
@@ -429,6 +471,7 @@ async function run() {
     await bug3(base)
     await frozenTab(base)
     await raceBackAndForth(base)
+    await tooltipSelfReplacement(base)
   } finally {
     server.close()
   }

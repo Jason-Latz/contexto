@@ -33,9 +33,13 @@ const SKIP_SELECTORS: readonly string[] = [
   '[data-contexto]',
   '[data-contexto-ui]',
   '#contexto-tooltip',
-  // Elements explicitly tagged as non-English — skip to avoid double-translation
-  '[lang]:not([lang^="en"])',
+  // Elements explicitly tagged as non-English — skip to avoid double-translation.
+  // An empty lang attribute declares nothing, so it must not match.
+  '[lang]:not([lang^="en"]):not([lang=""])',
 ]
+
+// One compound selector so closest()/matches() checks are a single call.
+const SKIP_SELECTOR = SKIP_SELECTORS.join(', ')
 
 // Domains where involuntary word replacement carries a real risk of harm:
 // misreading a medical dosage, misinterpreting a legal clause, or misunderstanding
@@ -165,11 +169,7 @@ async function checkHighStakesDomain(): Promise<boolean> {
 function isInsideSkippedElement(node: Node, root: Element): boolean {
   let ancestor: Node | null = node.parentElement
   while (ancestor && ancestor !== root) {
-    if (ancestor instanceof Element) {
-      for (const selector of SKIP_SELECTORS) {
-        if (ancestor.matches(selector)) return true
-      }
-    }
+    if (ancestor instanceof Element && ancestor.matches(SKIP_SELECTOR)) return true
     ancestor = ancestor.parentElement
   }
   return false
@@ -179,10 +179,13 @@ function isInsideSkippedElement(node: Node, root: Element): boolean {
 // The acceptNode filter rejects empty/whitespace-only nodes and any node
 // whose ancestor matches SKIP_SELECTORS.
 function buildTextWalker(root: Element): TreeWalker {
-  for (const selector of SKIP_SELECTORS) {
-    if (root.matches(selector)) {
-      return document.createTreeWalker(document.createElement('div'), NodeFilter.SHOW_TEXT)
-    }
+  // closest(), not matches(): the root handed to us can be an unmarked element
+  // NESTED inside skipped UI. The MutationObserver queues the immediate parent of
+  // an added text node as its walk root, and for the hover tooltip that parent is
+  // a plain inner span of the marked #contexto-tooltip container — checking only
+  // the root itself let replacement spans get injected into our own hover card.
+  if (root.closest(SKIP_SELECTOR)) {
+    return document.createTreeWalker(document.createElement('div'), NodeFilter.SHOW_TEXT)
   }
 
   return document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
