@@ -173,8 +173,39 @@ Conventions to preserve:
   contexts can't clobber each other's untouched lemmas. Don't reintroduce whole-map
   `getLexiconForStorage()` writes.
 
+## Word Types + verb policy (2026-07-14)
+
+Contexto is a **vocabulary tool, not a grammar tutor** (Jason, pre-ship review).
+What we can't render faithfully gets gated or disabled, not engineered around:
+
+- `settings.disabledPartsOfSpeech` (default `['verb']`) + popup "Word Types" card
+  (Nouns/Verbs/Adjectives/Adverbs/Phrases). Enforced in `extractPageCandidates`;
+  carried through the live-settings diff so toggles re-render open tabs.
+- **Verbs render as the bare infinitive** (packs carry no conjugations). When
+  enabled, verbs only qualify in bare-infinitive slots (after "to"/a modal,
+  surface == base form) — the one context all four languages render correctly.
+  The hover card tags verb targets "· infinitive". Long-term path if verbs ever
+  matter more: re-import keeping Wiktextract 3sg-present + gerund `forms` and
+  conjugate present tense only (past is periphrastic in de/fr/it — avoid).
+- Adjectives keep their known no-agreement problem by choice (accepted for now).
+
 ## Current state
 
+- **Pre-ship triage run landed (2026-07-14):** (1) hover-card self-replacement
+  fixed — the SPA observer used an unmarked tooltip inner span as its walk root and
+  `buildTextWalker` never checked the root's ancestors; now `closest()` (regression
+  since 124cdd3, proven red-green by the TOOLTIP-self live scenario + tooltip-overlap
+  fixture). (2) Popup page-status is cause-specific: "native Chrome pages" copy only
+  on walled-off pages (URL missing/non-http), stale http tabs get "reload this tab",
+  file:// points at the file-access permission. (3) Word Types toggles + verb policy
+  (see section above). (4) `scripts/lint_glosses.py` wrote a gloss review queue to
+  `docs/gloss-lint/` — **top data finding: ALL es entries with frequencyRank < 4568
+  (the whole visible band) are legacy pre-pipeline `curated-contexto` LLM seeds**;
+  narrow single-sense glosses (version -> "software release"), ~1.9k templated
+  "related to X" glosses, ~1.9k synthetic two-word headwords ("team guide"). The
+  adjudication engine cannot write sourceGloss (audits only retarget/gate), so gloss
+  repair needs either a regloss verdict or regeneration; es queue 4,147 rows
+  (3,368 renderable) awaits Jason's remove/rebuild/regloss decision.
 - **Overnight multi-source vocab run landed (2026-07-12):** +3,169 panel-verified tail
   words (de +2,450 · it +447 · es +272; fr 0 — failed its error-rate panel bar, by
   design). Four offline sources integrated under `pipeline/sources/` (FreeDict eng-X,
