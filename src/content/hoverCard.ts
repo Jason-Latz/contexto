@@ -36,6 +36,9 @@ export interface TargetGrammar {
   genderHint: string
   // "pl. Häuser", only when the plural is not a predictable +s/+es form.
   pluralHint: string
+  // "infinitive" for verbs: the shown target is the dictionary form, not a
+  // conjugation, and the learner should read it as such.
+  formHint: string
 }
 
 export interface TargetGrammarAttrs {
@@ -44,6 +47,7 @@ export interface TargetGrammarAttrs {
   articleForm: string | null  // data-article-form: definite article + singular (nouns)
   gender: string | null       // data-gender (nouns)
   plural: string | null       // data-plural (nouns)
+  pos?: string | null         // data-pos: learner-facing posLabel() value
 }
 
 const GENDER_ABBREV: Record<string, string> = {
@@ -84,5 +88,6 @@ export function composeTargetGrammar(attrs: TargetGrammarAttrs): TargetGrammar {
     targetDisplay: attrs.articleForm || attrs.baseTarget || attrs.translated,
     genderHint: genderHint(attrs.articleForm, attrs.gender),
     pluralHint: pluralHint(attrs.baseTarget, attrs.translated, attrs.plural),
+    formHint: attrs.pos === 'verb' ? 'infinitive' : '',
   }
 }

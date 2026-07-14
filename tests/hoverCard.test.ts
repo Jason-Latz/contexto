@@ -119,3 +119,25 @@ test('falls back to the displayed text when even base target is missing', () => 
   })
   assert.equal(g.targetDisplay, 'schrecken')
 })
+
+test('verbs carry the infinitive form hint; other kinds do not', () => {
+  const verb = composeTargetGrammar({
+    translated: 'probar', baseTarget: 'probar',
+    articleForm: null, gender: null, plural: null, pos: 'verb',
+  })
+  assert.equal(verb.targetDisplay, 'probar')
+  assert.equal(verb.formHint, 'infinitive')
+
+  const noun = composeTargetGrammar({
+    translated: 'cocina', baseTarget: 'cocina',
+    articleForm: 'la cocina', gender: 'feminine', plural: 'cocinas', pos: 'noun',
+  })
+  assert.equal(noun.formHint, '')
+
+  // Attrs read straight from getAttribute() can be null or absent entirely.
+  const missing = composeTargetGrammar({
+    translated: 'rápidamente', baseTarget: 'rápidamente',
+    articleForm: null, gender: null, plural: null,
+  })
+  assert.equal(missing.formHint, '')
+})
