@@ -41,6 +41,14 @@ const SKIP_SELECTORS: readonly string[] = [
 // One compound selector so closest()/matches() checks are a single call.
 const SKIP_SELECTOR = SKIP_SELECTORS.join(', ')
 
+// Extension-owned UI only. This is the subset safe to check with closest():
+// closest() walks ancestors without a boundary, and running the FULL skip list
+// through it lets the [lang] rule reach <html> — a page-level lang="de"/"und"
+// would silently disable the whole pipeline on an English page. Our own UI
+// markers can never legitimately wrap page content, so an unbounded walk for
+// them is always correct.
+const EXTENSION_UI_SELECTOR = '[data-contexto], [data-contexto-ui], #contexto-tooltip'
+
 // Domains where involuntary word replacement carries a real risk of harm:
 // misreading a medical dosage, misinterpreting a legal clause, or misunderstanding
 // a financial figure. The extension asks for explicit consent before proceeding.
@@ -179,12 +187,14 @@ function isInsideSkippedElement(node: Node, root: Element): boolean {
 // The acceptNode filter rejects empty/whitespace-only nodes and any node
 // whose ancestor matches SKIP_SELECTORS.
 function buildTextWalker(root: Element): TreeWalker {
-  // closest(), not matches(): the root handed to us can be an unmarked element
-  // NESTED inside skipped UI. The MutationObserver queues the immediate parent of
-  // an added text node as its walk root, and for the hover tooltip that parent is
-  // a plain inner span of the marked #contexto-tooltip container — checking only
-  // the root itself let replacement spans get injected into our own hover card.
-  if (root.closest(SKIP_SELECTOR)) {
+  // Two checks with different reach. matches() covers the root itself against
+  // the full skip list. closest() additionally covers roots NESTED inside our
+  // own UI: the MutationObserver queues the immediate parent of an added text
+  // node as its walk root, and for the hover tooltip that parent is a plain
+  // inner span of the marked #contexto-tooltip container — checking only the
+  // root itself let replacement spans get injected into our own hover card.
+  // closest() must stay restricted to EXTENSION_UI_SELECTOR (see above).
+  if (root.matches(SKIP_SELECTOR) || root.closest(EXTENSION_UI_SELECTOR)) {
     return document.createTreeWalker(document.createElement('div'), NodeFilter.SHOW_TEXT)
   }
 

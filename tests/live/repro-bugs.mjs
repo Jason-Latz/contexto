@@ -466,6 +466,32 @@ async function tooltipSelfReplacement(base) {
   await context.close()
 }
 
+// --- A page-level lang attribute must not disable the pipeline ---------------
+// The skip list's [lang]:not([lang^="en"]) rule gates nested foreign snippets.
+// Checked with an unbounded closest() it would also match <html lang="und"/
+// "x-default"/"de"> — routine CMS boilerplate on English pages — and silently
+// disable the whole walk (found in the 2026-07-14 review of the tooltip fix).
+async function mislabeledLang(base) {
+  const { context, sw } = await launch('mislabeled')
+  await seed(sw, ONBOARDED_ES)
+
+  const page = await context.newPage()
+  await page.goto(`${base}/mislabeled-lang.html`, { waitUntil: 'domcontentloaded' })
+
+  let translated = true
+  try { await spans(page).first().waitFor({ timeout: 8000 }) } catch { translated = false }
+  const count = await spans(page).count()
+
+  // The genuinely-French nested paragraph must still be left alone.
+  const inFrench = await page.locator('[lang="fr"] [data-contexto="true"]').count()
+
+  check('LANG-mislabel', 'Page-level non-English lang attribute does not disable replacement',
+    translated && count > 0 && inFrench === 0,
+    `${count} spans on <html lang="x-default"> page; ${inFrench} inside the lang="fr" block`)
+
+  await context.close()
+}
+
 async function run() {
   makeTestBuild()
   const { server, base } = await serveFixtures()
@@ -477,6 +503,7 @@ async function run() {
     await frozenTab(base)
     await raceBackAndForth(base)
     await tooltipSelfReplacement(base)
+    await mislabeledLang(base)
   } finally {
     server.close()
   }
