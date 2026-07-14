@@ -38,7 +38,7 @@ why the short `fixtures/spanish-article.html` rendered nothing). Optionally add 
 - [ ] Set the **Privacy policy URL** to the deployed `/privacy/` page (from step 1).
 - [ ] Complete the **data-use disclosures**: no data collected, no data sold or transferred,
       all processing on-device (no runtime network calls).
-- [ ] Upload the package: `release/contexto-extension-v0.0.10.zip`.
+- [ ] Upload the package: `release/contexto-extension-v0.2.0.zip`.
 - [ ] Submit for review.
 
 ## 4. After approval
