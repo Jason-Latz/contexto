@@ -61,16 +61,23 @@ const PRONOUN_BLOCKLIST = new Set([
   'somebody', 'anybody', 'nothing', 'something', 'anything', 'everything',
 ])
 
-// Words that introduce a bare-infinitive slot. "to taste" / "can taste" is the
-// ONE context every target language renders faithfully with the uninflected
-// dictionary target ("to probar", "can schmecken"): the slot itself is an
-// infinitive. Inflected slots ("tastes", "roasted", "tasting") would put an
-// infinitive where the sentence needs agreement, so they stay English. German
-// alone could also take present-plural slots (sie schmecken), but a per-language
-// carve-out is not worth the asymmetry while verbs are opt-in.
-const INFINITIVE_MARKERS = new Set([
-  'to', 'can', 'cannot', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would',
-])
+// A bare-infinitive slot — "to taste" / "can taste" — is the ONE context every
+// target language renders faithfully with the uninflected dictionary target
+// ("to probar", "can schmecken"): the slot itself is an infinitive. Inflected
+// slots ("tastes", "roasted", "tasting") would put an infinitive where the
+// sentence needs agreement, so they stay English. German alone could also take
+// present-plural slots (sie schmecken), but a per-language carve-out is not
+// worth the asymmetry while verbs are opt-in.
+//
+// The marker check is grammatical, not textual: compromise tags every modal
+// (can/could/may/might/must/shall/should/will/would, plus contractions like
+// "can't" and "cannot") as Modal, while the homograph proper nouns that a text
+// list would trip over ("In May, begin...", "Will Smith taste...") are tagged
+// Month/ProperNoun. Only "to" needs a text match (compromise calls it a plain
+// Conjunction).
+function opensInfinitiveSlot(precedingLower: string, precedingTags: readonly string[]): boolean {
+  return precedingLower === 'to' || precedingTags.includes('Modal')
+}
 
 const IRREGULAR_VERB_LEMMAS: Record<string, string> = {
   am: 'be',
@@ -351,9 +358,12 @@ function extractTokens(text: string): CandidateToken[] {
   let searchOffset = 0  // tracks our position in `text` as we step through terms
 
   for (const sentence of sentences) {
-    // The previous term in this sentence, for the verb infinitive-slot check.
-    // Reset per sentence: a marker cannot reach across a sentence boundary.
+    // The previous REAL term in this sentence, for the verb infinitive-slot
+    // check. Reset per sentence: a marker cannot reach across a boundary.
+    // Contractions produce a phantom empty-text term ("can't" -> "can't" + ""),
+    // which must not clobber the lookback, so empty surfaces are skipped.
     let previousLower = ''
+    let previousTags: string[] = []
 
     for (const term of sentence.terms) {
       const surface = term.text
@@ -375,7 +385,11 @@ function extractTokens(text: string): CandidateToken[] {
       const isVerb = tags.includes('Verb') || tags.includes('Infinitive') || tags.includes('Gerund')
       const lowerSurface = surface.toLowerCase()
       const precededBy = previousLower
-      previousLower = lowerSurface
+      const precededByTags = previousTags
+      if (surface.length > 0) {
+        previousLower = lowerSurface
+        previousTags = tags
+      }
 
       if (tags.includes('Hyphenated')) {
         continue
@@ -413,11 +427,11 @@ function extractTokens(text: string): CandidateToken[] {
           isPlural: tags.includes('Plural'),
         })
       } else if (isVerb) {
-        // Only bare-infinitive slots (see INFINITIVE_MARKERS): the surface must
+        // Only bare-infinitive slots (see opensInfinitiveSlot): the surface must
         // BE the base form and follow "to" or a modal. Anything else would swap
         // an inflected English verb for an uninflected target.
         const lemma = lemmatizeVerb(surface)
-        if (lowerSurface !== lemma || !INFINITIVE_MARKERS.has(precededBy)) continue
+        if (lowerSurface !== lemma || !opensInfinitiveSlot(precededBy, precededByTags)) continue
         tokens.push({
           word: surface,
           lemma,

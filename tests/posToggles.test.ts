@@ -105,8 +105,26 @@ test('verbs only qualify in bare-infinitive slots', async () => {
   const casesWithTaste = [
     'You must taste the soup before you serve it to anyone.',
     'We want to taste the soup before dinner is served tonight.',
+    // Contractions leave a phantom empty term that must not break the lookback.
+    "You can't taste the soup from the kitchen just yet.",
   ]
   for (const text of casesWithTaste) {
     assert.ok(lemmas(extractPageCandidates([node(text)], [])).includes('taste'), text)
+  }
+})
+
+test('the marker check is grammatical: homograph proper nouns do not open a slot', async () => {
+  delete storage[SETTINGS_KEY]
+  await loadSettings()
+  await loadLanguagePack('es', false)
+
+  // "May" the month and "Will" the name spell like modals but are tagged
+  // Month/ProperNoun; a text-only marker list would swap these verbs.
+  const properNounCases = [
+    'In May taste the strawberries from the kitchen garden outside.',
+    'Will Smith taste the soup from the kitchen this evening?',
+  ]
+  for (const text of properNounCases) {
+    assert.ok(!lemmas(extractPageCandidates([node(text)], [])).includes('taste'), text)
   }
 })
