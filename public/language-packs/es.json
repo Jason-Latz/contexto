@@ -270,7 +270,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.75,
       "eligible": true
@@ -416,12 +416,11 @@
       "plural": "ventanas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "An opening, usually covered by one or more panes of clear glass, to allow light and air from outside to enter a building or vehicle.",
+      "sourceGloss": "computer window",
       "frequencyRank": 427,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.8,
       "eligible": true
@@ -542,7 +541,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.77,
       "eligible": true
@@ -558,7 +557,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -764,12 +763,11 @@
       "plural": "versiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A specific form or variation of something.",
+      "sourceGloss": "software release",
       "frequencyRank": 450,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.07,
       "eligible": true
@@ -2450,7 +2448,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.94,
       "eligible": true
@@ -2481,7 +2479,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.39,
       "eligible": true
@@ -2567,12 +2565,11 @@
       "plural": "oraciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A grammatically complete series of words consisting of a subject and predicate, even if one or the other is implied.",
+      "sourceGloss": "complete grammatical unit",
       "frequencyRank": 570,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.58,
       "eligible": true
@@ -3188,7 +3185,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.07,
       "eligible": true
@@ -5146,12 +5143,11 @@
       "plural": "códigos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A body of law, sanctioned by legislation, in which the rules of law to be specifically applied by the courts are set forth in systematic form",
+      "sourceGloss": "system of symbols or software instructions",
       "confidence": "high",
       "frequencyRank": 710,
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.08,
       "eligible": true
@@ -5432,12 +5428,11 @@
       "plural": "laboratorios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A room, building or institution equipped for scientific research, experimentation or analysis.",
+      "sourceGloss": "place for scientific work",
       "confidence": "high",
       "frequencyRank": 729,
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.31,
       "eligible": true
@@ -6806,12 +6801,11 @@
       "plural": "referencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A measurement one can compare (some other measurement) to.",
+      "sourceGloss": "listed scholarly source",
       "frequencyRank": 2703,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.74,
       "eligible": true
@@ -6912,12 +6906,11 @@
       "plural": "conclusiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "The end, finish, close or last part of something.",
+      "sourceGloss": "final scholarly section",
       "frequencyRank": 2711,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.4,
       "eligible": true
@@ -7048,12 +7041,11 @@
       "plural": "conferencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A stated meeting of preachers and others, invested with authority to take cognizance of ecclesiastical matters.",
+      "sourceGloss": "academic meeting in academia",
       "frequencyRank": 2724,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.01,
       "eligible": true
@@ -7082,7 +7074,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.45,
       "eligible": true
@@ -7108,12 +7100,11 @@
       "plural": "borradores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A version of a written work (such as a book or paper) or drawing.",
+      "sourceGloss": "preliminary scholarly text",
       "frequencyRank": 2728,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.61,
       "eligible": true
@@ -7249,7 +7240,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.01,
       "eligible": true
@@ -7295,7 +7286,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.01,
       "eligible": true
@@ -7321,12 +7312,11 @@
       "plural": "facultades",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A division of a university.",
+      "sourceGloss": "university academic division",
       "frequencyRank": 2743,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.32,
       "eligible": true
@@ -7382,12 +7372,11 @@
       "plural": "profesores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A teacher or faculty member at a college or university regardless of formal rank.",
+      "sourceGloss": "university academic instructor",
       "frequencyRank": 2750,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.9,
       "eligible": true
@@ -7418,7 +7407,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.02,
       "eligible": true
@@ -8672,12 +8661,12 @@
       "plural": "argumentos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "The independent variable of a function.",
+      "sourceGloss": "A fact or statement used to support a proposition; a reason.",
       "frequencyRank": 2925,
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.64,
       "eligible": true
@@ -8703,12 +8692,11 @@
       "plural": "evidencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "Anything admitted by a court to prove or disprove alleged matters of fact in a trial.",
+      "sourceGloss": "support for academic claim",
       "frequencyRank": 2927,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.14,
       "eligible": true
@@ -8962,7 +8950,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.13,
       "eligible": true
@@ -9053,7 +9041,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.19,
       "eligible": true
@@ -9189,7 +9177,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.24,
       "eligible": true
@@ -9205,7 +9193,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.52,
       "eligible": true
@@ -9394,12 +9382,11 @@
       "plural": "créditos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A privilege of delayed payment extended to a buyer or borrower on the seller's or lender's belief that what is given will be repaid.",
+      "sourceGloss": "unit of academic coursework",
       "frequencyRank": 3007,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.0,
       "eligible": true
@@ -9415,7 +9402,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.03,
       "eligible": true
@@ -9626,7 +9613,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.15,
       "eligible": true
@@ -9963,12 +9950,11 @@
       "plural": "talleres",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A room, especially one which is not particularly large, used for manufacturing or other light industrial work.",
+      "sourceGloss": "interactive academic session",
       "frequencyRank": 3111,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.15,
       "eligible": true
@@ -13441,7 +13427,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.77,
       "eligible": true
@@ -13877,7 +13863,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.21,
       "eligible": true
@@ -14083,12 +14069,11 @@
       "plural": "señales",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A clearly visible object, generally flat, bearing a short message in words or pictures.",
+      "sourceGloss": "observable medical finding",
       "frequencyRank": 3682,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 5.08,
       "eligible": true
@@ -16424,12 +16409,11 @@
       "plural": "fármacos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "Any commodity that lies on hand, or is not salable; an article of slow sale, or in no demand.",
+      "sourceGloss": "medicinal chemical substance",
       "frequencyRank": 3953,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.87,
       "eligible": true
@@ -16745,7 +16729,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.63,
       "eligible": true
@@ -16851,7 +16835,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.17,
       "eligible": true
@@ -17947,7 +17931,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.1,
       "eligible": true
@@ -18108,12 +18092,11 @@
       "plural": "privilegios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A particular benefit, advantage, or favor",
+      "sourceGloss": "protected legal right",
       "frequencyRank": 4130,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.2,
       "eligible": true
@@ -18154,12 +18137,11 @@
       "plural": "obligaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "The act of binding oneself by a social, legal, or moral tie to someone.",
+      "sourceGloss": "binding legal duty",
       "frequencyRank": 4133,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.07,
       "eligible": true
@@ -18220,7 +18202,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.23,
       "eligible": false
@@ -18401,7 +18383,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.41,
       "eligible": true
@@ -18552,7 +18534,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.69,
       "eligible": true
@@ -18568,7 +18550,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.67,
       "eligible": true
@@ -18839,7 +18821,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -18970,12 +18952,11 @@
       "plural": "foros",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "A gathering for the purpose of discussion; a symposium.",
+      "sourceGloss": "place for legal hearing",
       "frequencyRank": 4231,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto",
-        "kaikki-en"
+        "curated-contexto"
       ],
       "enZipf": 4.38,
       "eligible": true
@@ -19411,7 +19392,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.22,
       "eligible": true
@@ -19482,12 +19463,12 @@
       "plural": "liberaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "The process by which a chemical substance is set free.",
+      "sourceGloss": "The event of setting (someone or something) free (e.g. hostages, slaves, prisoners, caged animals, hooked or netted fish, etc.).",
       "frequencyRank": 4278,
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.09,
       "eligible": true
@@ -19908,7 +19889,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.85,
       "eligible": true
@@ -20944,7 +20925,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.36,
       "eligible": true
@@ -21005,7 +20986,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.17,
       "eligible": true
@@ -21036,7 +21017,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.11,
       "eligible": true
@@ -21127,7 +21108,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.3,
       "eligible": true
@@ -21158,7 +21139,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.78,
       "eligible": true
@@ -22310,7 +22291,7 @@
       "confidence": "high",
       "sourceIds": [
         "curated-contexto",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.1,
       "eligible": true
@@ -45234,12 +45215,11 @@
       "source": "enter",
       "target": "intro",
       "partOfSpeech": "noun",
-      "sourceGloss": "A stroke of the Enter key.",
+      "sourceGloss": "The \"Enter\" key on a computer keyboard.",
       "frequencyRank": 6260,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "intros",
       "gender": "masculine",
@@ -50128,7 +50108,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "normandos",
       "gender": "masculine",
@@ -51414,12 +51394,11 @@
       "source": "republican",
       "target": "republicano",
       "partOfSpeech": "noun",
-      "sourceGloss": "Someone who favors a republic as a form of government.",
+      "sourceGloss": "A member or supporter of the Republican Party, the more right-wing of the two main political parties in the United States.",
       "frequencyRank": 6672,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "republicanos",
       "gender": "masculine",
@@ -54819,7 +54798,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "lobos de tierra",
       "gender": "masculine",
@@ -63087,12 +63066,11 @@
       "source": "ally",
       "target": "aliado",
       "partOfSpeech": "noun",
-      "sourceGloss": "A person, group, state, etc., which is associated or united by treaty with another for a common (especially military or political) purpose",
+      "sourceGloss": "A person, group, state, etc., which is associated or united by treaty with another for a common (especially military or political) purpose; a confederate.",
       "frequencyRank": 7451,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "aliados",
       "gender": "masculine",
@@ -64638,7 +64616,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "amoxicilinas",
       "gender": "feminine",
@@ -67785,7 +67763,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "antocianinas",
       "gender": "feminine",
@@ -73394,7 +73372,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "alcachofas",
       "gender": "feminine",
@@ -79343,12 +79321,11 @@
       "source": "banner",
       "target": "pancarta",
       "partOfSpeech": "noun",
-      "sourceGloss": "A large piece of cloth with a slogan, motto, or emblem carried in a demonstration or other procession or suspended in some conspicuous place.",
+      "sourceGloss": "A flag or standard used by a military commander, monarch or nation.",
       "frequencyRank": 8535,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "pancartas",
       "gender": "feminine",
@@ -82184,7 +82161,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "bencilos",
       "gender": "masculine",
@@ -87043,7 +87020,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "bonitos",
       "gender": "masculine",
@@ -91956,7 +91933,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "arbustos",
       "gender": "masculine",
@@ -95435,7 +95412,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "carbonos",
       "gender": "masculine",
@@ -101776,12 +101753,12 @@
       "source": "chive",
       "target": "cebollino",
       "partOfSpeech": "noun",
-      "sourceGloss": "The leaves of this plant used as a herb.",
+      "sourceGloss": "A perennial plant, Allium schoenoprasum, related to the onion.",
       "frequencyRank": 10031,
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "cebollinos",
       "gender": "masculine",
@@ -104122,7 +104099,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "civilizaciones",
       "gender": "feminine",
@@ -104438,7 +104415,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "clarines",
       "gender": "masculine",
@@ -109892,12 +109869,11 @@
       "source": "computing",
       "target": "informática",
       "partOfSpeech": "noun",
-      "sourceGloss": "The study of computers and computer programming.",
+      "sourceGloss": "The use of a computer or computers.",
       "frequencyRank": 10572,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "informáticas",
       "gender": "feminine",
@@ -114396,7 +114372,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "cortisonas",
       "gender": "feminine",
@@ -130807,12 +130783,11 @@
       "source": "dock",
       "target": "muelle",
       "partOfSpeech": "noun",
-      "sourceGloss": "A fixed structure attached to shore to which a vessel is secured when in port; usually for loading and unloading.",
+      "sourceGloss": "Any of the genus Rumex of coarse weedy plants with small green flowers related to buckwheat, especially bitter dock (Rumex obtusifolius), and used as potherbs and in folk medici...",
       "frequencyRank": 11967,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "muelles",
       "gender": "masculine",
@@ -135656,7 +135631,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "ecomusicologías",
       "gender": "feminine",
@@ -136032,7 +136007,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "ediciones",
       "gender": "feminine",
@@ -137423,12 +137398,11 @@
       "source": "element",
       "target": "elemento",
       "partOfSpeech": "noun",
-      "sourceGloss": "One of the simplest or essential parts or principles of which anything consists, or upon which the constitution or fundamental powers of anything are based.",
+      "sourceGloss": "A chemical substance made entirely of one such type of atom; any one of the simplest chemical substances that cannot be decomposed in a chemical reaction or by any chemical mean...",
       "frequencyRank": 12408,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "elementos",
       "gender": "masculine",
@@ -138494,7 +138468,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "imperios",
       "gender": "masculine",
@@ -141990,7 +141964,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "ergotaminas",
       "gender": "feminine",
@@ -186185,7 +186159,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "invasiones",
       "gender": "feminine",
@@ -190081,12 +190055,11 @@
       "source": "keyboard",
       "target": "teclado",
       "partOfSpeech": "noun",
-      "sourceGloss": "A component of many instruments, including the piano, organ, and harpsichord, consisting of usually black and white keys that cause different tones to be produced when struck.",
+      "sourceGloss": "A set of keys laid out in a grid-like pattern, used for typing on a typewriter, computer etc.",
       "frequencyRank": 15920,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "teclados",
       "gender": "masculine",
@@ -199666,7 +199639,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "lúcumas",
       "gender": "feminine",
@@ -228721,7 +228694,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "oxígenos",
       "gender": "masculine",
@@ -244376,7 +244349,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "marsopas",
       "gender": "feminine",
@@ -248463,12 +248436,11 @@
       "source": "profit",
       "target": "beneficio",
       "partOfSpeech": "noun",
-      "sourceGloss": "Benefit, positive result obtained.",
+      "sourceGloss": "Total income or cash flow minus expenditures. The money or other benefit a non-governmental organization or individual receives in exchange for products and services sold at an...",
       "frequencyRank": 19814,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "beneficios",
       "gender": "masculine",
@@ -258206,12 +258178,11 @@
       "source": "regionalism",
       "target": "regionalismo",
       "partOfSpeech": "noun",
-      "sourceGloss": "Regional character, local color.",
+      "sourceGloss": "Affection, often excessive, for one's own region and to everything related to it.",
       "frequencyRank": 20464,
       "confidence": "medium",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "regionalismos",
       "gender": "masculine",
@@ -261535,12 +261506,11 @@
       "source": "revolution",
       "target": "revolución",
       "partOfSpeech": "noun",
-      "sourceGloss": "The popular removal and replacement of a government, especially by sudden violent action.",
+      "sourceGloss": "A political upheaval in a government or state characterized by great change.",
       "frequencyRank": 20686,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "revoluciones",
       "gender": "feminine",
@@ -269065,7 +269035,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "científicos",
       "gender": "masculine",
@@ -271596,12 +271566,11 @@
       "source": "self-determination",
       "target": "autodeterminación",
       "partOfSpeech": "noun",
-      "sourceGloss": "The political independence of a people.",
+      "sourceGloss": "The political independence of a people",
       "frequencyRank": 21357,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "autodeterminaciones",
       "gender": "feminine",
@@ -275740,7 +275709,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "picozapatos",
       "gender": "masculine",
@@ -279652,7 +279621,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "teléfonos inteligentes",
       "gender": "masculine",
@@ -284659,7 +284628,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "patrocinadores",
       "gender": "masculine",
@@ -288384,12 +288353,11 @@
       "source": "stole",
       "target": "estola",
       "partOfSpeech": "noun",
-      "sourceGloss": "A scarf-like garment, often made of fur.",
+      "sourceGloss": "A garment consisting of a decorated band worn on the back of the neck, each end hanging over the chest, worn in ecclesiastical settings or sometimes as a part of graduation dress.",
       "frequencyRank": 22477,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "estolas",
       "gender": "feminine",
@@ -295403,12 +295371,11 @@
       "source": "tactics",
       "target": "táctica",
       "partOfSpeech": "noun",
-      "sourceGloss": "The employment and ordered arrangement of forces in relation to each other.",
+      "sourceGloss": "The military science that deals with achieving the objectives set by strategy.",
       "frequencyRank": 22945,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "tácticas",
       "gender": "feminine",
@@ -307746,7 +307713,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "tropomiosinas",
       "gender": "feminine",
@@ -316703,7 +316670,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "volunturismos",
       "gender": "masculine",
@@ -316819,12 +316786,11 @@
       "source": "vote",
       "target": "voto",
       "partOfSpeech": "noun",
-      "sourceGloss": "An act or instance of participating in such a choice, e.g., by submitting a ballot.",
+      "sourceGloss": "A formalized choice on legally relevant measures such as employment or appointment to office or a proceeding about a legal dispute.",
       "frequencyRank": 24374,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "plural": "votos",
       "gender": "masculine",
@@ -317408,7 +317374,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "plural": "morsas",
       "gender": "feminine",
@@ -325131,7 +325097,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 3.03,
       "eligible": true
@@ -325639,7 +325605,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 3.29,
       "eligible": false
@@ -333591,12 +333557,11 @@
       "source": "anal",
       "target": "anal",
       "partOfSpeech": "adjective",
-      "sourceGloss": "Of, related to, intended for or involving the anus.",
+      "sourceGloss": "Of, related to, intended for or involving the anus. [from Template:SAFESUBST: c.]",
       "frequencyRank": 25586,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "enZipf": 3.94,
       "eligible": true
@@ -335586,7 +335551,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 1.82,
       "eligible": true
@@ -343519,7 +343484,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 3.53,
       "eligible": true
@@ -343910,7 +343875,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 3.48,
       "eligible": true
@@ -359517,7 +359482,7 @@
       "confidence": "medium",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 2.32,
       "eligible": true
@@ -361702,7 +361667,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 2.99,
       "eligible": true
@@ -377003,12 +376968,11 @@
       "source": "judicial",
       "target": "judicial",
       "partOfSpeech": "adjective",
-      "sourceGloss": "specified by a civil bill court under the terms of the Land Law (Ireland) Act, 1881",
+      "sourceGloss": "Of or relating to the court system or the judicial branch of government.",
       "frequencyRank": 28925,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "freedict-eng-spa-2025.11.23"
       ],
       "enZipf": 4.14,
       "eligible": true
@@ -379823,7 +379787,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.7,
       "eligible": true
@@ -385986,7 +385950,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 3.13,
       "eligible": true
@@ -389057,7 +389021,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.55,
       "eligible": true
@@ -400656,7 +400620,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.59,
       "eligible": true
@@ -421106,7 +421070,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.08,
       "eligible": true
@@ -470286,7 +470250,7 @@
       "confidence": "high",
       "sourceIds": [
         "freedict-eng-spa-2025.11.23",
-        "kaikki-en"
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.22,
       "eligible": true
@@ -661256,6 +661220,12 @@
       "url": "https://github.com/apertium/apertium-eng-spa",
       "license": "GPL-2.0",
       "notes": "Optional corroboration source; not required for this generated pack."
+    },
+    "regloss-sense-aligned": {
+      "name": "Sense-aligned gloss repair (English Wiktionary via kaikki.org)",
+      "url": "https://kaikki.org/dictionary/rawdata.html",
+      "license": "CC-BY-SA and GFDL",
+      "notes": "sourceGloss replaced with the gloss of the Wiktionary sense whose translation table contains the entry's target (pipeline/import_es/regloss_legacy.py or an applied regloss verdict)."
     }
   }
 }

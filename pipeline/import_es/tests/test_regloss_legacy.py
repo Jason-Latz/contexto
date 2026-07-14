@@ -29,6 +29,11 @@ class FirstClauseTests(unittest.TestCase):
     def test_short_glosses_pass_through(self):
         self.assertEqual(first_clause("A short gloss."), "A short gloss.")
 
+    def test_abbreviations_are_not_sentence_boundaries(self):
+        g = ("The event of setting (someone or something) free (e.g. hostages, "
+             "slaves, prisoners, caged animals, hooked or netted fish, etc.).")
+        self.assertEqual(first_clause(g), g)
+
     def test_long_glosses_cut_at_a_sentence_boundary(self):
         long = ("A string of characters used to log in to a computer or network, "
                 "to access a level in a video game, and so on; archetypally a word "
@@ -59,6 +64,26 @@ class ChooseAlignedGlossTests(unittest.TestCase):
             sense("", ["muerte", "la muerte"], 18),
         ]
         self.assertIsNone(choose_aligned_gloss(senses, fold("muerte")))
+
+    def test_near_tie_between_glossed_senses_is_a_judgment_call(self):
+        # keyboard: instrument vs computer senses with comparable tables must
+        # go to the review queue, not auto-apply whichever is slightly larger.
+        senses = [
+            sense("A set of keys used to operate a typewriter, computer etc.", ["teclado"], 5),
+            sense("A component of many instruments including the piano.", ["teclado"], 6),
+        ]
+        self.assertIsNone(choose_aligned_gloss(senses, fold("teclado")))
+
+    def test_sole_aligned_sense_needs_page_order_confirmation(self):
+        # judicial: the ONLY aligned sense was an 1881 Irish land-law clause.
+        # With nothing to compare against, accept only the page's first sense.
+        clause = "Specified by a civil bill court under the Land Law Act."
+        self.assertIsNone(choose_aligned_gloss(
+            [sense(clause, ["judicial"], 3)], fold("judicial"),
+            g0="Of or relating to the administration of justice."))
+        first = "A specific form or variation of something."
+        self.assertEqual(choose_aligned_gloss(
+            [sense(first, ["versión"], 6)], fold("versión"), g0=first), first)
 
 
 if __name__ == "__main__":

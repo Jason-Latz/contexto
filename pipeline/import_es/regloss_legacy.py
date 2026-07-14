@@ -52,15 +52,33 @@ def is_suspect(entry: dict) -> bool:
     zipf = entry.get("enZipf") or 0.0
     if _lint.TEMPLATED_RE.search(gloss):
         return True
-    return zipf >= _lint.NARROW_DOMAIN_MIN_ZIPF and bool(_lint.DOMAIN_RE.search(gloss))
+    if zipf < _lint.NARROW_DOMAIN_MIN_ZIPF:
+        return False
+    # A domain marker that is the source word itself is self-reference, not a
+    # domain qualifier: "judicial" -> "...the judicial branch of government"
+    # is a fine gloss and reglossing it traded it for an 1881 Irish land-law
+    # footnote (review finding).
+    source = (entry.get("source") or "").lower()
+    return any(m.group(0).lower() != source for m in _lint.DOMAIN_RE.finditer(gloss))
 
 SENSE_CACHE = PROJECT_ROOT / "pipeline" / "data" / "en-sense-cache.jsonl"
 LEFTOVER_QUEUE = PROJECT_ROOT / "docs" / "data-maintenance" / "2026-07-14-regloss-leftovers.jsonl"
 
 # Gloss provenance marker appended to sourceIds when a sense-aligned gloss
-# replaces the legacy one. 'curated-contexto' is kept: the PAIR is still the
-# curated one; only the gloss gained a source.
-GLOSS_SOURCE_ID = "kaikki-en"
+# replaces the legacy one; also the idempotence marker for re-runs. Must NOT
+# collide with a dictionary source id: 'kaikki-en' can already appear in
+# sourceIds via corroboration (normalize.confidence_for extends sourceIds with
+# enrichment sources), which would silently skip those entries (review finding).
+GLOSS_SOURCE_ID = "regloss-sense-aligned"
+
+GLOSS_SOURCE_META = {
+    "name": "Sense-aligned gloss repair (English Wiktionary via kaikki.org)",
+    "url": "https://kaikki.org/dictionary/rawdata.html",
+    "license": "CC-BY-SA and GFDL",
+    "notes": "sourceGloss replaced with the gloss of the Wiktionary sense whose "
+             "translation table contains the entry's target (pipeline/import_es/"
+             "regloss_legacy.py or an applied regloss verdict).",
+}
 
 CONTENT_POS = {"noun", "verb", "adjective", "adverb"}
 
@@ -91,12 +109,17 @@ def usable_gloss(gloss: str) -> bool:
 
 def first_clause(gloss: str) -> str:
     # A hover card is not a dictionary page: keep the first full clause of a
-    # long gloss instead of hard-truncating mid-sentence.
+    # long gloss instead of hard-truncating mid-sentence. A period inside an
+    # abbreviation ("e.g. ", "i.e. ", "etc. ") is not a sentence boundary.
     if len(gloss) <= 120:
         return gloss
     for boundary in (". ", "; "):
-        cut = gloss.find(boundary, 40)
-        if cut != -1:
+        start = 40
+        while (cut := gloss.find(boundary, start)) != -1:
+            before = gloss[:cut].lower()
+            if boundary == ". " and before.endswith(("e.g", "i.e", "etc", "cf", "vs")):
+                start = cut + 1
+                continue
             return gloss[:cut + (1 if boundary == ". " else 0)]
     return gloss
 
@@ -105,15 +128,24 @@ def fold(value: str) -> str:
     return unicodedata.normalize("NFC", value).casefold().strip()
 
 
-def choose_aligned_gloss(senses: list[dict], target: str) -> str | None:
+def choose_aligned_gloss(senses: list[dict], target: str, g0: str = "") -> str | None:
     """Pick the gloss of the dominant sense aligned with `target`, or None.
 
     Senses are {'g': gloss, 'targets': set, 'n': full-table size}. Among the
     aligned senses with a usable gloss, the largest translation table wins
-    (dominance proxy). Wiktextract often carries a word's MAIN translations in
-    a gloss-less word-level block; if the best glossed sense's table is much
-    smaller than the largest aligned table, the glossed sense is a niche one
-    ("death" -> the Grim Reaper) — return None and let a human decide.
+    (dominance proxy). Every refusal below routes the entry to the review
+    queue instead of auto-applying — precision over recall, each guard earned
+    by a shipped failure:
+
+    - Gloss-less dominant block: Wiktextract often carries a word's MAIN
+      translations in a word-level block with no gloss; a glossed sense with a
+      much smaller table is a niche one ("death" -> the Grim Reaper).
+    - Near-tie ambiguity: two glossed aligned senses with comparable tables
+      ("keyboard" -> instrument vs computer) is a judgment call, not data.
+    - Sole aligned sense: with nothing to compare against, dominance is
+      unknowable from tables alone ("judicial" -> an 1881 Irish land-law
+      clause was the ONLY aligned sense). Accept only when that sense IS the
+      page's first sense (g0), Wiktionary's own dominance order.
     """
     aligned_all = [s for s in senses if target in s["targets"]]
     glossed = [s for s in aligned_all if usable_gloss(s["g"])]
@@ -122,29 +154,38 @@ def choose_aligned_gloss(senses: list[dict], target: str) -> str | None:
         return None
     if best["n"] * 2 < max(s["n"] for s in aligned_all):
         return None
+    runners = [s for s in glossed if s is not best and s["g"] != best["g"]]
+    if runners and max(s["n"] for s in runners) * 1.5 >= best["n"]:
+        return None
+    if len(aligned_all) == 1 and best["g"] != g0:
+        return None
     return best["g"]
 
 
-def load_sense_cache(language: str) -> dict[tuple[str, str], list[dict]]:
-    """(word, pos) -> senses in page order, each {'g', 'targets', 'n'}.
+def load_sense_cache(language: str) -> dict[tuple[str, str], dict]:
+    """(word, pos) -> {'senses': [...page order...], 'g0': first-sense gloss}.
 
-    'n' is the FULL de/fr/it/es translation-table size of the sense — the
-    dominance proxy. A word's central senses carry rich translation tables;
-    niche senses (heraldry, the Grim Reaper) carry a handful, so picking the
-    aligned sense with the largest table avoids trading a narrow gloss for a
-    different narrow gloss.
+    Each sense is {'g', 'targets', 'n'} where 'n' is the FULL de/fr/it/es
+    translation-table size — the dominance proxy. A word's central senses carry
+    rich translation tables; niche senses (heraldry, the Grim Reaper) carry a
+    handful, so picking the aligned sense with the largest table avoids trading
+    a narrow gloss for a different narrow gloss. 'g0' (the page's first sense)
+    is the dominance signal of last resort for sole-aligned-sense words.
     """
-    index: dict[tuple[str, str], list[dict]] = {}
+    index: dict[tuple[str, str], dict] = {}
     with SENSE_CACHE.open("r", encoding="utf-8") as fh:
         for line in fh:
             row = json.loads(line)
             key = (fold(row["w"]), row["pos"])
-            senses = index.setdefault(key, [])
+            slot = index.setdefault(key, {"senses": [], "g0": ""})
+            if not slot["g0"] and row.get("g0"):
+                slot["g0"] = row["g0"]
             for sense in row.get("senses", []):
                 tr = sense.get("tr", [])
                 targets = {fold(t[1]) for t in tr if t[0] == language}
                 if targets:
-                    senses.append({"g": sense.get("g", ""), "targets": targets, "n": len(tr)})
+                    slot["senses"].append(
+                        {"g": sense.get("g", ""), "targets": targets, "n": len(tr)})
     return index
 
 
@@ -182,8 +223,8 @@ def main() -> None:
             continue
 
         target = fold(entry.get("target", ""))
-        senses = index.get((fold(key), pos), [])
-        chosen = choose_aligned_gloss(senses, target)
+        slot = index.get((fold(key), pos), {"senses": [], "g0": ""})
+        chosen = choose_aligned_gloss(slot["senses"], target, slot["g0"])
         if chosen is None:
             leftovers.append({
                 "source": key,
@@ -192,7 +233,7 @@ def main() -> None:
                 "sourceGloss": entry.get("sourceGloss"),
                 "enZipf": entry.get("enZipf"),
                 "eligible": entry.get("eligible", False),
-                "candidateGlosses": [s["g"] for s in senses if usable_gloss(s["g"])][:3],
+                "candidateGlosses": [s["g"] for s in slot["senses"] if usable_gloss(s["g"])][:3],
             })
             continue
 
@@ -210,6 +251,8 @@ def main() -> None:
         entry["sourceIds"] = [*entry["sourceIds"], GLOSS_SOURCE_ID]
         reglossed += 1
 
+    if reglossed:
+        pack.setdefault("sources", {}).setdefault(GLOSS_SOURCE_ID, dict(GLOSS_SOURCE_META))
     write_json(args.pack, pack)
 
     LEFTOVER_QUEUE.parent.mkdir(parents=True, exist_ok=True)

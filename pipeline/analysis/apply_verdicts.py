@@ -357,6 +357,15 @@ def apply_regloss_row(core_entries: dict, tail_entries: dict, row: dict,
         reject(stats, "regloss_no_queue_record", key, "no matching regloss queue record")
         return
 
+    # Freshness: gloss candidates were aligned against the target the queue saw.
+    # If an audit retargeted the entry since (this run or an earlier one), the
+    # candidates describe the WRONG word — enforce the docstring's rebuild rule
+    # in code, not just in prose.
+    if record.get("target") != entry.get("target"):
+        reject(stats, "regloss_stale_target", key,
+               f"queue target {record.get('target')!r} != entry target {entry.get('target')!r}")
+        return
+
     # Never invent a definition: the gloss must be one of the queue's sourced
     # candidates, same defense-in-depth as retarget/mint target provenance.
     new_gloss = row.get("newGloss")
@@ -370,7 +379,7 @@ def apply_regloss_row(core_entries: dict, tail_entries: dict, row: dict,
         return
 
     entry["sourceGloss"] = new_gloss
-    gloss_source = record.get("glossSourceId") or "kaikki-en"
+    gloss_source = record.get("glossSourceId") or "regloss-sense-aligned"
     source_ids = entry.get("sourceIds") or []
     if gloss_source not in source_ids:
         entry["sourceIds"] = [*source_ids, gloss_source]
@@ -615,7 +624,9 @@ def main(argv=None) -> int:
                               "everything else no-ops as keep/skip")
     parser.add_argument("--mint-only", action="store_true",
                          help="apply only mint-{language}-*.jsonl and this language's "
-                              "rows of minttrial-mixed-*.jsonl; never touch audit-*.jsonl")
+                              "rows of minttrial-mixed-*.jsonl; never touch audit-*.jsonl "
+                              "or regloss-*.jsonl (regloss is gated with audit because its "
+                              "gloss candidates align against the post-audit target)")
     args = parser.parse_args(argv)
 
     report = apply_language(args.language, args.data_root or REPO_ROOT, args.ship_stratum, args.mint_only)

@@ -5,7 +5,7 @@ automatically; review and apply through the adjudication flow.
 
 | pack | rows | narrow-domain | templated | synthetic-compound | eligible rows |
 |------|-----:|--------------:|----------:|-------------------:|--------------:|
-| es | 1396 | 433 | 158 | 826 | 1104 |
+| es | 1425 | 459 | 161 | 826 | 1132 |
 | de | 538 | 441 | 99 | 0 | 538 |
 | fr | 256 | 215 | 42 | 0 | 256 |
 | it | 172 | 156 | 16 | 0 | 170 |

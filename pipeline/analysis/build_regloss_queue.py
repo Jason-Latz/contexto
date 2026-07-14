@@ -37,6 +37,7 @@ from pipeline.import_es.regloss_legacy import (
     first_clause,
     fold,
     is_suspect,
+    load_sense_cache,
     usable_gloss,
 )
 from .apply_verdicts import GENDERS_BY_LANGUAGE
@@ -47,25 +48,6 @@ QUEUES = REPO_ROOT / "pipeline" / "data" / "queues"
 
 CONTENT_POS = {"noun", "verb", "adjective", "adverb"}
 MAX_CANDIDATES = 5
-
-
-def load_sense_rows(language: str) -> dict[tuple[str, str], dict]:
-    """(word, pos) -> {'senses': [{'g','targets','n'}...], 'g0': first gloss}."""
-    index: dict[tuple[str, str], dict] = {}
-    with SENSE_CACHE.open("r", encoding="utf-8") as fh:
-        for line in fh:
-            row = json.loads(line)
-            key = (fold(row["w"]), row["pos"])
-            slot = index.setdefault(key, {"senses": [], "g0": ""})
-            if not slot["g0"] and row.get("g0"):
-                slot["g0"] = row["g0"]
-            for sense in row.get("senses", []):
-                tr = sense.get("tr", [])
-                targets = {fold(t[1]) for t in tr if t[0] == language}
-                if targets:
-                    slot["senses"].append(
-                        {"g": sense.get("g", ""), "targets": targets, "n": len(tr)})
-    return index
 
 
 def candidate_glosses(slot: dict, target: str) -> list[dict]:
@@ -96,7 +78,7 @@ def main() -> None:
     if not SENSE_CACHE.exists():
         raise SystemExit(f"{SENSE_CACHE} missing — build it first (see module docstring)")
 
-    index = load_sense_rows(language)
+    index = load_sense_cache(language)
     rows = []
     skipped_already_repaired = 0
     skipped_no_candidates = 0
