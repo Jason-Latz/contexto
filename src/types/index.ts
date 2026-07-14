@@ -149,6 +149,7 @@ export interface RuntimeSettings {
   aggressiveMode?: boolean
   blockedDomains?: string[]
   targetLanguage?: TargetLanguage
+  disabledPartsOfSpeech?: PartOfSpeech[]
 }
 
 // ---------- Popup <-> content script ----------

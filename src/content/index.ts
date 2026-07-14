@@ -4,9 +4,11 @@ import { extractPageCandidates, injectReplacements, restoreReplacements } from '
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
 import { loadLexicon, flushLexiconMerge, isDirty } from '../store/lexiconStore.js'
 import {
+  DEFAULT_DISABLED_PARTS_OF_SPEECH,
   areReplacementsEnabled,
   getBlockedDomains,
   getDensity,
+  getDisabledPartsOfSpeech,
   getDomainDecision,
   getTargetLanguage,
   isAggressiveMode,
@@ -23,7 +25,7 @@ import {
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
 import { PAGE_STATUS_MESSAGE, type PageStatus } from '../types/index.js'
-import type { CandidateToken, RuntimeSettings } from '../types/index.js'
+import type { CandidateToken, PartOfSpeech, RuntimeSettings } from '../types/index.js'
 
 // Pages with fewer words than this are too short for meaningful immersion
 // (e.g. error pages, blank tabs, single-widget dashboards).
@@ -76,23 +78,37 @@ function currentRuntimeSettings(): RuntimeSettings {
     aggressiveMode: isAggressiveMode(),
     blockedDomains: [...getBlockedDomains()],
     targetLanguage: getTargetLanguage(),
+    disabledPartsOfSpeech: [...getDisabledPartsOfSpeech()],
   }
 }
 
 // The settings a finished render pass actually consumed — NOT whatever is in
 // memory when it happens to finish. A reconcile can call loadSettings() while a
 // pass is still awaiting its pack or walking the DOM, so language and tail are
-// read back from the loader (what truly got loaded) and density is the value the
-// pass was handed. Recording live settings here would let an A -> B -> A toggle
-// leave the page rendered in B while every later diff believes it is in A.
-function renderedRuntimeSettings(density: number): RuntimeSettings {
+// read back from the loader (what truly got loaded) and density and the
+// disabled-POS set are the values the pass was handed. Recording live settings
+// here would let an A -> B -> A toggle leave the page rendered in B while every
+// later diff believes it is in A.
+function renderedRuntimeSettings(
+  density: number,
+  disabledPartsOfSpeech: readonly PartOfSpeech[],
+): RuntimeSettings {
   return {
     density,
     replacementsEnabled: true,
     aggressiveMode: isTailLoaded(),
     blockedDomains: [...getBlockedDomains()],
     targetLanguage: getActiveTargetLanguage(),
+    disabledPartsOfSpeech: [...disabledPartsOfSpeech],
   }
+}
+
+// Canonical comparison form: order-insensitive, with the pre-feature default
+// applied so a snapshot from before the field existed diffs as unchanged.
+function normalizedDisabledPos(settings: RuntimeSettings): string {
+  return JSON.stringify(
+    [...(settings.disabledPartsOfSpeech ?? DEFAULT_DISABLED_PARTS_OF_SPEECH)].sort(),
+  )
 }
 
 // Does the difference between two settings snapshots change what this page renders?
@@ -101,7 +117,8 @@ function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): b
     next.density !== previous.density ||
     (next.targetLanguage ?? 'es') !== (previous.targetLanguage ?? 'es') ||
     (next.aggressiveMode ?? false) !== (previous.aggressiveMode ?? false) ||
-    JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? [])
+    JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? []) ||
+    normalizedDisabledPos(next) !== normalizedDisabledPos(previous)
   )
 }
 
@@ -257,6 +274,7 @@ function updateRankedPageLemmas(pageCandidates: CandidateToken[]): string[] {
 
 async function renderReplacementPass(
   density: number,
+  disabledPartsOfSpeech: readonly PartOfSpeech[],
   shouldRecordExposure?: (lemma: string) => boolean,
   isCurrentRun: () => boolean = () => true,
 ): Promise<boolean> {
@@ -273,7 +291,7 @@ async function renderReplacementPass(
   // nodes, then run the word selector once for the whole page. This ensures
   // that once a lemma is chosen it is replaced in every text node, not just
   // the first node where it happened to beat the per-node density cap.
-  const pageCandidates = extractPageCandidates(textNodes)
+  const pageCandidates = extractPageCandidates(textNodes, disabledPartsOfSpeech)
   const maxReplacements = Math.floor(density * pageCandidates.length)
   const rankedLemmas = updateRankedPageLemmas(pageCandidates)
   const approvedLemmas = new Set(rankedLemmas.slice(0, maxReplacements))
@@ -343,8 +361,10 @@ async function startReplacementPipeline(): Promise<void> {
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     const density = computeDensity()
+    const disabledPos = [...getDisabledPartsOfSpeech()]
     const rendered = await renderReplacementPass(
       density,
+      disabledPos,
       undefined,
       () => isCurrentReplacementPipelineRun(runVersion),
     )
@@ -352,7 +372,7 @@ async function startReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density)
+    appliedSettings = renderedRuntimeSettings(density, disabledPos)
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -416,8 +436,10 @@ async function refreshReplacementPipeline(): Promise<void> {
     }
 
     const density = computeDensity()
+    const disabledPos = [...getDisabledPartsOfSpeech()]
     const rendered = await renderReplacementPass(
       density,
+      disabledPos,
       lemma => !recordedApprovedLemmas.has(lemma),
       () => isCurrentReplacementPipelineRun(runVersion),
     )
@@ -425,7 +447,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density)
+    appliedSettings = renderedRuntimeSettings(density, disabledPos)
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)

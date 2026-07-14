@@ -4,7 +4,7 @@ import { scanExpressions } from './expressionScanner.js'
 import { buildReplacement } from '../language/replacement.js'
 import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
 import { cleanGloss, posLabel } from './hoverCard.js'
-import type { CandidateToken, ExpressionMatch, NounTranslationEntry, TranslationEntry } from '../types/index.js'
+import type { CandidateToken, ExpressionMatch, NounTranslationEntry, PartOfSpeech, TranslationEntry } from '../types/index.js'
 import { getEntry, recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
 import { getLevel } from '../store/settingsStore.js'
@@ -59,6 +59,17 @@ const PRONOUN_BLOCKLIST = new Set([
   'this', 'these', 'those',
   'one', 'ones', 'everyone', 'someone', 'anyone', 'nobody',
   'somebody', 'anybody', 'nothing', 'something', 'anything', 'everything',
+])
+
+// Words that introduce a bare-infinitive slot. "to taste" / "can taste" is the
+// ONE context every target language renders faithfully with the uninflected
+// dictionary target ("to probar", "can schmecken"): the slot itself is an
+// infinitive. Inflected slots ("tastes", "roasted", "tasting") would put an
+// infinitive where the sentence needs agreement, so they stay English. German
+// alone could also take present-plural slots (sie schmecken), but a per-language
+// carve-out is not worth the asymmetry while verbs are opt-in.
+const INFINITIVE_MARKERS = new Set([
+  'to', 'can', 'cannot', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would',
 ])
 
 const IRREGULAR_VERB_LEMMAS: Record<string, string> = {
@@ -340,6 +351,10 @@ function extractTokens(text: string): CandidateToken[] {
   let searchOffset = 0  // tracks our position in `text` as we step through terms
 
   for (const sentence of sentences) {
+    // The previous term in this sentence, for the verb infinitive-slot check.
+    // Reset per sentence: a marker cannot reach across a sentence boundary.
+    let previousLower = ''
+
     for (const term of sentence.terms) {
       const surface = term.text
       const tags: string[] = term.tags ?? []
@@ -359,6 +374,8 @@ function extractTokens(text: string): CandidateToken[] {
       const isAdjective = tags.includes('Adjective')
       const isVerb = tags.includes('Verb') || tags.includes('Infinitive') || tags.includes('Gerund')
       const lowerSurface = surface.toLowerCase()
+      const precededBy = previousLower
+      previousLower = lowerSurface
 
       if (tags.includes('Hyphenated')) {
         continue
@@ -396,9 +413,14 @@ function extractTokens(text: string): CandidateToken[] {
           isPlural: tags.includes('Plural'),
         })
       } else if (isVerb) {
+        // Only bare-infinitive slots (see INFINITIVE_MARKERS): the surface must
+        // BE the base form and follow "to" or a modal. Anything else would swap
+        // an inflected English verb for an uninflected target.
+        const lemma = lemmatizeVerb(surface)
+        if (lowerSurface !== lemma || !INFINITIVE_MARKERS.has(precededBy)) continue
         tokens.push({
           word: surface,
-          lemma: lemmatizeVerb(surface),
+          lemma,
           start: idx,
           end: idx + surface.length,
           partOfSpeech: 'verb',
@@ -487,10 +509,18 @@ function replaceTextNode(
 // Gating here (not at load) keeps the full pack available for hover/export and
 // for promotion. Expanding coverage is additive: verify a common word and mark
 // it "high" (see imports/.../common-words-to-verify.json) — no code change.
-export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
+//
+// `disabledPartsOfSpeech` comes from the popup's Word Types card (verbs are off
+// by default). Filtering candidates is sufficient to keep a POS off the page:
+// injectReplacements only renders lemmas approved from these candidates.
+export function extractPageCandidates(
+  nodes: Text[],
+  disabledPartsOfSpeech: readonly PartOfSpeech[] = [],
+): CandidateToken[] {
   const seenLemmas = new Set<string>()
   const candidates: CandidateToken[] = []
   const ceiling = knownWordCeiling()
+  const disabledPos = new Set<PartOfSpeech>(disabledPartsOfSpeech)
 
   for (const node of nodes) {
     if (processedNodes.has(node)) continue
@@ -500,9 +530,12 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
 
     // Expression ranges must be excluded so we don't offer a lemma that will
     // be covered by a multi-word expression span in the replacement pass.
+    // A disabled expression claims no range, so its constituent words stay
+    // available to the unigram pass below.
     const occupiedRanges: Array<[number, number]> = []
 
     for (const match of parsed.expressionMatches) {
+      if (disabledPos.has('expression')) break
       const lemma = match.entry.source.toLowerCase()
       if (seenLemmas.has(lemma)) continue
       if (!isReplaceable(match.entry)) continue
@@ -527,6 +560,7 @@ export function extractPageCandidates(nodes: Text[]): CandidateToken[] {
 
       const entry = lookup(token.lemma)
       if (!entry || !isCompatibleEntry(entry, token)) continue
+      if (disabledPos.has(entry.partOfSpeech)) continue
       if (!isReplaceable(entry)) continue
       if (isAboveKnownCeiling(entry, ceiling)) continue
 
