@@ -96,7 +96,8 @@ vocabulary without slowing the default page load.**
   injector is unchanged. `loadLanguagePack(lang, includeTail)`; toggling aggressive mode
   reconciles the tail in place on the open tab.
 - **Aggressive Mode** = `settings.aggressiveMode` (default off) + popup toggle. Coverage:
-  es 88.4k · de 75.7k · fr 72.1k · it 69.3k (core+tail). Perf cost of the tail: ~+4.5% inject
+  es 85.7k · de 75.7k · fr 72.1k · it 69.3k (core+tail; es shrank 2026-07-14 when the
+  unreachable legacy compounds were removed). Perf cost of the tail: ~+4.5% inject
   time, ~+10MB heap, only when opted in (see `tests/live/run-perf.mjs`).
 - **Data ceiling:** 100k/language is NOT reachable from free offline Wiktextract/FreeDict
   with quality gating (the remainder is non-dictionary junk). To push higher, add another
@@ -191,6 +192,20 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 
 ## Current state
 
+- **Gloss repair run landed (2026-07-14, remove/rebuild/regloss):** (1) the 2,683
+  unreachable legacy synthetic-compound es entries are GONE (es core 47,317; no
+  backfill — FreeDict past the imported 45.8k is the junk band; growth belongs to the
+  gold-gated minting engine); (2) 113 suspect glosses repaired by SENSE-ALIGNED
+  regloss (`pipeline/import_es/regloss_legacy.py`: pick the Wiktionary sense whose own
+  es translation table contains the entry's target; dominance by table size; niche
+  senses like death->Grim Reaper refused and queued), provenance = `kaikki-en` on
+  sourceIds; (3) the adjudication engine has a **regloss verdict**
+  (`build_regloss_queue.py` + `apply_regloss_row`, provenance-checked like targets,
+  in npm test) with queues built: es 229 / de 141 / fr 126 / it 86 rows awaiting an
+  adjudication run. Sense-level cache: `pipeline/data/en-sense-cache.jsonl` (96k
+  words, rebuild via `scripts/stream_en_sense_translations.py`). es lint flags
+  4,147 -> 1,396 (mostly the 826 unreachable freedict multi-word phrases + queued
+  judgment calls).
 - **Pre-ship triage run landed (2026-07-14):** (1) hover-card self-replacement
   fixed — the SPA observer used an unmarked tooltip inner span as its walk root and
   `buildTextWalker` never checked the root's ancestors; now `closest()` (regression
