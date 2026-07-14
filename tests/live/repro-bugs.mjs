@@ -420,33 +420,37 @@ async function raceBackAndForth(base) {
 }
 
 // --- The hover card must never translate its own definition text -------------
-// Every hover rewrites the tooltip's inner spans, and that mutation used to be
+// Hovering rewrites the tooltip's inner spans, and that mutation used to be
 // picked up by the SPA observer with the unmarked inner span as the walk root,
 // splicing replacement spans into our own gloss (regression from 124cdd3).
+//
+// Reproducing needs three alignments: a gloss containing a word that is itself
+// an APPROVED lemma on the page ("password" -> "secret login code", with "code"
+// in the article and density 1), the word tagged the same POS in the gloss as
+// its pack entry ("code" is the gloss's head noun), and NO re-hover before the
+// assertion — rewriting textContent would wipe the injected evidence.
 async function tooltipSelfReplacement(base) {
   const { context, sw } = await launch('tooltip')
-  await seed(sw, ONBOARDED_ES)
+  await seed(sw, { ...ONBOARDED_ES, level: 'beginner', density: 1 })
 
   const page = await context.newPage()
-  await page.goto(`${base}/article-light.html`, { waitUntil: 'domcontentloaded' })
-  await spans(page).first().waitFor({ timeout: 8000 })
+  await page.goto(`${base}/tooltip-overlap.html`, { waitUntil: 'domcontentloaded' })
+  const passwordSpan = page.locator('[data-contexto="true"][data-source="password"]').first()
+  await passwordSpan.waitFor({ timeout: 8000 })
 
-  // Hover several spans in rounds — each hover rewrites the tooltip text.
-  const count = Math.min(await spans(page).count(), 3)
-  for (let round = 0; round < 2; round++) {
-    for (let i = 0; i < count; i++) {
-      await spans(page).nth(i).hover()
-      await page.waitForTimeout(150)
-    }
-  }
-  // Wait out the observer's 500 ms debounce with margin, then re-hover so the
-  // tooltip shows content that survived any (buggy) injection pass.
-  await page.waitForTimeout(1200)
-  await spans(page).first().hover()
+  // Sanity: the overlap word really is replaced on the page, so its lemma is
+  // approved and WOULD be injected into the tooltip by the old walker. Match by
+  // lemma: the rendered span's data-source may have absorbed an article.
+  const codeOnPage = await page.locator('article [data-contexto="true"][data-lemma="code"]').count()
+
+  // One hover writes the gloss into the tooltip; then wait out the observer's
+  // 500 ms debounce so a (buggy) flush has fired before we look.
+  await passwordSpan.hover()
+  await page.waitForTimeout(1400)
 
   const injected = await page.locator('#contexto-tooltip [data-contexto="true"]').count()
   const { gloss, shown } = await page.evaluate(() => {
-    const span = document.querySelector('[data-contexto="true"]')
+    const span = document.querySelector('[data-contexto="true"][data-source="password"]')
     const tip = document.getElementById('contexto-tooltip')
     // children[1] is the gloss line (source · gloss · target · hint).
     return {
@@ -455,8 +459,9 @@ async function tooltipSelfReplacement(base) {
     }
   })
   check('TOOLTIP-self', 'Hover card text is never itself translated',
-    injected === 0 && shown === gloss,
-    `${injected} injected span(s) inside tooltip; gloss shown=${JSON.stringify(shown)} expected=${JSON.stringify(gloss)}`)
+    codeOnPage > 0 && injected === 0 && shown === gloss,
+    `overlap word replaced ${codeOnPage}x on page; ${injected} injected span(s) inside tooltip; ` +
+    `gloss shown=${JSON.stringify(shown)} expected=${JSON.stringify(gloss)}`)
 
   await context.close()
 }
