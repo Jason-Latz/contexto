@@ -42,7 +42,17 @@ def is_legacy_compound(source: str, entry: dict) -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pack", type=Path, default=DEFAULT_PACK)
+    parser.add_argument("--removal-record", type=Path, default=REMOVAL_RECORD)
+    parser.add_argument("--golden-fixture", type=Path, default=GOLDEN_FIXTURE)
     args = parser.parse_args()
+
+    # Running against a COPY of the pack must not clobber the real repo's
+    # audit record or golden fixture (review finding) — refuse the implicit
+    # side-effect paths when the pack path was overridden.
+    if args.pack != DEFAULT_PACK and (args.removal_record == REMOVAL_RECORD
+                                      or args.golden_fixture == GOLDEN_FIXTURE):
+        raise SystemExit("--pack was overridden: pass --removal-record and "
+                         "--golden-fixture explicitly too")
 
     pack = read_json(args.pack)
     entries = pack["entries"]
@@ -53,8 +63,8 @@ def main() -> None:
 
     # Audit trail: one compact line per removed entry (the pack diff itself is
     # too large to review by eye).
-    REMOVAL_RECORD.parent.mkdir(parents=True, exist_ok=True)
-    with REMOVAL_RECORD.open("w", encoding="utf-8") as fh:
+    args.removal_record.parent.mkdir(parents=True, exist_ok=True)
+    with args.removal_record.open("w", encoding="utf-8") as fh:
         for key, entry in sorted(removed.items()):
             fh.write(json.dumps({
                 "source": key,
@@ -68,18 +78,18 @@ def main() -> None:
 
     # The golden fixture snapshotted a handful of the legacy compounds; those
     # rows guarded junk, not verified pairs, and leave with the data.
-    golden = json.loads(GOLDEN_FIXTURE.read_text())
+    golden = json.loads(args.golden_fixture.read_text())
     kept_golden = [g for g in golden if g["source"].lower() not in removed]
     dropped_golden = [g["source"] for g in golden if g["source"].lower() in removed]
     if len(kept_golden) < GOLDEN_MIN:
         raise RuntimeError(f"golden fixture would shrink below {GOLDEN_MIN} ({len(kept_golden)})")
-    GOLDEN_FIXTURE.write_text(json.dumps(kept_golden, ensure_ascii=False, indent=2) + "\n")
+    args.golden_fixture.write_text(json.dumps(kept_golden, ensure_ascii=False, indent=2) + "\n")
 
     print(json.dumps({
         "removed": len(removed),
         "finalEntries": len(entries),
         "goldenDropped": dropped_golden,
-        "removalRecord": str(REMOVAL_RECORD.relative_to(PROJECT_ROOT)),
+        "removalRecord": str(args.removal_record),
     }, indent=2))
 
 

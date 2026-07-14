@@ -416,11 +416,12 @@
       "plural": "ventanas",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "computer window",
+      "sourceGloss": "An opening, usually covered by one or more panes of clear glass, to allow light and air from outside to enter a building or vehicle.",
       "frequencyRank": 427,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.8,
       "eligible": true
@@ -521,11 +522,12 @@
       "plural": "aplicaciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "software application",
+      "sourceGloss": "An application (program), especially a small one designed for a mobile device.",
       "frequencyRank": 434,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.86,
       "eligible": true
@@ -763,11 +765,12 @@
       "plural": "versiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "software release",
+      "sourceGloss": "A specific form or variation of something.",
       "frequencyRank": 450,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.07,
       "eligible": true
@@ -2565,11 +2568,12 @@
       "plural": "oraciones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "complete grammatical unit",
+      "sourceGloss": "A grammatically complete series of words consisting of a subject and predicate, even if one or the other is implied.",
       "frequencyRank": 570,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.58,
       "eligible": true
@@ -3165,11 +3169,12 @@
       "plural": "médicos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "medical professional",
+      "sourceGloss": "A physician; a member of the medical profession; one who is trained and licensed to heal the sick or injured.",
       "frequencyRank": 610,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.9,
       "eligible": true
@@ -4051,11 +4056,12 @@
       "plural": "leyes",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "legal rule",
+      "sourceGloss": "The body of binding rules and regulations, customs, and standards established in a community by its legislative and judicial authorities.",
       "frequencyRank": 669,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.46,
       "eligible": true
@@ -5428,11 +5434,12 @@
       "plural": "laboratorios",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "place for scientific work",
+      "sourceGloss": "A room, building or institution equipped for scientific research, experimentation or analysis.",
       "confidence": "high",
       "frequencyRank": 729,
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.31,
       "eligible": true
@@ -6906,11 +6913,12 @@
       "plural": "conclusiones",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "final scholarly section",
+      "sourceGloss": "The end, finish, close or last part of something.",
       "frequencyRank": 2711,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.4,
       "eligible": true
@@ -7041,11 +7049,12 @@
       "plural": "conferencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "academic meeting in academia",
+      "sourceGloss": "The act of consulting together formally; serious conversation or discussion; interchange of views.",
       "frequencyRank": 2724,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.01,
       "eligible": true
@@ -7100,11 +7109,12 @@
       "plural": "borradores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "preliminary scholarly text",
+      "sourceGloss": "A version of a written work (such as a book or paper) or drawing.",
       "frequencyRank": 2728,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.61,
       "eligible": true
@@ -7297,11 +7307,12 @@
       "plural": "departamentos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "university academic unit",
+      "sourceGloss": "A part, portion, or subdivision.",
       "frequencyRank": 2742,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.23,
       "eligible": true
@@ -7327,11 +7338,12 @@
       "plural": "universidades",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "university academic division",
+      "sourceGloss": "An academic institution.",
       "frequencyRank": 2744,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.27,
       "eligible": true
@@ -7372,11 +7384,12 @@
       "plural": "profesores",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "university academic instructor",
+      "sourceGloss": "A teacher or faculty member at a college or university regardless of formal rank.",
       "frequencyRank": 2750,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.9,
       "eligible": true
@@ -8692,11 +8705,12 @@
       "plural": "evidencias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "support for academic claim",
+      "sourceGloss": "Facts or observations presented in support of an assertion.",
       "frequencyRank": 2927,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.14,
       "eligible": true
@@ -9382,11 +9396,12 @@
       "plural": "créditos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "unit of academic coursework",
+      "sourceGloss": "A privilege of delayed payment extended to a buyer or borrower on the seller's or lender's belief that what is given will be repaid.",
       "frequencyRank": 3007,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.0,
       "eligible": true
@@ -14069,11 +14084,12 @@
       "plural": "señales",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "observable medical finding",
+      "sourceGloss": "A visible fact that shows that something exists or may happen.",
       "frequencyRank": 3682,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 5.08,
       "eligible": true
@@ -16379,11 +16395,12 @@
       "plural": "terapias",
       "gender": "feminine",
       "partOfSpeech": "noun",
-      "sourceGloss": "structured medical treatment",
+      "sourceGloss": "Attempted remediation of a health problem following a diagnosis, usually synonymous with treatment.",
       "frequencyRank": 3951,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.52,
       "eligible": true
@@ -16409,11 +16426,12 @@
       "plural": "fármacos",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "medicinal chemical substance",
+      "sourceGloss": "A substance used to treat an illness, relieve a symptom, or modify a chemical process in the body for a specific purpose.",
       "frequencyRank": 3953,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.87,
       "eligible": true
@@ -18952,11 +18970,12 @@
       "plural": "foros",
       "gender": "masculine",
       "partOfSpeech": "noun",
-      "sourceGloss": "place for legal hearing",
+      "sourceGloss": "A gathering for the purpose of discussion; a symposium.",
       "frequencyRank": 4231,
       "confidence": "high",
       "sourceIds": [
-        "curated-contexto"
+        "curated-contexto",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.38,
       "eligible": true
@@ -58163,11 +58182,12 @@
       "source": "add-on",
       "target": "complemento",
       "partOfSpeech": "noun",
-      "sourceGloss": "A software extension or hardware peripheral that provides additional functions or customization for a core application or system.",
+      "sourceGloss": "Something which can be appended to something else.",
       "frequencyRank": 7124,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "complementos",
       "gender": "masculine",
@@ -72692,11 +72712,12 @@
       "source": "army",
       "target": "ejército",
       "partOfSpeech": "noun",
-      "sourceGloss": "The governmental agency in charge of a state's army.",
+      "sourceGloss": "A large, highly organized military force, concerned mainly with ground (rather than air or naval) operations.",
       "frequencyRank": 8093,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "ejércitos",
       "gender": "masculine",
@@ -122132,11 +122153,12 @@
       "source": "death",
       "target": "muerte",
       "partOfSpeech": "noun",
-      "sourceGloss": "Execution (in the judicial sense).",
+      "sourceGloss": "The cessation of life and all associated processes",
       "frequencyRank": 11390,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "muertes",
       "gender": "feminine",
@@ -150114,11 +150136,12 @@
       "source": "fire",
       "target": "fuego",
       "partOfSpeech": "noun",
-      "sourceGloss": "An instance of this chemical reaction, especially when intentionally created and maintained in a specific location to a useful end (such as a campfire or a hearth fire).",
+      "sourceGloss": "A (usually self-sustaining) chemical reaction involving the bonding of oxygen with carbon or other fuel, with the production of heat and the presence of flame or smouldering.",
       "frequencyRank": 13256,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "fuegos",
       "gender": "masculine",
@@ -242529,11 +242552,12 @@
       "source": "police",
       "target": "policía",
       "partOfSpeech": "noun",
-      "sourceGloss": "A department of local (usually municipal) government responsible for general law enforcement.",
+      "sourceGloss": "A constituted body of officers representing the civil authority of government, empowered to maintain public order and safety, enforce the law, and prevent, detect, and investigate crime.",
       "frequencyRank": 19420,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "policías",
       "gender": "feminine",
@@ -289133,11 +289157,12 @@
       "source": "strategy",
       "target": "estrategia",
       "partOfSpeech": "noun",
-      "sourceGloss": "The science and art of military command as applied to the overall planning and conduct of warfare.",
+      "sourceGloss": "A plan of action intended to accomplish a specific goal.",
       "frequencyRank": 22529,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "plural": "estrategias",
       "gender": "feminine",
@@ -378779,11 +378804,12 @@
       "source": "lieutenant",
       "target": "teniente",
       "partOfSpeech": "noun",
-      "sourceGloss": "A military grade that is junior to the grade the adjective modifies: lieutenant colonel, lieutenant general, lieutenant commander.",
+      "sourceGloss": "The lowest junior commissioned officer rank(s) in many military forces, often Army and Marines.",
       "frequencyRank": 29064,
       "confidence": "high",
       "sourceIds": [
-        "freedict-eng-spa-2025.11.23"
+        "freedict-eng-spa-2025.11.23",
+        "regloss-sense-aligned"
       ],
       "enZipf": 4.44,
       "eligible": true,
