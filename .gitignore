@@ -2,7 +2,7 @@ node_modules/
 dist/
 release/
 .test-build/
-pipeline/data/
+pipeline/data
 __pycache__/
 *.pyc
 .DS_Store
