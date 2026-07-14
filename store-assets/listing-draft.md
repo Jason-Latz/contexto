@@ -12,7 +12,7 @@ Passive language immersion while you read — Spanish, German, French, or Italia
 
 Contexto turns everyday reading into lightweight language practice. Choose your target language — Spanish, German, French, or Italian — and it replaces a user-controlled percentage of eligible English words with translations directly on the page, with the correct article and gender (der/die/das, le/la, il/lo/la…). Hover over any translated word to see the original English word, a short English definition, and the translation. Click a translated word to save it as unknown for later review and local export.
 
-Built for breadth: each language ships a large on-device vocabulary (50,000+ words), so it keeps surfacing new words long after the basics — ideal if you already know the common vocabulary and want to grow the long tail.
+Built for breadth: each language ships a large on-device vocabulary (47,000+ words, up to 85,000+ with Aggressive Mode), so it keeps surfacing new words long after the basics — ideal if you already know the common vocabulary and want to grow the long tail.
 
 Features:
 

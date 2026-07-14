@@ -42,13 +42,18 @@ function genderOf(english: string): string | undefined {
   return entry && entry.partOfSpeech === 'noun' ? entry.gender : undefined
 }
 
-test('every shipped pack loads, is ≥50k entries, and reports its language', async () => {
+// Per-language floors: es core is smaller since the 2026-07-14 removal of the
+// unreachable legacy synthetic compounds (tests/tailCounts.test.ts has details).
+const CORE_FLOOR: Record<string, number> = { es: 47_000, de: 50_000, fr: 50_000, it: 50_000 }
+
+test('every shipped pack loads, clears its size floor, and reports its language', async () => {
   for (const lang of ['es', 'de', 'fr', 'it'] as const) {
     await loadLanguagePack(lang)
     assert.equal(getActiveTargetLanguage(), lang)
     const pack = getActiveLanguagePack()
     assert.equal(pack?.targetLanguage, lang)
-    assert.ok(Object.keys(pack?.entries ?? {}).length >= 50_000, `${lang} pack must have ≥50k entries`)
+    const count = Object.keys(pack?.entries ?? {}).length
+    assert.ok(count >= CORE_FLOOR[lang], `${lang} pack must have ≥${CORE_FLOOR[lang]} entries (has ${count})`)
   }
 })
 

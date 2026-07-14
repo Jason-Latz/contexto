@@ -524,42 +524,10 @@
     "partOfSpeech": "expression"
   },
   {
-    "source": "movie research",
-    "kind": "snapshot",
-    "target": "investigación cinematográfica",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "investigaciones cinematográficas"
-  },
-  {
     "source": "properly",
     "kind": "snapshot",
     "target": "correctamente",
     "partOfSpeech": "adverb"
-  },
-  {
-    "source": "legal survey",
-    "kind": "snapshot",
-    "target": "encuesta legal",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "encuestas legales"
-  },
-  {
-    "source": "conference report",
-    "kind": "snapshot",
-    "target": "informe de conferencia",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "informes de conferencia"
-  },
-  {
-    "source": "product story",
-    "kind": "snapshot",
-    "target": "historia del producto",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "historias del producto"
   },
   {
     "source": "silver",
@@ -584,26 +552,10 @@
     "partOfSpeech": "verb"
   },
   {
-    "source": "event video",
-    "kind": "snapshot",
-    "target": "video del evento",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "videos del evento"
-  },
-  {
     "source": "wide",
     "kind": "snapshot",
     "target": "ancho",
     "partOfSpeech": "adjective"
-  },
-  {
-    "source": "safety report",
-    "kind": "snapshot",
-    "target": "informe de seguridad",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "informes de seguridad"
   },
   {
     "source": "shared",
@@ -646,34 +598,10 @@
     "partOfSpeech": "expression"
   },
   {
-    "source": "office map",
-    "kind": "snapshot",
-    "target": "mapa de oficina",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "mapas de oficina"
-  },
-  {
     "source": "supreme",
     "kind": "snapshot",
     "target": "supremo",
     "partOfSpeech": "adjective"
-  },
-  {
-    "source": "account survey",
-    "kind": "snapshot",
-    "target": "encuesta de cuenta",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "encuestas de cuenta"
-  },
-  {
-    "source": "work order",
-    "kind": "snapshot",
-    "target": "orden de trabajo",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "órdenes de trabajo"
   },
   {
     "source": "thus far",
@@ -820,14 +748,6 @@
     "plural": "concentrados"
   },
   {
-    "source": "media summary",
-    "kind": "snapshot",
-    "target": "resumen de medios",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "resúmenes de medios"
-  },
-  {
     "source": "root rot",
     "kind": "snapshot",
     "target": "pudrición de raíz",
@@ -854,26 +774,10 @@
     "partOfSpeech": "expression"
   },
   {
-    "source": "language document",
-    "kind": "snapshot",
-    "target": "documento de idioma",
-    "partOfSpeech": "noun",
-    "gender": "masculine",
-    "plural": "documentos de idioma"
-  },
-  {
     "source": "shed a tear",
     "kind": "snapshot",
     "target": "derramar una lágrima",
     "partOfSpeech": "expression"
-  },
-  {
-    "source": "quantitative research",
-    "kind": "snapshot",
-    "target": "investigación cuantitativa",
-    "partOfSpeech": "noun",
-    "gender": "feminine",
-    "plural": "investigaciones cuantitativas"
   },
   {
     "source": "cutthroat",

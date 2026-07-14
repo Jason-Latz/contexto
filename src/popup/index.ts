@@ -1,5 +1,6 @@
-import type { LexiconEntry, TargetLanguage } from '../types/index.js'
+import type { LexiconEntry, PartOfSpeech, TargetLanguage } from '../types/index.js'
 import { isTargetLanguage } from '../language/registry.js'
+import { DEFAULT_DISABLED_PARTS_OF_SPEECH } from '../store/settingsStore.js'
 import {
   loadLexicon,
   getEntry,
@@ -65,6 +66,7 @@ async function init(): Promise<void> {
     },
   })
   renderFeatureToggles(root, settings)
+  renderWordTypeToggles(root, settings)
 
   // Stats — session word count, unknown words, learning queue size.
   const statsHandle = renderStatsPanel(root, lexicon, session)
@@ -171,6 +173,50 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
 
   rows.appendChild(replacementToggle)
   rows.appendChild(aggressiveToggle)
+  section.appendChild(title)
+  section.appendChild(rows)
+  container.appendChild(section)
+}
+
+// Which kinds of words get swapped. Verbs are off by default: Contexto cannot
+// conjugate yet, so a verb renders as the dictionary infinitive — fine for
+// vocabulary, but it reads less naturally, and the hint says so honestly.
+function renderWordTypeToggles(container: HTMLElement, initialSettings: PopupSettings): void {
+  const WORD_TYPES: Array<{ pos: PartOfSpeech; label: string; hint?: string }> = [
+    { pos: 'noun', label: 'Nouns' },
+    {
+      pos: 'verb', label: 'Verbs',
+      hint: 'Lower fidelity: verbs show as the dictionary form because conjugation is hard. Off by default.',
+    },
+    { pos: 'adjective', label: 'Adjectives' },
+    { pos: 'adverb', label: 'Adverbs' },
+    { pos: 'expression', label: 'Phrases' },
+  ]
+
+  const disabled = new Set<PartOfSpeech>(
+    Array.isArray(initialSettings.disabledPartsOfSpeech)
+      ? initialSettings.disabledPartsOfSpeech as PartOfSpeech[]
+      : DEFAULT_DISABLED_PARTS_OF_SPEECH,
+  )
+
+  const section = document.createElement('div')
+  section.className = 'section'
+
+  const title = document.createElement('div')
+  title.className = 'section-title'
+  title.textContent = 'Word Types'
+
+  const rows = document.createElement('div')
+  rows.className = 'toggle-list'
+
+  for (const { pos, label, hint } of WORD_TYPES) {
+    rows.appendChild(buildToggleRow(label, !disabled.has(pos), async enabled => {
+      if (enabled) disabled.delete(pos)
+      else disabled.add(pos)
+      await updateSettings({ disabledPartsOfSpeech: [...disabled].sort() })
+    }, hint))
+  }
+
   section.appendChild(title)
   section.appendChild(rows)
   container.appendChild(section)

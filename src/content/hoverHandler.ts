@@ -192,6 +192,7 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
     articleForm: target.getAttribute('data-article-form'),
     gender: target.getAttribute('data-gender'),
     plural: target.getAttribute('data-plural'),
+    pos,
   })
 
   if (tipSourceTextEl) tipSourceTextEl.textContent = source
@@ -204,7 +205,7 @@ function showTooltip(target: HTMLElement, event: MouseEvent): void {
     tipTargetMainEl.textContent = translated
       ? `${activeLanguageName()} · ${grammar.targetDisplay}`
       : ''
-    const meta = [grammar.genderHint, grammar.pluralHint].filter(Boolean).join(' · ')
+    const meta = [grammar.genderHint, grammar.pluralHint, grammar.formHint].filter(Boolean).join(' · ')
     tipTargetMetaEl.textContent = meta ? ` · ${meta}` : ''
     tipTargetEl.style.display = translated ? 'block' : 'none'
     tipTargetMainEl.style.color = isUnknown ? TIP_MARK : TIP_ACCENT

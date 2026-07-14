@@ -276,8 +276,8 @@ async function bug3(base) {
   const blank = await context.newPage()
   await blank.goto('about:blank')
   const blankStatus = await readPageStatus(popup, blank)
-  check('BUG3-unreachable', 'Popup explains a page it cannot run on',
-    /does not run on this page/.test(blankStatus.headline),
+  check('BUG3-unreachable', 'Popup names native Chrome pages as the reason it cannot run',
+    /native Chrome pages/.test(blankStatus.headline),
     JSON.stringify(blankStatus.headline))
 
   await setSetting(sw, { replacementsEnabled: false })
@@ -419,6 +419,79 @@ async function raceBackAndForth(base) {
   await context.close()
 }
 
+// --- The hover card must never translate its own definition text -------------
+// Hovering rewrites the tooltip's inner spans, and that mutation used to be
+// picked up by the SPA observer with the unmarked inner span as the walk root,
+// splicing replacement spans into our own gloss (regression from 124cdd3).
+//
+// Reproducing needs three alignments: a gloss containing a word that is itself
+// an APPROVED lemma on the page ("password" -> "secret login code", with "code"
+// in the article and density 1), the word tagged the same POS in the gloss as
+// its pack entry ("code" is the gloss's head noun), and NO re-hover before the
+// assertion — rewriting textContent would wipe the injected evidence.
+async function tooltipSelfReplacement(base) {
+  const { context, sw } = await launch('tooltip')
+  await seed(sw, { ...ONBOARDED_ES, level: 'beginner', density: 1 })
+
+  const page = await context.newPage()
+  await page.goto(`${base}/tooltip-overlap.html`, { waitUntil: 'domcontentloaded' })
+  const passwordSpan = page.locator('[data-contexto="true"][data-source="password"]').first()
+  await passwordSpan.waitFor({ timeout: 8000 })
+
+  // Sanity: the overlap word really is replaced on the page, so its lemma is
+  // approved and WOULD be injected into the tooltip by the old walker. Match by
+  // lemma: the rendered span's data-source may have absorbed an article.
+  const codeOnPage = await page.locator('article [data-contexto="true"][data-lemma="code"]').count()
+
+  // One hover writes the gloss into the tooltip; then wait out the observer's
+  // 500 ms debounce so a (buggy) flush has fired before we look.
+  await passwordSpan.hover()
+  await page.waitForTimeout(1400)
+
+  const injected = await page.locator('#contexto-tooltip [data-contexto="true"]').count()
+  const { gloss, shown } = await page.evaluate(() => {
+    const span = document.querySelector('[data-contexto="true"][data-source="password"]')
+    const tip = document.getElementById('contexto-tooltip')
+    // children[1] is the gloss line (source · gloss · target · hint).
+    return {
+      gloss: span?.getAttribute('data-gloss') ?? '',
+      shown: tip?.children[1]?.textContent ?? '',
+    }
+  })
+  check('TOOLTIP-self', 'Hover card text is never itself translated',
+    codeOnPage > 0 && injected === 0 && shown === gloss,
+    `overlap word replaced ${codeOnPage}x on page; ${injected} injected span(s) inside tooltip; ` +
+    `gloss shown=${JSON.stringify(shown)} expected=${JSON.stringify(gloss)}`)
+
+  await context.close()
+}
+
+// --- A page-level lang attribute must not disable the pipeline ---------------
+// The skip list's [lang]:not([lang^="en"]) rule gates nested foreign snippets.
+// Checked with an unbounded closest() it would also match <html lang="und"/
+// "x-default"/"de"> — routine CMS boilerplate on English pages — and silently
+// disable the whole walk (found in the 2026-07-14 review of the tooltip fix).
+async function mislabeledLang(base) {
+  const { context, sw } = await launch('mislabeled')
+  await seed(sw, ONBOARDED_ES)
+
+  const page = await context.newPage()
+  await page.goto(`${base}/mislabeled-lang.html`, { waitUntil: 'domcontentloaded' })
+
+  let translated = true
+  try { await spans(page).first().waitFor({ timeout: 8000 }) } catch { translated = false }
+  const count = await spans(page).count()
+
+  // The genuinely-French nested paragraph must still be left alone.
+  const inFrench = await page.locator('[lang="fr"] [data-contexto="true"]').count()
+
+  check('LANG-mislabel', 'Page-level non-English lang attribute does not disable replacement',
+    translated && count > 0 && inFrench === 0,
+    `${count} spans on <html lang="x-default"> page; ${inFrench} inside the lang="fr" block`)
+
+  await context.close()
+}
+
 async function run() {
   makeTestBuild()
   const { server, base } = await serveFixtures()
@@ -429,6 +502,8 @@ async function run() {
     await bug3(base)
     await frozenTab(base)
     await raceBackAndForth(base)
+    await tooltipSelfReplacement(base)
+    await mislabeledLang(base)
   } finally {
     server.close()
   }

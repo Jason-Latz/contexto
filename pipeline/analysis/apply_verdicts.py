@@ -10,6 +10,15 @@ Inputs (per language):
   pipeline/data/queues/audit-{lang}.jsonl   - existing-entry records with
       {key, source, target, pos, gender, plural, alternatives:[{target,votes,
       sources,omwBestSenseRank,glosses,morph:{gender,plural,authority}|null}], ...}
+  pipeline/data/queues/regloss-{lang}.jsonl - suspect-gloss records built by
+      build_regloss_queue.py: {key, source, target, pos, currentGloss, enZipf,
+      candidateGlosses:[{gloss,tableSize,aligned}], glossSourceId}. Verdict
+      files: regloss-{lang}-*.jsonl with {key, verdict in {"keep","regloss"},
+      newGloss, confidence, reason, refuter?/judge?}. newGloss must be one of
+      the queue row's candidateGlosses — a definition is provenance-checked
+      exactly like a translation ("never invent a gloss"). Because gloss
+      candidates are aligned against the entry's CURRENT target, regloss
+      queues must be rebuilt after any audit pass that retargets entries.
   pipeline/data/queues/mint-{lang}.jsonl    - new-candidate records with
       {key, source, enZipf, alternatives:[...same shape...], shipTierHint}
   pipeline/data/queues/minttrial-mixed.jsonl - a small stratified trial sample
@@ -319,6 +328,65 @@ def apply_audit_row(core_entries: dict, tail_entries: dict, row: dict,
 
 
 # --------------------------------------------------------------------------
+# Regloss application: keep (no-op) / regloss -> replace sourceGloss.
+# --------------------------------------------------------------------------
+
+def apply_regloss_row(core_entries: dict, tail_entries: dict, row: dict,
+                       queue_by_key: dict, stats: Stats,
+                       ship_stratum: str | None = None) -> None:
+    key = row.get("key")
+    verdict = row.get("verdict")
+    entry = find_entry(core_entries, tail_entries, key)
+    if entry is None:
+        reject(stats, "regloss_missing_entry", key, "key not found in core or tail")
+        return
+
+    if ship_stratum == "strict" and verdict != "keep" and not ship_stratum_ok(row):
+        stats.bump("regloss_shipstratum_noop")
+        return
+
+    if verdict == "keep":
+        stats.bump("regloss_keep")
+        return
+    if verdict != "regloss":
+        reject(stats, "regloss_unknown_verdict", key, f"unrecognized verdict {verdict!r}")
+        return
+
+    record = queue_by_key.get(key)
+    if record is None:
+        reject(stats, "regloss_no_queue_record", key, "no matching regloss queue record")
+        return
+
+    # Freshness: gloss candidates were aligned against the target the queue saw.
+    # If an audit retargeted the entry since (this run or an earlier one), the
+    # candidates describe the WRONG word — enforce the docstring's rebuild rule
+    # in code, not just in prose.
+    if record.get("target") != entry.get("target"):
+        reject(stats, "regloss_stale_target", key,
+               f"queue target {record.get('target')!r} != entry target {entry.get('target')!r}")
+        return
+
+    # Never invent a definition: the gloss must be one of the queue's sourced
+    # candidates, same defense-in-depth as retarget/mint target provenance.
+    new_gloss = row.get("newGloss")
+    candidates = {c.get("gloss") for c in (record.get("candidateGlosses") or [])}
+    if not isinstance(new_gloss, str) or not new_gloss.strip() or new_gloss not in candidates:
+        reject(stats, "regloss_no_provenance", key,
+               "newGloss not among the queue's candidateGlosses")
+        return
+    if new_gloss.rstrip().endswith(":"):
+        reject(stats, "regloss_bad_gloss", key, "gloss is a truncated list intro")
+        return
+
+    entry["sourceGloss"] = new_gloss
+    gloss_source = record.get("glossSourceId") or "regloss-sense-aligned"
+    source_ids = entry.get("sourceIds") or []
+    if gloss_source not in source_ids:
+        entry["sourceIds"] = [*source_ids, gloss_source]
+    stats.bump("regloss_applied")
+
+
+# --------------------------------------------------------------------------
 # Mint application: skip (no-op) / mint -> new core or tail entry / drop.
 # --------------------------------------------------------------------------
 
@@ -469,6 +537,7 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
     }
 
     audit_queue = load_queue(paths, "audit", language)
+    regloss_queue = load_queue(paths, "regloss", language)
     mint_queue = load_queue(paths, "mint", language)
     minttrial_queue = load_minttrial_queue(paths, language)
 
@@ -507,6 +576,11 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
     if not mint_only:
         process(verdict_files_for(paths, "audit", language), audit_queue,
                 lambda row, q: apply_audit_row(core_entries, tail_entries, row, q, language, stats, ship_stratum))
+        # After audits: gloss candidates are aligned against the CURRENT target,
+        # so a regloss queue is only valid for entries the audit pass did not
+        # retarget after the queue was built (see module docstring).
+        process(verdict_files_for(paths, "regloss", language), regloss_queue,
+                lambda row, q: apply_regloss_row(core_entries, tail_entries, row, q, stats, ship_stratum))
 
     # Minttrial (panel-verified) applies BEFORE the plain mint batches, and the
     # plain mint pass excludes every key minttrial covered -- so for any key
@@ -550,7 +624,9 @@ def main(argv=None) -> int:
                               "everything else no-ops as keep/skip")
     parser.add_argument("--mint-only", action="store_true",
                          help="apply only mint-{language}-*.jsonl and this language's "
-                              "rows of minttrial-mixed-*.jsonl; never touch audit-*.jsonl")
+                              "rows of minttrial-mixed-*.jsonl; never touch audit-*.jsonl "
+                              "or regloss-*.jsonl (regloss is gated with audit because its "
+                              "gloss candidates align against the post-audit target)")
     args = parser.parse_args(argv)
 
     report = apply_language(args.language, args.data_root or REPO_ROOT, args.ship_stratum, args.mint_only)

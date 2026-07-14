@@ -597,5 +597,162 @@ class ApplyVerdictsMintOnlyAndMinttrialTest(unittest.TestCase):
         self.assertTrue((applied_dir / f"minttrial-mixed-0.jsonl.{LANG}.done").exists())
 
 
+class ReglossVerdictsFixtureTest(unittest.TestCase):
+    """Regloss verdicts: sourceGloss replacement with queue-provenance checks."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="apply-regloss-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+        write_json(self.tmp / "public" / "language-packs" / f"{LANG}.json", {
+            "version": "test", "sourceLanguage": "en", "targetLanguage": LANG,
+            "displayName": "German", "sources": {},
+            "entries": {
+                "version": {
+                    "source": "version", "target": "Version", "sourceGloss": "software release",
+                    "partOfSpeech": "noun", "confidence": "high", "frequencyRank": 1,
+                    "sourceIds": ["seed"], "eligible": True,
+                    "gender": "feminine", "plural": "Versionen",
+                },
+                "court": {
+                    "source": "court", "target": "Gericht", "sourceGloss": "institution deciding legal disputes",
+                    "partOfSpeech": "noun", "confidence": "high", "frequencyRank": 2,
+                    "sourceIds": ["seed"], "eligible": True,
+                    "gender": "neuter", "plural": "Gerichte",
+                },
+                "charge": {
+                    "source": "charge", "target": "Anklage", "sourceGloss": "formal criminal accusation",
+                    "partOfSpeech": "noun", "confidence": "high", "frequencyRank": 3,
+                    "sourceIds": ["seed"], "eligible": True,
+                    "gender": "feminine", "plural": "Anklagen",
+                },
+            },
+        })
+        write_json(self.tmp / "public" / "language-packs" / f"{LANG}.tail.json", {
+            "version": "test", "sourceLanguage": "en", "targetLanguage": LANG,
+            "displayName": "German", "sources": {}, "entries": {},
+        })
+
+        write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"regloss-{LANG}.jsonl", [
+            {"key": "version", "source": "version", "target": "Version", "pos": "noun",
+             "currentGloss": "software release", "enZipf": 5.07,
+             "candidateGlosses": [
+                 {"gloss": "A specific form or variation of something.", "tableSize": 6, "aligned": True},
+             ],
+             "glossSourceId": "regloss-sense-aligned"},
+            {"key": "court", "source": "court", "target": "Gericht", "pos": "noun",
+             "currentGloss": "institution deciding legal disputes", "enZipf": 5.41,
+             "candidateGlosses": [
+                 {"gloss": "The administration of law.", "tableSize": 5, "aligned": True},
+             ],
+             "glossSourceId": "regloss-sense-aligned"},
+            {"key": "charge", "source": "charge", "target": "Anklage", "pos": "noun",
+             "currentGloss": "formal criminal accusation", "enZipf": 5.2,
+             "candidateGlosses": [
+                 {"gloss": "An accusation.", "tableSize": 4, "aligned": True},
+             ],
+             "glossSourceId": "regloss-sense-aligned"},
+        ])
+
+    def run_verdicts(self, rows, ship_stratum=None):
+        write_jsonl(self.tmp / "pipeline" / "data" / "verdicts" / "final" / f"regloss-{LANG}-0.jsonl", rows)
+        return apply_language(LANG, self.tmp, ship_stratum)
+
+    def entries(self):
+        pack = json.loads((self.tmp / "public" / "language-packs" / f"{LANG}.json").read_text())
+        return pack["entries"]
+
+    def test_regloss_replaces_gloss_and_records_provenance(self):
+        report = self.run_verdicts([
+            {"key": "version", "verdict": "regloss",
+             "newGloss": "A specific form or variation of something.",
+             "confidence": 0.95, "refuter": "agree", "reason": "dominant sense"},
+            {"key": "court", "verdict": "keep", "confidence": 0.9, "refuter": "agree"},
+        ])
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["counts"].get("regloss_applied"), 1)
+        self.assertEqual(report["counts"].get("regloss_keep"), 1)
+        entries = self.entries()
+        self.assertEqual(entries["version"]["sourceGloss"], "A specific form or variation of something.")
+        self.assertIn("regloss-sense-aligned", entries["version"]["sourceIds"])
+        self.assertEqual(entries["court"]["sourceGloss"], "institution deciding legal disputes")
+
+    def test_invented_gloss_is_rejected(self):
+        report = self.run_verdicts([
+            {"key": "version", "verdict": "regloss",
+             "newGloss": "A totally made-up definition.",
+             "confidence": 0.95, "refuter": "agree", "reason": "hallucinated"},
+        ])
+        self.assertEqual(report["counts"].get("regloss_no_provenance"), 1)
+        self.assertEqual(self.entries()["version"]["sourceGloss"], "software release")
+
+    def test_missing_entry_is_rejected(self):
+        report = self.run_verdicts([
+            {"key": "ghost", "verdict": "regloss", "newGloss": "Anything.",
+             "confidence": 0.95, "refuter": "agree"},
+        ])
+        self.assertEqual(report["counts"].get("regloss_missing_entry"), 1)
+
+    def test_strict_stratum_noops_unconfirmed_rows(self):
+        report = self.run_verdicts([
+            # No refuter agreement: strict must treat it as keep.
+            {"key": "version", "verdict": "regloss",
+             "newGloss": "A specific form or variation of something.",
+             "confidence": 0.95, "refuter": "disagree"},
+            # Refuter-agreed at high confidence: ships.
+            {"key": "charge", "verdict": "regloss",
+             "newGloss": "An accusation.",
+             "confidence": 0.9, "refuter": "agree"},
+        ], ship_stratum="strict")
+        self.assertEqual(report["counts"].get("regloss_shipstratum_noop"), 1)
+        self.assertEqual(report["counts"].get("regloss_applied"), 1)
+        entries = self.entries()
+        self.assertEqual(entries["version"]["sourceGloss"], "software release")
+        self.assertEqual(entries["charge"]["sourceGloss"], "An accusation.")
+
+    def test_stale_target_is_rejected(self):
+        # The queue aligned its candidates against target "Version"; simulate a
+        # retarget landing in between by rewriting the entry's target first.
+        pack_path = self.tmp / "public" / "language-packs" / f"{LANG}.json"
+        pack = json.loads(pack_path.read_text())
+        pack["entries"]["version"]["target"] = "Fassung"
+        write_json(pack_path, pack)
+
+        report = self.run_verdicts([
+            {"key": "version", "verdict": "regloss",
+             "newGloss": "A specific form or variation of something.",
+             "confidence": 0.95, "refuter": "agree"},
+        ])
+        self.assertEqual(report["counts"].get("regloss_stale_target"), 1)
+        self.assertEqual(self.entries()["version"]["sourceGloss"], "software release")
+
+    def test_truncated_list_intro_gloss_is_rejected_even_with_provenance(self):
+        # Defense in depth: even a queue-listed candidate must not ship a
+        # dangling "such as:" gloss.
+        write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"regloss-{LANG}.jsonl", [
+            {"key": "version", "source": "version", "target": "Version", "pos": "noun",
+             "currentGloss": "software release", "enZipf": 5.07,
+             "candidateGlosses": [{"gloss": "A rule, such as:", "tableSize": 6, "aligned": True}],
+             "glossSourceId": "regloss-sense-aligned"},
+        ])
+        report = self.run_verdicts([
+            {"key": "version", "verdict": "regloss", "newGloss": "A rule, such as:",
+             "confidence": 0.95, "refuter": "agree"},
+        ])
+        self.assertEqual(report["counts"].get("regloss_bad_gloss"), 1)
+        self.assertEqual(self.entries()["version"]["sourceGloss"], "software release")
+
+    def test_rerun_is_idempotent(self):
+        rows = [{"key": "version", "verdict": "regloss",
+                 "newGloss": "A specific form or variation of something.",
+                 "confidence": 0.95, "refuter": "agree"}]
+        first = self.run_verdicts(rows)
+        self.assertEqual(first["counts"].get("regloss_applied"), 1)
+        second = apply_language(LANG, self.tmp)
+        self.assertNotIn("regloss_applied", second["counts"])
+        self.assertGreaterEqual(second["skippedAlreadyApplied"], 1)
+
+
+
 if __name__ == "__main__":
     unittest.main()

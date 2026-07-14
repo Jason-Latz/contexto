@@ -1,6 +1,11 @@
-import type { OnboardingLevel, TargetLanguage } from '../types/index.js'
+import type { OnboardingLevel, PartOfSpeech, TargetLanguage } from '../types/index.js'
 
 const STORAGE_KEY = 'contexto_settings'
+
+// Verbs render as the bare dictionary infinitive (no conjugation yet), which
+// reads wrong in most sentence slots, so they are the one part of speech
+// disabled out of the box. The popup's Word Types card opts back in.
+export const DEFAULT_DISABLED_PARTS_OF_SPEECH: readonly PartOfSpeech[] = ['verb']
 
 // Density defaults per level; user-adjustable via the popup slider.
 const LEVEL_DENSITY: Record<OnboardingLevel, number> = {
@@ -20,6 +25,9 @@ interface Settings {
   // low-confidence long-tail words, so opting in trades precision for coverage.
   aggressiveMode: boolean
   blockedDomains: string[]
+  // Parts of speech the user has switched off in the popup's Word Types card.
+  // Entries whose partOfSpeech is listed here are never candidates.
+  disabledPartsOfSpeech: PartOfSpeech[]
   // Per-hostname decisions made on the high-stakes banner.
   // true = user allowed replacements; false = user paused for that domain.
   domainDecisions: Record<string, boolean>
@@ -37,6 +45,7 @@ function makeDefaultSettings(): Settings {
     replacementsEnabled: true,
     aggressiveMode: false,
     blockedDomains: [],
+    disabledPartsOfSpeech: [...DEFAULT_DISABLED_PARTS_OF_SPEECH],
     domainDecisions: {},
   }
 }
@@ -54,6 +63,7 @@ export async function loadSettings(): Promise<void> {
       replacementsEnabled: raw.replacementsEnabled ?? true,
       aggressiveMode: raw.aggressiveMode ?? false,
       blockedDomains: raw.blockedDomains ?? [],
+      disabledPartsOfSpeech: raw.disabledPartsOfSpeech ?? [...DEFAULT_DISABLED_PARTS_OF_SPEECH],
       domainDecisions: raw.domainDecisions ?? {},
     }
   }
@@ -123,6 +133,10 @@ export async function setDensity(density: number): Promise<void> {
 
 export function getTargetLanguage(): TargetLanguage {
   return settings.targetLanguage
+}
+
+export function getDisabledPartsOfSpeech(): readonly PartOfSpeech[] {
+  return settings.disabledPartsOfSpeech
 }
 
 export function getBlockedDomains(): readonly string[] {

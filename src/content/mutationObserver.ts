@@ -4,6 +4,12 @@ import { injectReplacements } from './injector.js'
 // The data attribute written by injector.ts — used to gate characterData processing.
 const CONTEXTO_ATTR = 'data-contexto'
 
+// Extension-owned UI (hover tooltip, consent banner). Mutations inside these are
+// our own rendering, never page content — dropping them here avoids scheduling a
+// debounced walk on every tooltip update. The walker independently refuses these
+// subtrees (domWalker checks the root's ancestors), so this is belt and braces.
+const EXTENSION_UI_SELECTOR = '[data-contexto-ui], #contexto-tooltip'
+
 // How long to wait after the last mutation before processing. Batches rapid DOM
 // bursts (virtual scroll recycling, SPA route transitions) into a single pass.
 const DEBOUNCE_MS = 500
@@ -103,11 +109,13 @@ export function setupMutationObserver(
           // Only Element nodes have subtrees worth walking. Added Text nodes are
           // the leaf children of those elements and will be reached via the walker.
           if (node instanceof Element) {
+            if (node.closest(EXTENSION_UI_SELECTOR)) continue
             pendingRoots.add(node)
             hasWork = true
           } else if (node instanceof Text && node.parentElement) {
             // Text node added directly (e.g. innerHTML rebuild that creates bare
             // text children). Walk from the parent element so SKIP_SELECTORS apply.
+            if (node.parentElement.closest(EXTENSION_UI_SELECTOR)) continue
             pendingRoots.add(node.parentElement)
             hasWork = true
           }
