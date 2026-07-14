@@ -195,17 +195,23 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 - **Gloss repair run landed (2026-07-14, remove/rebuild/regloss):** (1) the 2,683
   unreachable legacy synthetic-compound es entries are GONE (es core 47,317; no
   backfill — FreeDict past the imported 45.8k is the junk band; growth belongs to the
-  gold-gated minting engine); (2) 113 suspect glosses repaired by SENSE-ALIGNED
-  regloss (`pipeline/import_es/regloss_legacy.py`: pick the Wiktionary sense whose own
-  es translation table contains the entry's target; dominance by table size; niche
-  senses like death->Grim Reaper refused and queued), provenance = `kaikki-en` on
-  sourceIds; (3) the adjudication engine has a **regloss verdict**
-  (`build_regloss_queue.py` + `apply_regloss_row`, provenance-checked like targets,
-  in npm test) with queues built: es 229 / de 141 / fr 126 / it 86 rows awaiting an
-  adjudication run. Sense-level cache: `pipeline/data/en-sense-cache.jsonl` (96k
-  words, rebuild via `scripts/stream_en_sense_translations.py`). es lint flags
-  4,147 -> 1,396 (mostly the 826 unreachable freedict multi-word phrases + queued
-  judgment calls).
+  gold-gated minting engine); (2) suspect glosses repaired by SENSE-ALIGNED regloss
+  (`pipeline/import_es/regloss_legacy.py`: pick the Wiktionary sense whose own es
+  translation table contains the entry's target): 77 auto-applied under hardened
+  guards (dominance by table size, near-tie -> queue, sole-aligned must be the page's
+  first sense, meta/dangling glosses rejected — each guard earned by a reviewed
+  failure like death->Grim Reaper or judicial->an 1881 land-law clause) + 26 more
+  applied through a hand-adjudicated verdict batch; provenance marker =
+  `regloss-sense-aligned` on sourceIds; (3) the adjudication engine has a **regloss
+  verdict** (`build_regloss_queue.py` + `apply_regloss_row`; gloss provenance-checked
+  like targets, stale-target freshness guard, in npm test), exercised end to end by
+  that batch; remaining queues: es ~178 sub-band rows / de 141 / fr 126 / it 86.
+  Sense-level cache: `pipeline/data/en-sense-cache.jsonl` (96k words, rebuild via
+  `scripts/stream_en_sense_translations.py`). es lint flags 4,147 -> ~1,400 (mostly
+  the 826 unreachable freedict multi-word phrases + queued judgment calls).
+  **Hard-won lesson: automated sense selection fails in unfixable ways (sparse
+  per-sense translation tables, gloss-less dominant blocks); anything the guards
+  can't prove goes to the queue, never auto-ships.**
 - **Pre-ship triage run landed (2026-07-14):** (1) hover-card self-replacement
   fixed — the SPA observer used an unmarked tooltip inner span as its walk root and
   `buildTextWalker` never checked the root's ancestors; now `closest()` (regression
