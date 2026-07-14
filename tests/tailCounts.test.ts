@@ -13,9 +13,12 @@ function load(name: string): Record<string, any> {
   return JSON.parse(readFileSync(`${PACKS}/${name}`, 'utf8')).entries
 }
 
-// Floors (well under the achieved es 88.1k / de 73.2k / fr 72.1k / it 68.9k).
+// Floors (just under the achieved es 85.7k / de 75.7k / fr 72.1k / it 69.3k).
+// es core dropped to 47.3k on 2026-07-14: 2,683 unreachable legacy synthetic
+// compounds were removed, and FreeDict past the imported 45.8k is the junk
+// band the runtime tests pin out, so there was nothing honest to backfill.
 const FLOORS: Record<string, { core: number; total: number }> = {
-  es: { core: 50000, total: 85000 },
+  es: { core: 47000, total: 85000 },
   de: { core: 57000, total: 71000 },
   fr: { core: 55000, total: 70000 },
   it: { core: 58000, total: 67000 },
