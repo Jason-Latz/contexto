@@ -276,8 +276,8 @@ async function bug3(base) {
   const blank = await context.newPage()
   await blank.goto('about:blank')
   const blankStatus = await readPageStatus(popup, blank)
-  check('BUG3-unreachable', 'Popup explains a page it cannot run on',
-    /does not run on this page/.test(blankStatus.headline),
+  check('BUG3-unreachable', 'Popup names native Chrome pages as the reason it cannot run',
+    /native Chrome pages/.test(blankStatus.headline),
     JSON.stringify(blankStatus.headline))
 
   await setSetting(sw, { replacementsEnabled: false })

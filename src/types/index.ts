@@ -164,9 +164,10 @@ export const PAGE_STATUS_MESSAGE = 'contexto:page-status'
 //   loading      a replacement pass is in flight, or content has just arrived
 //   active       the pipeline ran; `swapped` may still be 0 (nothing eligible)
 //   error        the pipeline failed (e.g. the language pack would not load)
-//   unreachable  the popup could not reach a content script on this tab
+// A tab with no content script never answers at all; the popup classifies that
+// case itself from the tab's URL (see PageStatus.ts describeNoScript).
 export type PageStatusKind =
-  | 'off' | 'blocked' | 'paused' | 'too-short' | 'loading' | 'active' | 'error' | 'unreachable'
+  | 'off' | 'blocked' | 'paused' | 'too-short' | 'loading' | 'active' | 'error'
 
 export interface PageStatus {
   kind: PageStatusKind
