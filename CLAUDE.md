@@ -201,8 +201,9 @@ What we can't render faithfully gets gated or disabled, not engineered around:
   (see section above). (4) `scripts/lint_glosses.py` wrote a gloss review queue to
   `docs/gloss-lint/` — **top data finding: ALL es entries with frequencyRank < 4568
   (the whole visible band) are legacy pre-pipeline `curated-contexto` LLM seeds**;
-  narrow single-sense glosses (version -> "software release"), ~1.9k templated
-  "related to X" glosses, ~1.9k synthetic two-word headwords ("team guide"). The
+  narrow single-sense glosses (version -> "software release"), ~2.0k templated
+  "related to X" glosses, ~3.5k synthetic two-word headwords ("team guide") — the
+  largest category (authoritative counts: docs/gloss-lint/SUMMARY.md). The
   adjudication engine cannot write sourceGloss (audits only retarget/gate), so gloss
   repair needs either a regloss verdict or regeneration; es queue 4,147 rows
   (3,368 renderable) awaits Jason's remove/rebuild/regloss decision.
