@@ -21,7 +21,7 @@ from pipeline.analysis.apply_verdicts import apply_language
 
 def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
                  wikidata=None, wikt_noun=None, wikt_gloss=None, wikt_match_gloss=None,
-                 langlinks=None):
+                 langlinks=None, wiktinv=None, slim_pos=None):
     """Assemble the `indexes` dict build_alternatives_and_check_gate expects, with
     empty defaults so a test only has to specify the sources it cares about."""
     return {
@@ -34,7 +34,14 @@ def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
         "wikt_gloss": wikt_gloss or {},
         "wikt_match_gloss": wikt_match_gloss or {},
         "langlinks": langlinks or {},
+        "wiktinv": wiktinv or {},
+        "slim_pos": slim_pos or {},
     }
+
+
+def wiktinv_prop(target, pos="noun", gloss="gloss"):
+    """A single wiktinv proposal (as load_wiktinv_index would emit for a key)."""
+    return {"target": target, "pos": pos, "gloss": gloss}
 
 
 def wiki_entry(target, exists=True):
@@ -382,6 +389,270 @@ class LanglinksTierTest(unittest.TestCase):
             "de", "cat", idx, min_votes=1)
         self.assertIsNone(diag["evidenceTier"])
         self.assertFalse(diag["wikipediaOnly"])
+
+
+class GlossStrictKeysParityTest(unittest.TestCase):
+    """gloss_strict_keys is the INVERSION of gloss_matches_word_strict, not a second
+    matcher: for every gloss/word pair, w in gloss_strict_keys(g) must agree exactly
+    with gloss_matches_word_strict(g, w)."""
+
+    GLOSSES = [
+        "dog", "the house", "a dog", "dog; hound", "big, large", "related to war",
+        "a kind of dog", "foot (a part of the body)", "free, without charge",
+        "in vain, without success", "(dog)", "[dog]", "dog (mammal)",
+        "dog; (canine mammal)", "", "   ", "hound, a canine", "An Owl", "dog.",
+    ]
+    WORDS = ["dog", "house", "the house", "hound", "large", "war", "foot", "free",
+             "without charge", "in vain", "canine", "mammal", "owl", "doghouse"]
+
+    def test_parity(self):
+        for g in self.GLOSSES:
+            keys = bmq.gloss_strict_keys(g)
+            for w in self.WORDS:
+                expected = bmq.gloss_matches_word_strict(g, w)
+                got = w.strip().lower() in keys
+                self.assertEqual(expected, got, f"gloss={g!r} word={w!r}")
+
+
+class LoadWiktinvIndexTest(unittest.TestCase):
+    """Exercise the real streaming inversion against a tiny on-disk slim cache."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="wiktinv-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+    def _run(self, lang, records):
+        path = self.tmp / f"slim-{lang}.jsonl"
+        path.write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n",
+                        encoding="utf-8")
+        orig = bmq.WIKT_CACHE_DIR
+        bmq.WIKT_CACHE_DIR = self.tmp
+        try:
+            return bmq.load_wiktinv_index(lang)
+        finally:
+            bmq.WIKT_CACHE_DIR = orig
+
+    def test_inverts_gloss_to_headword_with_pos(self):
+        idx, slim_pos = self._run("de", [
+            {"lemma": "Erdferkel", "pos": "noun", "gender": "neuter",
+             "plural": "Erdferkel", "glosses": ["an aardvark", "the aardvark"]},
+            {"lemma": "Hund", "pos": "noun", "gender": "masculine",
+             "plural": "Hunde", "glosses": ["dog; hound"]},
+        ])
+        self.assertEqual([p["target"] for p in idx["aardvark"]], ["Erdferkel"])
+        self.assertEqual(idx["aardvark"][0]["pos"], "noun")
+        # comma/semicolon segments each become a key.
+        self.assertEqual({p["target"] for p in idx["dog"]}, {"Hund"})
+        self.assertEqual({p["target"] for p in idx["hound"]}, {"Hund"})
+        self.assertEqual(slim_pos["hund"], {"noun"})
+
+    def test_homograph_multiple_headwords_both_proposed(self):
+        # Two distinct German nouns both gloss to "bank" -> both proposed.
+        idx, _ = self._run("de", [
+            {"lemma": "Bank", "pos": "noun", "gender": "feminine", "plural": "Bänke",
+             "glosses": ["bench"]},
+            {"lemma": "Ufer", "pos": "noun", "gender": "neuter", "plural": "Ufer",
+             "glosses": ["bank; shore"]},
+            {"lemma": "Geldinstitut", "pos": "noun", "gender": "neuter",
+             "plural": "Geldinstitute", "glosses": ["bank"]},
+        ])
+        self.assertEqual({p["target"] for p in idx["bank"]}, {"Ufer", "Geldinstitut"})
+
+    def test_multiword_target_pos_is_expression(self):
+        idx, slim_pos = self._run("de", [
+            {"lemma": "auf Wiedersehen", "pos": "adv", "gender": None, "plural": None,
+             "glosses": ["goodbye"]},
+        ])
+        self.assertEqual(idx["goodbye"][0]["pos"], "expression")
+        self.assertEqual(slim_pos["auf wiedersehen"], {"expression"})
+
+    def test_missing_slim_file_yields_empty(self):
+        idx, slim_pos = bmq.load_wiktinv_index("de")  # WIKT_CACHE_DIR unpatched -> real dir may lack it
+        # es/de/fr/it are in HAS_WIKT_TARGET_DUMP; a missing file must not raise.
+        self.assertIsInstance(idx, dict)
+
+
+class WiktinvProposerTest(unittest.TestCase):
+    def test_proposes_target_from_inversion_alone(self):
+        idx = make_indexes(
+            wiktinv={"aardvark": [wiktinv_prop("Erdferkel", pos="noun", gloss="an aardvark")]},
+            wikt_noun={"erdferkel": [("neuter", "Erdferkel")]},
+        )
+        alts, _, passes1, diag = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=1)
+        self.assertTrue(passes1)
+        self.assertEqual([a["target"] for a in alts], ["Erdferkel"])
+        self.assertIn("wiktinv", alts[0]["sources"])
+        self.assertEqual(alts[0]["pos"], "noun")
+        self.assertEqual(alts[0]["wiktinvGloss"], "an aardvark")
+        # morph comes free from the slim noun record.
+        self.assertEqual(alts[0]["morph"],
+                         {"gender": "neuter", "plural": "Erdferkel", "authority": "wiktextract"})
+        self.assertTrue(diag["wiktinvOnly"])
+        # wiktinv alone is ONE English-Wiktionary vote -> does NOT clear >=2.
+        _, _, passes2, diag2 = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=2)
+        self.assertFalse(passes2)
+        self.assertEqual(diag2["gateBest"], 1)
+
+    def test_homograph_multi_propose_not_merged(self):
+        idx = make_indexes(
+            wiktinv={"bank": [wiktinv_prop("Ufer", gloss="bank; shore"),
+                              wiktinv_prop("Geldinstitut", gloss="bank")]},
+        )
+        alts, _, _, _ = bmq.build_alternatives_and_check_gate("de", "bank", idx, min_votes=1)
+        self.assertEqual({a["target"] for a in alts}, {"Ufer", "Geldinstitut"})
+
+    def test_wiktinv_does_not_also_get_a_wiktgloss_vote(self):
+        # wiktinv and wiktgloss read the SAME slim gloss; the alt must not be
+        # double-counted. wiktgloss is suppressed on a slim-derived alternative.
+        idx = make_indexes(
+            wiktinv={"aardvark": [wiktinv_prop("Erdferkel", gloss="aardvark")]},
+            wikt_match_gloss={"erdferkel": ["aardvark"]},
+        )
+        alts, _, _, diag = bmq.build_alternatives_and_check_gate("de", "aardvark", idx, min_votes=1)
+        self.assertIn("wiktinv", alts[0]["sources"])
+        self.assertNotIn("wiktgloss", alts[0]["sources"])
+        self.assertEqual(diag["gateBest"], 1)
+
+    def test_independent_dictionary_plus_wiktinv_passes_at_two(self):
+        # freedict (a genuinely independent dictionary) + wiktinv = TWO gate votes.
+        idx = make_indexes(
+            freedict={"aardvark": [("Erdferkel", "the aardvark", "noun")]},
+            wiktinv={"aardvark": [wiktinv_prop("Erdferkel", gloss="aardvark")]},
+        )
+        alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=2)
+        self.assertTrue(passes)
+        self.assertEqual(diag["gateBest"], 2)
+        self.assertFalse(diag["wiktinvOnly"])  # freedict co-proposed
+        self.assertEqual(alts[0]["sources"], ["freedict", "wiktinv"])
+
+    def test_entr_wiktinv_collapse_to_one_gate_vote(self):
+        # entr proposes the same target wiktinv does; both are English Wiktionary,
+        # so the pair collapses to ONE gate vote (fails >=2, passes >=1).
+        idx = make_indexes(
+            entr={"aardvark": entr_bucket("de", "Erdferkel")},
+            wiktinv={"aardvark": [wiktinv_prop("Erdferkel", gloss="aardvark")]},
+        )
+        _, _, passes2, diag = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=2)
+        self.assertFalse(passes2)
+        self.assertEqual(diag["gateBest"], 1)
+        self.assertEqual(diag["strictBest"], 2)  # display still shows both
+
+
+class GateVoteCountTest(unittest.TestCase):
+    def test_family_collapses_to_one(self):
+        self.assertEqual(bmq.gate_vote_count({"entr"}), 1)
+        self.assertEqual(bmq.gate_vote_count({"entr", "wiktgloss"}), 1)
+        self.assertEqual(bmq.gate_vote_count({"entr", "wiktgloss", "wiktinv"}), 1)
+
+    def test_independent_source_plus_family(self):
+        self.assertEqual(bmq.gate_vote_count({"freedict", "entr", "wiktgloss", "wiktinv"}), 2)
+        self.assertEqual(bmq.gate_vote_count({"wikipedia", "wiktinv"}), 2)
+
+    def test_all_independent_count_individually(self):
+        self.assertEqual(bmq.gate_vote_count({"freedict", "apertium", "omw"}), 3)
+
+
+class NormalizePosTest(unittest.TestCase):
+    def test_maps_source_vocabularies(self):
+        self.assertEqual(bmq.normalize_pos("n"), "noun")
+        self.assertEqual(bmq.normalize_pos("pn"), "noun")
+        self.assertEqual(bmq.normalize_pos("adjective"), "adjective")
+        self.assertEqual(bmq.normalize_pos("adj"), "adjective")
+        self.assertEqual(bmq.normalize_pos("adv"), "adverb")
+        self.assertIsNone(bmq.normalize_pos("preposition"))
+        self.assertIsNone(bmq.normalize_pos(None))
+
+    def test_multiword_target_overrides_to_expression(self):
+        self.assertEqual(bmq.normalize_pos("noun", "casa blanca"), "expression")
+        self.assertEqual(bmq.normalize_pos("noun", "casa"), "noun")
+
+
+class ClassifyAlternativeTest(unittest.TestCase):
+    def test_noun_with_full_morph_is_mintable(self):
+        k = bmq.classify_alternative({"gender": "masculine", "plural": "gatos"}, set(), "es")
+        self.assertTrue(k["fullNounMorph"])
+        self.assertTrue(k["mintable"])
+        self.assertFalse(k["nounOnly"])
+        self.assertEqual(k["posHint"], "noun")
+
+    def test_noun_missing_plural_is_noun_only(self):
+        k = bmq.classify_alternative({"gender": "masculine", "plural": None}, set(), "es")
+        self.assertFalse(k["fullNounMorph"])
+        self.assertFalse(k["mintable"])
+        self.assertTrue(k["nounOnly"])
+
+    def test_nonnoun_evidence_is_mintable_without_morph(self):
+        k = bmq.classify_alternative(None, {"adjective"}, "es")
+        self.assertTrue(k["mintable"])
+        self.assertFalse(k["nounOnly"])
+        self.assertEqual(k["posHint"], "adjective")
+
+    def test_no_evidence_is_neither(self):
+        k = bmq.classify_alternative(None, set(), "es")
+        self.assertFalse(k["mintable"])
+        self.assertFalse(k["nounOnly"])
+        self.assertIsNone(k["posHint"])
+
+    def test_gender_not_in_language_set_is_not_full(self):
+        # neuter is not an es gender -> cannot mint as a noun.
+        k = bmq.classify_alternative({"gender": "neuter", "plural": "x"}, set(), "es")
+        self.assertFalse(k["fullNounMorph"])
+        self.assertTrue(k["nounOnly"])
+
+
+class PreSkipTest(unittest.TestCase):
+    def test_noun_no_morph_any_when_every_alt_is_noun_without_morph(self):
+        # A single wikipedia-proposed noun target with a gender but no plural, no
+        # non-noun reading -> cannot clear apply_verdicts as a noun, no escape.
+        idx = make_indexes(
+            langlinks={"mitochondria": wiki_entry("Mitochondrium", exists=True)},
+            wikt_noun={"mitochondrium": [("neuter", None)]},   # gender, NULL plural
+            slim_pos={"mitochondrium": {"noun"}},
+        )
+        alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "mitochondria", idx, min_votes=1)
+        self.assertTrue(passes)  # still in the queue (never dropped)
+        self.assertEqual(diag["preSkip"], "noun_no_morph_any")
+        self.assertFalse(diag["shippableAlt"])
+
+    def test_full_morph_noun_is_shippable_not_preskipped(self):
+        idx = make_indexes(
+            langlinks={"mitochondria": wiki_entry("Mitochondrium", exists=True)},
+            wikt_noun={"mitochondrium": [("neuter", "Mitochondrien")]},
+            slim_pos={"mitochondrium": {"noun"}},
+        )
+        _, _, _, diag = bmq.build_alternatives_and_check_gate(
+            "de", "mitochondria", idx, min_votes=1)
+        self.assertIsNone(diag["preSkip"])
+        self.assertTrue(diag["shippableAlt"])
+
+    def test_cognate_nonnoun_when_best_alt_is_identical_and_nonnoun(self):
+        # es "total" (adjective) == English "total": identical + non-noun -> the
+        # runtime would never inject it. freedict tags it adjective (non-noun ev).
+        idx = make_indexes(
+            freedict={"total": [("total", "whole", "adjective")]},
+            apertium={"total": ["total"]},
+            slim_pos={"total": {"adjective"}},
+        )
+        alts, _, _, diag = bmq.build_alternatives_and_check_gate("es", "total", idx, min_votes=1)
+        self.assertEqual(alts[0]["target"], "total")
+        self.assertEqual(diag["preSkip"], "cognate_nonnoun")
+
+    def test_nonnoun_alternative_escapes_noun_no_morph(self):
+        # One alt is a noun without morph, another is a verb (mintable non-noun) ->
+        # NOT preSkipped, and shippable.
+        idx = make_indexes(
+            apertium={"run": ["Lauf", "laufen"]},
+            wikt_noun={"lauf": [("masculine", None)]},  # noun, no plural
+            slim_pos={"lauf": {"noun"}, "laufen": {"verb"}},
+        )
+        _, _, _, diag = bmq.build_alternatives_and_check_gate("de", "run", idx, min_votes=1)
+        self.assertIsNone(diag["preSkip"])
+        self.assertTrue(diag["shippableAlt"])
 
 
 def _write_json(path: Path, data):

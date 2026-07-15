@@ -19,21 +19,33 @@ regardless of how many rows they contribute:
   English glosses, and if one of them IS the candidate English word W (strict
   lemma match), that target->source agreement counts as a vote (wiktgloss only
   ever confirms a target another source already proposed, never invents one) --
-  and "wikipedia", a target-PROPOSING source new in 2026-07-15 (see below).
+  "wiktinv", a target-PROPOSING source new 2026-07-15 (see below), and
+  "wikipedia", a target-PROPOSING source (see below).
 
-  CAVEAT ON INDEPENDENCE (verified 2026-07-15, corrects an earlier claim): entr
-  and wiktgloss both derive from the SAME wiki -- the ENGLISH Wiktionary. entr is
-  the English word W's Translations table; wiktgloss is the foreign headword T's
-  English gloss (kaikki-{lang}.jsonl records are English-Wiktionary foreign-
-  language entries -- their glosses are in English, e.g. German "frei" -> "free;
-  unenslaved"). They are DIFFERENT PAGES with independent editorial provenance
-  (a translation-table edit vs a headword-definition edit), so their agreement is
-  real corroboration -- but NOT a fully independent second dictionary the way
-  freedict/apertium/omw are. A wiktgloss-only second vote is therefore WEAKER
-  than a freedict/apertium/omw second vote; do not treat it as a peer when
-  choosing a >=2 ship gate. (At --min-votes 1 this is moot: every candidate with
-  one real dictionary vote already passes, so wiktgloss changes NO queue-
-  membership -- it only labels the source and bumps the displayed vote count.)
+  WIKTINV (target-PROPOSING, new 2026-07-15): the slim target-language Wiktextract
+  cache (slim-{lang}.jsonl) records each foreign headword T with its English
+  glosses. wiktinv INVERTS that: for a candidate W it proposes every headword T
+  whose gloss STRICT-matches W (gloss_matches_word_strict, via the gloss_strict_keys
+  inversion index). This is exactly how the de/fr/it core packs were originally
+  built (gloss->word inversion), now also run for es and against the tail-band
+  universe. Unlike wiktgloss it INVENTS targets no other source proposed -- that is
+  the point -- and each comes with the slim record's own morphology (gender/plural)
+  and POS. Multiple distinct headwords for one W are all kept (homograph guard).
+
+  CAVEAT ON INDEPENDENCE (verified 2026-07-15, corrects an earlier claim): entr,
+  wiktgloss AND wiktinv all derive from the SAME wiki -- the ENGLISH Wiktionary.
+  entr is the English word W's Translations table; wiktgloss is the foreign
+  headword T's English gloss; wiktinv is T PROPOSED FROM that same English gloss
+  (kaikki-{lang}.jsonl records are English-Wiktionary foreign-language entries --
+  their glosses are in English, e.g. German "frei" -> "free; unenslaved"). They
+  are the ONE English Wiktionary, so the three together count as a SINGLE
+  independent gate vote (WIKT_VOTE_FAMILY, collapsed in gate_votes) -- NOT a fully
+  independent second dictionary the way freedict/apertium/omw are. A family-only
+  second vote is therefore WEAKER than a freedict/apertium/omw second vote; do not
+  treat it as a peer when choosing a >=2 ship gate. (At --min-votes 1 this is moot
+  for queue membership: one real dictionary OR one family vote already passes, so
+  the collapse only affects the displayed >=2 quality breakdown, and wiktinv adds
+  genuinely NEW single-vote tail rows the other sources never listed.)
 
   WIKIPEDIA (target-PROPOSING, new 2026-07-15): pipeline/data/wikipedia/langlinks-
   {lang}.tsv maps an English article title to the target-language title of the
@@ -67,6 +79,21 @@ regardless of how many rows they contribute:
   Output is pipeline/data/queues/mint-{lang}.jsonl, ordered enZipf descending
   (teach the most useful missing words first), for the proposer/refuter/judge
   adjudication engine.
+
+  PRE-SKIP (mechanical shippability annotation, new 2026-07-15): every row carries
+  a "preSkip" field so downstream adjudication can drop the hopeless rows without
+  spending tokens (apply_verdicts stays the real gate -- rows are NEVER dropped
+  here):
+    - "cognate_nonnoun": the best alternative is an identical string (T == W) that
+      renders as a non-noun; the runtime never injects identical non-nouns.
+    - "noun_no_morph_any": every alternative is a provable noun lacking full
+      gender+plural, so none can clear apply_verdicts' noun morph gate.
+    - null otherwise.
+  A row is SHIPPABLE when preSkip is null AND >=1 alternative could clear
+  apply_verdicts (a non-noun, or a noun with full gender+plural) -- the honest
+  volume, reported per language. Each alternative also gains a "pos" hint (from
+  slim/entr/freedict/wiktinv POS + morph) and, when wiktinv proposed it, the
+  "wiktinvGloss" that matched; rows wiktinv alone unlocks carry "wiktinvOnly".
 
 Source availability per language (verified against the actual files in
 pipeline/data/sources/ — NOT symmetric, mirrors merge_evidence.py):
@@ -131,6 +158,18 @@ ES_WIKIDATA_DENYLIST_PATH = (
 
 LANGUAGES = ["es", "de", "fr", "it"]
 
+# Mirrors apply_verdicts.GENDERS_BY_LANGUAGE / validate-language-packs.mjs /
+# registry.ts (German adds neuter). Used ONLY by the preSkip shippability
+# annotations to predict whether apply_verdicts could mint an alternative as a
+# noun; apply_verdicts re-checks this itself at apply time, so a drift here can
+# never mint a bad entry -- only mis-annotate a queue row.
+GENDERS_BY_LANGUAGE = {
+    "es": {"masculine", "feminine"},
+    "fr": {"masculine", "feminine"},
+    "it": {"masculine", "feminine"},
+    "de": {"masculine", "feminine", "neuter"},
+}
+
 # Verified against the actual files in pipeline/data/sources/ (mirrors merge_evidence.py).
 # es joined 2026-07-15 once freedict-eng-es.jsonl was produced from the same
 # eng-spa TEI the es CORE pack imports (pipeline/sources/freedict-eng-es.lock.json).
@@ -155,14 +194,19 @@ MIN_INDEPENDENT_VOTES = 2
 # deterministic tie-breaking / display-casing precedence. "wikipedia" (the
 # interlanguage-link target proposer) sorts after the translation dictionaries;
 # "wiktgloss" (the target-language Wiktionary gloss-agreement vote) sorts last.
-SOURCE_ORDER = ["freedict", "apertium", "omw", "entr", "wikipedia", "wiktgloss"]
+SOURCE_ORDER = ["freedict", "apertium", "omw", "entr", "wiktinv", "wikipedia", "wiktgloss"]
 # Sources derived from the target-language Wiktextract slim cache. The wiktgloss
 # vote must not be counted when the alternative already carries a slim-derived
-# source (would double-count the SAME underlying dictionary). Today wiktgloss is
-# the only slim-derived source, and it is only ever added to alternatives already
-# proposed by a NON-slim source, so this guard never actually fires -- it is kept
-# explicit so adding another slim-derived source later can't silently double-vote.
-SLIM_DERIVED_SOURCES = {"wiktgloss"}
+# source (would double-count the SAME underlying dictionary). wiktinv (the slim-
+# gloss INVERSION proposer) reads the very same glosses, so it joined this set
+# 2026-07-15: an alternative wiktinv proposed already IS a slim gloss match, and
+# must never also be handed a separate wiktgloss vote for the identical evidence.
+SLIM_DERIVED_SOURCES = {"wiktgloss", "wiktinv"}
+# The English-Wiktionary vote family: entr (W's translations table), wiktgloss
+# (T's headword gloss), and wiktinv (T proposed FROM that gloss) all derive from
+# the ONE English Wiktionary, so together they count as a single independent gate
+# vote (see gate_votes). All three still appear in `sources` for provenance.
+WIKT_VOTE_FAMILY = {"entr", "wiktgloss", "wiktinv"}
 # Fixed strict-tier vote gloss-agreement quality bar. Independent of the --min-votes
 # GATE: it is the "how many candidates reach 2 independent votes" quality signal we
 # report the wiktgloss unlock / token-contains delta against.
@@ -298,8 +342,8 @@ def load_universe() -> list[dict]:
 # Raw source loaders (indexed by normalized English join key)
 # ---------------------------------------------------------------------------
 
-def load_freedict_index(lang: str) -> dict[str, list[tuple[str, str | None]]]:
-    idx: dict[str, list[tuple[str, str | None]]] = defaultdict(list)
+def load_freedict_index(lang: str) -> dict[str, list[tuple[str, str | None, str | None]]]:
+    idx: dict[str, list[tuple[str, str | None, str | None]]] = defaultdict(list)
     if lang not in HAS_FREEDICT:
         return idx
     path = SOURCES_DIR / f"freedict-eng-{lang}.jsonl"
@@ -309,7 +353,7 @@ def load_freedict_index(lang: str) -> dict[str, list[tuple[str, str | None]]]:
             target = r.get("target") or ""
             if not target:
                 continue
-            idx[norm(r.get("en"))].append((target, r.get("notes")))
+            idx[norm(r.get("en"))].append((target, r.get("notes"), r.get("pos")))
     return idx
 
 
@@ -440,6 +484,61 @@ def load_slim_wikt_indexes(
                 if len(match_idx[lemma_key]) < MAX_MATCH_GLOSSES:
                     match_idx[lemma_key].append(g.lower())
     return noun_idx, display_idx, match_idx, exact_lemmas
+
+
+def load_wiktinv_index(
+    lang: str,
+) -> tuple[dict[str, list[dict]], dict[str, set[str]]]:
+    """Invert the slim target-language Wiktextract cache by English gloss so a
+    candidate English word W can look up target headwords whose gloss STRICT-
+    matches it (gloss->word INVERSION -- how the de/fr/it core packs were first
+    built, now also run for es and against the tail-band universe).
+
+    Returns (wiktinv_idx, slim_pos_idx):
+      - wiktinv_idx: en_key -> [{"target": raw_lemma, "pos": <content pos|None>,
+        "gloss": <the matched gloss>}], one entry per (target, pos, matched
+        gloss). MULTIPLE distinct target headwords for one W are ALL kept
+        (homograph guard -- votes rank them, they are never merged); a single
+        headword is proposed once per (pos, gloss) sense that matched.
+      - slim_pos_idx: norm(lemma) -> set of content POS the lemma is attested as
+        across every slim record (not only matched ones) -- the target-side POS
+        authority the preSkip shippability annotations consult.
+
+    Same-wiki note: wiktinv reads the SAME slim glosses as the wiktgloss vote, so
+    it is a SLIM_DERIVED_SOURCE and collapses with entr/wiktgloss for the gate
+    (all three are the English Wiktionary). Its authority backing is the slim
+    record's own morphology, wired through compose_morph like any alternative.
+    Availability is gated on slim-<lang>.jsonl existing (missing -> empty +
+    loud log). Recall is bounded by the slim cache's <=3 glosses/record."""
+    wiktinv_idx: dict[str, list[dict]] = defaultdict(list)
+    slim_pos_idx: dict[str, set[str]] = defaultdict(set)
+    if lang not in HAS_WIKT_TARGET_DUMP:
+        return wiktinv_idx, slim_pos_idx
+    path = WIKT_CACHE_DIR / f"slim-{lang}.jsonl"
+    if not path.exists():
+        log(f"  [wiktinv] no {path.name} present -> wiktinv proposes no targets for {lang}")
+        return wiktinv_idx, slim_pos_idx
+    seen: dict[str, set[tuple]] = defaultdict(set)
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            rec = json.loads(line)
+            raw_lemma = rec.get("lemma")
+            lemma_key = norm(raw_lemma)
+            if not lemma_key:
+                continue
+            pos = normalize_pos(rec.get("pos"), raw_lemma)
+            if pos:
+                slim_pos_idx[lemma_key].add(pos)
+            for g in rec.get("glosses") or []:
+                if not g:
+                    continue
+                for wkey in gloss_strict_keys(g):
+                    sig = (lemma_key, pos)  # one proposal per (target, sense POS)
+                    if sig in seen[wkey]:
+                        continue
+                    seen[wkey].add(sig)
+                    wiktinv_idx[wkey].append({"target": raw_lemma, "pos": pos, "gloss": g})
+    return wiktinv_idx, slim_pos_idx
 
 
 # ---------------------------------------------------------------------------
@@ -573,6 +672,50 @@ def gloss_tokencontains_word(gloss: str, word: str) -> bool:
     return w in _TOKEN_RE.findall(gloss.lower())
 
 
+def gloss_strict_keys(gloss: str) -> set[str]:
+    """The set of candidate words `gloss` STRICT-matches, derived from the SAME
+    reduction primitives as gloss_matches_word_strict (NOT a second matcher): for
+    any word w already reduced to its .strip().lower() form,
+        w in gloss_strict_keys(gloss)  <=>  gloss_matches_word_strict(gloss, w).
+    Used to INVERT the slim target-Wiktextract glosses (gloss -> headwords) in one
+    pass so the wiktinv proposer can look a candidate up by key instead of scanning
+    every gloss per candidate. Parity with the matcher is asserted in the tests."""
+    keys: set[str] = set()
+    for seg in (gloss, *re.split(r"[;,]", gloss)):
+        if any(ch in _BRACKET_CHARS for ch in seg):
+            continue
+        reduced = _reduce_gloss_segment(seg)
+        if reduced:
+            keys.add(reduced)
+    return keys
+
+
+# POS normalization shared by the pos-evidence gathering (slim/entr/freedict all
+# spell parts of speech differently). Maps onto the mintable content classes;
+# anything else (function words, unknown, symbols) folds to None.
+_POS_NORM = {
+    "noun": "noun", "n": "noun", "pn": "noun", "proper noun": "noun", "name": "noun",
+    "verb": "verb", "v": "verb",
+    "adj": "adjective", "adjective": "adjective",
+    "adv": "adverb", "adverb": "adverb",
+    "phrase": "expression", "expression": "expression", "proverb": "expression",
+    "phraseologicalunit": "expression",
+}
+_NONNOUN_CONTENT_POS = {"verb", "adjective", "adverb", "expression"}
+
+
+def normalize_pos(raw: str | None, target: str | None = None) -> str | None:
+    """Fold a raw POS onto {noun, verb, adjective, adverb, expression} or None. A
+    multi-word target overrides a bare content class to expression (it renders /
+    mints as a phrase, never taking a noun article)."""
+    if not raw:
+        return None
+    mapped = _POS_NORM.get(raw.strip().lower())
+    if mapped and mapped != "expression" and target and " " in target.strip():
+        return "expression"
+    return mapped
+
+
 # ---------------------------------------------------------------------------
 # Morphology composition (compose wikidata + wiktextract per FIELD)
 # ---------------------------------------------------------------------------
@@ -625,6 +768,110 @@ def compose_morph(
 
 
 # ---------------------------------------------------------------------------
+# Mintability / preSkip classification (mechanical, mirrors apply_verdicts)
+# ---------------------------------------------------------------------------
+
+def _is_standalone(value) -> bool:
+    """A real, usable replacement string (mirrors apply_verdicts.is_standalone /
+    validate-language-packs.mjs requireStandaloneTarget)."""
+    return (isinstance(value, str) and value.strip() != ""
+            and not value.startswith("-") and not value.endswith("-"))
+
+
+def full_noun_morph(morph: dict | None, lang: str) -> bool:
+    """Whether an alternative's composed morph would let apply_verdicts mint it as
+    a NOUN: a gender in the language's allowed set + a standalone plural. Exactly
+    the check apply_verdicts.apply_mint_row runs for pos == noun."""
+    if not morph:
+        return False
+    return (morph.get("gender") in GENDERS_BY_LANGUAGE.get(lang, set())
+            and _is_standalone(morph.get("plural")))
+
+
+def classify_alternative(morph: dict | None, pos_evidence: set[str], lang: str) -> dict:
+    """Mechanical POS / mintability signals for ONE alternative, used by the
+    preSkip shippability annotations. `pos_evidence` is the union of every content
+    POS any authority attests for this target (freedict/entr/wiktinv rows + the
+    slim target-side POS set + a gender in the morph).
+
+      - fullNounMorph: apply_verdicts could mint it as a noun (see full_noun_morph).
+      - nounEvidence:  some authority attests a NOUN reading.
+      - nonnounEvidence: some authority attests a verb/adjective/adverb/expression
+        reading -- apply_verdicts mints those WITHOUT needing morph.
+      - mintable: fullNounMorph OR nonnounEvidence -- could clear apply_verdicts
+        for SOME verdict. A target with NO POS evidence and no morph is NOT counted
+        mintable (the honest lower bound: those are overwhelmingly wiki-only
+        encyclopedic nouns that lack the gender+plural a noun mint requires).
+      - nounOnly: nounEvidence AND NOT nonnounEvidence AND NOT fullNounMorph -- a
+        provable noun that can't clear the morph gate no matter the verdict.
+      - posHint: a single best-guess content POS for display (may be None)."""
+    has_full = full_noun_morph(morph, lang)
+    has_gender = bool(morph and morph.get("gender"))
+    pos_set = set(pos_evidence)
+    if has_gender:
+        pos_set.add("noun")
+    noun_ev = "noun" in pos_set
+    nonnoun_ev = bool(pos_set & _NONNOUN_CONTENT_POS)
+    if has_gender:
+        pos_hint: str | None = "noun"
+    elif nonnoun_ev and not noun_ev and len(pos_set) == 1:
+        pos_hint = next(iter(pos_set))
+    elif noun_ev and not nonnoun_ev:
+        pos_hint = "noun"
+    else:
+        pos_hint = None
+    return {
+        "posHint": pos_hint,
+        "fullNounMorph": has_full,
+        "nounEvidence": noun_ev,
+        "nonnounEvidence": nonnoun_ev,
+        "mintable": has_full or nonnoun_ev,
+        "nounOnly": noun_ev and not nonnoun_ev and not has_full,
+    }
+
+
+def gate_vote_count(sources: set[str]) -> int:
+    """Independent GATE votes for one alternative's source set: the English-
+    Wiktionary family (entr/wiktgloss/wiktinv) collapses to ONE vote (they are the
+    same wiki -- see WIKT_VOTE_FAMILY + the module CAVEAT ON INDEPENDENCE), every
+    other source counts individually. Every family member still appears in
+    `sources` for provenance -- only the gate arithmetic collapses them. wikipedia
+    is a DIFFERENT wiki, so wikipedia + any family member is a valid independent 2."""
+    n = len(sources)
+    fam = sources & WIKT_VOTE_FAMILY
+    if len(fam) > 1:
+        n -= (len(fam) - 1)
+    return n
+
+
+def compute_preskip(en_key: str, alternatives: list[dict], classifications: list[dict],
+                    lang: str) -> str | None:
+    """Mechanical shippability annotation for a queue row -- NEVER drops the row,
+    just labels the ones downstream LLM adjudication can skip without spending
+    tokens (apply_verdicts remains the real gate):
+      - "cognate_nonnoun": the BEST (top-ranked) alternative is an identical string
+        (target == W, case-insensitive) that renders as a non-noun. The runtime
+        never injects identical non-nouns (no article to distinguish them from the
+        English word), so such a mint teaches nothing.
+      - "noun_no_morph_any": EVERY alternative is a provable noun lacking full
+        gender+plural (classify's nounOnly) -- none can clear apply_verdicts' noun
+        morph gate no matter the verdict, and no non-noun alternative exists.
+      - None otherwise.
+    cognate_nonnoun is checked first (it is about the target the adjudicator will
+    most likely pick)."""
+    if not alternatives:
+        return None
+    best, bk = alternatives[0], classifications[0]
+    if (norm(best.get("target")) == en_key
+            and bk["nonnounEvidence"] and not bk["nounEvidence"]
+            and not bk["fullNounMorph"]):
+        return "cognate_nonnoun"
+    if all(k["nounOnly"] for k in classifications):
+        return "noun_no_morph_any"
+    return None
+
+
+# ---------------------------------------------------------------------------
 # Per-candidate alternative building
 # ---------------------------------------------------------------------------
 
@@ -652,8 +899,16 @@ def build_alternatives_and_check_gate(
     alt_omw_best_rank: dict[str, int] = {}
     alt_omw_glosses: dict[str, list[str]] = defaultdict(list)
     alt_freedict_notes: dict[str, list[str]] = defaultdict(list)
+    # POS evidence per alternative, gathered from the sources that carry a POS
+    # (freedict/entr/wiktinv). Consumed by the preSkip shippability annotations
+    # (Task C) together with the slim target-side POS authority + noun morph.
+    alt_pos_ev: dict[str, set[str]] = defaultdict(set)
+    # wiktinv provenance per alternative: the matched sense's (pos, gloss), noun
+    # sense preferred for display. Used for the alt "pos" hint + QA sampling.
+    alt_wiktinv: dict[str, dict] = {}
 
-    def register(cand_raw: str, source_name: str, sense_rank: int | None = None, omw_gloss: str | None = None) -> None:
+    def register(cand_raw: str, source_name: str, sense_rank: int | None = None,
+                 omw_gloss: str | None = None, pos: str | None = None) -> None:
         cn = norm(cand_raw)
         if not cn:
             return
@@ -664,9 +919,11 @@ def build_alternatives_and_check_gate(
                 alt_omw_best_rank[cn] = sense_rank
         if omw_gloss and len(alt_omw_glosses[cn]) < MAX_GLOSSES:
             alt_omw_glosses[cn].append(omw_gloss)
+        if pos:
+            alt_pos_ev[cn].add(pos)
 
-    for target, notes in freedict_rows:
-        register(target, "freedict")
+    for target, notes, fd_pos in freedict_rows:
+        register(target, "freedict", pos=normalize_pos(fd_pos, target))
         if notes:
             cn = norm(target)
             if len(alt_freedict_notes[cn]) < MAX_GLOSSES:
@@ -677,9 +934,25 @@ def build_alternatives_and_check_gate(
         for target in targets:
             register(target, "omw", sense_rank, gloss)
     for bucket in entr_buckets:
+        bucket_pos = normalize_pos(bucket.get("pos"))
         for lc, target, _tags in bucket["tr"]:
             if lc == lang:
-                register(target, "entr")
+                register(target, "entr", pos=normalize_pos(bucket.get("pos"), target) or bucket_pos)
+
+    # wiktinv: the slim-gloss INVERSION proposer. Every distinct target headword
+    # whose slim English gloss STRICT-matches this candidate is proposed (homograph
+    # guard: distinct targets are separate alternatives, never merged). Registered
+    # BEFORE wikipedia so its authoritative slim-lemma casing (German capitals,
+    # es/fr/it lowercase) wins over a Wikipedia auto-capitalized title, but AFTER
+    # the translation dictionaries so a dictionary's own casing still wins.
+    for prop in indexes.get("wiktinv", {}).get(en_key, []):
+        target = prop["target"]
+        register(target, "wiktinv", pos=prop.get("pos"))
+        cn = norm(target)
+        prior = alt_wiktinv.get(cn)
+        # Prefer a noun sense for the display pos/gloss (renders with an article).
+        if prior is None or (prior.get("pos") != "noun" and prop.get("pos") == "noun"):
+            alt_wiktinv[cn] = {"pos": prop.get("pos"), "gloss": prop.get("gloss")}
 
     # Wikipedia proposes ONE target (already casing-normalized against the
     # authorities, see load_langlinks_index). Registered LAST so a translation
@@ -695,12 +968,15 @@ def build_alternatives_and_check_gate(
 
     if not alt_sources:
         return [], set(), False, {"trueBest": 0, "strictBest": 0, "tcBest": 0,
-                                  "evidenceTier": None, "wikipediaOnly": False}
+                                  "gateBest": 0, "evidenceTier": None,
+                                  "wikipediaOnly": False, "wiktinvOnly": False,
+                                  "preSkip": None}
 
     noun_idx = indexes["wikt_noun"]
     gloss_idx = indexes["wikt_gloss"]
     match_gloss_idx = indexes["wikt_match_gloss"]
     wikidata_idx = indexes["wikidata"]
+    slim_pos_idx = indexes.get("slim_pos", {})
 
     # ---- wiktgloss agreement vote (strict) + token-contains measurement ----
     # Only ever CONFIRMS a target another (non-slim) source already proposed --
@@ -724,23 +1000,10 @@ def build_alternatives_and_check_gate(
         would_have_wiktgloss = ("wiktgloss" in alt_sources[cn]) or (cn in tc_only_keys)
         return real_votes(cn) + (1 if would_have_wiktgloss else 0)
 
-    def gate_votes(cn: str) -> int:
-        # entr and wiktgloss BOTH derive from the English Wiktionary (see the
-        # module CAVEAT ON INDEPENDENCE): together they are ONE independent vote,
-        # so collapse them for the GATE. Clearing >=2 therefore always requires a
-        # genuinely independent corroborator (freedict/apertium/omw/wikipedia).
-        # Both stay listed in `sources` for provenance -- only the gate arithmetic
-        # collapses them. wikipedia is a DIFFERENT wiki, so wikipedia+wiktgloss is
-        # a valid independent 2.
-        n = len(alt_sources[cn])
-        if {"entr", "wiktgloss"} <= alt_sources[cn]:
-            n -= 1
-        return n
-
     strict_best = max(len(alt_sources[cn]) for cn in alt_sources)
     true_best = max(real_votes(cn) for cn in alt_sources)
     tc_best = max(tc_votes(cn) for cn in alt_sources)
-    gate_best = max(gate_votes(cn) for cn in alt_sources)
+    gate_best = max(gate_vote_count(alt_sources[cn]) for cn in alt_sources)
     passes = gate_best >= min_votes
 
     # ---- Wikipedia evidence tier (only when wikipedia proposed a target) ----
@@ -777,6 +1040,7 @@ def build_alternatives_and_check_gate(
     )
 
     alternatives = []
+    classifications = []
     for cn in ranked[:MAX_ALTERNATIVES]:
         sources_sorted = [s for s in SOURCE_ORDER if s in alt_sources[cn]]
         votes = len(alt_sources[cn])
@@ -788,14 +1052,43 @@ def build_alternatives_and_check_gate(
             fallback = list(alt_omw_glosses.get(cn, [])) + list(alt_freedict_notes.get(cn, []))
             glosses = [f"(en) {g}" for g in fallback[:MAX_GLOSSES]]
 
-        alternatives.append({
+        # POS evidence for this target: the source-row POS (freedict/entr/wiktinv)
+        # + the slim target-side POS authority + a gender in the morph.
+        wprov = alt_wiktinv.get(cn)
+        pos_evidence = set(alt_pos_ev.get(cn, ())) | set(slim_pos_idx.get(cn, ()))
+        if wprov and wprov.get("pos"):
+            pos_evidence.add(wprov["pos"])
+        klass = classify_alternative(morph, pos_evidence, lang)
+        classifications.append(klass)
+
+        alt = {
             "target": alt_orig_case.get(cn, cn),
             "votes": votes,
             "sources": sources_sorted,
             "omwBestSenseRank": alt_omw_best_rank.get(cn),
             "glosses": glosses,
             "morph": morph,
-        })
+            "pos": klass["posHint"],
+        }
+        if wprov and wprov.get("gloss"):
+            alt["wiktinvGloss"] = wprov["gloss"]  # the slim gloss that matched W
+        alternatives.append(alt)
+
+    # wiktinv-only stratum: EVERY proposer across the alternatives is an English-
+    # Wiktionary family source (no freedict/apertium/omw/wikipedia) AND the best
+    # alternative is one wiktinv proposed -- the net-new volume the inversion
+    # unlocks (analogous to wikipediaOnly). Used for QA sampling + the breakdown.
+    all_proposers: set[str] = set()
+    for srcs in alt_sources.values():
+        all_proposers |= srcs
+    best_sources = alt_sources.get(ranked[0], set()) if ranked else set()
+    wiktinv_only = bool("wiktinv" in best_sources and all_proposers <= WIKT_VOTE_FAMILY)
+
+    diag["wiktinvOnly"] = wiktinv_only
+    # A row is SHIPPABLE when it is not preSkipped AND at least one alternative
+    # could clear apply_verdicts (non-noun, or noun with full gender+plural).
+    diag["shippableAlt"] = any(k["mintable"] for k in classifications)
+    diag["preSkip"] = compute_preskip(en_key, alternatives, classifications, lang)
 
     return alternatives, set(alt_sources.keys()), passes, diag
 
@@ -841,6 +1134,7 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
     for lemma in sorted(authority_exact):  # sorted -> deterministic collision pick
         norm_to_exact.setdefault(norm(lemma), lemma)
     langlinks_idx, ll_stats = load_langlinks_index(lang, authority_exact, norm_to_exact)
+    wiktinv_idx, slim_pos_idx = load_wiktinv_index(lang)
     indexes = {
         "freedict": load_freedict_index(lang),
         "apertium": load_apertium_index(lang),
@@ -851,11 +1145,14 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
         "wikt_gloss": gloss_idx,
         "wikt_match_gloss": match_gloss_idx,
         "langlinks": langlinks_idx,
+        "wiktinv": wiktinv_idx,
+        "slim_pos": slim_pos_idx,
     }
     log(f"  indexes loaded in {time.time() - t0:.1f}s "
         f"(pack_keys={len(pack_keys)}, already_adjudicated={len(excluded_keys)}, "
         f"wiktgloss_lemmas={len(match_gloss_idx)}, authority_lemmas={len(authority_exact)}, "
-        f"langlinks={len(langlinks_idx)})")
+        f"langlinks={len(langlinks_idx)}, wiktinv_keys={len(wiktinv_idx)}, "
+        f"slim_pos_lemmas={len(slim_pos_idx)})")
     log(f"  [langlinks] {json.dumps(dict(ll_stats), sort_keys=True)}")
 
     t1 = time.time()
@@ -933,6 +1230,33 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
                         else:
                             ev[f"{tier}_noun_missing_morph"] += 1  # -> mint_no_morph later
 
+        # ---- wiktinv contribution + freedict-es second-vote + preSkip/shippable ----
+        best_sources = set(best_alt.get("sources") or [])
+        if any("wiktinv" in (a.get("sources") or []) for a in alternatives):
+            ev["wiktinv_present"] += 1
+            if diag["wiktinvOnly"]:
+                ev["wiktinv_sole"] += 1   # English-Wiktionary-only, wiktinv wins best
+            else:
+                ev["wiktinv_co"] += 1     # wiktinv co-proposes with an independent source
+        # freedict pushing a target to >=2 genuinely-independent (real) votes.
+        if any("freedict" in (a.get("sources") or [])
+               and len(set(a.get("sources") or []) - SLIM_DERIVED_SOURCES) >= 2
+               for a in alternatives):
+            ev["freedict_second_vote"] += 1
+
+        preskip = diag["preSkip"]
+        if preskip:
+            ev[f"preskip_{preskip}"] += 1
+        gate_best = diag.get("gateBest", 0)
+        shippable = preskip is None and diag["shippableAlt"]
+        if shippable:
+            ev["shippable"] += 1
+            ev["shippable_ge2_gate" if gate_best >= 2 else "shippable_1_gate"] += 1
+            if tier:
+                ev[f"shippable_tier_{tier}"] += 1
+            if diag["wiktinvOnly"]:
+                ev["shippable_wiktinv_sole"] += 1
+
         entr_senses = build_entr_senses(lang, key, entr_idx, all_alt_keys)
         enzipf = row["enZipf"]
         record = {
@@ -943,7 +1267,10 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
             "entrSenses": entr_senses,
             "alternatives": alternatives,
             "shipTierHint": "tail" if enzipf < 5.0 else "core-gap",
+            "preSkip": preskip,
         }
+        if diag["wiktinvOnly"]:
+            record["wiktinvOnly"] = True
         if tier:
             record["evidenceTier"] = tier
             record["wikipediaOnly"] = diag["wikipediaOnly"]
