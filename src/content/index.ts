@@ -85,19 +85,27 @@ function currentRuntimeSettings(): RuntimeSettings {
 
 // The settings a finished render pass actually consumed — NOT whatever is in
 // memory when it happens to finish. A reconcile can call loadSettings() while a
-// pass is still awaiting its pack or walking the DOM, so language and tail are
-// read back from the loader (what truly got loaded) and density and the
-// disabled-POS set are the values the pass was handed. Recording live settings
-// here would let an A -> B -> A toggle leave the page rendered in B while every
-// later diff believes it is in A.
+// pass is still awaiting its pack or walking the DOM, so the language is read
+// back from the loader (what truly got loaded) and density and the disabled-POS
+// set are the values the pass was handed. Recording live settings here would let
+// an A -> B -> A toggle leave the page rendered in B while every later diff
+// believes it is in A.
+//
+// `tailLoaded` is the state AT CANDIDATE EXTRACTION, not at pass end: the
+// progressive tail merges in the background, so its commit can land mid-pass —
+// after the pass chose its candidates from the core-only lookup(), but before it
+// finished. Reading isTailLoaded() live here would record that render as
+// tail-inclusive, and the queued percolation re-diff would wrongly drop as a
+// no-op, stranding the page without its tail words.
 function renderedRuntimeSettings(
   density: number,
   disabledPartsOfSpeech: readonly PartOfSpeech[],
+  tailLoadedAtExtraction: boolean,
 ): RuntimeSettings {
   return {
     density,
     replacementsEnabled: true,
-    tailLoaded: isTailLoaded(),
+    tailLoaded: tailLoadedAtExtraction,
     blockedDomains: [...getBlockedDomains()],
     targetLanguage: getActiveTargetLanguage(),
     disabledPartsOfSpeech: [...disabledPartsOfSpeech],
@@ -273,19 +281,27 @@ function updateRankedPageLemmas(pageCandidates: CandidateToken[]): string[] {
   return rankedPageLemmas
 }
 
+// What a finished pass reports: whether it rendered, and whether the tail was
+// merged when its candidates were extracted (see renderedRuntimeSettings).
+interface RenderPassResult {
+  rendered: boolean
+  tailLoadedAtExtraction: boolean
+}
+
 async function renderReplacementPass(
   density: number,
   disabledPartsOfSpeech: readonly PartOfSpeech[],
   shouldRecordExposure?: (lemma: string) => boolean,
   isCurrentRun: () => boolean = () => true,
-): Promise<boolean> {
+): Promise<RenderPassResult> {
   // Set up hover handling before injection so the first rendered span is covered.
   setupHoverHandler()
 
   // Walk and process all text nodes. collectTextNodes() may return [] if the
   // user chose Keep Paused on the high-stakes domain banner.
   const textNodes = await collectTextNodes(document.body)
-  if (!isCurrentRun()) return false
+  const tailLoadedAtExtraction = isTailLoaded()
+  if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
 
   // --- Pass A: page-level word selection ---
   // Collect one representative candidate per unique eligible lemma across all
@@ -302,14 +318,14 @@ async function renderReplacementPass(
   for (const node of textNodes) {
     injectReplacements(node, approvedLemmas, { shouldRecordExposure })
   }
-  if (!isCurrentRun()) return false
+  if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
 
   // Attach the SPA-safe MutationObserver now that approvedLemmas is settled.
   // It will apply the same replacement set to any DOM nodes added after the
   // current pass (route transitions, infinite scroll, dynamic widgets).
   mutationObserver = setupMutationObserver(approvedLemmas)
   activeApprovedLemmas = approvedLemmas
-  return true
+  return { rendered: true, tailLoadedAtExtraction }
 }
 
 // Bring the niche tail in behind the first paint. The core-only pass has already
@@ -393,17 +409,17 @@ async function startReplacementPipeline(): Promise<void> {
 
     const density = computeDensity()
     const disabledPos = [...getDisabledPartsOfSpeech()]
-    const rendered = await renderReplacementPass(
+    const pass = await renderReplacementPass(
       density,
       disabledPos,
       undefined,
       () => isCurrentReplacementPipelineRun(runVersion),
     )
-    if (!rendered) return
+    if (!pass.rendered) return
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density, disabledPos)
+    appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
     // First core-only pass has rendered; now bring the niche tail in behind it.
     schedulePercolation()
   } catch (err) {
@@ -471,17 +487,17 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     const density = computeDensity()
     const disabledPos = [...getDisabledPartsOfSpeech()]
-    const rendered = await renderReplacementPass(
+    const pass = await renderReplacementPass(
       density,
       disabledPos,
       lemma => !recordedApprovedLemmas.has(lemma),
       () => isCurrentReplacementPipelineRun(runVersion),
     )
-    if (!rendered) return
+    if (!pass.rendered) return
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density, disabledPos)
+    appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
     // Keep the tail percolating: a language switch reset it, and until it is
     // loaded this re-arms the background load (idempotent once loaded).
     schedulePercolation()
