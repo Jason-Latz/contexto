@@ -17,12 +17,26 @@ regardless of how many rows they contribute:
   freedict, apertium, omw, en-tr-cache ("entr"), and the "wiktgloss" agreement
   vote -- the target-language Wiktextract entry for the proposed target T carries
   English glosses, and if one of them IS the candidate English word W (strict
-  lemma match), that target->source agreement counts as an independent vote (a
-  different wiki community than the English-Wiktionary "entr" translation tables).
-  wiktgloss only ever confirms a target another source already proposed, never
-  invents one. Output is pipeline/data/queues/mint-{lang}.jsonl, ordered enZipf
-  descending (teach the most useful missing words first), for the
-  proposer/refuter/judge adjudication engine.
+  lemma match), that target->source agreement counts as a vote. wiktgloss only
+  ever confirms a target another source already proposed, never invents one.
+
+  CAVEAT ON INDEPENDENCE (verified 2026-07-15, corrects an earlier claim): entr
+  and wiktgloss both derive from the SAME wiki -- the ENGLISH Wiktionary. entr is
+  the English word W's Translations table; wiktgloss is the foreign headword T's
+  English gloss (kaikki-{lang}.jsonl records are English-Wiktionary foreign-
+  language entries -- their glosses are in English, e.g. German "frei" -> "free;
+  unenslaved"). They are DIFFERENT PAGES with independent editorial provenance
+  (a translation-table edit vs a headword-definition edit), so their agreement is
+  real corroboration -- but NOT a fully independent second dictionary the way
+  freedict/apertium/omw are. A wiktgloss-only second vote is therefore WEAKER
+  than a freedict/apertium/omw second vote; do not treat it as a peer when
+  choosing a >=2 ship gate. (At --min-votes 1 this is moot: every candidate with
+  one real dictionary vote already passes, so wiktgloss changes NO queue-
+  membership -- it only labels the source and bumps the displayed vote count.)
+
+  Output is pipeline/data/queues/mint-{lang}.jsonl, ordered enZipf descending
+  (teach the most useful missing words first), for the proposer/refuter/judge
+  adjudication engine.
 
 Source availability per language (verified against the actual files in
 pipeline/data/sources/ — NOT symmetric, mirrors merge_evidence.py):
@@ -342,11 +356,14 @@ def load_slim_wikt_indexes(
 # Gloss-match agreement vote (wiktgloss)
 # ---------------------------------------------------------------------------
 # The target-language Wiktionary entry for target T carries English glosses. If
-# one of them, as a standalone lemma, IS the English candidate word W, that is an
-# independent second opinion (target->source) on top of the source->target
-# translation dictionaries -- edited by a different wiki community than the
-# English Wiktionary translation tables that produce the "entr" vote, hence
-# counted as an independent source.
+# one of them, as a standalone lemma, IS the English candidate word W, that is a
+# target->source second opinion on top of the source->target translation
+# dictionaries. NOTE (verified): entr and wiktgloss both come from the ENGLISH
+# Wiktionary (different pages -- W's translation table vs T's headword gloss), so
+# their agreement is corroboration but NOT a fully independent second dictionary.
+# See the module docstring's CAVEAT ON INDEPENDENCE. It only ever confirms a
+# target another source already proposed, so every alternative keeps >=1 real
+# dictionary vote and wiktgloss can never be the sole basis for an alternative.
 
 _LEADING_ARTICLE_RE = re.compile(r"^(a|an|the)\s+")
 _TRAILING_PUNCT = " \t.,;:!?\"'`()[]"
