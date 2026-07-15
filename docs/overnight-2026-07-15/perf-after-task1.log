@@ -1,0 +1,14 @@
+perf-after-task1 (2026-07-15T10:28:36.145Z)
+core first-pass avg: 3186ms (baseline 3357ms, delta -5.1%)
+core heap avg: 40.4MB (baseline 41MB)
+default percolation-complete avg: 4778ms
+default steady-state heap avg: 38.1MB (old aggressive 59.1MB)
+TAIL PARSE/MERGE contribution above page-work baseline: 0ms (gate D budget 50ms)
+  (merge-window longtask max 67ms is post-core page work; no-tail baseline max 67ms)
+longest reconcile re-render task: 3277ms (the existing in-place reconcile cost, = a language switch; not tail parse/merge)
+longest main-thread task overall: 4262ms
+  wikipedia-photosynthesis   core 1616/2311ms  default 1938/37.7MB  tailMerge+0ms reconcile 1120ms
+  wikipedia-roman-empire     core 4492/4976ms  default 4846/38.7MB  tailMerge+0ms reconcile 3075ms
+  gutenberg-alice            core 2338/4644ms  default 2648/37.7MB  tailMerge+0ms reconcile 3277ms
+  pg-essay                   core 1081/2612ms  default 1162/37.4MB  tailMerge+0ms reconcile 1817ms
+  mdn-array                  core 750/1388ms  default 791/38.8MB  tailMerge+0ms reconcile 507ms

@@ -1,0 +1,8 @@
+wikipedia-photosynthesis   core: 1616 repl /  2563ms / 33.2MB   aggressive: 1935 repl /  2559ms / 49MB
+wikipedia-roman-empire     core: 4492 repl /  5238ms / 56.2MB   aggressive: 4869 repl /  5471ms / 61.9MB
+gutenberg-alice            core: 2338 repl /  4863ms / 38.2MB   aggressive: 2646 repl /  4966ms / 69.4MB
+pg-essay                   core: 1081 repl /  2798ms / 40.8MB   aggressive: 1165 repl /  2725ms / 58MB
+mdn-array                  core:  750 repl /  1322ms / 36.4MB   aggressive:  792 repl /  2137ms / 57.2MB
+
+aggregate: {"coreAvgMs":3357,"aggressiveAvgMs":3572,"coreAvgHeapMB":41,"aggressiveAvgHeapMB":59.1}
+results -> tests/live/perf-results.json  screenshots -> /Users/jason/Downloads/CS Classes/Projects/Textum/.claude/worktrees/long-tail-vocab-expansion-80f07b/tests/live/screenshots

@@ -1,0 +1,88 @@
+{
+  "language": "es",
+  "sites": 5,
+  "generatedFrom": "tests/live/fixtures/perf",
+  "rows": [
+    {
+      "site": "wikipedia-photosynthesis",
+      "core": {
+        "ms": 2563,
+        "count": 1616,
+        "heap": 33.2,
+        "errors": 0
+      },
+      "aggressive": {
+        "ms": 2559,
+        "count": 1935,
+        "heap": 49,
+        "errors": 0
+      }
+    },
+    {
+      "site": "wikipedia-roman-empire",
+      "core": {
+        "ms": 5238,
+        "count": 4492,
+        "heap": 56.2,
+        "errors": 0
+      },
+      "aggressive": {
+        "ms": 5471,
+        "count": 4869,
+        "heap": 61.9,
+        "errors": 0
+      }
+    },
+    {
+      "site": "gutenberg-alice",
+      "core": {
+        "ms": 4863,
+        "count": 2338,
+        "heap": 38.2,
+        "errors": 0
+      },
+      "aggressive": {
+        "ms": 4966,
+        "count": 2646,
+        "heap": 69.4,
+        "errors": 0
+      }
+    },
+    {
+      "site": "pg-essay",
+      "core": {
+        "ms": 2798,
+        "count": 1081,
+        "heap": 40.8,
+        "errors": 0
+      },
+      "aggressive": {
+        "ms": 2725,
+        "count": 1165,
+        "heap": 58,
+        "errors": 0
+      }
+    },
+    {
+      "site": "mdn-array",
+      "core": {
+        "ms": 1322,
+        "count": 750,
+        "heap": 36.4,
+        "errors": 0
+      },
+      "aggressive": {
+        "ms": 2137,
+        "count": 792,
+        "heap": 57.2,
+        "errors": 0
+      }
+    }
+  ],
+  "aggregate": {
+    "coreAvgMs": 3357,
+    "aggressiveAvgMs": 3572,
+    "coreAvgHeapMB": 41,
+    "aggressiveAvgHeapMB": 59.1
+  }
+}

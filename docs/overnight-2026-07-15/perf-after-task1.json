@@ -1,0 +1,134 @@
+{
+  "language": "es",
+  "sites": 5,
+  "generatedFrom": "tests/live/fixtures/perf",
+  "baseline": {
+    "coreAvgMs": 3357,
+    "coreAvgHeapMB": 41,
+    "aggressiveAvgMs": 3572,
+    "aggressiveAvgHeapMB": 59.1
+  },
+  "rows": [
+    {
+      "site": "wikipedia-photosynthesis",
+      "core": {
+        "ms": 2311,
+        "count": 1616,
+        "heap": 42.5,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 1802,
+        "coreCount": 1616,
+        "percolateDoneMs": 2992,
+        "finalCount": 1938,
+        "maxLongtaskMs": 1511,
+        "maxTailMergeLongtaskMs": 0,
+        "maxReconcileLongtaskMs": 1120,
+        "heap": 37.7,
+        "errors": 0
+      },
+      "tailMergeContributionMs": 0
+    },
+    {
+      "site": "wikipedia-roman-empire",
+      "core": {
+        "ms": 4976,
+        "count": 4492,
+        "heap": 44.9,
+        "postCoreMaxLongtaskMs": 67,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 4667,
+        "coreCount": 4492,
+        "percolateDoneMs": 7861,
+        "finalCount": 4846,
+        "maxLongtaskMs": 4262,
+        "maxTailMergeLongtaskMs": 67,
+        "maxReconcileLongtaskMs": 3075,
+        "heap": 38.7,
+        "errors": 0
+      },
+      "tailMergeContributionMs": 0
+    },
+    {
+      "site": "gutenberg-alice",
+      "core": {
+        "ms": 4644,
+        "count": 2338,
+        "heap": 36.2,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 4057,
+        "coreCount": 2338,
+        "percolateDoneMs": 7405,
+        "finalCount": 2648,
+        "maxLongtaskMs": 3858,
+        "maxTailMergeLongtaskMs": 0,
+        "maxReconcileLongtaskMs": 3277,
+        "heap": 37.7,
+        "errors": 0
+      },
+      "tailMergeContributionMs": 0
+    },
+    {
+      "site": "pg-essay",
+      "core": {
+        "ms": 2612,
+        "count": 1081,
+        "heap": 44.6,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 2168,
+        "coreCount": 1081,
+        "percolateDoneMs": 4039,
+        "finalCount": 1162,
+        "maxLongtaskMs": 1887,
+        "maxTailMergeLongtaskMs": 0,
+        "maxReconcileLongtaskMs": 1817,
+        "heap": 37.4,
+        "errors": 0
+      },
+      "tailMergeContributionMs": 0
+    },
+    {
+      "site": "mdn-array",
+      "core": {
+        "ms": 1388,
+        "count": 750,
+        "heap": 34,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 1030,
+        "coreCount": 750,
+        "percolateDoneMs": 1594,
+        "finalCount": 791,
+        "maxLongtaskMs": 654,
+        "maxTailMergeLongtaskMs": 0,
+        "maxReconcileLongtaskMs": 507,
+        "heap": 38.8,
+        "errors": 0
+      },
+      "tailMergeContributionMs": 0
+    }
+  ],
+  "aggregate": {
+    "coreFirstPassAvgMs": 3186,
+    "coreAvgHeapMB": 40.4,
+    "defaultPercolateDoneAvgMs": 4778,
+    "defaultSteadyHeapMB": 38.1,
+    "maxTailMergeContributionMs": 0,
+    "maxMergeWindowLongtaskMs": 67,
+    "maxPageWorkBaselineMs": 67,
+    "maxReconcileLongtaskMs": 3277,
+    "maxLongtaskMs": 4262
+  }
+}

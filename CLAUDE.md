@@ -52,7 +52,7 @@ npm run test:live-tab-sync                 # headed: settings-sync + page-status
 curl -s --compressed https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl \
   | python3 scripts/stream_en_translations.py pipeline/data/en-tr-cache.jsonl   # ~13 min, one-time
 python3 -m pipeline.import_tail.build --language es --wikt-extract pipeline/data/kaikki-es.jsonl
-node tests/live/run-perf.mjs               # headed: multi-site core-vs-aggressive perf (needs build)
+node tests/live/run-perf.mjs               # headed: multi-site core-vs-default-tail perf (needs build)
 ```
 
 Site (static, no build step):
@@ -81,24 +81,29 @@ The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**
   `GENDERS_BY_LANGUAGE` in the validator, a `<lang>Adapter.ts` + dispatch entry, and build
   the pack. The loader/injector/popup are already language-generic.
 
-## Vocabulary tiers — core + niche tail (2026-07)
+## Vocabulary tiers — core + progressive niche tail (2026-07-15)
 
-Each language ships two shards. **This is the performance design: getting to a large
-vocabulary without slowing the default page load.**
+Each language ships two shards. **This is the performance design: the full vocabulary
+works by default, and the tail must never block or slow the core first pass.**
 
 - **core** (`<lang>.json`) — curated, frequency-ranked, high/medium-confidence. Loaded
-  eagerly on every page (as before). This is what gets injected by default.
+  eagerly on every page; the first replacement pass waits only on this.
 - **tail** (`<lang>.tail.json`) — niche, `low`-confidence long-tail words (real English
   words gated on `/usr/share/dict/words` OR wordfreq, `enZipf < 5.0`, deduped vs core).
-  **Quarantined:** lazy-loaded and only when **Aggressive Mode** is on, so a default page
-  never fetches/parses it and its words are never injected. Quarantine is enforced entirely
-  in `src/language/loader.ts` — `lookup()` only consults the tail Map when it's loaded; the
-  injector is unchanged. `loadLanguagePack(lang, includeTail)`; toggling aggressive mode
-  reconciles the tail in place on the open tab.
-- **Aggressive Mode** = `settings.aggressiveMode` (default off) + popup toggle. Coverage:
-  es 85.7k · de 75.7k · fr 72.1k · it 69.3k (core+tail; es shrank 2026-07-14 when the
-  unreachable legacy compounds were removed). Perf cost of the tail: ~+4.5% inject
-  time, ~+10MB heap, only when opted in (see `tests/live/run-perf.mjs`).
+  **Loads progressively BY DEFAULT** (Aggressive Mode is retired; a stored
+  `aggressiveMode` key is ignored; there is no user-facing tier toggle). After the
+  core-only first pass renders, the content script's `schedulePercolation()` calls
+  `ensureTailLoaded()` (`src/language/loader.ts`): the build ships the tail as a chunk
+  manifest + 4,000-entry compact chunk files (`scripts/build-compact-packs.mjs`), each
+  fetched/merged in its own `requestIdleCallback` slice; when merged, the normal
+  reconcile re-renders so tail words percolate into the open page a beat after load.
+- **Heap discipline:** the tail Map stores compact TUPLES; an entry is expanded to a
+  full object only on a lookup hit (then cached), and merge slices validate tuples
+  allocation-free. Measured 2026-07-15 (`tests/live/run-perf.mjs`, es): core first pass
+  3184ms avg (baseline 3357ms, -5.2%); tail parse/merge adds <=1ms of main-thread slice
+  over the no-tail baseline; percolation completes ~4.8s avg; steady-state heap 38.1MB
+  post-GC vs the old eager-tail 59.1MB. Committed public tail files stay single verbose
+  packs (pipeline/validator untouched); chunking is dist-only.
 - **Data ceiling:** 100k/language is NOT reachable from free offline Wiktextract/FreeDict
   with quality gating (the remainder is non-dictionary junk). To push higher, add another
   independent source dictionary (e.g. FreeDict eng-deu/fra/ita, as es already stacks FreeDict
@@ -107,8 +112,10 @@ vocabulary without slowing the default page load.**
 Conventions to preserve:
 - Tail entries are `confidence: "low"`, `frequencyRank` offset by 1,000,000 (sort after core),
   `enZipf < 5.0`. Never let tail keys overlap core (the validator enforces disjointness).
-- Don't inject the tail by default — the whole point is quarantine. Keep the core shard the
-  eager one; keep the tail lazy.
+- The tail must never block or slow the core first pass: keep `loadLanguagePack()`
+  core-only, keep the tail load idle-chunked and off the critical path, and keep
+  `isTailLoaded()` meaning "fully merged" (the live-settings diff keys on it via
+  `tailLoaded` to fire exactly one percolation reconcile).
 
 ## Live settings sync + page status (2026-07-09)
 
@@ -192,6 +199,17 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 
 ## Current state
 
+- **Default-on progressive tail landed (2026-07-15):** Aggressive Mode is retired
+  (setting, popup toggle, live-diff key, tests); the niche tail now loads by default in
+  idle-time chunks after the core first pass and percolates into the open page via the
+  existing reconcile path (see "Vocabulary tiers"). Live proof: `test:live-tab-sync`
+  gained PERCOLATE-default (es-tail-only "photon" -> fotón appears with no toggle) and
+  PERCOLATE-switch (de-tail-only "wildlife" -> Fauna after a language switch); 21/21
+  scenarios green. Perf (es, 5 fixtures): first pass -5.2% vs baseline, tail merge
+  main-thread contribution <=1ms, steady-state heap 38.1MB (old aggressive 59.1MB).
+  Artifacts: `docs/overnight-2026-07-15/perf-after-task1.{json,log}` + `shots/`.
+  The perf harness (`tests/live/run-perf.mjs`) now measures CORE (tail-stripped build)
+  vs DEFAULT (shipping build) with phase-attributed longtasks.
 - **Gloss repair run landed (2026-07-14, remove/rebuild/regloss):** (1) the 2,683
   unreachable legacy synthetic-compound es entries are GONE (es core 47,317; no
   backfill — FreeDict past the imported 45.8k is the junk band; growth belongs to the
