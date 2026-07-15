@@ -12,3 +12,10 @@ longest main-thread task overall: 4262ms
   gutenberg-alice            core 2338/4644ms  default 2648/37.7MB  tailMerge+0ms reconcile 3277ms
   pg-essay                   core 1081/2612ms  default 1162/37.4MB  tailMerge+0ms reconcile 1817ms
   mdn-array                  core 750/1388ms  default 791/38.8MB  tailMerge+0ms reconcile 507ms
+
+CORRECTION (2026-07-15, post-review): the "38.1MB vs old aggressive 59.1MB" heap
+comparison above is unfair — 38.1 was measured post-GC, 59.1 was not. The fair
+like-for-like post-GC comparison (see perf-after-task1b.log) is core-only 27.5MB
+vs full core+tail 38.4MB: today's tail retains ~11MB. This file also predates the
+incremental-percolation fix; its "reconcile re-render task" numbers (0.5-3.3s) are
+what the review flagged and perf-after-task1b measures the fix for.

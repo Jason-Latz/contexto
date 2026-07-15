@@ -95,15 +95,21 @@ works by default, and the tail must never block or slow the core first pass.**
   core-only first pass renders, the content script's `schedulePercolation()` calls
   `ensureTailLoaded()` (`src/language/loader.ts`): the build ships the tail as a chunk
   manifest + 4,000-entry compact chunk files (`scripts/build-compact-packs.mjs`), each
-  fetched/merged in its own `requestIdleCallback` slice; when merged, the normal
-  reconcile re-renders so tail words percolate into the open page a beat after load.
+  fetched/merged in its own `requestIdleCallback` slice; when merged, tail words
+  percolate into the open page **INCREMENTALLY** (`renderIncrementalTailPass`): tail
+  arrival is additive, so only the marginal lemmas are injected into the still-
+  unreplaced text, in time-budgeted slices with idle yields — existing spans are never
+  torn down, and the page-wide density target is preserved (erring on slightly fewer
+  injections, since leftover text fragments parse with less sentence context). A
+  genuine settings/language change still takes the full restore-and-re-render path.
 - **Heap discipline:** the tail Map stores compact TUPLES; an entry is expanded to a
   full object only on a lookup hit (then cached), and merge slices validate tuples
   allocation-free. Measured 2026-07-15 (`tests/live/run-perf.mjs`, es): core first pass
-  3184ms avg (baseline 3357ms, -5.2%); tail parse/merge adds <=1ms of main-thread slice
-  over the no-tail baseline; percolation completes ~4.8s avg; steady-state heap 38.1MB
-  post-GC vs the old eager-tail 59.1MB. Committed public tail files stay single verbose
-  packs (pipeline/validator untouched); chunking is dist-only.
+  3186ms avg (baseline 3357ms, -5.1%); longest percolation-window main-thread task 83ms
+  (harness gates it at 250ms; the no-tail page-work baseline in that window is 68ms);
+  percolation completes ~5.7s avg; heap post-GC like-for-like: core-only 27.5MB vs full
+  core+tail 38.4MB, so today's tail retains ~11MB. Committed public tail files stay
+  single verbose packs (pipeline/validator untouched); chunking is dist-only.
 - **Data ceiling:** 100k/language is NOT reachable from free offline Wiktextract/FreeDict
   with quality gating (the remainder is non-dictionary junk). To push higher, add another
   independent source dictionary (e.g. FreeDict eng-deu/fra/ita, as es already stacks FreeDict
@@ -199,17 +205,24 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 
 ## Current state
 
-- **Default-on progressive tail landed (2026-07-15):** Aggressive Mode is retired
-  (setting, popup toggle, live-diff key, tests); the niche tail now loads by default in
-  idle-time chunks after the core first pass and percolates into the open page via the
-  existing reconcile path (see "Vocabulary tiers"). Live proof: `test:live-tab-sync`
-  gained PERCOLATE-default (es-tail-only "photon" -> fotón appears with no toggle) and
-  PERCOLATE-switch (de-tail-only "wildlife" -> Fauna after a language switch); 21/21
-  scenarios green. Perf (es, 5 fixtures): first pass -5.2% vs baseline, tail merge
-  main-thread contribution <=1ms, steady-state heap 38.1MB (old aggressive 59.1MB).
-  Artifacts: `docs/overnight-2026-07-15/perf-after-task1.{json,log}` + `shots/`.
-  The perf harness (`tests/live/run-perf.mjs`) now measures CORE (tail-stripped build)
-  vs DEFAULT (shipping build) with phase-attributed longtasks.
+- **Default-on progressive tail landed (2026-07-15, + incremental percolation after
+  adversarial review):** Aggressive Mode is retired (setting, popup toggle, live-diff
+  key, tests); the niche tail loads by default in idle-time chunks after the core
+  first pass and percolates into the open page INCREMENTALLY — only the marginal
+  lemmas are injected, existing spans are never torn down (see "Vocabulary tiers").
+  The review caught the first version paying a full restore+re-render on every page
+  (0.5-3.3s main-thread freeze on big pages); incremental percolation cut that to
+  83ms max (measured while scrolling the largest fixture). Live proof:
+  `test:live-tab-sync` gained PERCOLATE-default (es-tail-only "photon" -> fotón, no
+  toggle), PERCOLATE-incremental (0 teardowns during percolation), PERCOLATE-switch
+  (de-tail-only "wildlife" -> Fauna after a language switch); 22/22 green, red/green
+  proven by disabling the incremental branch. Perf (es, 5 fixtures): first pass -5.1%
+  vs baseline; percolation-window longtask 83ms max (gated at 250ms; no-tail page
+  work is 68ms of it); heap post-GC core-only 27.5MB vs full 38.4MB. Artifacts:
+  `docs/overnight-2026-07-15/perf-after-task1b.{json,log}` + `shots/`. Bug found in
+  passing: the live harness's teardown counters observed `document.documentElement`,
+  which is NULL at init-script time, so observe() threw and REG-firstrun's churn
+  assertion had been vacuous; all counters now observe `document`.
 - **Gloss repair run landed (2026-07-14, remove/rebuild/regloss):** (1) the 2,683
   unreachable legacy synthetic-compound es entries are GONE (es core 47,317; no
   backfill — FreeDict past the imported 45.8k is the junk band; growth belongs to the

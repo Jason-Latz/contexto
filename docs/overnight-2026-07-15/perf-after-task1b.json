@@ -1,0 +1,122 @@
+{
+  "language": "es",
+  "sites": 5,
+  "generatedFrom": "tests/live/fixtures/perf",
+  "baseline": {
+    "coreAvgMs": 3357,
+    "aggressiveAvgMs": 3572,
+    "note": "pre-change heap baselines were captured without forced GC and are not comparable to the post-GC numbers below"
+  },
+  "percolationLongtaskBudgetMs": 250,
+  "rows": [
+    {
+      "site": "wikipedia-photosynthesis",
+      "core": {
+        "ms": 2296,
+        "count": 1616,
+        "heap": 27.3,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 1797,
+        "coreCount": 1616,
+        "percolateDoneMs": 2942,
+        "finalCount": 1870,
+        "maxLongtaskMs": 1516,
+        "maxPercolationLongtaskMs": 0,
+        "heap": 38,
+        "errors": 0
+      }
+    },
+    {
+      "site": "wikipedia-roman-empire",
+      "core": {
+        "ms": 5118,
+        "count": 4492,
+        "heap": 28.4,
+        "postCoreMaxLongtaskMs": 70,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 4376,
+        "coreCount": 4492,
+        "percolateDoneMs": 7407,
+        "finalCount": 4792,
+        "maxLongtaskMs": 3964,
+        "maxPercolationLongtaskMs": 82,
+        "heap": 39,
+        "errors": 0
+      }
+    },
+    {
+      "site": "gutenberg-alice",
+      "core": {
+        "ms": 4506,
+        "count": 2338,
+        "heap": 27.1,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 3986,
+        "coreCount": 2338,
+        "percolateDoneMs": 8798,
+        "finalCount": 2584,
+        "maxLongtaskMs": 3784,
+        "maxPercolationLongtaskMs": 0,
+        "heap": 38.4,
+        "errors": 0
+      }
+    },
+    {
+      "site": "pg-essay",
+      "core": {
+        "ms": 2630,
+        "count": 1081,
+        "heap": 26.7,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 2199,
+        "coreCount": 1081,
+        "percolateDoneMs": 5002,
+        "finalCount": 1146,
+        "maxLongtaskMs": 1887,
+        "maxPercolationLongtaskMs": 0,
+        "heap": 37.7,
+        "errors": 0
+      }
+    },
+    {
+      "site": "mdn-array",
+      "core": {
+        "ms": 1385,
+        "count": 750,
+        "heap": 28.2,
+        "postCoreMaxLongtaskMs": 0,
+        "errors": 0
+      },
+      "default": {
+        "coreDoneMs": 1196,
+        "coreCount": 750,
+        "percolateDoneMs": 1722,
+        "finalCount": 779,
+        "maxLongtaskMs": 665,
+        "maxPercolationLongtaskMs": 0,
+        "heap": 38.9,
+        "errors": 0
+      }
+    }
+  ],
+  "aggregate": {
+    "coreFirstPassAvgMs": 3187,
+    "coreAvgHeapMB": 27.5,
+    "defaultPercolateDoneAvgMs": 5174,
+    "defaultSteadyHeapMB": 38.4,
+    "maxPercolationLongtaskMs": 82,
+    "maxPageWorkBaselineMs": 70,
+    "maxLongtaskMs": 3964
+  }
+}
