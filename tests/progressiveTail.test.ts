@@ -91,9 +91,13 @@ function installFetch(): void {
   globalThis.fetch = async (url: string | URL | Request) => {
     const href = typeof url === 'string' ? url : url instanceof URL ? url.href : url.url
 
-    if (href.endsWith('de.tail.json')) {
+    // Manifest-level tail fetch (<lang>.tail.json): counted whatever the outcome.
+    if (/\.tail\.json$/.test(href)) {
       counts.manifest++
-      return new Response(DE_TAIL_MANIFEST, { status: 200 })
+      if (href.endsWith('de.tail.json')) return new Response(DE_TAIL_MANIFEST, { status: 200 })
+      if (href.endsWith('fr.tail.json')) return new Response(FR_TAIL_VERBOSE, { status: 200 })
+      // Any other language's tail is treated as absent for this test.
+      return new Response('', { status: 404 })
     }
     if (href.endsWith('de.tail.0.json')) {
       counts.chunks++
@@ -103,12 +107,6 @@ function installFetch(): void {
       counts.chunks++
       return new Response(DE_TAIL_CHUNK_1, { status: 200 })
     }
-    if (href.endsWith('fr.tail.json')) {
-      counts.manifest++
-      return new Response(FR_TAIL_VERBOSE, { status: 200 })
-    }
-    // Any other tail shard is treated as absent for this test.
-    if (href.endsWith('.tail.json')) return new Response('', { status: 404 })
     const body = await readFile(new URL(href))
     return new Response(body, { status: 200 })
   }
@@ -206,6 +204,18 @@ test('a missing tail shard is tolerated (core-only, no throw)', async () => {
   await reloadCore('it')
   await ensureTailLoaded('it')
   assert.equal(getActiveLanguagePack()?.targetLanguage, 'it')
-  assert.equal(isTailLoaded(), true, 'an absent tail commits an empty tail rather than staying unloaded')
+  // An absent tail reads as "not loaded" (empty), so the content script never
+  // fires a pointless percolation reconcile for a language with no tail.
+  assert.equal(isTailLoaded(), false, 'an absent tail is not "loaded"')
   assert.equal(lookup(TAIL_SOURCE), null)
+})
+
+test('a re-run after an absent tail does not re-fetch', async () => {
+  installFetch()
+  await reloadCore('it')
+  await ensureTailLoaded('it')
+  const firstManifest = counts.manifest
+  // The empty tail is committed, so a second ensureTailLoaded is a no-op.
+  await ensureTailLoaded('it')
+  assert.equal(counts.manifest, firstManifest, 'absent tail is not re-fetched on every percolation')
 })

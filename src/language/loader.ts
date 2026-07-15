@@ -301,9 +301,12 @@ export async function loadLanguagePack(
   resetTail()
 }
 
-// True when the niche tail shard is fully merged for the active language.
+// True when a non-empty niche tail is fully merged for the active language. An
+// absent tail (404) commits an empty map so it is not re-fetched, but reads as
+// "not loaded" so the content script's percolation reconcile is a no-op — a
+// language with no tail never pays for a pointless re-render.
 export function isTailLoaded(): boolean {
-  return tailSlots !== null
+  return tailSlots !== null && tailSlots.size > 0
 }
 
 export function getActiveLanguagePack(): AnyLanguagePack | null {
