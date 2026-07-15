@@ -970,7 +970,7 @@ def build_alternatives_and_check_gate(
         return [], set(), False, {"trueBest": 0, "strictBest": 0, "tcBest": 0,
                                   "gateBest": 0, "evidenceTier": None,
                                   "wikipediaOnly": False, "wiktinvOnly": False,
-                                  "preSkip": None}
+                                  "shippableAlt": False, "preSkip": None}
 
     noun_idx = indexes["wikt_noun"]
     gloss_idx = indexes["wikt_gloss"]
@@ -1069,6 +1069,7 @@ def build_alternatives_and_check_gate(
             "glosses": glosses,
             "morph": morph,
             "pos": klass["posHint"],
+            "mintable": klass["mintable"],  # could clear apply_verdicts for some verdict
         }
         if wprov and wprov.get("gloss"):
             alt["wiktinvGloss"] = wprov["gloss"]  # the slim gloss that matched W
@@ -1268,6 +1269,7 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
             "alternatives": alternatives,
             "shipTierHint": "tail" if enzipf < 5.0 else "core-gap",
             "preSkip": preskip,
+            "shippable": shippable,
         }
         if diag["wiktinvOnly"]:
             record["wiktinvOnly"] = True
