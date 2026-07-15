@@ -530,6 +530,7 @@ def load_langlinks_index(
 _LEADING_ARTICLE_RE = re.compile(r"^(a|an|the)\s+")
 _TRAILING_PUNCT = " \t.,;:!?\"'`()[]"
 _TOKEN_RE = re.compile(r"[a-z]+(?:'[a-z]+)?")
+_BRACKET_CHARS = set("()[]{}")
 
 
 def _reduce_gloss_segment(seg: str) -> str:
@@ -543,13 +544,16 @@ def gloss_matches_word_strict(gloss: str, word: str) -> bool:
     """STRICT tier: the gloss (whole, or one comma/semicolon segment), lowercased
     and stripped of a leading article + trailing punctuation, EQUALS `word`.
     Definitional glosses ("related to war", "a kind of dog", "foot (a part of the
-    body)") deliberately do NOT match -- only clean single-lemma glosses do."""
+    body)") deliberately do NOT match -- only clean single-lemma glosses do. A
+    segment containing a bracket ("(dog)", "dog (mammal)") is definitional/
+    parenthetical and never a clean lemma, so it is rejected outright -- otherwise
+    trailing-punct stripping would peel "(dog)" down to "dog" and false-match."""
     w = word.strip().lower()
     if not w:
         return False
-    if _reduce_gloss_segment(gloss) == w:
-        return True
-    for seg in re.split(r"[;,]", gloss):
+    for seg in (gloss, *re.split(r"[;,]", gloss)):
+        if any(ch in _BRACKET_CHARS for ch in seg):
+            continue
         if _reduce_gloss_segment(seg) == w:
             return True
     return False
@@ -588,7 +592,13 @@ def compose_morph(
     which source(s) actually contributed: "wikidata", "wiktextract", or
     "wikidata+wiktextract". Returns None only when neither field is available.
     (Nouns still need BOTH gender and plural to be mintable -- enforced by
-    apply_verdicts, not here.)"""
+    apply_verdicts, not here.)
+
+    ACCEPTED LIMITATION: because gender and plural are picked per field, a
+    wikidata gender can be paired with a wiktextract plural that actually belongs
+    to a DIFFERENT homograph sense of the lemma (measured at 4/159 real de cases,
+    all benign -- the plural form was correct for the intended sense anyway).
+    Not worth the complexity of sense-joining the two authorities."""
     wd_gender = _best_field(wd_pairs, 0)
     wd_plural = _best_field(wd_pairs, 1)
     wx_gender = _best_field(wx_pairs, 0)

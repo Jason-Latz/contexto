@@ -75,6 +75,16 @@ class StrictGlossMatcherTest(unittest.TestCase):
         self.assertFalse(bmq.gloss_matches_word_strict("doghouse", "dog"))
         self.assertFalse(bmq.gloss_matches_word_strict("watchdog", "dog"))
 
+    def test_negative_fully_parenthesized_token(self):
+        # A bracketed segment is definitional and must never reduce to a lemma,
+        # even a fully-parenthesized single token (trailing-punct stripping used
+        # to peel "(dog)" -> "dog").
+        self.assertFalse(bmq.gloss_matches_word_strict("(dog)", "dog"))
+        self.assertFalse(bmq.gloss_matches_word_strict("[dog]", "dog"))
+        self.assertFalse(bmq.gloss_matches_word_strict("dog (mammal)", "dog"))
+        # ...but a clean segment alongside a bracketed one still matches.
+        self.assertTrue(bmq.gloss_matches_word_strict("dog; (canine mammal)", "dog"))
+
     def test_tokencontains_is_a_strict_superset(self):
         # token-contains (MEASUREMENT only) catches what strict deliberately drops.
         self.assertTrue(bmq.gloss_tokencontains_word("foot (a part of the body)", "foot"))
