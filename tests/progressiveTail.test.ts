@@ -32,6 +32,13 @@ const TAIL_EXPRESSION = 'zzz niche phrase'
 // posCode: noun=0 adverb=1 adjective=2 verb=3 expression=4 function=5; conf low=2.
 const TAIL_WORD_TUPLE = ['nischenwort', 1, 'a niche test word', 1_000_001, 2, 0, 0, 0, 1, 0]
 const TAIL_EXPR_TUPLE = ['nischenphrase', 4, 'a niche test expression', 1_000_002, 2, 0, 0, 0, 1, 0]
+// A structurally unusable noun (no gender/plural): the allocation-free tuple
+// filter must drop it at merge time, exactly as isUsableEntry drops its verbose
+// equivalent. And a dangling hyphenated target must be dropped for any POS.
+const BAD_NOUN = 'zzzbadnoun'
+const BAD_NOUN_TUPLE = ['Nischending', 0, 'a noun with no morphology', 1_000_003, 2, 0, 0, 0, 1, 0]
+const BAD_TARGET = 'zzzbadtarget'
+const BAD_TARGET_TUPLE = ['nischen-', 2, 'a dangling prefix target', 1_000_004, 2, 0, 0, 0, 1, 0]
 
 // The shipping tail is served as a chunk manifest + physical chunk files. This
 // mirrors what scripts/build-compact-packs.mjs emits into dist/.
@@ -57,7 +64,11 @@ const DE_TAIL_CHUNK_1 = JSON.stringify({
   sourceLanguage: 'en',
   targetLanguage: 'de',
   displayName: 'German',
-  entries: { [TAIL_EXPRESSION]: TAIL_EXPR_TUPLE },
+  entries: {
+    [TAIL_EXPRESSION]: TAIL_EXPR_TUPLE,
+    [BAD_NOUN]: BAD_NOUN_TUPLE,
+    [BAD_TARGET]: BAD_TARGET_TUPLE,
+  },
 })
 
 // A verbose single-file tail (the committed public format + the fallback path).
@@ -147,6 +158,11 @@ test('ensureTailLoaded merges the chunked tail by default and its words resolve'
   assert.equal(tailEntry?.source, TAIL_SOURCE, 'source reconstructed from the key')
   // Tail expressions must be scannable (materialized at merge time).
   assert.equal(getExpressionKeys().includes(TAIL_EXPRESSION), true, 'tail expression scannable after merge')
+
+  // Structurally unusable tuples are filtered at merge time by the allocation-free
+  // tuple check, matching what isUsableEntry does for verbose entries.
+  assert.equal(lookup(BAD_NOUN), null, 'a noun tuple without gender/plural must not be injectable')
+  assert.equal(lookup(BAD_TARGET), null, 'a dangling hyphenated target must not be injectable')
 })
 
 test('lookup materializes a tail entry on demand and caches it (stable reference)', async () => {

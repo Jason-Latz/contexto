@@ -10,6 +10,7 @@ import {
   isCompactPack,
   expandCompactEntries,
   expandCompactEntry,
+  POS_CODES,
   type CompactEntry,
   type CompactLanguagePack,
 } from './packFormat.js'
@@ -108,11 +109,24 @@ function slotToEntry(key: string, slot: TailSlot): TranslationEntry {
   return Array.isArray(slot) ? expandCompactEntry(key, slot) : slot
 }
 
-// Merge one raw tail entry into the in-progress maps. Expanding here to validate
-// is deliberate: the temporary object is discarded (only the compact SLOT is
-// retained), so the tail's steady-state heap stays at tuple cost while reusing
-// the exact isUsableEntry predicate the core uses. Expressions are the exception:
-// they are rare and kept expanded so getExpressionEntries needs no full scan.
+// Usability check on a COMPACT tuple, without expanding it. Mirrors isUsableEntry
+// (allowLowConfidence) but reads tuple positions directly so a merge slice
+// allocates NOTHING — the whole tail is validated with zero garbage, which keeps
+// each idle slice cheap and free of GC spikes even under page memory pressure.
+// Tuple layout (packFormat.ts): [target,pos,gloss,rank,conf,gender,plural,...].
+function isUsableCompactTuple(t: CompactEntry): boolean {
+  if (!isStandaloneTarget(t[0])) return false
+  if (POS_CODES[t[1]] === 'noun') {
+    const plural = t[6]
+    return Boolean(t[0] && plural && t[5] && typeof plural === 'string' && isStandaloneTarget(plural))
+  }
+  return Boolean(t[0])
+}
+
+// Merge one raw tail entry. Only the compact SLOT is retained (deferred
+// materialization); compact tuples are validated allocation-free, and the verbose
+// test-shard path falls back to isUsableEntry. Expressions are rare, so they are
+// materialized here so getExpressionEntries needs no full-tail scan.
 function mergeTailEntry(
   rawKey: string,
   slot: TailSlot,
@@ -120,11 +134,18 @@ function mergeTailEntry(
   expressions: Array<[string, ExpressionTranslationEntry]>,
 ): void {
   const key = rawKey.toLowerCase()
-  const entry = slotToEntry(key, slot)
-  if (!isUsableEntry(entry, true)) return
-  into.set(key, slot)
-  if (entry.partOfSpeech === 'expression') {
-    expressions.push([key, entry as ExpressionTranslationEntry])
+  if (Array.isArray(slot)) {
+    if (!isUsableCompactTuple(slot)) return
+    into.set(key, slot)
+    if (POS_CODES[slot[1]] === 'expression') {
+      expressions.push([key, expandCompactEntry(key, slot) as ExpressionTranslationEntry])
+    }
+  } else {
+    if (!isUsableEntry(slot, true)) return
+    into.set(key, slot)
+    if (slot.partOfSpeech === 'expression') {
+      expressions.push([key, slot as ExpressionTranslationEntry])
+    }
   }
 }
 
@@ -194,11 +215,18 @@ async function loadTailProgressive(targetLanguage: TargetLanguage): Promise<void
   const slots = new Map<string, TailSlot>()
   const expressions: Array<[string, ExpressionTranslationEntry]> = []
 
-  const response = await fetch(tailPackUrl(targetLanguage))
+  // A language may simply have no tail (a missing extension resource REJECTS the
+  // fetch rather than returning a 404). Either way, commit an empty tail so
+  // lookups resolve deterministically and percolation is not re-attempted.
+  let response: Response
+  try {
+    response = await fetch(tailPackUrl(targetLanguage))
+  } catch {
+    commitTail(targetLanguage, slots, expressions, generation)
+    return
+  }
   if (generation !== tailGeneration) return
   if (!response.ok) {
-    // A language may simply have no tail yet — commit an empty one so lookups
-    // resolve deterministically instead of re-fetching on every percolation.
     commitTail(targetLanguage, slots, expressions, generation)
     return
   }
