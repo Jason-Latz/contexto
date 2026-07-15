@@ -23,8 +23,17 @@ export const meta = {
 }
 
 const REPO = '/Users/jason/Downloads/CS Classes/Projects/Textum'
-const A = (typeof args !== 'undefined' && args) ? args : {}
-const LANG = A.lang || 'de'
+// Args may arrive as an object or (defensively) as a JSON string; a missing lang
+// ABORTS rather than silently defaulting — on the first smoke run a default here
+// masked args not arriving at all, and maxBatches was silently ignored.
+let A = {}
+if (typeof args === 'string') { try { A = JSON.parse(args) } catch { A = {} } }
+else if (typeof args !== 'undefined' && args) { A = args }
+if (!A.lang) {
+  log(`ABORT bad_args: args.lang missing. Received: ${JSON.stringify(A).slice(0, 300)}`)
+  return { aborted: 'bad_args', receivedArgs: A }
+}
+const LANG = A.lang
 const LNAME = { de: 'German', fr: 'French', it: 'Italian', es: 'Spanish' }[LANG] || LANG
 const QUEUE = A.queuePath || `pipeline/data/queues/mint-${LANG}.jsonl`
 const ORDERED = `pipeline/data/queues/mint-${LANG}.ordered.jsonl`
@@ -38,7 +47,8 @@ const MAXB = (A.maxBatches === undefined || A.maxBatches === null) ? null : A.ma
 // the logical-batch -> file-index map a pure function of args, so resume is exact.
 const FILE_BASE = A.fileIndexBase || 10000
 
-const COMMON = `Repo: ${REPO} (paths contain spaces — always quote them). python3 available. Do NOT git commit. public/language-packs/ is READ-ONLY here (only pipeline/analysis/apply_verdicts.py ever writes packs, and only after a panel passes). Write ONLY the verdict/queue files this task names, and write each atomically: write <path>.tmp then rename it (mv) onto <path> so a partial file is never observed. Create parent dirs first (mkdir -p). Your final message is machine-read — return ONLY the structured output.`
+const COMMON = `Repo: ${REPO} (paths contain spaces — always quote them). python3 available. Do NOT git commit. public/language-packs/ is READ-ONLY here (only pipeline/analysis/apply_verdicts.py ever writes packs, and only after a panel passes). Write ONLY the verdict/queue files this task names, and write each atomically: write <path>.<your-batch-id>.tmp (NOT bare .tmp — concurrent batches collided on shared tmp names) then rename it (mv) onto <path>. Create parent dirs first (mkdir -p).
+SCRATCH DISCIPLINE (a prior batch was silently corrupted by this): if you need ANY intermediate file (slice extracts, helper scripts, key lists), put it ONLY under "${REPO}/pipeline/data/scratch/<your-unique-task-id>/" (mkdir -p it; e.g. mint-de-10008/ or prep-de/). NEVER write or read a generically-named file (slice.jsonl, tmp.py, existing_keys.txt, verdicts.tmp) in the session scratchpad or any shared directory — many batch agents run concurrently and interleaved writes to same-named files have already swapped rows between batches undetected. Prefer re-reading slices directly from the canonical file with sed over caching copies. Your final message is machine-read — return ONLY the structured output.`
 
 const RULES = `NON-NEGOTIABLE MINT RULES:
 - Never invent a translation: a mint target must be copied verbatim from one of the record's listed alternatives (each came from a real dictionary/source).
@@ -125,7 +135,10 @@ ${RULES}
 ${ADDENDUM}
 You are the ADJUDICATOR, fluent in ${LNAME} and English. MINT adjudication: decide which NEW candidate words to add to the ${LNAME} pack.
 Read your slice: sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}"  (up to ${BATCH} records; the last batch may have fewer).
-RESUME: if "${REPO}/${RAW(b.fi)}" already exists with at least as many lines as your slice, this batch is already adjudicated — return {ok:true,status:"resumed",minted:0,skipped:0,written:<its line count>} and write nothing.
+SLICE INTEGRITY (mandatory before any adjudication): extract your slice KEY LIST twice, independently, straight from the canonical ordered file (never from a cached copy):
+  sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" | python3 -c "import sys,json; [print(json.loads(l)['key']) for l in sys.stdin]"
+Run that twice and diff the outputs: they must be byte-identical with the expected count. If they differ, your reads are racing something — re-run until two consecutive extractions agree. Every verdict you emit must be for a key in this set, and after writing your verdict file verify (mechanically, with a diff against the key list) that your file contains EXACTLY one line per slice key except keys you skipped for idempotence.
+RESUME: if "${REPO}/${RAW(b.fi)}" already exists, VALIDATE it against your slice key set: every key in it must belong to the set, and (its keys + keys found in existing final/fixup mint-${LANG}-*.jsonl files) must cover the whole set. If valid, return {ok:true,status:"resumed",minted:0,skipped:0,written:<its line count>} and write nothing. If INVALID (foreign keys, or gaps not explained by idempotence), delete it (rm) and adjudicate from scratch.
 IDEMPOTENCE: skip any key that already appears in an existing "${REPO}/pipeline/data/verdicts/final/mint-${LANG}-*.jsonl" or ".../fixup/mint-${LANG}-*.jsonl" file (do not re-adjudicate it; do not emit a line for it).
 ATTENTION DISCIPLINE (this batch is large): work through the rows in small groups of ~15 and emit results as you go. Emit EXACTLY ONE JSON verdict line per input record — never summarize, never collapse ("the rest are skips" is FORBIDDEN), never omit a row. The output must have one line per adjudicated record.
 Per record decide "mint" or "skip":
@@ -140,7 +153,8 @@ const refP = (b) => `${COMMON}
 ${RULES}
 ${ADDENDUM}
 You are the REFUTER, fluent in ${LNAME} and English. The adjudicator wrote "${REPO}/${RAW(b.fi)}" for lines ${b.lo}-${b.hi} of "${REPO}/${ORDERED}".
-RESUME: if "${REPO}/${FIN(b.fi)}" already exists with at least as many lines as the raw file, this batch is already refuted — read it and return {ok:true,status:"resumed",minted:<verdict=="mint" count>,skipped:<skip count>,disputed:<refuter=="dispute" count>,agreed:<refuter=="agree" count>}.
+VALIDATE THE RAW FILE FIRST (a prior run had cross-batch row contamination): extract your slice key set (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" piped through python3 to print each line's key; run twice, must agree). If the raw file contains ANY key outside the slice set, or its keys plus keys in existing final/fixup mint-${LANG}-*.jsonl files do not cover the slice set, it is corrupt: delete it (rm "${REPO}/${RAW(b.fi)}") and return {ok:false,status:"corrupt_raw",minted:0,skipped:0,disputed:0,agreed:0} — the batch will re-run on the next launch. Do not refute a corrupt file.
+RESUME: if "${REPO}/${FIN(b.fi)}" already exists and its key set equals the raw file's key set, this batch is already refuted — read it and return {ok:true,status:"resumed",minted:<verdict=="mint" count>,skipped:<skip count>,disputed:<refuter=="dispute" count>,agreed:<refuter=="agree" count>}.
 Otherwise re-read the same queue slice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}") alongside the raw verdicts and PROVE THEM WRONG wherever possible. Attack every "mint" and every line with confidence<0.75, and sample ~20% of the skips (a wrongful skip loses a good word). For each attacked line ask: is the target really a correct translation of the record's GLOSSED sense (not its own back-translation)? wrong/non-dominant sense? Wikipedia langlink topic-artifact or plural-title error? verb not an infinitive? noun missing authoritative morph? non-noun cognate identical to English?
 Write "${REPO}/${FIN(b.fi)}" (atomic .tmp then mv): copy each raw line and add "refuter":"agree" or "refuter":"dispute" (+ "refuterReason" when disputing); lines you did not attack get "refuter":"unreviewed". Do NOT change verdicts yourself — disputes go to the judge. One line per raw line.
 Return {ok, status:"processed", minted:<mint count>, skipped:<skip count>, disputed:<disputes>, agreed:<agrees>}.`
@@ -193,6 +207,7 @@ return {
   skipped: sum('skipped'),
   disputed: sum('disputed'),
   judged: sum('judged'),
+  corruptRawBatches: results.filter((r) => r && r.status === 'corrupt_raw').length,
   moreWorkRemains: Math.ceil(prep.orderable / BATCH) > numBatches,
   nextStep: `Panel-gate then apply: Workflow mint-panel.workflow.js {lang:"${LANG}"}, then (if ship) python3 pipeline/analysis/apply_verdicts.py --language ${LANG} --mint-only --ship-stratum strict`,
 }
