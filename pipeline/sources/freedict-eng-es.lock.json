@@ -1,0 +1,31 @@
+{
+  "source": "freedict-eng-es",
+  "targetLanguage": "es",
+  "generatedAt": "2026-07-15",
+  "producedFile": "pipeline/data/sources/freedict-eng-es.jsonl",
+  "producer": "python3 pipeline/sources/parse_freedict_eng.py --tei <eng-spa.tei> --language es --out pipeline/data/sources/freedict-eng-es.jsonl",
+  "upstream": {
+    "name": "FreeDict eng-spa (WikDict-derived TEI)",
+    "url": "https://download.freedict.org/dictionaries/eng-spa/2025.11.23/freedict-eng-spa-2025.11.23.src.tar.xz",
+    "version": "2025.11.23",
+    "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+    "sha256": "dd724fb48c5701395c15d7d648a9e6f6b75d6ff4269e465dce6d3a292700198d",
+    "archiveBytes": 3715012,
+    "teiMember": "eng-spa/eng-spa.tei",
+    "localCache": "pipeline/data/import-cache/es/freedict-eng-spa-2025.11.23.src.tar.xz",
+    "notes": "Same archive the es CORE pack was imported from (see pipeline/sources/es.lock.json and pipeline/import_es/freedict.py). Re-parsed here in the shared source schema (en/target/pos/gender/plural/notes) so es gains a FreeDict gate vote in build_mint_queue.py, matching how de/fr/it already stack freedict-eng-{de,fr,it}.jsonl. The archive was already on disk under import-cache/es/; if absent, re-download from the url above (verify sha256)."
+  },
+  "counts": {
+    "teiEntries": 64258,
+    "rowsWritten": 133073,
+    "byPartOfSpeech": {
+      "noun": 62311,
+      "expression": 27089,
+      "adjective": 19946,
+      "verb": 17772,
+      "adverb": 2877,
+      "function": 2511,
+      "unknown": 567
+    }
+  }
+}

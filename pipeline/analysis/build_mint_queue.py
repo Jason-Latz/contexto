@@ -70,7 +70,9 @@ regardless of how many rows they contribute:
 
 Source availability per language (verified against the actual files in
 pipeline/data/sources/ — NOT symmetric, mirrors merge_evidence.py):
-  - freedict-eng-{de,fr,it}.jsonl   (no es)
+  - freedict-eng-{es,de,fr,it}.jsonl (all four; es added 2026-07-15, produced
+    from the same eng-spa WikDict TEI the es CORE imports — see
+    pipeline/sources/freedict-eng-es.lock.json)
   - apertium-eng-{es,de,fr,it}.jsonl (all four)
   - omw-eng-{es,fr,it}.jsonl         (no de — no omw-eng-de.jsonl exists)
   - en-tr-cache.jsonl                (shared, filtered per lang by tr[].lc)
@@ -130,7 +132,9 @@ ES_WIKIDATA_DENYLIST_PATH = (
 LANGUAGES = ["es", "de", "fr", "it"]
 
 # Verified against the actual files in pipeline/data/sources/ (mirrors merge_evidence.py).
-HAS_FREEDICT = {"de", "fr", "it"}
+# es joined 2026-07-15 once freedict-eng-es.jsonl was produced from the same
+# eng-spa TEI the es CORE pack imports (pipeline/sources/freedict-eng-es.lock.json).
+HAS_FREEDICT = {"es", "de", "fr", "it"}
 HAS_OMW = {"es", "fr", "it"}
 # Which languages CAN have a slim target-language Wiktextract cache (morphology +
 # glosses + the wiktgloss agreement vote). de/fr/it always have; es joined once

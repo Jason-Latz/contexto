@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Convert a FreeDict eng-<lang> TEI source file into normalized JSONL.
 
-Handles the three TEI dialects observed across the FreeDict eng-deu,
-eng-fra, and eng-ita releases (see Textum/CLAUDE.md "Multi-language"):
+Handles the TEI dialects observed across the FreeDict eng-deu, eng-fra,
+eng-ita, and eng-spa releases (see Textum/CLAUDE.md "Multi-language"):
 
   - eng-deu (Ding-derived): entry-level `<gramGrp><pos>` for the headword,
     plus PER-TRANSLATION `<gramGrp>` nested inside each `<cit type="trans">`
@@ -16,6 +16,11 @@ eng-fra, and eng-ita releases (see Textum/CLAUDE.md "Multi-language"):
     `<quote>` per `<cit type="trans">`, and the definition for a translation
     group sits in a NESTED `<sense><def>` one level below the sense that
     holds the `<cit>`. No gender/number markup.
+  - eng-spa (WikDict-derived, same shape as eng-ita): entry-level
+    `<gramGrp><pos>` (Ding-style `n`/`pn`/`v`/... abbreviations), one or more
+    `<quote>` per `<cit type="trans" xml:lang="es">`, definition NESTED in
+    `<sense><def>`. No gender/number markup (gender/plural for es come from the
+    wikidata + slim-es Wiktextract authorities downstream, as for de/fr/it).
 
 None of the three TEI dialects give an explicit inflected plural form (only
 a `<number>pl</number>` tag marking that a *given* translation quote already
@@ -195,7 +200,7 @@ def parse_tei(tei_path: Path):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tei", required=True, type=Path, help="Path to the eng-xxx.tei file")
-    parser.add_argument("--language", required=True, choices=["de", "fr", "it"], help="Target language code (informational; used in progress logging only)")
+    parser.add_argument("--language", required=True, choices=["es", "de", "fr", "it"], help="Target language code (informational; used in progress logging only)")
     parser.add_argument("--out", required=True, type=Path, help="Output JSONL path")
     args = parser.parse_args()
 
