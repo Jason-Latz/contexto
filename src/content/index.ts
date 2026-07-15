@@ -23,6 +23,7 @@ import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
 } from '../utils/extensionContext.js'
+import { whenIdle } from '../utils/idle.js'
 import { PAGE_STATUS_MESSAGE, type PageStatus } from '../types/index.js'
 import type { CandidateToken, PartOfSpeech, RuntimeSettings } from '../types/index.js'
 
@@ -128,6 +129,23 @@ function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): b
     (next.tailLoaded ?? false) !== (previous.tailLoaded ?? false) ||
     JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? []) ||
     normalizedDisabledPos(next) !== normalizedDisabledPos(previous)
+  )
+}
+
+// Is the ONLY render-relevant difference that the niche tail finished loading?
+// This is the additive case: everything already on the page stays valid, only
+// new vocabulary became available — so the refresh can inject incrementally
+// instead of tearing the page down and re-rendering it (a multi-second
+// main-thread freeze on large pages). Any genuine settings/language change
+// still takes the full restore-and-re-render path.
+function isTailArrivalOnly(previous: RuntimeSettings, next: RuntimeSettings): boolean {
+  return (
+    (next.tailLoaded ?? false) &&
+    !(previous.tailLoaded ?? false) &&
+    next.density === previous.density &&
+    (next.targetLanguage ?? 'es') === (previous.targetLanguage ?? 'es') &&
+    JSON.stringify(next.blockedDomains ?? []) === JSON.stringify(previous.blockedDomains ?? []) &&
+    normalizedDisabledPos(next) === normalizedDisabledPos(previous)
   )
 }
 
@@ -328,6 +346,111 @@ async function renderReplacementPass(
   return { rendered: true, tailLoadedAtExtraction }
 }
 
+// How long one synchronous slice of the incremental tail pass may hold the main
+// thread before yielding. The tail percolates in AFTER the page is already
+// rendered and readable, so its work must stay imperceptible.
+const INCREMENTAL_SLICE_BUDGET_MS = 30
+
+// The ADDITIVE render pass for tail arrival: everything already injected on the
+// page stays valid (same language, density, filters — only new vocabulary became
+// available), so instead of restoring and re-rendering the whole page (a
+// multi-second main-thread freeze on large pages), inject just the marginal
+// lemmas into the still-unreplaced text.
+//
+// Correctness relies on measured injector mechanics:
+// - The DOM walker skips [data-contexto] spans, so a fresh walk sees exactly the
+//   text that is still English. Already-approved lemmas had every occurrence
+//   replaced, so they cannot double-inject; unreplaced nodes keep their
+//   parsedNodeCache entry (re-parse is a cache hit), and only the leftover text
+//   runs of replaced nodes need fresh parses.
+// - Density stays page-wide: the target is density * |already-injected lemmas +
+//   candidates still on the page|, and only the shortfall is injected, taken in
+//   the SAME page-rank order a full re-render would use (the initial pass
+//   approved a prefix of rankedPageLemmas; this approves the next entries). The
+//   parse of leftover fragments has less sentence context than a restored page
+//   would, so when this differs from a full re-render it yields slightly FEWER
+//   injections, never more.
+// - Work is sliced under a time budget with idle yields, so the pass never
+//   freezes the main thread the way the restore+re-render reconcile did.
+async function renderIncrementalTailPass(
+  density: number,
+  disabledPartsOfSpeech: readonly PartOfSpeech[],
+  isCurrentRun: () => boolean,
+): Promise<RenderPassResult> {
+  setupHoverHandler()
+
+  const textNodes = await collectTextNodes(document.body)
+  const tailLoadedAtExtraction = isTailLoaded()
+  if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
+
+  // --- Pass A (sliced): candidates from the still-unreplaced text ---
+  const pageCandidates: CandidateToken[] = []
+  const seenLemmas = new Set<string>()
+  let index = 0
+  while (index < textNodes.length) {
+    await whenIdle()
+    if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
+    const sliceStart = performance.now()
+    while (index < textNodes.length && performance.now() - sliceStart < INCREMENTAL_SLICE_BUDGET_MS) {
+      // Per-node extraction so the time budget is honored between nodes; the
+      // per-lemma dedupe extractPageCandidates does within one call is applied
+      // across slices here.
+      for (const candidate of extractPageCandidates([textNodes[index]], disabledPartsOfSpeech)) {
+        if (seenLemmas.has(candidate.lemma)) continue
+        seenLemmas.add(candidate.lemma)
+        pageCandidates.push(candidate)
+      }
+      index++
+    }
+  }
+
+  // --- Marginal selection at page-wide density ---
+  const poolLemmas = new Set<string>(activeApprovedLemmas)
+  for (const candidate of pageCandidates) poolLemmas.add(candidate.lemma)
+  const targetTotal = Math.floor(density * poolLemmas.size)
+  const marginalBudget = Math.max(0, targetTotal - activeApprovedLemmas.size)
+
+  // Extend the retained page ranking with the new candidates. Existing entries
+  // keep their rank (updateRankedPageLemmas would DROP the already-replaced
+  // lemmas here, because their occurrences are no longer extractable), so later
+  // full refreshes keep the additive-density behavior.
+  const alreadyRanked = new Set(rankedPageLemmas)
+  const newCandidates = pageCandidates.filter(candidate => !alreadyRanked.has(candidate.lemma))
+  rankedPageLemmas = [
+    ...rankedPageLemmas,
+    ...selectTokens(newCandidates, newCandidates.length).map(token => token.lemma),
+  ]
+
+  const candidateLemmas = new Set(pageCandidates.map(candidate => candidate.lemma))
+  const approvedNew = new Set<string>()
+  for (const lemma of rankedPageLemmas) {
+    if (approvedNew.size >= marginalBudget) break
+    if (activeApprovedLemmas.has(lemma) || !candidateLemmas.has(lemma)) continue
+    approvedNew.add(lemma)
+  }
+
+  // --- Pass B (sliced): inject only the marginal lemmas ---
+  const shouldRecord = (lemma: string): boolean => !recordedApprovedLemmas.has(lemma)
+  index = 0
+  while (index < textNodes.length && approvedNew.size > 0) {
+    await whenIdle()
+    if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
+    const sliceStart = performance.now()
+    while (index < textNodes.length && performance.now() - sliceStart < INCREMENTAL_SLICE_BUDGET_MS) {
+      injectReplacements(textNodes[index], approvedNew, { shouldRecordExposure: shouldRecord })
+      index++
+    }
+  }
+  if (!isCurrentRun()) return { rendered: false, tailLoadedAtExtraction }
+
+  // Reattach the SPA observer with the full replacement set so content added
+  // later gets core AND tail vocabulary.
+  const union = new Set([...activeApprovedLemmas, ...approvedNew])
+  mutationObserver = setupMutationObserver(union)
+  activeApprovedLemmas = union
+  return { rendered: true, tailLoadedAtExtraction }
+}
+
 // Bring the niche tail in behind the first paint. The core-only pass has already
 // rendered; this loads the tail progressively off the critical path and, once it
 // has merged, re-renders through the normal reconcile so the tail words percolate
@@ -470,6 +593,29 @@ async function refreshReplacementPipeline(): Promise<void> {
     // schedulePercolation once this pass has rendered.
     await loadLanguagePack(getTargetLanguage())
     if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    // Tail arrival is ADDITIVE: nothing on the page went stale, so do not tear
+    // it down — inject the marginal tail vocabulary incrementally instead of
+    // paying a full restore+re-render freeze. Any other change falls through to
+    // the full path below.
+    if (appliedSettings !== null && isTailArrivalOnly(appliedSettings, currentRuntimeSettings())) {
+      mutationObserver?.disconnect()
+      mutationObserver = null
+
+      const density = computeDensity()
+      const disabledPos = [...getDisabledPartsOfSpeech()]
+      const pass = await renderIncrementalTailPass(
+        density,
+        disabledPos,
+        () => isCurrentReplacementPipelineRun(runVersion),
+      )
+      if (!pass.rendered) return
+
+      rememberRecordedLemmas(activeApprovedLemmas)
+      isReplacementPipelineActive = true
+      appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
+      return
+    }
 
     mutationObserver?.disconnect()
     mutationObserver = null

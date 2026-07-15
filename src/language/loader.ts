@@ -6,6 +6,7 @@ import type {
   TranslationEntry,
 } from '../types/index.js'
 import { assertExtensionContextAvailable } from '../utils/extensionContext.js'
+import { whenIdle } from '../utils/idle.js'
 import {
   isCompactPack,
   expandCompactEntries,
@@ -168,19 +169,6 @@ function isChunkManifest(pack: unknown): pack is TailChunkManifest {
   )
 }
 
-// Yield to the browser between merge slices so the tail never monopolizes the
-// main thread. requestIdleCallback runs the next slice only when the page is
-// idle; the timeout guarantees forward progress on a busy page. In Node (unit
-// tests) there is no requestIdleCallback, so a macrotask turn stands in.
-function whenIdle(): Promise<void> {
-  return new Promise((resolve) => {
-    const ric = (globalThis as { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => void })
-      .requestIdleCallback
-    if (typeof ric === 'function') ric(() => resolve(), { timeout: 200 })
-    else setTimeout(resolve, 0)
-  })
-}
-
 function tailPackUrl(targetLanguage: TargetLanguage, chunkIndex?: number): string {
   const name = chunkIndex === undefined
     ? `${targetLanguage}.tail.json`
@@ -222,6 +210,12 @@ async function loadTailProgressive(targetLanguage: TargetLanguage): Promise<void
   try {
     response = await fetch(tailPackUrl(targetLanguage))
   } catch {
+    // Deliberately swallowed: the realistic causes are a missing tail resource
+    // (see above) and a mid-flight extension-context invalidation, and in both
+    // cases "no tail, don't retry" is the intended policy — the tail is an
+    // enhancement, never worth failing or re-spinning the pipeline over. A
+    // genuinely corrupt tail (bad JSON/metadata) still throws past this catch
+    // and is reported by schedulePercolation's warn.
     commitTail(targetLanguage, slots, expressions, generation)
     return
   }
