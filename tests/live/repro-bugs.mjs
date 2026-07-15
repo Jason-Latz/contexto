@@ -22,7 +22,7 @@ const FIXDIR = path.join(__dirname, 'fixtures')
 
 const ONBOARDED_ES = {
   onboarded: true, level: 'advanced', targetLanguage: 'es', density: 0.9,
-  replacementsEnabled: true, aggressiveMode: false, blockedDomains: [], domainDecisions: {},
+  replacementsEnabled: true, blockedDomains: [], domainDecisions: {},
 }
 
 function makeTestBuild() {
@@ -492,6 +492,50 @@ async function mislabeledLang(base) {
   await context.close()
 }
 
+// --- The niche tail loads by default and percolates in, no toggle -----------
+// The tail is no longer gated behind Aggressive Mode. After the core-only first
+// paint, the content script loads the tail off the critical path and re-renders
+// so its words appear. Proven with words that live ONLY in a language's tail, so
+// their target text is proof the tail merged.
+//
+//   'photon'  is es-tail-only (fotón) — not in the es core.
+//   'wildlife' is de-tail-only (Fauna) — not in the de core.
+// The first proves default-on percolation; the second proves a language switch
+// re-percolates the NEW language's tail (not just the first load).
+async function tailPercolation(base) {
+  const { context, sw, extId } = await launch('percolate')
+  // density 1 so every eligible word — including the single 'wildlife' — is
+  // selected, making the tail-only assertions deterministic.
+  await seed(sw, { ...ONBOARDED_ES, density: 1 })
+
+  const page = await context.newPage()
+  await page.goto(`${base}/percolate-tail.html`, { waitUntil: 'domcontentloaded' })
+  // The core paints first (some span appears without waiting on the tail).
+  await spans(page).first().waitFor({ timeout: 8000 })
+
+  // The es-tail-only word must appear on its own, with no toggle touched.
+  const photon = page.locator('[data-contexto="true"][data-lemma="photon"]').first()
+  let percolated = true
+  try { await photon.waitFor({ timeout: 10000 }) } catch { percolated = false }
+  const photonTarget = percolated ? await photon.getAttribute('data-base-target') : ''
+  check('PERCOLATE-default', 'A tail-only word appears by default shortly after load, no toggle',
+    percolated && /^fot[oó]n$/i.test(photonTarget ?? ''),
+    `photon -> ${JSON.stringify(photonTarget)}`)
+
+  // Switching language must reset AND re-percolate the tail for the new language.
+  await clickLanguageInPopup(context, extId, 'German')
+  await page.bringToFront()
+  const wildlife = page.locator('[data-contexto="true"][data-lemma="wildlife"]').first()
+  let deTail = true
+  try { await wildlife.waitFor({ timeout: 10000 }) } catch { deTail = false }
+  const wildlifeTarget = deTail ? await wildlife.getAttribute('data-base-target') : ''
+  check('PERCOLATE-switch', 'A language switch re-percolates the new language tail',
+    deTail && /^fauna$/i.test(wildlifeTarget ?? ''),
+    `wildlife -> ${JSON.stringify(wildlifeTarget)}`)
+
+  await context.close()
+}
+
 async function run() {
   makeTestBuild()
   const { server, base } = await serveFixtures()
@@ -504,6 +548,7 @@ async function run() {
     await raceBackAndForth(base)
     await tooltipSelfReplacement(base)
     await mislabeledLang(base)
+    await tailPercolation(base)
   } finally {
     server.close()
   }
