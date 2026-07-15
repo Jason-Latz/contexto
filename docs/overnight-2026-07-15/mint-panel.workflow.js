@@ -24,8 +24,17 @@ export const meta = {
 }
 
 const REPO = '/Users/jason/Downloads/CS Classes/Projects/Textum'
-const A = (typeof args !== 'undefined' && args) ? args : {}
-const LANG = A.lang || 'de'
+// The harness delivers args as a JSON STRING (proven by args-probe.workflow.js);
+// parse defensively and ABORT on a missing lang rather than silently defaulting
+// (a silent de default here would panel German for every language).
+let A = {}
+if (typeof args === 'string') { try { A = JSON.parse(args) } catch { A = {} } }
+else if (typeof args !== 'undefined' && args) { A = args }
+if (!A.lang) {
+  log(`ABORT bad_args: args.lang missing. Received: ${JSON.stringify(A).slice(0, 300)}`)
+  return { aborted: 'bad_args', receivedArgs: A }
+}
+const LANG = A.lang
 const LNAME = { de: 'German', fr: 'French', it: 'Italian', es: 'Spanish' }[LANG] || LANG
 const SAMPLE = A.sampleSize || 120
 const SEED = A.seed || 20260715
