@@ -16,8 +16,8 @@ decisions.json
 tests/live/screenshots/
 tests/live/.user-data/
 tests/live/.user-data-*/
-tests/live/.dist-test/
-tests/live/.dist-repro/
+tests/live/.ud-*/
+tests/live/.dist-*/
 tests/live/repro-results.json
 MORNING_REPORT.svg
 tests/live/fixtures/perf
