@@ -20,7 +20,8 @@ from pipeline.analysis.apply_verdicts import apply_language
 
 
 def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
-                 wikidata=None, wikt_noun=None, wikt_gloss=None, wikt_match_gloss=None):
+                 wikidata=None, wikt_noun=None, wikt_gloss=None, wikt_match_gloss=None,
+                 langlinks=None):
     """Assemble the `indexes` dict build_alternatives_and_check_gate expects, with
     empty defaults so a test only has to specify the sources it cares about."""
     return {
@@ -32,7 +33,13 @@ def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
         "wikt_noun": wikt_noun or {},
         "wikt_gloss": wikt_gloss or {},
         "wikt_match_gloss": wikt_match_gloss or {},
+        "langlinks": langlinks or {},
     }
+
+
+def wiki_entry(target, exists=True):
+    """A pre-resolved langlinks proposal (as load_langlinks_index would emit)."""
+    return {"target": target, "exists": exists}
 
 
 def entr_bucket(lang, target, gloss="gloss", pos="noun"):
@@ -133,18 +140,38 @@ class MinVotesGateTest(unittest.TestCase):
 
 
 class WiktglossVoteTest(unittest.TestCase):
-    def test_wiktgloss_unlocks_entr_only_at_two(self):
+    def test_entr_plus_wiktgloss_collapses_to_one_gate_vote(self):
+        # entr and wiktgloss both derive from the English Wiktionary, so together
+        # they are ONE independent vote and must NOT clear the >=2 gate alone.
         idx = make_indexes(
             entr={"aardvark": entr_bucket("de", "Erdferkel")},
             wikt_match_gloss={"erdferkel": ["aardvark"]},
         )
-        alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
+        alts, _, passes2, diag2 = bmq.build_alternatives_and_check_gate(
             "de", "aardvark", idx, min_votes=2)
-        self.assertTrue(passes)                      # reached the 2-vote gate...
-        self.assertEqual(diag["trueBest"], 1)        # ...but only 1 REAL dictionary vote
-        self.assertEqual(diag["strictBest"], 2)
-        self.assertIn("wiktgloss", alts[0]["sources"])
+        self.assertFalse(passes2)                    # collapses to 1 gate vote
+        self.assertEqual(diag2["trueBest"], 1)       # 1 real dictionary vote
+        self.assertEqual(diag2["strictBest"], 2)     # display still shows both
+        self.assertEqual(diag2["gateBest"], 1)       # ...but the gate counts one
+        self.assertIn("wiktgloss", alts[0]["sources"])  # provenance kept
         self.assertEqual(alts[0]["votes"], 2)
+        # At min-votes 1 it still passes -- the collapse never changes tail volume.
+        _, _, passes1, _ = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=1)
+        self.assertTrue(passes1)
+
+    def test_independent_dictionary_plus_wiktgloss_passes_at_two(self):
+        # apertium is a genuinely different dictionary from the English
+        # Wiktionary, so apertium+wiktgloss is TWO independent votes -> passes.
+        idx = make_indexes(
+            apertium={"aardvark": ["Erdferkel"]},
+            wikt_match_gloss={"erdferkel": ["aardvark"]},
+        )
+        _, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=2)
+        self.assertTrue(passes)
+        self.assertEqual(diag["strictBest"], 2)
+        self.assertEqual(diag["gateBest"], 2)
 
     def test_wiktgloss_never_invents_an_alternative(self):
         # A lemma that only appears in the gloss index (no real source proposed
@@ -185,6 +212,168 @@ class WiktglossVoteTest(unittest.TestCase):
                           "authority": "wikidata+wiktextract"})
 
 
+class RomanNumeralTest(unittest.TestCase):
+    def test_positive(self):
+        for w in ("i", "iv", "ix", "xvi", "mmxxiv", "di", "liv", "mi"):
+            self.assertTrue(bmq.is_roman_numeral(w), w)
+
+    def test_negative(self):
+        # Real words and the empty string are not roman numerals.
+        for w in ("", "aardvark", "the", "dog", "photosynthesis"):
+            self.assertFalse(bmq.is_roman_numeral(w), w)
+
+
+class LanglinksCasingTest(unittest.TestCase):
+    """resolve_langlinks_casing: undo MediaWiki's forced first-letter capital by
+    re-deriving casing from the target-side authorities (exact set + norm map)."""
+
+    @staticmethod
+    def _authority(*lemmas):
+        exact = set(lemmas)
+        norm_to_exact = {}
+        for lemma in sorted(exact):
+            norm_to_exact.setdefault(bmq.norm(lemma), lemma)
+        return exact, norm_to_exact
+
+    def test_de_noun_keeps_authority_capitalization(self):
+        # German nouns are capitalized; the authority records "Mikroprozessor",
+        # and the Wikipedia title already matches it exactly.
+        exact, n2e = self._authority("Mikroprozessor")
+        self.assertEqual(
+            bmq.resolve_langlinks_casing("Mikroprozessor", "de", exact, n2e),
+            ("Mikroprozessor", True))
+
+    def test_es_common_noun_lowercased_via_authority(self):
+        # Wikipedia capitalizes the title "Fotosíntesis"; the Spanish authority
+        # has the common noun "fotosíntesis" -> adopt the lowercase form.
+        exact, n2e = self._authority("fotosíntesis")
+        self.assertEqual(
+            bmq.resolve_langlinks_casing("Fotosíntesis", "es", exact, n2e),
+            ("fotosíntesis", True))
+
+    def test_absent_from_authority_de_keeps_wikipedia_casing_and_is_absent(self):
+        exact, n2e = self._authority("etwasanderes")
+        self.assertEqual(
+            bmq.resolve_langlinks_casing("Neuwort", "de", exact, n2e),
+            ("Neuwort", False))
+
+    def test_absent_from_authority_es_strips_capital_and_is_absent(self):
+        # es/fr/it: never emit a capitalized common noun on Wikipedia's say-so.
+        exact, n2e = self._authority("otracosa")
+        self.assertEqual(
+            bmq.resolve_langlinks_casing("Palabranueva", "es", exact, n2e),
+            ("palabranueva", False))
+
+    def test_exists_in_other_casing_adopts_authority_form(self):
+        # The authority stores an unusual casing the two checked forms miss;
+        # existence still holds and the stored exact form is adopted.
+        exact, n2e = self._authority("iPod")
+        self.assertEqual(
+            bmq.resolve_langlinks_casing("IPod", "it", exact, n2e),
+            ("iPod", True))
+
+
+class LanglinksIndexGateTest(unittest.TestCase):
+    """The proper-noun hygiene gates live in load_langlinks_index; exercise them
+    through a tiny on-disk TSV + authority so the gate arithmetic is real."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="langlinks-gate-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+    def _run(self, lang, rows, authority=()):
+        path = self.tmp / f"langlinks-{lang}.tsv"
+        path.write_text("".join(f"{w}\t{t}\n" for w, t in rows), encoding="utf-8")
+        exact = set(authority)
+        n2e = {}
+        for lemma in sorted(exact):
+            n2e.setdefault(bmq.norm(lemma), lemma)
+        orig = bmq.WIKIPEDIA_DIR
+        bmq.WIKIPEDIA_DIR = self.tmp
+        try:
+            return bmq.load_langlinks_index(lang, exact, n2e)
+        finally:
+            bmq.WIKIPEDIA_DIR = orig
+
+    def test_acronym_target_skipped(self):
+        idx, stats = self._run("es", [("laser", "LASER")])
+        self.assertNotIn("laser", idx)
+        self.assertEqual(stats["skip_t_acronym"], 1)
+
+    def test_single_letter_and_roman_numeral_w_skipped(self):
+        idx, stats = self._run("de", [("x", "X"), ("iv", "Vier"), ("cat", "Katze")])
+        self.assertNotIn("x", idx)
+        self.assertNotIn("iv", idx)
+        self.assertIn("cat", idx)
+        self.assertEqual(stats["skip_w_single_or_roman"], 2)
+
+    def test_cognate_counted_but_kept(self):
+        idx, stats = self._run("es", [("hotel", "Hotel")], authority=["hotel"])
+        self.assertEqual(idx["hotel"], {"target": "hotel", "exists": True})
+        self.assertEqual(stats["cognate_kept"], 1)
+
+
+class LanglinksTierTest(unittest.TestCase):
+    """Evidence-tier assignment for a wikipedia-proposed target."""
+
+    def test_t1_when_a_real_dictionary_covotes_same_target(self):
+        idx = make_indexes(
+            apertium={"microprocessor": ["Mikroprozessor"]},
+            langlinks={"microprocessor": wiki_entry("Mikroprozessor", exists=True)},
+        )
+        _, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "microprocessor", idx, min_votes=1)
+        self.assertTrue(passes)
+        self.assertEqual(diag["evidenceTier"], "T1")
+        self.assertFalse(diag["wikipediaOnly"])  # apertium also proposed it
+
+    def test_t1_wikipedia_plus_wiktgloss_is_independent(self):
+        # wikipedia (a different wiki) + wiktgloss clears the >=2 gate and is T1.
+        idx = make_indexes(
+            langlinks={"aardvark": wiki_entry("Erdferkel", exists=True)},
+            wikt_match_gloss={"erdferkel": ["aardvark"]},
+        )
+        alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "aardvark", idx, min_votes=2)
+        self.assertTrue(passes)
+        self.assertEqual(diag["gateBest"], 2)
+        self.assertEqual(diag["evidenceTier"], "T1")
+        self.assertTrue(diag["wikipediaOnly"])
+        self.assertEqual(alts[0]["sources"], ["wikipedia", "wiktgloss"])
+
+    def test_t2_when_only_wikipedia_but_target_exists(self):
+        idx = make_indexes(
+            langlinks={"widget": wiki_entry("Dingsbums", exists=True)},
+        )
+        alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "widget", idx, min_votes=1)
+        self.assertTrue(passes)
+        self.assertEqual(diag["evidenceTier"], "T2")
+        self.assertTrue(diag["wikipediaOnly"])
+        self.assertEqual(alts[0]["sources"], ["wikipedia"])
+        # wikipedia-only does NOT clear the >=2 gate.
+        _, _, passes2, _ = bmq.build_alternatives_and_check_gate(
+            "de", "widget", idx, min_votes=2)
+        self.assertFalse(passes2)
+
+    def test_t3_when_no_authority_knows_the_target(self):
+        idx = make_indexes(
+            langlinks={"widget": wiki_entry("Dingsbums", exists=False)},
+        )
+        _, _, passes, diag = bmq.build_alternatives_and_check_gate(
+            "de", "widget", idx, min_votes=1)
+        self.assertTrue(passes)
+        self.assertEqual(diag["evidenceTier"], "T3")
+        self.assertTrue(diag["wikipediaOnly"])
+
+    def test_no_tier_when_wikipedia_did_not_propose(self):
+        idx = make_indexes(apertium={"cat": ["Katze"]})
+        _, _, _, diag = bmq.build_alternatives_and_check_gate(
+            "de", "cat", idx, min_votes=1)
+        self.assertIsNone(diag["evidenceTier"])
+        self.assertFalse(diag["wikipediaOnly"])
+
+
 def _write_json(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
@@ -218,8 +407,10 @@ class ComposedAuthorityAcceptedByApplyVerdictsTest(unittest.TestCase):
         _write_jsonl(self.tmp / "pipeline" / "data" / "queues" / "mint-de.jsonl", [
             {"lang": "de", "key": "aardvark", "source": "aardvark", "enZipf": 3.0,
              "shipTierHint": "tail",
+             # A genuinely-independent 2-vote pairing (apertium + wiktgloss) --
+             # entr+wiktgloss no longer clears the gate, see WiktglossVoteTest.
              "alternatives": [{
-                 "target": "Erdferkel", "votes": 2, "sources": ["entr", "wiktgloss"],
+                 "target": "Erdferkel", "votes": 2, "sources": ["apertium", "wiktgloss"],
                  "omwBestSenseRank": None, "glosses": ["Erdferkel"],
                  "morph": {"gender": "neuter", "plural": "Erdferkel",
                            "authority": "wikidata+wiktextract"},
