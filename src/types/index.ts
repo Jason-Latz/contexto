@@ -143,10 +143,14 @@ export interface WordSeen {
 export type OnboardingLevel = 'beginner' | 'intermediate' | 'advanced';
 
 // The subset of settings the content script watches for live changes.
+// `tailLoaded` is not a user setting — it is a render-input the content script
+// tracks so that when the niche tail finishes percolating in, the diff notices
+// the vocabulary grew and re-renders (the same mechanism the retired Aggressive
+// Mode toggle used, now driven purely by loader state).
 export interface RuntimeSettings {
   density?: number
   replacementsEnabled?: boolean
-  aggressiveMode?: boolean
+  tailLoaded?: boolean
   blockedDomains?: string[]
   targetLanguage?: TargetLanguage
   disabledPartsOfSpeech?: PartOfSpeech[]

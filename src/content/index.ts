@@ -1,4 +1,4 @@
-import { getActiveTargetLanguage, isTailLoaded, loadLanguagePack } from '../language/loader.js'
+import { ensureTailLoaded, getActiveTargetLanguage, isTailLoaded, loadLanguagePack } from '../language/loader.js'
 import { collectTextNodes } from './domWalker.js'
 import { extractPageCandidates, injectReplacements, restoreReplacements } from './injector.js'
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
@@ -11,7 +11,6 @@ import {
   getDisabledPartsOfSpeech,
   getDomainDecision,
   getTargetLanguage,
-  isAggressiveMode,
   isDomainBlocked,
   loadSettings,
 } from '../store/settingsStore.js'
@@ -71,11 +70,13 @@ function countPageWords(): number {
 }
 
 // The settings currently in memory, in the shape change detection compares.
+// `tailLoaded` reads live loader state (not a stored setting): once the niche
+// tail has percolated in, this flips true and the diff re-renders to inject it.
 function currentRuntimeSettings(): RuntimeSettings {
   return {
     density: getDensity(),
     replacementsEnabled: areReplacementsEnabled(),
-    aggressiveMode: isAggressiveMode(),
+    tailLoaded: isTailLoaded(),
     blockedDomains: [...getBlockedDomains()],
     targetLanguage: getTargetLanguage(),
     disabledPartsOfSpeech: [...getDisabledPartsOfSpeech()],
@@ -96,7 +97,7 @@ function renderedRuntimeSettings(
   return {
     density,
     replacementsEnabled: true,
-    aggressiveMode: isTailLoaded(),
+    tailLoaded: isTailLoaded(),
     blockedDomains: [...getBlockedDomains()],
     targetLanguage: getActiveTargetLanguage(),
     disabledPartsOfSpeech: [...disabledPartsOfSpeech],
@@ -116,7 +117,7 @@ function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): b
   return (
     next.density !== previous.density ||
     (next.targetLanguage ?? 'es') !== (previous.targetLanguage ?? 'es') ||
-    (next.aggressiveMode ?? false) !== (previous.aggressiveMode ?? false) ||
+    (next.tailLoaded ?? false) !== (previous.tailLoaded ?? false) ||
     JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? []) ||
     normalizedDisabledPos(next) !== normalizedDisabledPos(previous)
   )
@@ -311,6 +312,35 @@ async function renderReplacementPass(
   return true
 }
 
+// Bring the niche tail in behind the first paint. The core-only pass has already
+// rendered; this loads the tail progressively off the critical path and, once it
+// has merged, re-renders through the normal reconcile so the tail words percolate
+// into the page. Idempotent: a no-op once the tail is loaded for the active
+// language, and ensureTailLoaded coalesces repeat calls while it is in flight.
+function schedulePercolation(): void {
+  if (extensionContextInvalidated) return
+  if (isTailLoaded()) return
+
+  const language = getActiveTargetLanguage()
+  void ensureTailLoaded(language)
+    .then(() => {
+      if (extensionContextInvalidated) return
+      // A language switch during the load supersedes this percolation; the new
+      // language's pass will re-arm its own.
+      if (getActiveTargetLanguage() !== language) return
+      // The tail merged: the tailLoaded diff now differs from what was rendered,
+      // so this reconciles the open page to include the niche vocabulary.
+      requestReplacementRefresh()
+    })
+    .catch((err) => {
+      if (isExtensionContextInvalidatedError(err)) {
+        shutdownInvalidatedContext(true)
+        return
+      }
+      console.warn('[Contexto] Tail percolation failed:', err)
+    })
+}
+
 async function startReplacementPipeline(): Promise<void> {
   if (extensionContextInvalidated) return
   if (!isExtensionContextAvailable()) {
@@ -343,8 +373,9 @@ async function startReplacementPipeline(): Promise<void> {
     stopContentWatcher()
 
     // Load runtime data only after the user-facing replacement toggle is enabled.
-    // Aggressive mode additionally loads the quarantined niche tail shard.
-    await loadLanguagePack(getTargetLanguage(), isAggressiveMode())
+    // Only the CORE shard here — the first paint never waits on the niche tail,
+    // which percolates in afterwards (schedulePercolation, below).
+    await loadLanguagePack(getTargetLanguage())
     await loadLexicon()
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
@@ -373,6 +404,8 @@ async function startReplacementPipeline(): Promise<void> {
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
     appliedSettings = renderedRuntimeSettings(density, disabledPos)
+    // First core-only pass has rendered; now bring the niche tail in behind it.
+    schedulePercolation()
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
@@ -415,10 +448,11 @@ async function refreshReplacementPipeline(): Promise<void> {
       return
     }
 
-    // Reconcile the loaded pack with the current aggressive-mode setting: this
-    // lazy-loads the niche tail when it was just turned on, or drops it when
-    // turned off, so the re-render below injects the right vocabulary set.
-    await loadLanguagePack(getTargetLanguage(), isAggressiveMode())
+    // Reload the CORE for the active language (a no-op when unchanged; a language
+    // switch resets the tail so it re-percolates for the new language below). The
+    // niche tail is never loaded synchronously here — it comes in via
+    // schedulePercolation once this pass has rendered.
+    await loadLanguagePack(getTargetLanguage())
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     mutationObserver?.disconnect()
@@ -448,6 +482,9 @@ async function refreshReplacementPipeline(): Promise<void> {
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
     appliedSettings = renderedRuntimeSettings(density, disabledPos)
+    // Keep the tail percolating: a language switch reset it, and until it is
+    // loaded this re-arms the background load (idempotent once loaded).
+    schedulePercolation()
   } catch (err) {
     if (isExtensionContextInvalidatedError(err)) {
       shutdownInvalidatedContext(true)
