@@ -101,6 +101,7 @@ Build a STABLE, evidence-priority-ordered mint queue for ${LNAME} from "${REPO}/
 Each input row is an enriched candidate: {key, source, lang, enZipf, pos?, entrSenses, alternatives:[{target,votes,sources,glosses,morph:{gender,plural,authority}|null}], evidenceTier:"T1"|"T2"|"T3"|null (present only on wiki-involved rows), preSkip:"cognate_nonnoun"|"noun_no_morph_any"|null (may be absent on older rows), shipTierHint}.
 
 STEP 1 — DROP preSkip rows entirely (do NOT queue them; count them). A row is preSkip if its preSkip field is a non-null string. If the field is ABSENT (older schema), derive it: preSkip if (pos is not "noun" AND every alternative's target equals the source spelling) -> cognate_nonnoun; or (pos == "noun" AND no alternative has morph.gender) -> noun_no_morph_any.
+STEP 1b — ALSO drop rows whose "shippable" field is exactly false (count separately as notShippable). These rows cannot clear apply_verdicts no matter the verdict (e.g. nouns with no full-morph alternative), so adjudicating them wastes the run's time budget. Rows missing the field entirely are KEPT.
 
 STEP 2 — bucket every surviving row (compute, do not trust a prebuilt order):
   bestVotes = max alternative "votes" (default 1). wikiInvolved = evidenceTier in {T1,T2,T3} OR any alternative's sources include "wikipedia". wiktinvOnly = the union of all alternatives' sources is a subset of {"wiktinv"}.
