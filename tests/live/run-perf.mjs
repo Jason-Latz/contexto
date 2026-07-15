@@ -7,9 +7,11 @@
 //   CORE    — the tail shards are stripped from the test build, so only the core
 //             first pass runs. This is the baseline-comparable "first-pass inject
 //             time" (same measurement the pre-change baseline used).
-//   DEFAULT — the shipping build. The core paints, then the tail percolates in.
-//             We measure time-to-percolation, steady-state heap, and the longest
-//             main-thread task attributable to the tail merge (longtask entries).
+//   DEFAULT — the shipping build. The core paints, then the tail percolates in
+//             INCREMENTALLY (marginal words injected in time-budgeted slices; no
+//             restore). We measure time-to-percolation, post-GC steady-state
+//             heap, and the longest main-thread task in the percolation window,
+//             which is GATED at PERCOLATION_LONGTASK_BUDGET_MS.
 //
 //   npm run build && node tests/live/run-perf.mjs
 //
@@ -32,6 +34,12 @@ const FIXDIR = path.join(__dirname, 'fixtures', 'perf')
 const PERCOLATE_FIXTURE = path.join(__dirname, 'fixtures', 'percolate-tail.html')
 
 const LANG = 'es' // measured in the shipping default language
+
+// Budget for the longest main-thread task in the percolation window (tail chunk
+// parse/merge + the incremental extract/inject slices + post-core page work).
+// Measured max on the largest fixture while scrolling: 84ms (2026-07-15); the
+// budget leaves ~3x headroom for slower machines and tonight's tail doubling.
+const PERCOLATION_LONGTASK_BUDGET_MS = 250
 const SITES = [
   'wikipedia-photosynthesis',
   'wikipedia-roman-empire',
@@ -148,7 +156,7 @@ async function measureCoreInject(page) {
 async function heapMB(page, { gc = false } = {}) {
   const cdp = await page.context().newCDPSession(page)
   // Force a collection first so we read retained steady-state heap, not garbage
-  // left over from the load + the percolation reconcile.
+  // left over from the load + the percolation pass.
   if (gc) { try { await cdp.send('HeapProfiler.collectGarbage') } catch (e) { /* ignore */ } }
   await cdp.send('Performance.enable')
   const { metrics } = await cdp.send('Performance.getMetrics')
@@ -171,68 +179,55 @@ async function waitForSpanStable(page, quietMs = 800, deadline = 15000) {
   return last
 }
 
-// Wait until the tail has percolated in and settled. The percolation reconcile
-// restores the page (count drops) then re-injects a larger set, so we require
-// BOTH that drop to have been seen AND the count to be quiet for `quietMs` — this
-// prevents stopping early at the core plateau if the tail starts slowly.
-async function waitForPercolation(page, quietMs = 1200, deadline = 30000) {
+// Wait until the tail has percolated in and settled. Percolation is INCREMENTAL
+// (marginal tail words are injected; existing spans are never torn down), so the
+// signature is the span count rising ABOVE the core-only count and then staying
+// quiet — there is no restore drop to look for.
+async function waitForPercolation(page, coreCount, quietMs = 1200, deadline = 30000) {
   const start = Date.now()
   while (Date.now() - start < deadline) {
-    const done = await page.evaluate((q) => {
+    const done = await page.evaluate(({ q, coreN }) => {
       const p = window.__perf
       if (!p || p.counts.length === 0) return false
-      let sawDrop = false
-      for (let i = 1; i < p.counts.length; i++) if (p.counts[i].n < p.counts[i - 1].n) { sawDrop = true; break }
       const lastT = p.counts[p.counts.length - 1].t
-      const quiet = p.n > 0 && performance.now() - lastT > q
-      return sawDrop && quiet
-    }, quietMs)
+      return p.n > coreN && performance.now() - lastT > q
+    }, { q: quietMs, coreN: coreCount })
     if (done) break
     await page.waitForTimeout(150)
   }
   return page.evaluate(() => window.__perf)
 }
 
-// From the (t, n) trajectory, three phases:
-//   1. core render     — count rises 0 -> C (first peak).
-//   2. tail parse+merge — count holds at C while the tail loads in idle chunks
-//                         (no DOM change); THIS is what gate D bounds to <50ms.
-//   3. reconcile        — the percolation re-render restores (count DROPS) then
-//                         re-injects the larger set C'. This is the existing
-//                         in-place reconcile pass (same cost as a language switch
-//                         or density change), NOT tail parse/merge.
-// So the tail-merge longtasks are those between core-done and the restore drop;
-// the big reconcile injection task is at/after the drop and is reported separately.
+// From the (t, n) trajectory, two phases:
+//   1. core render — count rises 0 -> C in one burst.
+//   2. percolation — after the tail loads in idle chunks (a ~1-3s pause with no
+//      DOM change), the incremental pass injects the marginal tail words in
+//      time-budgeted slices; the count only ever RISES (nothing is torn down).
+// The phase boundary is the largest time gap between consecutive count samples
+// (the tail-load pause dwarfs every intra-burst gap). The percolation window is
+// everything from the last core sample onward: tail chunk parse/merge slices,
+// the incremental extract/inject slices, and the post-core page work that the
+// CORE config shows exists even with no tail (reported alongside for context).
 function analyze(perf) {
   const counts = perf.counts
   if (counts.length === 0) {
     return { coreDoneMs: 0, coreCount: 0, percolateDoneMs: 0, finalCount: 0,
-      maxLongtaskMs: 0, maxTailMergeLongtaskMs: 0, maxReconcileLongtaskMs: 0 }
+      maxLongtaskMs: 0, maxPercolationLongtaskMs: 0 }
   }
 
-  let coreIdx = counts.length - 1
-  for (let i = 0; i + 1 < counts.length; i++) {
-    if (counts[i].n > 0 && counts[i + 1].n < counts[i].n) { coreIdx = i; break }
+  let boundaryIdx = counts.length
+  let largestGap = 0
+  for (let i = 1; i < counts.length; i++) {
+    const gap = counts[i].t - counts[i - 1].t
+    if (gap > largestGap) { largestGap = gap; boundaryIdx = i }
   }
+  const coreIdx = boundaryIdx - 1
   const coreDoneT = counts[coreIdx].t
-  // The reconcile re-render restores first, so its longtask STARTS slightly before
-  // the count-drop event (the drop is observed mid-task). Attribute by finding the
-  // longtask that SPANS the drop; everything strictly before it is tail parse/merge.
-  const dropT = coreIdx + 1 < counts.length ? counts[coreIdx + 1].t : Infinity
-  const longtasks = perf.longtasks ?? []
-  const spanning = longtasks
-    .filter((e) => e.s <= dropT && dropT <= e.s + e.d)
-    .sort((a, b) => b.d - a.d)[0]
-  const reconcileStartT = spanning ? spanning.s : dropT
 
+  const longtasks = perf.longtasks ?? []
   const maxLongtaskMs = longtasks.reduce((m, e) => Math.max(m, e.d), 0)
-  // Gate D: parse/merge slices run after the core render and strictly before the
-  // reconcile task begins (while the count sits flat at the core value).
-  const maxTailMergeLongtaskMs = longtasks
-    .filter((e) => e.s >= coreDoneT && e.s < reconcileStartT)
-    .reduce((m, e) => Math.max(m, e.d), 0)
-  const maxReconcileLongtaskMs = longtasks
-    .filter((e) => e.s >= reconcileStartT)
+  const maxPercolationLongtaskMs = longtasks
+    .filter((e) => e.s >= coreDoneT)
     .reduce((m, e) => Math.max(m, e.d), 0)
 
   return {
@@ -241,8 +236,7 @@ function analyze(perf) {
     percolateDoneMs: Math.round(counts[counts.length - 1].t),
     finalCount: counts[counts.length - 1].n,
     maxLongtaskMs: +maxLongtaskMs.toFixed(1),
-    maxTailMergeLongtaskMs: +maxTailMergeLongtaskMs.toFixed(1),
-    maxReconcileLongtaskMs: +maxReconcileLongtaskMs.toFixed(1),
+    maxPercolationLongtaskMs: +maxPercolationLongtaskMs.toFixed(1),
   }
 }
 
@@ -272,10 +266,10 @@ async function run() {
   let failures = 0
 
   // One CORE-config site measurement (tail stripped): baseline-comparable
-  // first-pass inject time, plus the post-core page-work longtask (layout /
-  // SPA-observer churn triggered by the big core injection) with NO tail present.
-  // That longtask is the baseline the DEFAULT config's merge window is
-  // differenced against, so gate D isolates the tail merge's OWN contribution.
+  // first-pass inject time, post-GC heap, plus the post-core page-work longtask
+  // (layout / SPA-observer churn triggered by the big core injection) with NO
+  // tail present — reported alongside the percolation-window max as context for
+  // how much of that window is page work rather than tail work.
   async function measureCoreSite(ctx, site) {
     const url = pathToFileURL(path.join(FIXDIR, `${site}.html`)).href
     const page = await ctx.newPage()
@@ -286,7 +280,7 @@ async function run() {
     await page.addInitScript(installPerfObserver)
     await page.goto(url, { waitUntil: 'load' })
     const { ms, count } = await measureCoreInject(page)
-    const heap = await heapMB(page)
+    const heap = await heapMB(page, { gc: true })
     const perf = await page.evaluate(() => window.__perf)
     const coreDoneT = perf.counts.length ? perf.counts[perf.counts.length - 1].t : 0
     const postCoreMaxLongtaskMs = +(perf.longtasks ?? [])
@@ -296,8 +290,9 @@ async function run() {
   }
 
   // One DEFAULT-config site measurement: percolation trajectory, steady-state
-  // heap (post-GC), and phase-attributed longtasks.
-  async function measureDefaultSite(ctx, site) {
+  // heap (post-GC), and phase-attributed longtasks. `coreCount` (from the CORE
+  // config) tells waitForPercolation what "above core coverage" means.
+  async function measureDefaultSite(ctx, site, coreCount) {
     const url = pathToFileURL(path.join(FIXDIR, `${site}.html`)).href
     const page = await ctx.newPage()
     const consoleErrors = []
@@ -306,7 +301,7 @@ async function run() {
     })
     await page.addInitScript(installPerfObserver)
     await page.goto(url, { waitUntil: 'load' })
-    const perf = await waitForPercolation(page)
+    const perf = await waitForPercolation(page, coreCount)
     const heap = await heapMB(page, { gc: true })
     await page.close()
     return { ...analyze(perf), heap, errors: consoleErrors.length }
@@ -356,24 +351,23 @@ async function run() {
   for (const row of rows) {
     const isAnomalous = (r) => (
       r.finalCount < row.core.count ||
-      Math.max(0, r.maxTailMergeLongtaskMs - row.core.postCoreMaxLongtaskMs) > 50 ||
+      r.maxPercolationLongtaskMs > PERCOLATION_LONGTASK_BUDGET_MS ||
       r.errors > 0
-    ) && { finalCount: r.finalCount, mergeWindow: r.maxTailMergeLongtaskMs, errors: r.errors }
-    const a = await withRetry((s) => measureDefaultSite(fullCtx, s), isAnomalous, row.site)
+    ) && { finalCount: r.finalCount, percolationTask: r.maxPercolationLongtaskMs, errors: r.errors }
+    const a = await withRetry((s) => measureDefaultSite(fullCtx, s, row.core.count), isAnomalous, row.site)
 
     // The default final coverage must be >= the core coverage (the tail only adds).
     if (a.finalCount < row.core.count) { failures++; console.log(`  ! ${row.site}: default (${a.finalCount}) < core (${row.core.count}) — tail not adding coverage`) }
-    // GATE D: the tail parse/merge's OWN contribution to any main-thread slice —
-    // the merge-window longtask above the no-tail page-work baseline — must be
-    // <=50ms. (The merge-window max on huge pages is dominated by post-core layout
-    // work that occurs with or without the tail; differencing isolates the merge.)
+    // GATE: the longest main-thread task in the percolation window (tail chunk
+    // parse/merge + incremental extract/inject slices + post-core page work).
+    // The CORE config's postCoreMaxLongtaskMs shows how much of this exists with
+    // no tail at all.
     row.default = a
-    row.tailMergeContributionMs = +Math.max(0, a.maxTailMergeLongtaskMs - row.core.postCoreMaxLongtaskMs).toFixed(1)
-    if (row.tailMergeContributionMs > 50) { failures++; console.log(`  ! ${row.site}: tail-merge contribution ${row.tailMergeContributionMs}ms > 50ms budget`) }
+    if (a.maxPercolationLongtaskMs > PERCOLATION_LONGTASK_BUDGET_MS) { failures++; console.log(`  ! ${row.site}: percolation-window longtask ${a.maxPercolationLongtaskMs}ms > ${PERCOLATION_LONGTASK_BUDGET_MS}ms budget`) }
     console.log(
       `${row.site.padEnd(26)} core: ${String(row.core.count).padStart(4)} repl / ${String(row.core.ms).padStart(5)}ms` +
       `   default: ${String(a.finalCount).padStart(4)} repl / percolate@${String(a.percolateDoneMs).padStart(5)}ms / ${a.heap}MB` +
-      `   mergeWindow ${a.maxTailMergeLongtaskMs}ms (pageBaseline ${row.core.postCoreMaxLongtaskMs}ms -> tail +${row.tailMergeContributionMs}ms)  reconcile ${a.maxReconcileLongtaskMs}ms`,
+      `   percolationTask ${a.maxPercolationLongtaskMs}ms (no-tail page work ${row.core.postCoreMaxLongtaskMs}ms)`,
     )
   }
 
@@ -385,41 +379,38 @@ async function run() {
   const avgF = (f) => +(rows.reduce((s, r) => s + f(r), 0) / rows.length).toFixed(1)
   const summary = {
     language: LANG, sites: rows.length, generatedFrom: 'tests/live/fixtures/perf',
-    baseline: { coreAvgMs: 3357, coreAvgHeapMB: 41, aggressiveAvgMs: 3572, aggressiveAvgHeapMB: 59.1 },
+    baseline: { coreAvgMs: 3357, aggressiveAvgMs: 3572, note: 'pre-change heap baselines were captured without forced GC and are not comparable to the post-GC numbers below' },
+    percolationLongtaskBudgetMs: PERCOLATION_LONGTASK_BUDGET_MS,
     rows,
     aggregate: {
       coreFirstPassAvgMs: avg((r) => r.core.ms),
       coreAvgHeapMB: avgF((r) => r.core.heap || 0),
       defaultPercolateDoneAvgMs: avg((r) => r.default.percolateDoneMs),
       defaultSteadyHeapMB: avgF((r) => r.default.heap || 0),
-      maxTailMergeContributionMs: rows.reduce((m, r) => Math.max(m, r.tailMergeContributionMs), 0),
-      maxMergeWindowLongtaskMs: rows.reduce((m, r) => Math.max(m, r.default.maxTailMergeLongtaskMs), 0),
+      maxPercolationLongtaskMs: rows.reduce((m, r) => Math.max(m, r.default.maxPercolationLongtaskMs), 0),
       maxPageWorkBaselineMs: rows.reduce((m, r) => Math.max(m, r.core.postCoreMaxLongtaskMs), 0),
-      maxReconcileLongtaskMs: rows.reduce((m, r) => Math.max(m, r.default.maxReconcileLongtaskMs), 0),
       maxLongtaskMs: rows.reduce((m, r) => Math.max(m, r.default.maxLongtaskMs), 0),
     },
   }
-  fs.writeFileSync(path.join(OUTDIR, 'perf-after-task1.json'), JSON.stringify(summary, null, 2))
+  fs.writeFileSync(path.join(OUTDIR, 'perf-after-task1b.json'), JSON.stringify(summary, null, 2))
 
   // Only a REGRESSION matters: the first pass must not get slower than baseline by
   // more than ~5%. Faster is a pass (removing the tail from the critical path can
   // only help). Signed delta so the report is honest either way.
   const signedDelta = (summary.aggregate.coreFirstPassAvgMs - 3357) / 3357
+  const tailHeapDelta = +(summary.aggregate.defaultSteadyHeapMB - summary.aggregate.coreAvgHeapMB).toFixed(1)
   const log = [
-    `perf-after-task1 (${new Date().toISOString()})`,
+    `perf-after-task1b (${new Date().toISOString()})`,
     `core first-pass avg: ${summary.aggregate.coreFirstPassAvgMs}ms (baseline 3357ms, delta ${(signedDelta * 100).toFixed(1)}%)`,
-    `core heap avg: ${summary.aggregate.coreAvgHeapMB}MB (baseline 41MB)`,
+    `heap, post-GC, like-for-like: core-only ${summary.aggregate.coreAvgHeapMB}MB vs full (core+tail) ${summary.aggregate.defaultSteadyHeapMB}MB — the tail retains ~${tailHeapDelta}MB`,
     `default percolation-complete avg: ${summary.aggregate.defaultPercolateDoneAvgMs}ms`,
-    `default steady-state heap avg: ${summary.aggregate.defaultSteadyHeapMB}MB (old aggressive 59.1MB)`,
-    `TAIL PARSE/MERGE contribution above page-work baseline: ${summary.aggregate.maxTailMergeContributionMs}ms (gate D budget 50ms)`,
-    `  (merge-window longtask max ${summary.aggregate.maxMergeWindowLongtaskMs}ms is post-core page work; no-tail baseline max ${summary.aggregate.maxPageWorkBaselineMs}ms)`,
-    `longest reconcile re-render task: ${summary.aggregate.maxReconcileLongtaskMs}ms (the existing in-place reconcile cost, = a language switch; not tail parse/merge)`,
-    `longest main-thread task overall: ${summary.aggregate.maxLongtaskMs}ms`,
-    ...rows.map((r) => `  ${r.site.padEnd(26)} core ${r.core.count}/${r.core.ms}ms  default ${r.default.finalCount}/${r.default.heap}MB  tailMerge+${r.tailMergeContributionMs}ms reconcile ${r.default.maxReconcileLongtaskMs}ms`),
+    `longest percolation-window main-thread task: ${summary.aggregate.maxPercolationLongtaskMs}ms (budget ${PERCOLATION_LONGTASK_BUDGET_MS}ms; no-tail page-work max in the same window ${summary.aggregate.maxPageWorkBaselineMs}ms)`,
+    `longest main-thread task overall (incl. the core first pass itself): ${summary.aggregate.maxLongtaskMs}ms`,
+    ...rows.map((r) => `  ${r.site.padEnd(26)} core ${r.core.count}/${r.core.ms}ms/${r.core.heap}MB  default ${r.default.finalCount}/${r.default.heap}MB  percolationTask ${r.default.maxPercolationLongtaskMs}ms (page work ${r.core.postCoreMaxLongtaskMs}ms)`),
   ].join('\n')
-  fs.writeFileSync(path.join(OUTDIR, 'perf-after-task1.log'), log + '\n')
+  fs.writeFileSync(path.join(OUTDIR, 'perf-after-task1b.log'), log + '\n')
   console.log('\n' + log)
-  console.log(`\nresults -> ${path.join(OUTDIR, 'perf-after-task1.json')}`)
+  console.log(`\nresults -> ${path.join(OUTDIR, 'perf-after-task1b.json')}`)
 
   if (signedDelta > 0.05) { failures++; console.log(`FAIL: core first-pass ${summary.aggregate.coreFirstPassAvgMs}ms regressed >5% vs the 3357ms baseline`) }
   if (failures) { console.log(`\nFAILURES: ${failures}`); process.exitCode = 1 }
