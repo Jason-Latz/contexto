@@ -82,15 +82,12 @@ HAS_OMW = {"es", "fr", "it"}
 # target-language Wiktextract dump exists in this repo.
 HAS_WIKT_TARGET_DUMP = {"de", "fr", "it"}
 
-WIKT_DUMP_FILENAME = {"de": "kaikki-de.jsonl", "fr": "kaikki-fr.jsonl", "it": "kaikki-it.jsonl"}
-
-# Reuse the already-tested gender/plural extraction from the pack importer so
-# the slim cache's morphology stays consistent with how the packs themselves
-# were built.
+# Slim-cache construction was factored into pipeline/analysis/build_slim_wikt.py
+# (single source of truth, reused by build_mint_queue.py too). merge_evidence
+# only ever builds de/fr/it slim caches -- HAS_WIKT_TARGET_DUMP gates
+# load_slim_wikt_noun_index below, so es is never built from here.
 sys.path.insert(0, str(REPO_ROOT))
-from pipeline.import_wikt.extract import _gender_of, _plural_of  # noqa: E402
-
-POS_WANTED = {"noun", "verb", "adj", "adv"}
+from pipeline.analysis.build_slim_wikt import build_slim_wikt_cache  # noqa: E402
 
 
 def log(msg: str) -> None:
@@ -124,59 +121,9 @@ def match_kind(current_norm: str, candidate_norm: str) -> str | None:
 
 
 # ---------------------------------------------------------------------------
-# Slim target-language Wiktextract cache (built once, reused across runs)
+# Slim target-language Wiktextract cache (built once by build_slim_wikt, reused
+# across runs). build_slim_wikt_cache is imported at the top of this module.
 # ---------------------------------------------------------------------------
-
-def build_slim_wikt_cache(lang: str) -> Path:
-    """Stream the big target-language kaikki dump once and write a slim cache
-    of {lemma, pos, gender, plural, glosses[<=3]} — reused on subsequent runs.
-    """
-    out_path = WIKT_CACHE_DIR / f"slim-{lang}.jsonl"
-    src_path = WIKT_CACHE_DIR / WIKT_DUMP_FILENAME[lang]
-    if out_path.exists() and out_path.stat().st_mtime >= src_path.stat().st_mtime:
-        log(f"slim wikt cache for {lang} already up to date: {out_path}")
-        return out_path
-
-    log(f"building slim wikt cache for {lang} from {src_path} ...")
-    t0 = time.time()
-    n_in = n_out = 0
-    with open(src_path, encoding="utf-8") as fin, open(out_path, "w", encoding="utf-8") as fout:
-        for line in fin:
-            n_in += 1
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                rec = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            pos = rec.get("pos")
-            if pos not in POS_WANTED:
-                continue
-            lemma = (rec.get("word") or "").strip()
-            if not lemma:
-                continue
-            gender = plural = None
-            if pos == "noun":
-                gender = _gender_of(rec)
-                plural = _plural_of(rec)
-            glosses: list[str] = []
-            for sense in rec.get("senses", []):
-                if sense.get("form_of") or sense.get("alt_of"):
-                    continue
-                for g in sense.get("glosses") or []:
-                    g = g.strip()
-                    if g:
-                        glosses.append(g)
-                        break
-                if len(glosses) >= 3:
-                    break
-            slim = {"lemma": lemma, "pos": pos, "gender": gender, "plural": plural, "glosses": glosses[:3]}
-            fout.write(json.dumps(slim, ensure_ascii=False) + "\n")
-            n_out += 1
-    log(f"  {lang}: {n_in} lines in -> {n_out} slim records, {time.time() - t0:.1f}s")
-    return out_path
-
 
 def load_slim_wikt_noun_index(lang: str) -> dict[str, list[tuple[str | None, str | None]]]:
     """normalize(lemma) -> list of (gender, plural) for noun records only."""
