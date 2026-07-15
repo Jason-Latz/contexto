@@ -53,7 +53,7 @@ function describe(status: PageStatus): StatusCopy {
         return {
           tone: 'idle',
           headline: 'No swappable words on this page.',
-          hint: 'Raise the density below, or turn on Aggressive Mode for rarer words.',
+          hint: 'Raise the density below to swap more words.',
         }
       }
       const language = getLanguageInfo(status.language).displayName

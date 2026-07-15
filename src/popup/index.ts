@@ -137,7 +137,6 @@ async function updateSettings(patch: Partial<PopupSettings>): Promise<void> {
 function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSettings): void {
   const settings = {
     replacementsEnabled: initialSettings.replacementsEnabled ?? true,
-    aggressiveMode: (initialSettings.aggressiveMode as boolean | undefined) ?? false,
   }
 
   const section = document.createElement('div')
@@ -159,20 +158,7 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
     },
   )
 
-  // Aggressive mode injects the quarantined niche "tail" vocabulary (rare,
-  // low-confidence words). Off by default — opting in trades precision for reach.
-  const aggressiveToggle = buildToggleRow(
-    'Aggressive Mode',
-    settings.aggressiveMode,
-    async enabled => {
-      settings.aggressiveMode = enabled
-      await updateSettings({ aggressiveMode: enabled })
-    },
-    'Also swap rare niche words (larger vocabulary, lower accuracy).',
-  )
-
   rows.appendChild(replacementToggle)
-  rows.appendChild(aggressiveToggle)
   section.appendChild(title)
   section.appendChild(rows)
   container.appendChild(section)
