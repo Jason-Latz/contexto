@@ -223,7 +223,7 @@ async function bug4(base) {
           if (n.nodeType === 1 && n.getAttribute?.('data-contexto') === 'true') window.__removed++
         }
       }
-    }).observe(document.documentElement, { childList: true, subtree: true })
+    }).observe(document, { childList: true, subtree: true }) // document, NOT documentElement: null at init-script time, observe() would throw and leave the counter dead
   })
   await tabA.goto(`${base}/article-light.html`, { waitUntil: 'domcontentloaded' })
   let ok = true
@@ -362,7 +362,7 @@ async function frozenTab(base) {
           if (n.nodeType === 1 && n.getAttribute?.('data-contexto') === 'true') window.__removed++
         }
       }
-    }).observe(document.documentElement, { childList: true, subtree: true })
+    }).observe(document, { childList: true, subtree: true }) // document, NOT documentElement: null at init-script time, observe() would throw and leave the counter dead
     dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }))
   })
   await article.waitForTimeout(1500)
@@ -509,6 +509,19 @@ async function tailPercolation(base) {
   await seed(sw, { ...ONBOARDED_ES, density: 1 })
 
   const page = await context.newPage()
+  // Count span TEARDOWNS: percolation must be additive (inject the marginal tail
+  // words into unreplaced text), never a restore-and-re-render of the page the
+  // user is already reading. Red with the old full-reconcile percolation.
+  await page.addInitScript(() => {
+    window.__removed = 0
+    new MutationObserver(muts => {
+      for (const m of muts) {
+        for (const n of m.removedNodes) {
+          if (n.nodeType === 1 && n.getAttribute?.('data-contexto') === 'true') window.__removed++
+        }
+      }
+    }).observe(document, { childList: true, subtree: true }) // document, NOT documentElement: null at init-script time, observe() would throw and leave the counter dead
+  })
   await page.goto(`${base}/percolate-tail.html`, { waitUntil: 'domcontentloaded' })
   // The core paints first (some span appears without waiting on the tail).
   await spans(page).first().waitFor({ timeout: 8000 })
@@ -521,6 +534,10 @@ async function tailPercolation(base) {
   check('PERCOLATE-default', 'A tail-only word appears by default shortly after load, no toggle',
     percolated && /^fot[oó]n$/i.test(photonTarget ?? ''),
     `photon -> ${JSON.stringify(photonTarget)}`)
+
+  const tornDown = await page.evaluate(() => window.__removed)
+  check('PERCOLATE-incremental', 'Percolation adds tail words without tearing down existing spans',
+    tornDown === 0, `${tornDown} core span(s) removed during percolation`)
 
   // Switching language must reset AND re-percolate the tail for the new language.
   await clickLanguageInPopup(context, extId, 'German')
