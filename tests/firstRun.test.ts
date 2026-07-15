@@ -72,7 +72,7 @@ globalThis.fetch = async () => new Response(SYNTHETIC_PACK, { status: 200 })
 // Mirror the content-script startup order: settings -> pack -> lexicon -> init.
 async function startupThroughInit(): Promise<void> {
   await loadSettings()
-  await loadLanguagePack('de', false)
+  await loadLanguagePack('de')
   await loadLexicon()
   await ensureFirstRunInit()
 }

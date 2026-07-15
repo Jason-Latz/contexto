@@ -224,8 +224,8 @@ function buildToggleRow(
   label.textContent = labelText
 
   // Optional secondary line under the label, for toggles that need a word of
-  // explanation (e.g. aggressive mode). Kept inside the label cell so the On/Off
-  // button stays vertically centered against the label+hint block.
+  // explanation (e.g. the Verbs word-type). Kept inside the label cell so the
+  // On/Off button stays vertically centered against the label+hint block.
   if (hintText) {
     const wrap = document.createElement('span')
     const hint = document.createElement('span')

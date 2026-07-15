@@ -20,10 +20,6 @@ interface Settings {
   targetLanguage: TargetLanguage
   density: number
   replacementsEnabled: boolean
-  // Aggressive mode: also inject the quarantined niche "tail" vocabulary
-  // (public/language-packs/<lang>.tail.json). Off by default — the tail is
-  // low-confidence long-tail words, so opting in trades precision for coverage.
-  aggressiveMode: boolean
   blockedDomains: string[]
   // Parts of speech the user has switched off in the popup's Word Types card.
   // Entries whose partOfSpeech is listed here are never candidates.
@@ -43,7 +39,6 @@ function makeDefaultSettings(): Settings {
     targetLanguage: 'es',
     density: LEVEL_DENSITY.beginner,
     replacementsEnabled: true,
-    aggressiveMode: false,
     blockedDomains: [],
     disabledPartsOfSpeech: [...DEFAULT_DISABLED_PARTS_OF_SPEECH],
     domainDecisions: {},
@@ -61,7 +56,6 @@ export async function loadSettings(): Promise<void> {
       ...raw,
       targetLanguage: raw.targetLanguage ?? 'es',
       replacementsEnabled: raw.replacementsEnabled ?? true,
-      aggressiveMode: raw.aggressiveMode ?? false,
       blockedDomains: raw.blockedDomains ?? [],
       disabledPartsOfSpeech: raw.disabledPartsOfSpeech ?? [...DEFAULT_DISABLED_PARTS_OF_SPEECH],
       domainDecisions: raw.domainDecisions ?? {},
@@ -113,15 +107,6 @@ export function getLevel(): OnboardingLevel | null {
 
 export function areReplacementsEnabled(): boolean {
   return settings.replacementsEnabled
-}
-
-export function isAggressiveMode(): boolean {
-  return settings.aggressiveMode
-}
-
-// Toggle aggressive mode (inject the quarantined niche tail) and persist.
-export async function setAggressiveMode(enabled: boolean): Promise<void> {
-  await persistSettings({ aggressiveMode: enabled })
 }
 
 // Update the stored density and persist immediately.

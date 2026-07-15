@@ -217,7 +217,7 @@ async function freshInstall(): Promise<void> {
   }
   clearDirty()
   await loadSettings()
-  await loadLanguagePack('de', false)
+  await loadLanguagePack('de')
   await loadLexicon()
   await ensureFirstRunInit()
 

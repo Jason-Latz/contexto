@@ -80,7 +80,7 @@ test('loader reads a compact pack and expands entries on lookup', async () => {
   }
 
   const { loadLanguagePack, lookup } = await import('../src/language/loader.js')
-  await loadLanguagePack('it', false)
+  await loadLanguagePack('it')
 
   const adj = lookup('compacttestword')
   assert.equal(adj?.target, 'parolina')
@@ -98,7 +98,7 @@ test('loader reads a compact pack and expands entries on lookup', async () => {
   // Restore real data in the shared loader singleton for other test files: switch
   // languages (to force a reload past the same-language cache) then reload real it.
   serveCompact = false
-  await loadLanguagePack('es', false)
-  await loadLanguagePack('it', false)
+  await loadLanguagePack('es')
+  await loadLanguagePack('it')
   assert.equal(lookup('compacttestword'), null, 'synthetic compact entry cleared after restore')
 })

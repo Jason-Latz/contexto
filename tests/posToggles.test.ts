@@ -75,7 +75,7 @@ test('verbs are disabled by default, and an explicit choice overrides it', async
 test('disabled parts of speech never become candidates', async () => {
   delete storage[SETTINGS_KEY]
   await loadSettings()
-  await loadLanguagePack('es', false)
+  await loadLanguagePack('es')
 
   // "to taste" is a bare-infinitive slot, so the verb qualifies when enabled.
   const text = 'We would like to taste the soup in the kitchen today.'
@@ -88,7 +88,7 @@ test('disabled parts of speech never become candidates', async () => {
 test('verbs only qualify in bare-infinitive slots', async () => {
   delete storage[SETTINGS_KEY]
   await loadSettings()
-  await loadLanguagePack('es', false)
+  await loadLanguagePack('es')
 
   const casesWithoutTaste = [
     // Inflected surfaces: an uninflected target would read as a grammar error.
@@ -116,7 +116,7 @@ test('verbs only qualify in bare-infinitive slots', async () => {
 test('the marker check is grammatical: homograph proper nouns do not open a slot', async () => {
   delete storage[SETTINGS_KEY]
   await loadSettings()
-  await loadLanguagePack('es', false)
+  await loadLanguagePack('es')
 
   // "May" the month and "Will" the name spell like modals but are tagged
   // Month/ProperNoun; a text-only marker list would swap these verbs.

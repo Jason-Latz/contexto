@@ -276,39 +276,29 @@ function resetTail(): void {
 // ensureTailLoaded, so it never blocks this. Switching to a new language resets
 // the tail (a new core invalidates it); staying on the same language is a no-op
 // that preserves an already-loaded tail.
-//
-// `includeTail` is a transitional convenience for callers/tests that want the
-// tail loaded eagerly and awaited in one call; the runtime default path does not
-// use it (the content script percolates the tail in after first paint).
 export async function loadLanguagePack(
   targetLanguage: TargetLanguage = DEFAULT_TARGET_LANGUAGE,
-  includeTail = false,
 ): Promise<void> {
   const coreReady = activePack?.targetLanguage === targetLanguage && entries !== null
+  if (coreReady) return
 
-  if (!coreReady) {
-    assertExtensionContextAvailable()
+  assertExtensionContextAvailable()
 
-    const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
-    if (!response.ok) {
-      throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
-    }
-
-    const pack = (await response.json()) as AnyLanguagePack
-    if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
-      throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
-    }
-
-    activePack = pack
-    entries = buildEntryMap(pack, false)
-    expressionEntries = null
-    // A fresh core invalidates any previously-loaded tail (wrong language).
-    resetTail()
+  const response = await fetch(chrome.runtime.getURL(`language-packs/${targetLanguage}.json`))
+  if (!response.ok) {
+    throw new Error(`[Contexto] Failed to load ${targetLanguage} language pack`)
   }
 
-  if (includeTail) {
-    await ensureTailLoaded(targetLanguage)
+  const pack = (await response.json()) as AnyLanguagePack
+  if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
+    throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
   }
+
+  activePack = pack
+  entries = buildEntryMap(pack, false)
+  expressionEntries = null
+  // A fresh core invalidates any previously-loaded tail (wrong language).
+  resetTail()
 }
 
 // True when the niche tail shard is fully merged for the active language.
