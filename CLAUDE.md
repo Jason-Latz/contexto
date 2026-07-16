@@ -205,6 +205,20 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 
 ## Current state
 
+- **Long-tail expansion wave 1 landed (2026-07-16, on main):** +5,357 panel-verified
+  tail words (fr +1,339 / it +1,869 / de +1,073 / es +1,076); tails now es 39,440 ·
+  de 19,367 · fr 17,638 · it 12,580. Every language batch shipped under an independent
+  Opus panel at the 5% tail bar (de 0.0% / it 0.83% / fr 3.33% / es 4.17%, n=120).
+  Three NEW target-proposing sources power the mint queue: Wikipedia langlinks
+  (`pipeline/sources/parse_wikipedia_langlinks.py`), Spanish-Wiktextract inversion
+  (wiktinv), FreeDict eng-es; plus a gloss-match corroboration vote and a
+  wikidata+wiktextract morphology compose. Factory: resumable
+  adjudicate->refute->judge->panel->apply workflows in `docs/overnight-2026-07-15/`
+  (also the full run ledger in `OVERNIGHT_PLAN.md`, gitignored). Wave 2 (remaining
+  ~46k-row shippable pool) drains via the same path. Measured ceiling: full 2x per
+  language is NOT reachable from current free sources (es pool caps at ~1.2x);
+  next levers are other-language Wiktionary editions and FreeDict supplements.
+
 - **Default-on progressive tail landed (2026-07-15, + incremental percolation after
   adversarial review):** Aggressive Mode is retired (setting, popup toggle, live-diff
   key, tests); the niche tail loads by default in idle-time chunks after the core
