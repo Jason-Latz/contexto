@@ -130,15 +130,18 @@ log(`${LANG}: ${prep.orderable} orderable rows (${prep.preSkip} preSkip dropped)
 const RAW = (fi) => `pipeline/data/verdicts/raw/mint-${LANG}-${fi}.jsonl`
 const FIN = (fi) => `pipeline/data/verdicts/final/mint-${LANG}-${fi}.jsonl`
 const FIX = (fi) => `pipeline/data/verdicts/fixup/mint-${LANG}-${fi}.jsonl`
+const APPLIED = (fi) => `pipeline/data/verdicts/applied/mint-${LANG}-${fi}.jsonl.done`
 
 const adjP = (b) => `${COMMON}
 ${RULES}
 ${ADDENDUM}
 You are the ADJUDICATOR, fluent in ${LNAME} and English. MINT adjudication: decide which NEW candidate words to add to the ${LNAME} pack.
+IMMUTABLE APPLIED GUARD (your FIRST filesystem check): if "${REPO}/${APPLIED(b.fi)}" exists, this batch already changed a shipped pack. Do not create, delete, truncate, rename, or otherwise modify its raw/final/fixup files. Return {ok:true,status:"applied",minted:0,skipped:0,written:0} immediately.
 Read your slice: sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}"  (up to ${BATCH} records; the last batch may have fewer).
 SLICE INTEGRITY (mandatory before any adjudication): extract your slice KEY LIST twice, independently, straight from the canonical ordered file (never from a cached copy):
   sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" | python3 -c "import sys,json; [print(json.loads(l)['key']) for l in sys.stdin]"
 Run that twice and diff the outputs: they must be byte-identical with the expected count. If they differ, your reads are racing something — re-run until two consecutive extractions agree. Every verdict you emit must be for a key in this set, and after writing your verdict file verify (mechanically, with a diff against the key list) that your file contains EXACTLY one line per slice key except keys you skipped for idempotence.
+FINAL-FIRST GUARD: before trusting or writing raw, inspect "${REPO}/${FIN(b.fi)}" if it exists. Validate that it has exactly one unique row for every key in this slice — no missing, duplicate, or foreign keys. If complete, return {ok:true,status:"refuted",minted:0,skipped:0,written:0} without touching raw or final. If the final is invalid or incomplete, preserve every artifact and return {ok:false,status:"inconsistent_final",minted:0,skipped:0,written:0}; never overwrite evidence that may already have been reviewed.
 RESUME: if "${REPO}/${RAW(b.fi)}" already exists, VALIDATE it against your slice key set: every key in it must belong to the set, and (its keys + keys found in existing final/fixup mint-${LANG}-*.jsonl files) must cover the whole set. If valid, return {ok:true,status:"resumed",minted:0,skipped:0,written:<its line count>} and write nothing. If INVALID (foreign keys, or gaps not explained by idempotence), delete it (rm) and adjudicate from scratch.
 IDEMPOTENCE: skip any key that already appears in an existing "${REPO}/pipeline/data/verdicts/final/mint-${LANG}-*.jsonl" or ".../fixup/mint-${LANG}-*.jsonl" file (do not re-adjudicate it; do not emit a line for it).
 ATTENTION DISCIPLINE (this batch is large): work through the rows in small groups of ~15 and emit results as you go. Emit EXACTLY ONE JSON verdict line per input record — never summarize, never collapse ("the rest are skips" is FORBIDDEN), never omit a row. The output must have one line per adjudicated record.
@@ -154,8 +157,9 @@ const refP = (b) => `${COMMON}
 ${RULES}
 ${ADDENDUM}
 You are the REFUTER, fluent in ${LNAME} and English. The adjudicator wrote "${REPO}/${RAW(b.fi)}" for lines ${b.lo}-${b.hi} of "${REPO}/${ORDERED}".
-VALIDATE THE RAW FILE FIRST (a prior run had cross-batch row contamination): extract your slice key set (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" piped through python3 to print each line's key; run twice, must agree). If the raw file contains ANY key outside the slice set, or its keys plus keys in existing final/fixup mint-${LANG}-*.jsonl files do not cover the slice set, it is corrupt: delete it (rm "${REPO}/${RAW(b.fi)}") and return {ok:false,status:"corrupt_raw",minted:0,skipped:0,disputed:0,agreed:0} — the batch will re-run on the next launch. Do not refute a corrupt file.
-RESUME: if "${REPO}/${FIN(b.fi)}" already exists and its key set equals the raw file's key set, this batch is already refuted — read it and return {ok:true,status:"resumed",minted:<verdict=="mint" count>,skipped:<skip count>,disputed:<refuter=="dispute" count>,agreed:<refuter=="agree" count>}.
+IMMUTABLE APPLIED GUARD (your FIRST filesystem check): if "${REPO}/${APPLIED(b.fi)}" exists, do not touch raw/final/fixup. Return {ok:true,status:"applied",minted:0,skipped:0,disputed:0,agreed:0} immediately.
+FINAL-FIRST RESUME: extract the canonical slice key set twice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" piped through python3 to print each line's key; both reads must agree). If "${REPO}/${FIN(b.fi)}" exists, validate it BEFORE raw: it must have exactly one unique row for every slice key — no missing, duplicate, or foreign keys. If complete, this batch is already refuted even when raw is absent or empty — read the final and return {ok:true,status:"resumed",minted:<verdict=="mint" count>,skipped:<skip count>,disputed:<refuter=="dispute" count>,agreed:<refuter=="agree" count>} without rewriting anything. If the final is invalid or incomplete, preserve all files and return {ok:false,status:"inconsistent_final",minted:0,skipped:0,disputed:0,agreed:0}; never overwrite reviewed evidence.
+VALIDATE THE RAW FILE NEXT (a prior run had cross-batch row contamination): if the raw file contains ANY key outside the slice set, or its keys plus keys in existing final/fixup mint-${LANG}-*.jsonl files do not cover the slice set, it is corrupt: delete it (rm "${REPO}/${RAW(b.fi)}") and return {ok:false,status:"corrupt_raw",minted:0,skipped:0,disputed:0,agreed:0} — the batch will re-run on the next launch. Do not refute a corrupt file.
 Otherwise re-read the same queue slice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}") alongside the raw verdicts and PROVE THEM WRONG wherever possible. Attack every "mint" and every line with confidence<0.75, and sample ~20% of the skips (a wrongful skip loses a good word). For each attacked line ask: is the target really a correct translation of the record's GLOSSED sense (not its own back-translation)? wrong/non-dominant sense? Wikipedia langlink topic-artifact or plural-title error? verb not an infinitive? noun missing authoritative morph? non-noun cognate identical to English?
 Write "${REPO}/${FIN(b.fi)}" (atomic .tmp then mv): copy each raw line and add "refuter":"agree" or "refuter":"dispute" (+ "refuterReason" when disputing); lines you did not attack get "refuter":"unreviewed". Do NOT change verdicts yourself — disputes go to the judge. One line per raw line.
 Return {ok, status:"processed", minted:<mint count>, skipped:<skip count>, disputed:<disputes>, agreed:<agrees>}.`
@@ -164,6 +168,7 @@ const judgeP = (b) => `${COMMON}
 ${RULES}
 ${ADDENDUM}
 You are the FINAL JUDGE (Opus — this ruling ships tonight). "${REPO}/${FIN(b.fi)}" has lines with "refuter":"dispute".
+IMMUTABLE APPLIED GUARD (your FIRST filesystem check): if "${REPO}/${APPLIED(b.fi)}" exists, do not touch raw/final/fixup. Return {ok:true,status:"applied",judged:0} immediately.
 RESUME: if "${REPO}/${FIX(b.fi)}" already exists and already contains a ruling for every disputed key in the final file, return {ok:true,status:"resumed",judged:<its line count>}.
 For each "refuter":"dispute" line, re-read its record in "${REPO}/${ORDERED}" (match by key), weigh the adjudicator's mint against the refuter's objection, and rule: uphold the mint ONLY if the evidence truly teaches the entry's glossed sense with authoritative morph (nouns) / a clean infinitive (verbs); otherwise overturn to skip. When in doubt: skip.
 Write ONLY the disputed lines to "${REPO}/${FIX(b.fi)}" (atomic .tmp then mv), same schema, add "judge":"opus" and DROP the refuter field. An upheld mint MUST keep confidence>=0.8 so it clears the ship stratum; a skip ruling is a skip.
@@ -178,9 +183,13 @@ const batches = Array.from({ length: numBatches }, (_, i) => ({
 const results = (await pipeline(
   batches,
   (b) => agent(adjP(b), { label: `adj:mint:${LANG}:${b.fi}`, phase: 'Adjudicate', model: 'sonnet', schema: ADJ }),
-  (adj, b) => (adj && adj.ok)
-    ? agent(refP(b), { label: `ref:mint:${LANG}:${b.fi}`, phase: 'Adjudicate', model: 'sonnet', schema: REF })
-    : null,
+  (adj, b) => {
+    if (!adj || !adj.ok) return null
+    if (adj.status === 'applied') {
+      return { ok: true, status: 'applied', minted: 0, skipped: 0, disputed: 0, agreed: 0 }
+    }
+    return agent(refP(b), { label: `ref:mint:${LANG}:${b.fi}`, phase: 'Adjudicate', model: 'sonnet', schema: REF })
+  },
   (ref, b) => {
     if (!ref || !ref.ok) return ref || null
     if (ref.disputed > 0) {

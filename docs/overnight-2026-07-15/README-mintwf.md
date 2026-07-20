@@ -82,10 +82,12 @@ filesystem access**, all persistence and the resume checks live **inside the age
 - **Prepare** — if `mint-<lang>.ordered.jsonl` exists and is non-empty, it is NOT
   rebuilt (rebuilding could reorder rows and break in-flight batch line-ranges); its
   line count is reused. Ordering is deterministic (bucket ASC, enZipf DESC, key ASC).
-- **Adjudicator** — if `raw/mint-<lang>-<fi>.jsonl` already has >= its slice's lines,
-  returns `resumed` and writes nothing.
-- **Refuter** — if `final/mint-<lang>-<fi>.jsonl` already covers the raw file, returns
-  `resumed` (reads the dispute count back from it).
+- **Every stage** — checks the matching `applied/*.done` marker first. Applied
+  batches are immutable and return immediately.
+- **Adjudicator** — trusts an exact, slice-complete final before inspecting raw;
+  otherwise an exact raw resumes. An invalid/incomplete final blocks for inspection.
+- **Refuter** — validates an exact, slice-complete final against the ordered queue,
+  not against raw, so a missing/empty raw file cannot erase reviewed verdicts.
 - **Judge** — if `fixup/mint-<lang>-<fi>.jsonl` already rules every disputed key,
   returns `resumed`.
 - **Panel** — sample file and each `panel-<lang>-<seed>-agent-<k>.jsonl` are reused if
@@ -94,6 +96,23 @@ filesystem access**, all persistence and the resume checks live **inside the age
 Every file is written **atomically** (`<path>.tmp` then `mv`), so a kill mid-write
 never leaves a partial file that a resume would trust. `runIndex` for the panel is the
 seed (no clock available), so re-running the same seed targets the same output files.
+
+Resume safety is **applied-first, then final-first, then raw**. A
+`verdicts/applied/mint-<lang>-<fi>.jsonl.done` marker makes that batch immutable: no
+stage may touch its raw/final/fixup artifacts. A complete, slice-valid final is also
+authoritative even when raw is absent or empty; it resumes without rewriting either
+file. An incomplete or foreign-keyed final blocks that batch for inspection instead
+of being overwritten. This ordering prevents a stale or missing raw file from erasing
+reviewed verdicts after an interrupted run.
+
+For a new adjudication wave, panel with a **new unused seed**. Reusing a seed is
+only for resuming that exact frozen panel run: its sample and per-agent files are
+intentionally reused, and the sampler must recompute the finished eligible universe
+and prove the frozen sample is the exact seeded sample from it. Do not launch the
+panel until every ordered batch is either applied or has an exact final plus complete
+fixups for all disputes; otherwise a new seed would freeze a sample from a partial
+verdict universe. Apply only from the current workflow's successful return, never
+from a pre-existing panel JSON left at the same seed after an aborted run.
 
 ## File locations
 
