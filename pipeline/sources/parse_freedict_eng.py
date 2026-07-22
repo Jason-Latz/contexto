@@ -4,8 +4,8 @@
 Handles the TEI dialects observed across the FreeDict eng-deu, eng-fra,
 eng-ita, and eng-spa releases (see Textum/CLAUDE.md "Multi-language"):
 
-  - eng-deu (Ding-derived): entry-level `<gramGrp><pos>` for the headword,
-    plus PER-TRANSLATION `<gramGrp>` nested inside each `<cit type="trans">`
+  - eng-deu (Ding-derived): occasional entry-level `<gramGrp><pos>` for the
+    headword, plus PER-TRANSLATION `<gramGrp>` nested inside each `<cit type="trans">`
     carrying `<pos>`/`<gen>`/`<number>` for that specific target word. Nouns
     are tagged only with `<gen>` (no explicit `n` pos value anywhere in the
     file) - gender presence implies noun.
@@ -27,6 +27,17 @@ a `<number>pl</number>` tag marking that a *given* translation quote already
 *is* a plural form) - `plural` is therefore always emitted as null here;
 gender/plural enrichment for de/fr/it is expected to come from a downstream
 source (as it already does for the Wiktextract-inverted core packs).
+
+The emitted POS fields are intentionally side-specific:
+
+  - `sourcePos` uses only the English entry/headword `<gramGrp>`; a multiword
+    English headword becomes `expression` under the existing source-token policy.
+  - `targetPos` uses the translation `<cit>`'s `<gramGrp>`/gender when present.
+    Because some FreeDict dialects put POS only on the English entry, an entirely
+    untagged translation falls back to the entry's lexical POS under the normal
+    same-POS translation assumption. This fallback is target-facing only.
+  - legacy `pos` aliases `targetPos`; it must never authorize an English source
+    token's runtime POS.
 
 Usage:
   python3 parse_freedict_eng.py --tei <path/to/eng-xxx.tei> --language de --out <path/to/out.jsonl>
@@ -153,6 +164,10 @@ def iter_rows_for_entry(entry: ElementTree.Element):
         return
 
     entry_pos_raw = clean_text(entry.findtext("tei:gramGrp/tei:pos", namespaces=TEI_NS)) or None
+    source_lexical_pos = map_pos(entry_pos_raw, has_gender=False)
+    source_pos = source_lexical_pos
+    if source_pos != "function" and " " in source:
+        source_pos = "expression"
 
     for sense in entry.findall("tei:sense", TEI_NS):
         gloss = def_text_for_sense(sense)
@@ -161,23 +176,28 @@ def iter_rows_for_entry(entry: ElementTree.Element):
             cit_pos_raw = clean_text(cit.findtext("tei:gramGrp/tei:pos", namespaces=TEI_NS)) or None
             cit_gender_raw = clean_text(cit.findtext("tei:gramGrp/tei:gen", namespaces=TEI_NS)) or None
 
-            part_of_speech = map_pos(cit_pos_raw or entry_pos_raw, has_gender=bool(cit_gender_raw))
-            gender = map_gender(cit_gender_raw) if part_of_speech == "noun" else None
+            if cit_pos_raw or cit_gender_raw:
+                target_pos = map_pos(cit_pos_raw, has_gender=bool(cit_gender_raw))
+            else:
+                # Sparse WikDict-style translations rely on the English entry's
+                # lexical class. Do not use source_pos here: its multiword
+                # `expression` override describes the English source surface.
+                target_pos = source_lexical_pos
+            gender = map_gender(cit_gender_raw) if target_pos == "noun" else None
 
             for quote in cit.findall("tei:quote", TEI_NS):
                 target = element_text(quote)
                 if not target:
                     continue
 
-                pos = part_of_speech
-                if pos != "function" and " " in source:
-                    pos = "expression"
-
                 yield {
                     "en": source,
                     "target": target,
-                    "pos": pos,
-                    "gender": gender if pos == "noun" else None,
+                    "sourcePos": source_pos,
+                    "targetPos": target_pos,
+                    # Backward-compatible target-facing alias. Never source evidence.
+                    "pos": target_pos,
+                    "gender": gender if target_pos == "noun" else None,
                     "plural": None,
                     "notes": gloss,
                 }

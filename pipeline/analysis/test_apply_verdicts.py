@@ -102,27 +102,33 @@ class ApplyVerdictsFixtureTest(unittest.TestCase):
         # ---- mint queue ----
         write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"mint-{LANG}.jsonl", [
             {"lang": LANG, "key": "widget", "source": "widget", "enZipf": 3.2, "shipTierHint": "tail",
+             "sourcePosCandidates": ["noun"], "sourcePos": "noun",
              "alternatives": [
                  {"target": "Gerätchen", "votes": 2, "sources": ["freedict", "omw"],
                   "morph": {"gender": "neuter", "plural": "Gerätchen", "authority": "wiktextract"}},
              ]},
             {"lang": LANG, "key": "vaporize", "source": "vaporize", "enZipf": 3.8, "shipTierHint": "core-gap",
+             "sourcePosCandidates": ["verb"], "sourcePos": "verb",
              "alternatives": [
                  {"target": "verdampfen", "votes": 3, "sources": ["freedict", "omw", "apertium"], "morph": None},
              ]},
             {"lang": LANG, "key": "fizzle", "source": "fizzle", "enZipf": 4.9, "shipTierHint": "core-gap",
+             "sourcePosCandidates": ["verb"], "sourcePos": "verb",
              "alternatives": [
                  {"target": "verpuffen", "votes": 2, "sources": ["freedict"], "morph": None},
                  {"target": "versanden", "votes": 1, "sources": ["omw"], "morph": None},
              ]},
             {"lang": LANG, "key": "obscuria", "source": "obscuria", "enZipf": 6.5, "shipTierHint": "core-gap",
+             "sourcePosCandidates": ["verb"], "sourcePos": "verb",
              "alternatives": [
                  {"target": "verpuffen", "votes": 2, "sources": ["freedict"], "morph": None},
                  {"target": "versanden", "votes": 1, "sources": ["omw"], "morph": None},
              ]},
             {"lang": LANG, "key": "phantom", "source": "phantom", "enZipf": 2.5, "shipTierHint": "tail",
+             "sourcePosCandidates": ["noun"], "sourcePos": "noun",
              "alternatives": [{"target": "Trugbild", "votes": 2, "sources": ["freedict"], "morph": None}]},
             {"lang": LANG, "key": "house", "source": "house", "enZipf": 5.0, "shipTierHint": "core-gap",
+             "sourcePosCandidates": ["noun"], "sourcePos": "noun",
              "alternatives": [{"target": "Bau", "votes": 3, "sources": ["freedict", "omw", "apertium"], "morph": None}]},
         ])
 
@@ -287,6 +293,81 @@ class ApplyVerdictsFixtureTest(unittest.TestCase):
         self.assertFalse(report["ok"])
 
 
+class ApplyVerdictsSourcePosAuthorizationTest(unittest.TestCase):
+    """Mint POS is English queue provenance, never a target-side/LLM guess."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="apply-verdicts-source-pos-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+        write_json(self.tmp / "public" / "language-packs" / f"{LANG}.json", {
+            "version": "test", "sourceLanguage": "en", "targetLanguage": LANG,
+            "displayName": "German", "sources": {}, "entries": {},
+        })
+
+        def queue_row(key, candidates, alt_candidates=None, source_pos="__derive__"):
+            alternative = {
+                "target": f"{key}-target", "votes": 1,
+                "sources": ["freedict"], "glosses": [], "morph": None,
+                # Deliberately irrelevant to source-POS authorization.
+                "pos": "adjective",
+            }
+            if alt_candidates is not None:
+                alternative["sourcePosCandidates"] = alt_candidates
+            row = {
+                "lang": LANG, "key": key, "source": key, "enZipf": 3.0,
+                "shipTierHint": "tail",
+                "alternatives": [alternative],
+            }
+            if candidates is not None:  # None simulates a legacy queue row.
+                row["sourcePosCandidates"] = candidates
+                row["sourcePos"] = (candidates[0] if len(candidates) == 1 else None)
+            if source_pos != "__derive__":
+                row["sourcePos"] = source_pos
+            return row
+
+        write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"mint-{LANG}.jsonl", [
+            queue_row("authorized", ["adverb"]),
+            queue_row("polysemous", ["noun", "verb"], ["verb"]),
+            # Row-wide polysemy would allow adjective, but the exact selected
+            # source-target pair authorizes only adverb.
+            queue_row("wrongshape", ["adjective", "adverb"], ["adverb"]),
+            queue_row("legacy", None),
+        ])
+        write_jsonl(
+            self.tmp / "pipeline" / "data" / "verdicts" / "final" / f"mint-{LANG}-0.jsonl",
+            [
+                {"key": "authorized", "verdict": "mint", "target": "authorized-target",
+                 "shipTier": "tail", "pos": "adverb", "confidence": 0.9, "reason": "ok"},
+                # sourcePos is null for genuine polysemy; membership in the
+                # explicit candidate set is the authorization contract.
+                {"key": "polysemous", "verdict": "mint", "target": "polysemous-target",
+                 "shipTier": "tail", "pos": "verb", "confidence": 0.9, "reason": "ok"},
+                # German target looks adjectival, but English source is only
+                # authorized as adverb (the de-10027 failure mode).
+                {"key": "wrongshape", "verdict": "mint", "target": "wrongshape-target",
+                 "shipTier": "tail", "pos": "adjective", "confidence": 0.9, "reason": "bad"},
+                # Old queue rows are not grandfathered: missing evidence fails closed.
+                {"key": "legacy", "verdict": "mint", "target": "legacy-target",
+                 "shipTier": "tail", "pos": "adjective", "confidence": 0.9, "reason": "bad"},
+            ],
+        )
+
+    def test_only_queue_authorized_english_pos_can_mint(self):
+        report = apply_language(LANG, self.tmp)
+        self.assertTrue(report["ok"], report)
+        tail = json.loads(
+            (self.tmp / "public" / "language-packs" / f"{LANG}.tail.json").read_text()
+        )["entries"]
+
+        self.assertEqual(tail["authorized"]["partOfSpeech"], "adverb")
+        self.assertEqual(tail["polysemous"]["partOfSpeech"], "verb")
+        self.assertNotIn("wrongshape", tail)
+        self.assertNotIn("legacy", tail)
+        self.assertEqual(report["counts"].get("mint_pos_not_authorized"), 2)
+        self.assertEqual(report["counts"].get("mint_tail"), 2)
+
+
 class ApplyVerdictsShipStratumTest(unittest.TestCase):
     """Fixture self-test for --ship-stratum strict: a change (retarget/gate/
     mint) only applies when (refuter=="agree" OR the row is a judge ruling
@@ -360,10 +441,10 @@ class ApplyVerdictsShipStratumTest(unittest.TestCase):
 
         write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"mint-{LANG}.jsonl", [
             {"lang": LANG, "key": "mintship", "source": "mintship", "enZipf": 3.0,
-             "shipTierHint": "tail",
+             "shipTierHint": "tail", "sourcePosCandidates": ["adjective"], "sourcePos": "adjective",
              "alternatives": [{"target": "mintedTarget", "votes": 2, "sources": ["freedict"], "morph": None}]},
             {"lang": LANG, "key": "mintblock", "source": "mintblock", "enZipf": 3.0,
-             "shipTierHint": "tail",
+             "shipTierHint": "tail", "sourcePosCandidates": ["adjective"], "sourcePos": "adjective",
              "alternatives": [{"target": "blockedTarget", "votes": 2, "sources": ["freedict"], "morph": None}]},
         ])
         write_jsonl(self.tmp / "pipeline" / "data" / "verdicts" / "final" / f"mint-{LANG}-0.jsonl", [
@@ -466,7 +547,7 @@ class ApplyVerdictsMintOnlyAndMinttrialTest(unittest.TestCase):
         # "overlap" is sampled into BOTH mint-de and minttrial-mixed (as build_minttrial_sample.py
         # does: minttrial rows are drawn straight from the mint-{lang} queue).
         overlap_record = {"lang": LANG, "key": "overlap", "source": "overlap", "enZipf": 3.0,
-                           "shipTierHint": "tail",
+                           "shipTierHint": "tail", "sourcePosCandidates": ["verb"], "sourcePos": "verb",
                            "alternatives": [{"target": "trialTarget", "votes": 2, "sources": ["freedict"], "morph": None},
                                             {"target": "batchTarget", "votes": 2, "sources": ["freedict"], "morph": None}]}
         write_jsonl(self.tmp / "pipeline" / "data" / "queues" / f"mint-{LANG}.jsonl", [overlap_record])
@@ -474,6 +555,7 @@ class ApplyVerdictsMintOnlyAndMinttrialTest(unittest.TestCase):
         # ignored (not rejected/counted) when applying language=de.
         write_jsonl(self.tmp / "pipeline" / "data" / "queues" / "minttrial-mixed.jsonl", [
             {"lang": "fr", "key": "bonjour", "source": "bonjour", "enZipf": 3.0, "shipTierHint": "tail",
+             "sourcePosCandidates": ["verb"], "sourcePos": "verb",
              "alternatives": [{"target": "hello", "votes": 2, "sources": ["freedict"], "morph": None}]},
             dict(overlap_record),
         ])
@@ -544,7 +626,7 @@ class ApplyVerdictsMintOnlyAndMinttrialTest(unittest.TestCase):
             "displayName": "German", "sources": {}, "entries": {},
         })
         overlap_record = {"lang": LANG, "key": "overlap", "source": "overlap", "enZipf": 3.0,
-                           "shipTierHint": "tail",
+                           "shipTierHint": "tail", "sourcePosCandidates": ["verb"], "sourcePos": "verb",
                            "alternatives": [{"target": "batchTarget", "votes": 2, "sources": ["freedict"], "morph": None}]}
         write_jsonl(tmp / "pipeline" / "data" / "queues" / f"mint-{LANG}.jsonl", [overlap_record])
         write_jsonl(tmp / "pipeline" / "data" / "queues" / "minttrial-mixed.jsonl", [dict(overlap_record)])

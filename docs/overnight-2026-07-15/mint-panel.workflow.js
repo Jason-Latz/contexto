@@ -60,10 +60,13 @@ const VERIFY_POLICY = `Verify each mint as a fluent native ${LNAME} speaker, adv
 Mark ok:false if ANY check fails.`
 
 const SAMPLE_SCHEMA = {
-  type: 'object', required: ['ok', 'eligible', 'sampled', 'buckets', 'universeFingerprint'],
+  type: 'object', required: ['ok', 'requestedSampleSize', 'batchSize', 'fileIndexBase', 'eligible', 'sampled', 'buckets', 'universeFingerprint', 'sampleFingerprint'],
   properties: {
-    ok: { type: 'boolean' }, eligible: { type: 'number' }, sampled: { type: 'number' },
-    buckets: { type: 'object' }, universeFingerprint: { type: 'string' }, notes: { type: 'string' },
+    ok: { type: 'boolean' }, requestedSampleSize: { type: 'number' },
+    batchSize: { type: 'number' }, fileIndexBase: { type: 'number' },
+    eligible: { type: 'number' }, sampled: { type: 'number' },
+    buckets: { type: 'object' }, universeFingerprint: { type: 'string' },
+    sampleFingerprint: { type: 'string' }, notes: { type: 'string' },
   },
 }
 const AGENT_SCHEMA = {
@@ -74,11 +77,12 @@ const AGENT_SCHEMA = {
   },
 }
 const REDUCE_SCHEMA = {
-  type: 'object', required: ['ok', 'sampled', 'errors', 'errorRate', 'decision', 'universeFingerprint'],
+  type: 'object', required: ['ok', 'sampled', 'errors', 'errorRate', 'decision', 'universeFingerprint', 'sampleFingerprint', 'falseKeys'],
   properties: {
     ok: { type: 'boolean' }, sampled: { type: 'number' }, errors: { type: 'number' },
     errorRate: { type: 'number' }, decision: { type: 'string' },
-    universeFingerprint: { type: 'string' }, notes: { type: 'string' },
+    universeFingerprint: { type: 'string' }, sampleFingerprint: { type: 'string' },
+    falseKeys: { type: 'array', items: { type: 'string' } }, notes: { type: 'string' },
   },
 }
 
@@ -86,16 +90,9 @@ const REDUCE_SCHEMA = {
 phase('Sample')
 log(`Sampling ${SAMPLE} ship-stratum ${LANG} mints (seed ${SEED}) for panel re-verification`)
 const sampled = await agent(`${COMMON}
-Build a stratified, seeded sample of SHIP-STRATUM-ELIGIBLE ${LNAME} mints for panel audit.
-PREFLIGHT BEFORE RESUME OR SAMPLING: count "${REPO}/pipeline/data/queues/mint-${LANG}.ordered.jsonl" and derive every expected batch at ${BATCH} rows with file indices starting at ${FILE_BASE}. For each batch, either its matching applied/*.done marker must exist (immutable prior wave), OR its final file must contain exactly one unique row per key in the matching ordered-queue slice. For every final row with refuter:"dispute", the matching fixup file must contain exactly one ruling for that key. If any expected batch/fixup is absent, short, duplicate-keyed, or foreign-keyed, return {ok:false,eligible:0,sampled:0,buckets:{},universeFingerprint:"",notes:"incomplete verdict universe: ..."} and DO NOT create or reuse a sample.
-Collect candidates ONLY from expected file-index >=${FILE_BASE} final files that DO NOT have a matching applied/*.done marker; this makes the panel audit exactly the pending wave the applier would change. Apply fixup overrides: for any key present in the matching fixup file (same basename), the fixup row REPLACES the final row. Do not include older file indices or already-applied batches.
-Ship-stratum-eligible = verdict=="mint" AND confidence>=0.8 AND (refuter=="agree" OR the row has a "judge" field). Mirror ship_stratum_ok in pipeline/analysis/apply_verdicts.py exactly.
-Stratify by EVIDENCE bucket: join each key to its record in "${REPO}/pipeline/data/queues/mint-${LANG}.jsonl" (fall back to mint-${LANG}.ordered.jsonl) and bucket by (dict>=2 votes / T1 / dict single-vote / T2 / wiktinv-only / T3 / other), using evidenceTier and the top alternative's votes/sources exactly as the adjudication workflow's Prepare step did.
-Draw ${SAMPLE} rows with random.Random(${SEED}) (build_minttrial_sample.py conventions: seeded, sample without replacement within a stratum), allocated across buckets proportional to bucket size with at least 1 from each non-empty bucket; if fewer than ${SAMPLE} eligible mints exist, take them all.
-ALWAYS compute the complete eligible universe and the exact deterministic expected sample before looking at an existing sample file. Compute universeFingerprint as SHA-256 over canonical compact JSON for the effective eligible rows sorted by key (at minimum key, target, verdict, confidence, refuter/judge, and originating file index).
-Write each sampled row to "${REPO}/${SAMPLE_FILE}" (atomic .tmp then mv) as the verdict line ENRICHED with the queue evidence needed to verify it blind: {key, target, pos, shipTier, gender, plural, confidence, entrSenses, chosenAlternative:{target,glosses,morph,sources,votes}, evidenceTier, enZipf, lang:"${LANG}"}.
-RESUME (only after the preflight passes): if "${REPO}/${SAMPLE_FILE}" already exists and is non-empty, require its ordered key list to equal the freshly recomputed deterministic expected sample exactly — membership and line count alone are NOT sufficient because it may have been frozen from a partial universe. If exact, do not rebuild it. If different, return ok:false and block; never silently reuse or overwrite it, and explicitly report that any old "${REPO}/${VERDICT_FILE}" is stale and must not authorize apply.
-Return {ok, eligible:<all pending ship-stratum mints>, sampled:<rows written/counted>, buckets:{bucket:count}, universeFingerprint, notes}.`,
+Do not implement sampling or integrity logic yourself. Run this tracked deterministic preflight/sampler exactly:
+cd "${REPO}" && python3 -m pipeline.analysis.mint_panel_contract sample --language "${LANG}" --seed ${SEED} --sample-size ${SAMPLE} --batch-size ${BATCH} --file-index-base ${FILE_BASE} --output "${SAMPLE_FILE}"
+It validates every ordered batch/fixup, excludes applied markers and minttrial-superseded rows, fingerprints the full effective queue+verdict universe, and refuses a stale frozen sample. Return the command's JSON object verbatim. If it exits nonzero, return its {ok:false,...} JSON and do not write anything else.`,
   { label: `panel-sample:${LANG}`, phase: 'Sample', model: 'sonnet', schema: SAMPLE_SCHEMA })
 
 if (!sampled || !sampled.ok || !(sampled.sampled > 0)) {
@@ -106,8 +103,16 @@ if (sampled.sampled !== Math.min(SAMPLE, sampled.eligible)) {
   log(`Panel sample integrity failure for ${LANG}: sampled=${sampled.sampled}, eligible=${sampled.eligible}, requested=${SAMPLE}`)
   return { aborted: 'sample_integrity', lang: LANG, sampled }
 }
+if (sampled.requestedSampleSize !== SAMPLE || sampled.batchSize !== BATCH || sampled.fileIndexBase !== FILE_BASE) {
+  log(`Panel sample contract mismatch for ${LANG}`)
+  return { aborted: 'sample_contract', lang: LANG, sampled }
+}
 if (!/^[a-f0-9]{64}$/.test(sampled.universeFingerprint)) {
   log(`Panel sample fingerprint failure for ${LANG}`)
+  return { aborted: 'sample_fingerprint', lang: LANG, sampled }
+}
+if (!/^[a-f0-9]{64}$/.test(sampled.sampleFingerprint)) {
+  log(`Panel deterministic sample fingerprint failure for ${LANG}`)
   return { aborted: 'sample_fingerprint', lang: LANG, sampled }
 }
 const nAgents = Math.max(1, Math.ceil(sampled.sampled / PER_AGENT))
@@ -138,11 +143,9 @@ if (panel.length !== nAgents || panel.some((r) => !r || !r.ok) || panelChecked !
 // ---------- Reduce: write the panel verdict json, decide ship/block ----------
 phase('Reduce')
 const reduced = await agent(`${COMMON}
-Reduce the ${LNAME} panel run into a single verdict. Read exactly agent files 0 through ${nAgents - 1} for run ${RUNIDX}; ignore no file and include no extra glob matches. Re-validate that their disjoint unique keys exactly cover "${REPO}/${SAMPLE_FILE}" before writing anything. If not, return {ok:false,sampled:0,errors:0,errorRate:1,decision:"block",universeFingerprint:"${sampled.universeFingerprint}",notes:"panel coverage mismatch"} without writing a verdict.
-sampled = total lines across all agent files; errors = total lines with ok:false; errorRate = errors / sampled (0 if sampled==0).
-decision = "ship" if errorRate <= ${SHIP_BAR} else "block".
-Write "${REPO}/${VERDICT_FILE}" (atomic .tmp then mv): {lang:"${LANG}", runIndex:${RUNIDX}, seed:${SEED}, universeFingerprint:"${sampled.universeFingerprint}", sampled, errors, errorRate, decision, shipBar:${SHIP_BAR}, perAgent:[{agent:<k>, checked, errors}], errorExamples:[{key,reason} up to 20 from the ok:false lines]}.
-Return {ok, sampled, errors, errorRate, decision, universeFingerprint:"${sampled.universeFingerprint}", notes}.`,
+Do not implement reduction or integrity logic yourself. Run the tracked deterministic reducer exactly:
+cd "${REPO}" && python3 -m pipeline.analysis.mint_panel_contract reduce --language "${LANG}" --seed ${SEED} --sample-size ${SAMPLE} --ship-bar ${SHIP_BAR} --batch-size ${BATCH} --file-index-base ${FILE_BASE} ${Array.from({ length: nAgents }, (_, k) => `--results "${AGENT_FILE(k)}"`).join(' ')} --output "${VERDICT_FILE}"
+It recomputes the current universe and deterministic sample, requires exactly one judgment for every sampled key, verifies all error arithmetic, and writes the COMPLETE falseKeys list used by apply suppression. Return the command's JSON object verbatim. If it exits nonzero, return its {ok:false,...} JSON and do not write anything else.`,
   { label: `panel-reduce:${LANG}`, phase: 'Reduce', model: 'sonnet', schema: REDUCE_SCHEMA })
 
 if (!reduced || !reduced.ok) {
@@ -157,6 +160,14 @@ if (reduced.universeFingerprint !== sampled.universeFingerprint) {
   log(`Panel reduce fingerprint mismatch for ${LANG}`)
   return { aborted: 'reduce_fingerprint', lang: LANG, expected: sampled.universeFingerprint, reduced }
 }
+if (reduced.sampleFingerprint !== sampled.sampleFingerprint) {
+  log(`Panel reduce sample fingerprint mismatch for ${LANG}`)
+  return { aborted: 'reduce_sample_fingerprint', lang: LANG, expected: sampled.sampleFingerprint, reduced }
+}
+if (!Array.isArray(reduced.falseKeys) || reduced.falseKeys.length !== reduced.errors) {
+  log(`Panel reduce false-key completeness failure for ${LANG}`)
+  return { aborted: 'reduce_false_keys', lang: LANG, reduced }
+}
 log(`${LANG} PANEL VERDICT: ${reduced.errors}/${reduced.sampled} errors = ${reduced.errorRate} -> ${reduced.decision.toUpperCase()} (bar ${SHIP_BAR}). Written to ${VERDICT_FILE}`)
 
 return {
@@ -167,9 +178,10 @@ return {
   sampled: reduced.sampled,
   errors: reduced.errors,
   errorRate: reduced.errorRate,
+  falseKeys: reduced.falseKeys,
   decision: reduced.decision,
   verdictFile: VERDICT_FILE,
   applyStep: reduced.decision === 'ship'
-    ? `python3 pipeline/analysis/apply_verdicts.py --language ${LANG} --mint-only --ship-stratum strict`
+    ? `python3 pipeline/analysis/apply_verdicts.py --language ${LANG} --mint-only --ship-stratum strict --panel-verdict ${VERDICT_FILE}`
     : '(blocked — apply nothing for this language)',
 }

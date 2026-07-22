@@ -1,0 +1,4644 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "packChanges": "Only the ten historical fluent-panel failures are removed.",
+    "sourcePosContradictions": "Exact-pair singleton POS is candidate evidence, not proof of the intended English sense. Every listed row requires independent sense-aware adjudication.",
+    "sparseEvidence": "Absence of the old POS from a sparse OMW/Apertium/Wiktionary pair table never proves that the shipped POS is wrong."
+  },
+  "summary": {
+    "panelConfirmedRemovals": 10,
+    "exactPairContradictionsForReview": 123,
+    "rowWideOnlyContradictionsForReview": 32,
+    "totalManualReview": 155
+  },
+  "panelOnlyPackSha256": {
+    "de": "145d0a10bb75c88bbcb65e5dd0d263063069e714240f52fe29f74e7b450c1509",
+    "fr": "2c153697d7752de3eaf0bdb58df40623c94245fc1e6b10627d5723493dd4184c",
+    "it": "9aea932b9b86baee9bf03e79eb55708ad71508596d2ff900d1e2681dddcade3f",
+    "es": "cd0736e596eca0f27259f613e50b7fab74e3a9c2679356ccdbb3355bff193442"
+  },
+  "knownFalsePositiveExamples": [
+    {
+      "language": "es",
+      "key": "foursquare",
+      "why": "adjective gloss but OMW exposed only a homographic noun pair"
+    },
+    {
+      "language": "it",
+      "key": "melomaniac",
+      "why": "English and target are nouns despite one Apertium adjective tag"
+    },
+    {
+      "language": "fr",
+      "key": "preventative",
+      "why": "direct adjective pairing was misclassified from an OMW noun sense"
+    },
+    {
+      "language": "fr",
+      "key": "wherefore",
+      "why": "correct adverb pairing; WordNet's nominal sense is not exhaustive"
+    },
+    {
+      "language": "it",
+      "key": "vesicatory",
+      "why": "English has noun and adjective senses; selected target is adjectival"
+    }
+  ],
+  "panelRemovals": [
+    {
+      "language": "es",
+      "key": "cucurbita",
+      "target": "cucúrbita",
+      "panelReason": "taxonomic genus proper noun; langlink '(en)' gloss; no dictionary sense",
+      "beforeEntrySha256": "ca492be51a8c57a7e1535a0e27b7d2417d2115d0d72407b6ee8bbe14289ce873"
+    },
+    {
+      "language": "es",
+      "key": "mailed",
+      "target": "enviar",
+      "panelReason": "past-tense key not base form; verb won't render, non-teachable",
+      "beforeEntrySha256": "1922e4a0adee336d77181b6c0a43d4704abcb119bc627ae6965104617e1143ed"
+    },
+    {
+      "language": "es",
+      "key": "scanning",
+      "target": "escanear",
+      "panelReason": "gerund key not base infinitive; verb won't render, non-teachable",
+      "beforeEntrySha256": "83db7d5c773f87a23670018c9baf83bd3a5a128bea73f1246b461ea3f629247f"
+    },
+    {
+      "language": "es",
+      "key": "scholia",
+      "target": "escolio",
+      "panelReason": "English lemma is plural (should key scholium); plural-form artifact, number mismatch",
+      "beforeEntrySha256": "534ed2a90059d8d4b09a51a28ac7bff3b10d2a95364694825a48471a6992ca63"
+    },
+    {
+      "language": "es",
+      "key": "varnished",
+      "target": "barnizado",
+      "panelReason": "POS/sense mismatch: 'varnished' is adjective/participle, minted as noun barnizado='varnishing'",
+      "beforeEntrySha256": "db214bc23651847e217da9620b07820e1832a214814d371a707f1709eed39626"
+    },
+    {
+      "language": "fr",
+      "key": "antiquer",
+      "target": "antiquaire",
+      "panelReason": "antiquer not a standard English headword; antiquaire=antique dealer, unverifiable pair, gloss echoes headword",
+      "beforeEntrySha256": "dfbd335fb33935c05f0cca3048d58ad8c8e9c53a46b6be25edbdac6c01541e4b"
+    },
+    {
+      "language": "fr",
+      "key": "min",
+      "target": "minute",
+      "panelReason": "source is an abbreviation, not a teachable word",
+      "beforeEntrySha256": "12b21962db8966800e566e10ac74d54b34cbcd06a509bd118487f47471f80ef5"
+    },
+    {
+      "language": "fr",
+      "key": "punica",
+      "target": "grenade",
+      "panelReason": "Punica is a Latin genus proper noun, not teachable",
+      "beforeEntrySha256": "6c4afa159226b10fd47173b1089b6e7f0267794a438c8e491f396109522cb7d1"
+    },
+    {
+      "language": "fr",
+      "key": "tec",
+      "target": "détective",
+      "panelReason": "détective default gender is masculine (le détective), not feminine",
+      "beforeEntrySha256": "7a3536ae9db1cb87ba4639071c14babcac4dcf614efcd7b3cfbea3964eaf5e3e"
+    },
+    {
+      "language": "it",
+      "key": "pseudocarp",
+      "target": "pseudocarpio",
+      "panelReason": "malformed target; correct Italian is pseudocarpo not pseudocarpio",
+      "beforeEntrySha256": "99b7a51abcec2060cbbd9aff3eb17cc64bbcb39107d9d514ebc9288bb6ef61a3"
+    }
+  ],
+  "reviewItems": [
+    {
+      "language": "de",
+      "key": "attractively",
+      "target": "attraktiv",
+      "sourceGloss": "attractive, fetching; handsome",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In an attractive manner; with the power of attracting or drawing to.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "candidly",
+      "target": "freimütig",
+      "sourceGloss": "candid, frank, upfront",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "adverb"
+        },
+        {
+          "source": "wordnet",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": [
+        {
+          "gloss": "in a candid manner; frankly.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "caving",
+      "target": "Höhlenforschung",
+      "sourceGloss": "speleology",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "compacted",
+      "target": "komprimiert",
+      "sourceGloss": "compressed",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "controversially",
+      "target": "kontrovers",
+      "sourceGloss": "controversial",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "deluding",
+      "target": "täuschend",
+      "sourceGloss": "deceptive",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "embarrassingly",
+      "target": "peinlich",
+      "sourceGloss": "woeful, hurtful",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "epizootic",
+      "target": "Tierseuche",
+      "sourceGloss": "epizootic",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "experimentally",
+      "target": "experimentell",
+      "sourceGloss": "experimental",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In the manner of an experiment.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "fowling",
+      "target": "Vogelfang",
+      "sourceGloss": "fowling",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "grassed",
+      "target": "grasbewachsen",
+      "sourceGloss": "grassy (overgrown with grass)",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "hovering",
+      "target": "Schwebeflug",
+      "sourceGloss": "hovering",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "intertwining",
+      "target": "Verflechtung",
+      "sourceGloss": "interconnection",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "jokingly",
+      "target": "scherzhaft",
+      "sourceGloss": "jocular (humorous, amusing, joking)",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        },
+        {
+          "source": "wordnet",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "lifesaving",
+      "target": "lebensrettend",
+      "sourceGloss": "life-saving",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "oversimplification",
+      "target": "zu starke Vereinfachung",
+      "sourceGloss": "oversimplification",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "wordnet",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": [
+        {
+          "gloss": "An explanation that excludes important information for the sake of brevity, or of making the explanation or presentation easy to understand.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "perjured",
+      "target": "meineidig",
+      "sourceGloss": "perjured",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "powerfully",
+      "target": "mächtig",
+      "sourceGloss": "powerful, mighty",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In a powerful manner.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "proportioned",
+      "target": "proportioniert",
+      "sourceGloss": "proportioned",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "querying",
+      "target": "fragend",
+      "sourceGloss": "questioning, inquiring, interrogative",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "rigidly",
+      "target": "starr",
+      "sourceGloss": "rigid",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In a rigid manner; stiffly.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "sacrificing",
+      "target": "Opferung",
+      "sourceGloss": "sacrificing",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "scalding",
+      "target": "Verbrühung",
+      "sourceGloss": "scalding",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "scarring",
+      "target": "Narbenbildung",
+      "sourceGloss": "scarring",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "solidly",
+      "target": "solide",
+      "sourceGloss": "solidly",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "adverb"
+        },
+        {
+          "source": "wordnet",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": [
+        {
+          "gloss": "In a solid or firm manner.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "spectacularly",
+      "target": "eindrucksvoll",
+      "sourceGloss": "impressive",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In a spectacular manner, extraordinarily, amazingly.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "speedily",
+      "target": "schnell",
+      "sourceGloss": "quick, fast",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        },
+        {
+          "source": "wordnet",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "swayed",
+      "target": "beeinflusst",
+      "sourceGloss": "influenced, governed",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "tanked",
+      "target": "betrunken",
+      "sourceGloss": "drunk, inebriated",
+      "currentPos": "adjective",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "titling",
+      "target": "Betitelung",
+      "sourceGloss": "titling",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "trepanning",
+      "target": "Trepanation",
+      "sourceGloss": "trepanation (practice of drilling a hole in the skull)",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "tunneling",
+      "target": "Untertunnelung",
+      "sourceGloss": "tunneling",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "unacceptably",
+      "target": "unannehmbar",
+      "sourceGloss": "unacceptable",
+      "currentPos": "adjective",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Not within the limits of what is generally considered to be acceptable.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "de",
+      "key": "undercutting",
+      "target": "Preisunterbietung",
+      "sourceGloss": "undercutting",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "de",
+      "key": "universalist",
+      "target": "Universalist",
+      "sourceGloss": "universalist",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "alfresco",
+      "target": "al aire libre",
+      "sourceGloss": "outdoors (in the open air)",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "anatomic",
+      "target": "anatómico",
+      "sourceGloss": "anatomical",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "beebread",
+      "target": "pan de abeja",
+      "sourceGloss": "(en) Bee pollen with added honey and bee secretions, made and stored in brood cells by forager bees, and used as food for worker bees and larvae.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Bee pollen with added honey and bee secretions, made and stored in brood cells by forager bees, and used as food for worker bees and larvae.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "bowleg",
+      "target": "pierna arqueada",
+      "sourceGloss": "(en) A leg that curves outward at the knee.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A leg that curves outward at the knee.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "butternut",
+      "target": "nogal blanco americano",
+      "sourceGloss": "(en) A North American walnut tree, Juglans cinerea.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A North American walnut tree, Juglans cinerea.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "canvasback",
+      "target": "porrón coacoxtle",
+      "sourceGloss": "(en) A North American wild duck, Aythya valisineria, popular as a game bird.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A North American wild duck, Aythya valisineria, popular as a game bird.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "coattail",
+      "target": "faldón trasero",
+      "sourceGloss": "(en) The flap at the back of a coat that hangs down, sometimes below the waist.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The flap at the back of a coat that hangs down, sometimes below the waist.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "cockaigne",
+      "target": "país de Cucaña",
+      "sourceGloss": "(en) (Middle Ages) an imaginary land of luxury and idleness",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "coendou",
+      "target": "puercoespín arborícola",
+      "sourceGloss": "coendou",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A prehensile-tailed tree-dwelling porcupine, of genus Coendou, found in Central and South America.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "colewort",
+      "target": "col silvestre",
+      "sourceGloss": "(en) A plant of the genus Brassica; now specifically, a Brassica plant without a head used for food, such as kale.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A plant of the genus Brassica; now specifically, a Brassica plant without a head used for food, such as kale.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "colorcast",
+      "target": "dominante de color",
+      "sourceGloss": "(en) (photography) An undesirable tint of color affecting another color in a photograph, due to an incorrect balance.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "An undesirable tint of color affecting another color in a photograph, due to an incorrect balance.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "condemned",
+      "target": "condenado",
+      "sourceGloss": "convicted",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "freedict-explicit",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Having received a curse to be doomed to suffer eternally.",
+          "containsAny": false
+        },
+        {
+          "gloss": "A person sentenced to death.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "congee",
+      "target": "arroz caldo",
+      "sourceGloss": "(en) (Asian, _, cuisine) A type of thick rice porridge or soup, sometimes prepared with vegetables and/or meat.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A type of thick rice porridge or soup, sometimes prepared with vegetables and/or meat.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "diamondback",
+      "target": "crótalo adamantino",
+      "sourceGloss": "(en) (common name) Either of two species of rattlesnake having a diamond pattern on the back: Crotalus adamanteus, found in the southeastern United States, and Crotalus atrox, found in the southwestern United States and northwestern and central Mexico.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Either of two species of rattlesnake having a diamond pattern on the back: Crotalus adamanteus, found in the southeastern United States, and Crotalus atrox, found in the southwestern United States and northwestern and central Mexico.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "earshot",
+      "target": "alcance del oído",
+      "sourceGloss": "(en) A distance from which sound is still audible.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A distance from which sound is still audible.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "earthshine",
+      "target": "luz cenicienta",
+      "sourceGloss": "(en) (astronomy) Reflected earthlight visible on the Moon's night side.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Sunlight reflected from the Earth's surface, especially when visible on the part of the Moon's surface not illuminated by the Sun (the night side); earthlight.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "flatcar",
+      "target": "vagón plataforma",
+      "sourceGloss": "(en) (rail, US) A railroad freight car without sides and roof.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A railroad freight car without sides and roof.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "forgiving",
+      "target": "misericordioso",
+      "sourceGloss": "merciful",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Inclined to forgive.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "foursquare",
+      "target": "cuadrado",
+      "sourceGloss": "square",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Having four equal sides; square.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "freewheel",
+      "target": "piñón libre",
+      "sourceGloss": "(en) A device in a transmission that disengages the driveshaft from the driven shaft when the driven shaft rotates faster than the driveshaft.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A device in a transmission that disengages the driveshaft from the driven shaft when the driven shaft rotates faster than the driveshaft.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "grinning",
+      "target": "sonreír",
+      "sourceGloss": "to smile",
+      "currentPos": "verb",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "herewith",
+      "target": "por la presente",
+      "sourceGloss": "hereby (by this means, action or process)",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "with this; especially, with this letter or communication",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "housework",
+      "target": "tareas domésticas",
+      "sourceGloss": "(en) domestic household chores such as cleaning and cooking",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "domestic household chores such as cleaning and cooking",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "jaywalker",
+      "target": "peatón imprudente",
+      "sourceGloss": "(en) (US) A person who violates pedestrian traffic regulations by crossing a street away from a designated crossing or who walks on the part of the street intended for vehicles instead of the part designated for pedestrians.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A person who violates pedestrian traffic regulations by crossing a street away from a designated crossing or who walks on the part of the street intended for vehicles instead of the part designated for pedestrians.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "jobless",
+      "target": "desempleado",
+      "sourceGloss": "unemployed",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "lento",
+      "target": "lento",
+      "sourceGloss": "slow",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Slow (45–60 bpm).",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "lightship",
+      "target": "buque faro",
+      "sourceGloss": "(en) (nautical) A ship riding at anchor and displaying a light for the guidance of sailors, in a position where a fixed lighthouse structure would be impracticable.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A ship riding at anchor and displaying a light for the guidance of sailors, in a position where a fixed lighthouse structure would be impracticable.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "mainspring",
+      "target": "resorte motor",
+      "sourceGloss": "(en) (horology) The principal spring of a clockwork mechanism, which drives it by uncoiling.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The principal spring of a clockwork mechanism, which drives it by uncoiling.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "misbehavior",
+      "target": "mal comportamiento",
+      "sourceGloss": "(en) (American spelling) Action or conduct that is inappropriate, improper, incorrect, or unexpected.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Action or conduct that is inappropriate, improper, incorrect, or unexpected.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "misnomer",
+      "target": "nombre impropio",
+      "sourceGloss": "(en) An incorrect use of a term, especially one which is misleading; a misname.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A mistake in the naming of a person or place; a misidentification.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "morepork",
+      "target": "nínox maorí",
+      "sourceGloss": "(en) (chiefly, New Zealand) The Tasmanian spotted owl (Ninox novaeseelandiae), a small brown owl indigenous to New Zealand and Tasmania. [from 19th c.]",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The Tasmanian spotted owl (Ninox novaeseelandiae), a small brown owl indigenous to New Zealand and Tasmania.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "nationalistic",
+      "target": "nacionalista",
+      "sourceGloss": "nationalist",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "nonconforming",
+      "target": "inconformista",
+      "sourceGloss": "nonconformist, maverick",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "nosey",
+      "target": "entrometido",
+      "sourceGloss": "nosy, meddlesome, intrusive",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "overground",
+      "target": "ferrocarril de cercanía",
+      "sourceGloss": "(en) (chiefly, London) A commuter rail or similar rail transport system, or a train in such systems, generally running through an urban area largely above ground and faster than an underground or metro with fewer stops.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A commuter rail or similar rail transport system, or a train in such systems, generally running through an urban area largely above ground and faster than an underground or metro with fewer stops.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "prewar",
+      "target": "preguerra",
+      "sourceGloss": "prewar time period",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "puppetry",
+      "target": "arte del titiritero",
+      "sourceGloss": "(en) (uncountable) The art of making, and performing with puppets",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The art of making, and performing with puppets",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "puritanical",
+      "target": "puritano",
+      "sourceGloss": "puritan",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Of or pertaining to the Puritans, or to their doctrines and practice.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "roadhouse",
+      "target": "restaurante de carretera",
+      "sourceGloss": "(en) (chiefly, US) An inn or similar establishment situated beside a road beyond the jurisdiction of a town or city. In the centuries before motor vehicles, such inns were places for travellers to stop at night during multi-day journeys, besides being public houses for their local countryfolk.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "An inn or similar establishment situated beside a road beyond the jurisdiction of a town or city. In the centuries before motor vehicles, such inns were places for travellers to stop at night during multi-day journeys, besides being public houses for their local countryfolk.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "scaled",
+      "target": "escamoso",
+      "sourceGloss": "squamous, scaly",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Covered with scales or scale-like structures.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "shortsighted",
+      "target": "miope",
+      "sourceGloss": "myopic",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "snakeskin",
+      "target": "piel de serpiente",
+      "sourceGloss": "(en) The skin of a snake",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The skin of a snake",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "solatium",
+      "target": "pretium doloris",
+      "sourceGloss": "(en) (legal) A form of compensation for emotional rather than physical or financial harm.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A form of compensation for emotional rather than physical or financial harm.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "someway",
+      "target": "de alguna manera",
+      "sourceGloss": "somehow",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "starlight",
+      "target": "luz estelar",
+      "sourceGloss": "(en) Light emitted from stars other than the Sun.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Light emitted from stars.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "statesmanship",
+      "target": "arte de gobernar",
+      "sourceGloss": "(en) The skill of being a good statesman, the ability to perform well in political office.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The skill of being a good statesman, the ability to perform well in political office.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "stepwise",
+      "target": "paso a paso",
+      "sourceGloss": "step by step",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "One step or stage at a time; step by step",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "sterlet",
+      "target": "esturión esterlete",
+      "sourceGloss": "(en) A smaller, common Eurasian sturgeon, of the species Acipenser ruthenus.",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A smaller, common Eurasian sturgeon, of the species Acipenser ruthenus.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "sweatshop",
+      "target": "taller clandestino",
+      "sourceGloss": "(en) A factory or other place of work where pay is low and conditions are poor or even illegal. [from 1892]",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A factory or other place of work where pay is low and conditions are poor or even illegal.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "tabu",
+      "target": "tabú",
+      "sourceGloss": "taboo",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "taproot",
+      "target": "raíz pivotante",
+      "sourceGloss": "(en) (botany) A long, tapering root, exhibited by many plant species (such as carrots and dandelions). [from early 17th c.]",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A long, tapering root, exhibited by many plant species (such as carrots and dandelions).",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "toiletry",
+      "target": "útil de aseo",
+      "sourceGloss": "(en) Any item used for personal hygiene or grooming (for one's toilet).",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Any item used for personal hygiene or grooming (for one's toilet).",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "twee",
+      "target": "cursi",
+      "sourceGloss": "cutesy, corny, cheesy, kitschy, chintzy, mawkish",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "es",
+      "key": "unawares",
+      "target": "de improviso",
+      "sourceGloss": "out of the blue",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Unexpectedly or by surprise.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "unidentified",
+      "target": "desconocido",
+      "sourceGloss": "unknown, undisclosed, unbeknownst",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Not identified; having an unknown or unnamed identity.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "unlearned",
+      "target": "ignorante",
+      "sourceGloss": "ignorant",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "ignorant, uneducated, untaught, untrained.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "unyieldingly",
+      "target": "a cal y canto",
+      "sourceGloss": "under lock and key, shut tight, closed behind doors",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "adverb"
+        },
+        {
+          "source": "freedict-explicit",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "In an unyielding way.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "key": "younger",
+      "target": "junior",
+      "sourceGloss": "(en) used of the younger of two persons of the same name especially used to distinguish a son from his father",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Synonym of junior.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "acephalous",
+      "target": "acéphale",
+      "sourceGloss": "acephalous, headless",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "airfoil",
+      "target": "profil d'aile",
+      "sourceGloss": "(en) a device that provides reactive force when in motion relative to the surrounding air; can lift or control a plane in flight",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A structure shaped to produce lift when moving in air.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "amygdala",
+      "target": "amygdale cérébrale",
+      "sourceGloss": "(en) an almond-shaped neural structure in the anterior part of the temporal lobe of the cerebrum; intimately connected with the hypothalamus and the hippocampus and the cingulate gyrus; as part of the limbic system it plays an important role in motivation and emotional behavior",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Each one of the two regions of the brain, located as a pair in the medial temporal lobe, believed to play a key role in processing emotions, such as fear and pleasure, in both animals and humans.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "anaphrodisiac",
+      "target": "anaphrodisiaque",
+      "sourceGloss": "anaphrodisiac",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "angler",
+      "target": "pêcheur à la ligne",
+      "sourceGloss": "angler",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A person who fishes with a hook and line.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "antimilitarist",
+      "target": "antimilitariste",
+      "sourceGloss": "antimilitarist",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Opposed to militarism",
+          "containsAny": false
+        },
+        {
+          "gloss": "One who opposes militarism.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "antipruritic",
+      "target": "antiprurigineux",
+      "sourceGloss": "antipruritic",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "chinatown",
+      "target": "quartier chinois",
+      "sourceGloss": "chinatown",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A district of a city or town (in a country other than China) in which there is a large concentration of Chinese residents and businesses.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "cinematographer",
+      "target": "directeur de la photographie",
+      "sourceGloss": "(en) a photographer who operates a movie camera",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A photographer who oversees the operations of the cameras and lighting when making a film. The cinematographer may also double as the camera operator of the movie camera, though this is usually done by a cameraman. The film director may also double as the cinematographer, though this is usually a different person.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "colloquialism",
+      "target": "expression familière",
+      "sourceGloss": "(en) a colloquial expression; characteristic of spoken or written communication that seeks to imitate informal speech",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A colloquial word or phrase; a common spoken expression.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "conveyancing",
+      "target": "cession des droits immobiliers",
+      "sourceGloss": "(en) act of transferring property title from one person to another",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The drawing of deeds etc. concerning transfer of property, and the legal execution of such transfers.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "driftwood",
+      "target": "bois flotté",
+      "sourceGloss": "(en) wood that is floating or that has been washed ashore",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Floating wood that drifts with the current of a body of water.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "eavesdropping",
+      "target": "écoute clandestine",
+      "sourceGloss": "eavesdropping",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "verbal noun of eavesdrop:",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "fingertip",
+      "target": "bout des doigts",
+      "sourceGloss": "(en) the end (tip) of a finger",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The tip of the human finger.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "foothold",
+      "target": "point d'appui",
+      "sourceGloss": "foothold",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A solid grip with the feet.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "forties",
+      "target": "années 40",
+      "sourceGloss": "forties",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The fifth decade of a century: the 1840s, 1940s, 2040s, etc.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "grieving",
+      "target": "deuil",
+      "sourceGloss": "bereavement",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "guessing",
+      "target": "deviner",
+      "sourceGloss": "to guess; to work out, figure out",
+      "currentPos": "verb",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "headfirst",
+      "target": "la tête la première",
+      "sourceGloss": "headfirst, headlong",
+      "currentPos": "expression",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "highland",
+      "target": "hautes terres",
+      "sourceGloss": "highland",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A high area; land that is higher than surrounding areas.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "keyhole",
+      "target": "trou de la serrure",
+      "sourceGloss": "keyhole",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The hole in a lock where the key is inserted and turns.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "leatherback",
+      "target": "tortue luth",
+      "sourceGloss": "(en) wide-ranging marine turtle with flexible leathery carapace; largest living turtle",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Any of species Dermochelys coriacea, of large sea turtles, with leathery backs.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "luxe",
+      "target": "luxe",
+      "sourceGloss": "luxury",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "marksman",
+      "target": "tireur d'élite",
+      "sourceGloss": "(en) someone skilled in shooting",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A man or person skilled at hitting targets, as with a firearm, bow, or thrown object.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "minutia",
+      "target": "petit détail",
+      "sourceGloss": "(en) a small or minor detail",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A minor detail, often of negligible importance.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "napping",
+      "target": "sieste",
+      "sourceGloss": "siesta (a nap, especially an afternoon one taken during the hottest part of the day in some cultures)",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "nightly",
+      "target": "de nuit",
+      "sourceGloss": "at night",
+      "currentPos": "expression",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Happening or appearing in the night; night-time; nocturnal.",
+          "containsAny": false
+        },
+        {
+          "gloss": "Every night.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "octonary",
+      "target": "octonaire",
+      "sourceGloss": "octonary",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt-sense",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "onwards",
+      "target": "en avant",
+      "sourceGloss": "forward (towards the front)",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "outnumber",
+      "target": "être en supériorité numérique",
+      "sourceGloss": "outnumber",
+      "currentPos": "expression",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "verb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "To be more in number than somebody or something.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "pampered",
+      "target": "comme un coq en pâte",
+      "sourceGloss": "in clover, very comfortably, with one's every need catered to, pampered",
+      "currentPos": "expression",
+      "proposedPos": "verb",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "paternoster",
+      "target": "Notre Père",
+      "sourceGloss": "(en) a type of lift having a chain of open compartments that move continually in an endless loop so that (agile) passengers can step on or off at each floor",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The Lord's Prayer, especially in a Roman Catholic context.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "peacetime",
+      "target": "temps de paix",
+      "sourceGloss": "peacetime",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The period of time when a nation or people is at peace, not fighting a war.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "peek",
+      "target": "jeter un coup d'œil",
+      "sourceGloss": "to take a look, to have a look, to glance",
+      "currentPos": "expression",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "verb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "To look slyly, or with the eyes half closed, or through a crevice; to peep.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "piecemeal",
+      "target": "peu à peu",
+      "sourceGloss": "bit by bit, little by little, gradually, by degrees",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Made or done in pieces or one stage at a time.",
+          "containsAny": false
+        },
+        {
+          "gloss": "Piece by piece; in small amounts, stages, or degrees.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "plight",
+      "target": "situation désespérée",
+      "sourceGloss": "plight",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A dire or unfortunate situation.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "pretended",
+      "target": "faire semblant",
+      "sourceGloss": "to pretend",
+      "currentPos": "expression",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "preventative",
+      "target": "préventif",
+      "sourceGloss": "preventive",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "schoolwork",
+      "target": "travail scolaire",
+      "sourceGloss": "(en) a school task performed by a student to satisfy the teacher",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Work done for school, including both in class and as homework.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "shamed",
+      "target": "honte",
+      "sourceGloss": "shame (feeling)",
+      "currentPos": "noun",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "sharpshooter",
+      "target": "tireur d'élite",
+      "sourceGloss": "(en) someone skilled in shooting",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A person trained to shoot precisely with a rifle; a marksman.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "snowshoe",
+      "target": "raquette à neige",
+      "sourceGloss": "(en) a device to help you walk on deep snow; a lightweight frame shaped like a racquet is strengthened with cross pieces and contains a network of thongs; one is worn on each foot",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A flat item of footwear worn to facilitate walking in deep snow.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "someplace",
+      "target": "quelque part",
+      "sourceGloss": "somewhere",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "swimmingly",
+      "target": "comme sur des roulettes",
+      "sourceGloss": "like a charm, smoothly, swimmingly, without a hitch",
+      "currentPos": "expression",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "adverb"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "With a gliding motion suggesting swimming.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "talkie",
+      "target": "film parlant",
+      "sourceGloss": "talkie",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A movie with sound, as opposed to a silent film.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "torturing",
+      "target": "torturer",
+      "sourceGloss": "to torture (to intentionally inflict severe pain on someone, usually with the aim of forcing confessions or punishing them)",
+      "currentPos": "verb",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "verb",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "unreliability",
+      "target": "manque de fiabilité",
+      "sourceGloss": "(en) the trait of not being dependable or reliable",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The quality of being unreliable.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "unsuspecting",
+      "target": "qui ne se doute de rien",
+      "sourceGloss": "unsuspecting",
+      "currentPos": "expression",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "adjective"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Not suspecting; without any suspicion.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "wartime",
+      "target": "temps de guerre",
+      "sourceGloss": "wartime",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "A period during which a war is in progress in a particular place.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "wherefore",
+      "target": "pourquoi",
+      "sourceGloss": "why",
+      "currentPos": "adverb",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "fr",
+      "key": "willet",
+      "target": "chevalier semipalmé",
+      "sourceGloss": "(en) large North American shorebird of eastern and Gulf Coasts",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        },
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Tringa semipalmata (or formerly Catoptrophorus semipalmatus), a large shorebird in the family Scolopacidae.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "fr",
+      "key": "workload",
+      "target": "charge de travail",
+      "sourceGloss": "workload",
+      "currentPos": "expression",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "en-wikt",
+          "pos": "noun"
+        },
+        {
+          "source": "en-wikt-sense",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "The amount of work assigned to a particular worker, normally in a specified time period.",
+          "containsAny": true
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "antiaircraft",
+      "target": "antiaereo",
+      "sourceGloss": "anti-aircraft",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "it",
+      "key": "antipruritic",
+      "target": "antipruriginoso",
+      "sourceGloss": "antipruritic",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "row_wide_only_source_pos",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "wordnet",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun"
+      ],
+      "selectedAlternativeSourcePosCandidates": [],
+      "entrSenses": []
+    },
+    {
+      "language": "it",
+      "key": "barefaced",
+      "target": "sfacciato",
+      "sourceGloss": "insolent, cheeky, impudent, shameless or brazen-faced",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Undisguisedly offensive and bold; crude.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "guiltless",
+      "target": "innocente",
+      "sourceGloss": "innocent",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Free from guilt; innocent.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "gutless",
+      "target": "smidollato",
+      "sourceGloss": "spineless, namby-pamby",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "it",
+      "key": "hitchhike",
+      "target": "fare l'autostop",
+      "sourceGloss": "(en) (intransitive) To try to get a ride in a passing vehicle while standing at the side of a road, generally by either sticking out one's finger or thumb or holding a sign with one's stated destination.",
+      "currentPos": "expression",
+      "proposedPos": "verb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "freedict-explicit",
+          "pos": "verb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "verb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "verb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "To try to get a ride in a passing vehicle while standing at the side of a road, generally by either sticking out one's finger or thumb or holding a sign with one's stated destination.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "lento",
+      "target": "lento",
+      "sourceGloss": "slow",
+      "currentPos": "noun",
+      "proposedPos": "adverb",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adverb"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "adjective",
+        "adverb"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adverb"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "Slow (45–60 bpm).",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "melomaniac",
+      "target": "melomane",
+      "sourceGloss": "melomaniac",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "apertium-explicit",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": [
+        {
+          "gloss": "One with an abnormal fondness of music; a person who loves music.",
+          "containsAny": false
+        }
+      ]
+    },
+    {
+      "language": "it",
+      "key": "sudorific",
+      "target": "sudorifero",
+      "sourceGloss": "sudorific, sudoriferous",
+      "currentPos": "noun",
+      "proposedPos": "adjective",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "adjective"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "adjective"
+      ],
+      "entrSenses": []
+    },
+    {
+      "language": "it",
+      "key": "vesicatory",
+      "target": "vescicatorio",
+      "sourceGloss": "vesicatory, vesicant",
+      "currentPos": "adjective",
+      "proposedPos": "noun",
+      "reviewClass": "exact_pair_singleton_is_not_sense_proof",
+      "status": "manual_required_no_pack_change",
+      "evidence": [
+        {
+          "source": "omw",
+          "pos": "noun"
+        }
+      ],
+      "rowSourcePosCandidates": [
+        "noun",
+        "adjective"
+      ],
+      "selectedAlternativeSourcePosCandidates": [
+        "noun"
+      ],
+      "entrSenses": []
+    }
+  ],
+  "supersededUnsafePlanSha256": "0c2b339775670b59d75873edf4bb30de90cce4ba6c3187f81625f94182ceb68c"
+}

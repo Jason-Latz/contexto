@@ -225600,22 +225600,6 @@
       "enZipf": 0.0,
       "eligible": true
     },
-    "antiquer": {
-      "source": "antiquer",
-      "target": "antiquaire",
-      "partOfSpeech": "noun",
-      "sourceGloss": "antiquer",
-      "frequencyRank": 1016447,
-      "confidence": "low",
-      "sourceIds": [
-        "apertium",
-        "wiktinv"
-      ],
-      "gender": "feminine",
-      "plural": "antiquaires",
-      "enZipf": 0.0,
-      "eligible": true
-    },
     "antistrophe": {
       "source": "antistrophe",
       "target": "antistrophe",
@@ -229249,21 +229233,6 @@
       "enZipf": 4.72,
       "eligible": true
     },
-    "min": {
-      "source": "min",
-      "target": "minute",
-      "partOfSpeech": "noun",
-      "sourceGloss": "minute (etymology 1, time unit, all same senses)",
-      "frequencyRank": 1016681,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "gender": "feminine",
-      "plural": "minutes",
-      "enZipf": 4.42,
-      "eligible": true
-    },
     "coaching": {
       "source": "coaching",
       "target": "coaching",
@@ -231164,21 +231133,6 @@
       "gender": "masculine",
       "plural": "buis",
       "enZipf": 1.26,
-      "eligible": true
-    },
-    "punica": {
-      "source": "punica",
-      "target": "grenade",
-      "partOfSpeech": "noun",
-      "sourceGloss": "pomegranate",
-      "frequencyRank": 1016801,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "gender": "feminine",
-      "plural": "grenades",
-      "enZipf": 1.25,
       "eligible": true
     },
     "homarus": {
@@ -242182,21 +242136,6 @@
       "sourceIds": [
         "omw"
       ],
-      "enZipf": 3.01,
-      "eligible": true
-    },
-    "tec": {
-      "source": "tec",
-      "target": "détective",
-      "partOfSpeech": "noun",
-      "sourceGloss": "detective (police officer who looks for evidence)",
-      "frequencyRank": 1017524,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "gender": "feminine",
-      "plural": "détectives",
       "enZipf": 3.01,
       "eligible": true
     },

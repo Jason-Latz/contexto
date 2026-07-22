@@ -52,6 +52,8 @@ SCRATCH DISCIPLINE (a prior batch was silently corrupted by this): if you need A
 
 const RULES = `NON-NEGOTIABLE MINT RULES:
 - Never invent a translation: a mint target must be copied verbatim from one of the record's listed alternatives (each came from a real dictionary/source).
+- partOfSpeech describes the ENGLISH SOURCE token. The row's sourcePosCandidates are its lemma-wide fallback; when the chosen alternative has a non-empty sourcePosCandidates list, that exact-pair list is the stricter authority. A mint pos MUST come from the governing list; a singleton is forced; an empty governing list means skip.
+- alternative.pos and alternative.mintable describe only the translated target's shape. They are non-authoritative for the English source POS and may legitimately differ (for example, an adjective-shaped German target for an English adverb). Never copy either field into the verdict or use it to block an otherwise source-authorized non-noun.
 - Noun gender/plural come ONLY from the chosen alternative's morph authority fields. If no sense-correct alternative carries morph.gender AND morph.plural, verdict = skip. Never guess morphology.
 - Verbs render as the BARE INFINITIVE (packs carry no conjugations): a verb mint's target MUST be the infinitive; a conjugated form or participle => skip.
 - Prefer skip over any mint you are not confident in. A wrong word taught is worse than no word. Only mints with confidence>=0.8 AND refuter agreement (or a judge ruling) ship.
@@ -95,13 +97,12 @@ const JUDGE = {
 
 // ---------- Prepare: preSkip filter + evidence-priority ordering ----------
 phase('Prepare')
-log(`Preparing ${LANG}: filtering preSkip rows and ordering ${QUEUE} by evidence priority`)
+log(`Preparing ${LANG}: source-contract filtering and ordering ${QUEUE} by evidence priority`)
 const prep = await agent(`${COMMON}
 Build a STABLE, evidence-priority-ordered mint queue for ${LNAME} from "${REPO}/${QUEUE}".
-Each input row is an enriched candidate: {key, source, lang, enZipf, pos?, entrSenses, alternatives:[{target,votes,sources,glosses,morph:{gender,plural,authority}|null}], evidenceTier:"T1"|"T2"|"T3"|null (present only on wiki-involved rows), preSkip:"cognate_nonnoun"|"noun_no_morph_any"|null (may be absent on older rows), shipTierHint}.
+Each input row is an enriched candidate: {key, source, lang, enZipf, sourcePosCandidates, sourcePos, entrSenses, alternatives:[{target,votes,sources,glosses,morph:{gender,plural,authority}|null,sourcePosCandidates,pos,mintable}], evidenceTier:"T1"|"T2"|"T3"|null (present only on wiki-involved rows), preSkip:"source_contract_no_mintable_alternative"|<legacy-target-label>|null, shipTierHint}. The sourcePos fields are authoritative English-side evidence; alternative pos/mintable are target-side hints only.
 
-STEP 1 — DROP preSkip rows entirely (do NOT queue them; count them). A row is preSkip if its preSkip field is a non-null string. If the field is ABSENT (older schema), derive it: preSkip if (pos is not "noun" AND every alternative's target equals the source spelling) -> cognate_nonnoun; or (pos == "noun" AND no alternative has morph.gender) -> noun_no_morph_any.
-STEP 1b — ALSO drop rows whose "shippable" field is exactly false (count separately as notShippable). These rows cannot clear apply_verdicts no matter the verdict (e.g. nouns with no full-morph alternative), so adjudicating them wastes the run's time budget. Rows missing the field entirely are KEPT.
+STEP 1 — First require every row and alternative to carry a well-formed sourcePosCandidates array; if not, fail without writing. For each alternative, its non-empty sourcePosCandidates governs; only an empty list falls back to the row list. A mechanically viable path is (a) a standalone, non-identical target with any governing verb/adjective/adverb/expression POS, or (b) governing noun with an allowed language gender and standalone plural. DROP only rows with NO viable path. The new `source_contract_no_mintable_alternative` label may corroborate that result, but recompute it. Ignore historical `cognate_nonnoun` / `noun_no_morph_any`, `shippable:false`, and alternative `mintable:false`: those were target-derived and cannot gate an English-source-authorized candidate.
 
 STEP 2 — bucket every surviving row (compute, do not trust a prebuilt order):
   bestVotes = max alternative "votes" (default 1). wikiInvolved = evidenceTier in {T1,T2,T3} OR any alternative's sources include "wikipedia". wiktinvOnly = the union of all alternatives' sources is a subset of {"wiktinv"}.
@@ -110,7 +111,7 @@ STEP 2 — bucket every surviving row (compute, do not trust a prebuilt order):
   bucket 2 (c): NOT wikiInvolved AND bestVotes==1    [dictionary, single-vote]
   bucket 3 (d): evidenceTier == "T2"
   bucket 4 (e): wiktinvOnly
-  bucket 5 (f): evidenceTier == "T3" AND pos != "noun"
+  bucket 5 (f): evidenceTier == "T3" AND sourcePos != "noun"
   bucket 6 (other): anything left (e.g. a T3 noun with morph) — keep it, ordered last so early-stopping never silently drops a shippable row.
 
 STEP 3 — write "${REPO}/${ORDERED}" (atomic .tmp then mv): the surviving rows as VERBATIM copies of the input rows (do not alter any field — apply_verdicts.py re-derives provenance from the canonical ${QUEUE} by key, so keys and content must stay identical), sorted by (bucket ASC, then enZipf DESC, then key ASC) for determinism.
@@ -147,10 +148,11 @@ IDEMPOTENCE: skip any key that already appears in an existing "${REPO}/pipeline/
 ATTENTION DISCIPLINE (this batch is large): work through the rows in small groups of ~15 and emit results as you go. Emit EXACTLY ONE JSON verdict line per input record — never summarize, never collapse ("the rest are skips" is FORBIDDEN), never omit a row. The output must have one line per adjudicated record.
 Per record decide "mint" or "skip":
 - mint: choose the ONE alternative whose glosses/evidence teach the record's GLOSSED English sense (entrSenses) and that is teachable; copy its target verbatim.
-- NOUN mint: the chosen alternative MUST carry morph.gender AND morph.plural; else skip.
-- VERB mint: target MUST be the bare infinitive; else skip.
+- source POS: use the chosen alternative's non-empty sourcePosCandidates when present; otherwise use the row sourcePosCandidates. Choose only from that governing English-side set (singleton forced). alternative.pos and alternative.mintable are target hints and never authorize or block source POS.
+- NOUN source mint: the chosen alternative MUST carry morph.gender AND morph.plural; else skip.
+- VERB source mint: target MUST be the bare infinitive; else skip.
 - shipTier: take shipTierHint, but downgrade "core-gap" to "tail" unless the choice is unanimous across >=3 sources AND confidence>=0.9.
-Write one JSON line per record to "${REPO}/${RAW(b.fi)}" (atomic .tmp then mv): for a mint {key, verdict:"mint", target, shipTier, gender, plural, pos, morphAuthority, confidence:0-1, reason:"<=12 words"}; for a skip {key, verdict:"skip", pos, confidence:0-1, reason:"<=12 words"}.
+Write one JSON line per record to "${REPO}/${RAW(b.fi)}" (atomic .tmp then mv): for a mint {key, verdict:"mint", target, shipTier, gender, plural, pos:<English source POS>, morphAuthority, confidence:0-1, reason:"<=12 words"}; for a skip {key, verdict:"skip", pos:null, confidence:0-1, reason:"<=12 words"}.
 Return {ok, status:"processed", minted:<mint count>, skipped:<skip count>, written:<total lines>}.`
 
 const refP = (b) => `${COMMON}
@@ -160,7 +162,7 @@ You are the REFUTER, fluent in ${LNAME} and English. The adjudicator wrote "${RE
 IMMUTABLE APPLIED GUARD (your FIRST filesystem check): if "${REPO}/${APPLIED(b.fi)}" exists, do not touch raw/final/fixup. Return {ok:true,status:"applied",minted:0,skipped:0,disputed:0,agreed:0} immediately.
 FINAL-FIRST RESUME: extract the canonical slice key set twice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}" piped through python3 to print each line's key; both reads must agree). If "${REPO}/${FIN(b.fi)}" exists, validate it BEFORE raw: it must have exactly one unique row for every slice key — no missing, duplicate, or foreign keys. If complete, this batch is already refuted even when raw is absent or empty — read the final and return {ok:true,status:"resumed",minted:<verdict=="mint" count>,skipped:<skip count>,disputed:<refuter=="dispute" count>,agreed:<refuter=="agree" count>} without rewriting anything. If the final is invalid or incomplete, preserve all files and return {ok:false,status:"inconsistent_final",minted:0,skipped:0,disputed:0,agreed:0}; never overwrite reviewed evidence.
 VALIDATE THE RAW FILE NEXT (a prior run had cross-batch row contamination): if the raw file contains ANY key outside the slice set, or its keys plus keys in existing final/fixup mint-${LANG}-*.jsonl files do not cover the slice set, it is corrupt: delete it (rm "${REPO}/${RAW(b.fi)}") and return {ok:false,status:"corrupt_raw",minted:0,skipped:0,disputed:0,agreed:0} — the batch will re-run on the next launch. Do not refute a corrupt file.
-Otherwise re-read the same queue slice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}") alongside the raw verdicts and PROVE THEM WRONG wherever possible. Attack every "mint" and every line with confidence<0.75, and sample ~20% of the skips (a wrongful skip loses a good word). For each attacked line ask: is the target really a correct translation of the record's GLOSSED sense (not its own back-translation)? wrong/non-dominant sense? Wikipedia langlink topic-artifact or plural-title error? verb not an infinitive? noun missing authoritative morph? non-noun cognate identical to English?
+Otherwise re-read the same queue slice (sed -n '${b.lo},${b.hi}p' "${REPO}/${ORDERED}") alongside the raw verdicts and PROVE THEM WRONG wherever possible. Attack every "mint" and every line with confidence<0.75, and sample ~20% of the skips (a wrongful skip loses a good word). Mechanically dispute any mint whose pos is outside the chosen alternative's non-empty sourcePosCandidates (or the row fallback when that list is empty). For each attacked line ask: is the target really a correct translation of the record's GLOSSED sense (not its own back-translation)? wrong/non-dominant sense? Wikipedia langlink topic-artifact or plural-title error? source POS copied from a target-side hint? verb not an infinitive? noun missing authoritative morph? non-noun cognate identical to English?
 Write "${REPO}/${FIN(b.fi)}" (atomic .tmp then mv): copy each raw line and add "refuter":"agree" or "refuter":"dispute" (+ "refuterReason" when disputing); lines you did not attack get "refuter":"unreviewed". Do NOT change verdicts yourself — disputes go to the judge. One line per raw line.
 Return {ok, status:"processed", minted:<mint count>, skipped:<skip count>, disputed:<disputes>, agreed:<agrees>}.`
 
@@ -170,7 +172,7 @@ ${ADDENDUM}
 You are the FINAL JUDGE (Opus — this ruling ships tonight). "${REPO}/${FIN(b.fi)}" has lines with "refuter":"dispute".
 IMMUTABLE APPLIED GUARD (your FIRST filesystem check): if "${REPO}/${APPLIED(b.fi)}" exists, do not touch raw/final/fixup. Return {ok:true,status:"applied",judged:0} immediately.
 RESUME: if "${REPO}/${FIX(b.fi)}" already exists and already contains a ruling for every disputed key in the final file, return {ok:true,status:"resumed",judged:<its line count>}.
-For each "refuter":"dispute" line, re-read its record in "${REPO}/${ORDERED}" (match by key), weigh the adjudicator's mint against the refuter's objection, and rule: uphold the mint ONLY if the evidence truly teaches the entry's glossed sense with authoritative morph (nouns) / a clean infinitive (verbs); otherwise overturn to skip. When in doubt: skip.
+For each "refuter":"dispute" line, re-read its record in "${REPO}/${ORDERED}" (match by key), weigh the adjudicator's mint against the refuter's objection, and rule: uphold the mint ONLY if the evidence truly teaches the entry's glossed sense, its English source POS is in the chosen alternative's non-empty sourcePosCandidates (or the row fallback), and it has authoritative morph (source nouns) / a clean infinitive (source verbs); otherwise overturn to skip. alternative.pos/mintable remain non-authoritative target hints. When in doubt: skip.
 Write ONLY the disputed lines to "${REPO}/${FIX(b.fi)}" (atomic .tmp then mv), same schema, add "judge":"opus" and DROP the refuter field. An upheld mint MUST keep confidence>=0.8 so it clears the ship stratum; a skip ruling is a skip.
 Return {ok, status:"processed", judged:<lines ruled>}.`
 
@@ -219,5 +221,5 @@ return {
   judged: sum('judged'),
   corruptRawBatches: results.filter((r) => r && r.status === 'corrupt_raw').length,
   moreWorkRemains: Math.ceil(prep.orderable / BATCH) > numBatches,
-  nextStep: `Panel-gate then apply: Workflow mint-panel.workflow.js {lang:"${LANG}"}, then (if ship) python3 pipeline/analysis/apply_verdicts.py --language ${LANG} --mint-only --ship-stratum strict`,
+  nextStep: `Panel-gate then apply: Workflow mint-panel.workflow.js {lang:"${LANG}"}, then use its exact applyStep (includes the required --panel-verdict)`,
 }

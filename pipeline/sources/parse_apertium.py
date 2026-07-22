@@ -28,6 +28,16 @@ always = lang1, `<r>` always = lang2 — independent of which side is English.
 `PAIRS` below records which literal side ('l' or 'r') is English for each
 downloaded file.
 
+Every output row keeps the two sides' grammatical evidence separate:
+
+  - `sourcePos` comes only from symbols on the English side;
+  - `targetPos` and `gender` come only from symbols on the target side;
+  - legacy `pos` aliases `targetPos` for target-facing consumers.
+
+There is deliberately no cross-side POS fallback. A target adjective can be a
+valid translation of an English adverb, so copying either side's tag onto the
+other would corrupt Contexto's runtime source-token classification.
+
 Usage:
     python3 pipeline/sources/parse_apertium.py
 """
@@ -137,8 +147,7 @@ def pos_and_gender(symbols: list[str]) -> tuple[str | None, str | None]:
     return pos, gender
 
 
-def parse_dix(path: Path, en_side: str) -> list[dict]:
-    target_side = "r" if en_side == "l" else "l"
+def parse_dix(path: Path, en_side: str) -> tuple[list[dict], dict]:
     tree = ET.parse(path)
     root = tree.getroot()
 
@@ -182,18 +191,24 @@ def parse_dix(path: Path, en_side: str) -> list[dict]:
                 continue
 
             en_text = en_text.lower()
-            pos, gender = pos_and_gender(tgt_symbols)
-            if pos is None:
-                # fall back to the English side's POS tag if the target side had none
-                pos, _ = pos_and_gender(en_symbols)
+            source_pos, _ = pos_and_gender(en_symbols)
+            target_pos, gender = pos_and_gender(tgt_symbols)
 
-            key = (en_text, tgt_text, pos, gender)
+            key = (en_text, tgt_text, source_pos, target_pos, gender)
             if key in seen:
                 dup_count += 1
                 continue
             seen.add(key)
 
-            rows.append({"en": en_text, "target": tgt_text, "pos": pos, "gender": gender})
+            rows.append({
+                "en": en_text,
+                "target": tgt_text,
+                "sourcePos": source_pos,
+                "targetPos": target_pos,
+                # Backward-compatible target-facing alias. Never source evidence.
+                "pos": target_pos,
+                "gender": gender,
+            })
 
     stats = {
         "rows": len(rows),

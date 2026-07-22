@@ -532044,22 +532044,6 @@
       "enZipf": 1.82,
       "eligible": true
     },
-    "scholia": {
-      "source": "scholia",
-      "target": "escolio",
-      "partOfSpeech": "noun",
-      "sourceGloss": "scholium",
-      "frequencyRank": 1038541,
-      "confidence": "low",
-      "sourceIds": [
-        "omw",
-        "wikipedia"
-      ],
-      "gender": "masculine",
-      "plural": "escolios",
-      "enZipf": 1.82,
-      "eligible": true
-    },
     "avena": {
       "source": "avena",
       "target": "avena",
@@ -532547,21 +532531,6 @@
       ],
       "gender": "feminine",
       "plural": "carlinas",
-      "enZipf": 1.6,
-      "eligible": true
-    },
-    "cucurbita": {
-      "source": "cucurbita",
-      "target": "cucúrbita",
-      "partOfSpeech": "noun",
-      "sourceGloss": "(en) type genus of the Cucurbitaceae",
-      "frequencyRank": 1038573,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "gender": "feminine",
-      "plural": "cucúrbitas",
       "enZipf": 1.6,
       "eligible": true
     },
@@ -535302,19 +535271,6 @@
       "enZipf": 3.72,
       "eligible": true
     },
-    "scanning": {
-      "source": "scanning",
-      "target": "escanear",
-      "partOfSpeech": "verb",
-      "sourceGloss": "to scan",
-      "frequencyRank": 1038750,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "enZipf": 3.72,
-      "eligible": true
-    },
     "ut": {
       "source": "ut",
       "target": "do",
@@ -535765,19 +535721,6 @@
       "partOfSpeech": "adjective",
       "sourceGloss": "nuptial (pertaining to wedding and marriage)",
       "frequencyRank": 1038783,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "enZipf": 3.5,
-      "eligible": true
-    },
-    "mailed": {
-      "source": "mailed",
-      "target": "enviar",
-      "partOfSpeech": "verb",
-      "sourceGloss": "to send",
-      "frequencyRank": 1038784,
       "confidence": "low",
       "sourceIds": [
         "omw"
@@ -542842,21 +542785,6 @@
       "sourceIds": [
         "omw"
       ],
-      "enZipf": 2.37,
-      "eligible": true
-    },
-    "varnished": {
-      "source": "varnished",
-      "target": "barnizado",
-      "partOfSpeech": "noun",
-      "sourceGloss": "varnishing; varnish",
-      "frequencyRank": 1039287,
-      "confidence": "low",
-      "sourceIds": [
-        "omw"
-      ],
-      "gender": "masculine",
-      "plural": "barnizados",
       "enZipf": 2.37,
       "eligible": true
     },

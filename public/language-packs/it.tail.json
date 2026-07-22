@@ -156945,22 +156945,6 @@
       "enZipf": 0.0,
       "eligible": true
     },
-    "pseudocarp": {
-      "source": "pseudocarp",
-      "target": "pseudocarpio",
-      "partOfSpeech": "noun",
-      "sourceGloss": "pseudocarp",
-      "frequencyRank": 1011188,
-      "confidence": "low",
-      "sourceIds": [
-        "omw",
-        "wiktinv"
-      ],
-      "gender": "masculine",
-      "plural": "pseudocarpi",
-      "enZipf": 0.0,
-      "eligible": true
-    },
     "pseudopodium": {
       "source": "pseudopodium",
       "target": "pseudopodio",

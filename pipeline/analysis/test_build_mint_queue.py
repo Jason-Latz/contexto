@@ -17,11 +17,12 @@ from pathlib import Path
 
 from pipeline.analysis import build_mint_queue as bmq
 from pipeline.analysis.apply_verdicts import apply_language
+from pipeline.sources import parse_apertium, parse_freedict_eng
 
 
-def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
+def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None, ensense=None,
                  wikidata=None, wikt_noun=None, wikt_gloss=None, wikt_match_gloss=None,
-                 langlinks=None, wiktinv=None, slim_pos=None):
+                 langlinks=None, wiktinv=None, slim_pos=None, wordnet_pos=None):
     """Assemble the `indexes` dict build_alternatives_and_check_gate expects, with
     empty defaults so a test only has to specify the sources it cares about."""
     return {
@@ -29,6 +30,7 @@ def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
         "apertium": apertium or {},
         "omw": omw or {},
         "entr": entr or {},
+        "ensense": ensense or {},
         "wikidata": wikidata or {},
         "wikt_noun": wikt_noun or {},
         "wikt_gloss": wikt_gloss or {},
@@ -36,6 +38,7 @@ def make_indexes(*, freedict=None, apertium=None, omw=None, entr=None,
         "langlinks": langlinks or {},
         "wiktinv": wiktinv or {},
         "slim_pos": slim_pos or {},
+        "wordnet_pos": wordnet_pos or {},
     }
 
 
@@ -518,7 +521,10 @@ class WiktinvProposerTest(unittest.TestCase):
     def test_independent_dictionary_plus_wiktinv_passes_at_two(self):
         # freedict (a genuinely independent dictionary) + wiktinv = TWO gate votes.
         idx = make_indexes(
-            freedict={"aardvark": [("Erdferkel", "the aardvark", "noun")]},
+            freedict={"aardvark": [{
+                "target": "Erdferkel", "notes": "the aardvark",
+                "targetPos": "noun", "sourcePos": "noun",
+            }]},
             wiktinv={"aardvark": [wiktinv_prop("Erdferkel", gloss="aardvark")]},
         )
         alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
@@ -562,13 +568,257 @@ class NormalizePosTest(unittest.TestCase):
         self.assertEqual(bmq.normalize_pos("pn"), "noun")
         self.assertEqual(bmq.normalize_pos("adjective"), "adjective")
         self.assertEqual(bmq.normalize_pos("adj"), "adjective")
+        self.assertEqual(bmq.normalize_pos("a"), "adjective")
+        self.assertEqual(bmq.normalize_pos("s"), "adjective")
         self.assertEqual(bmq.normalize_pos("adv"), "adverb")
+        self.assertEqual(bmq.normalize_pos("r"), "adverb")
         self.assertIsNone(bmq.normalize_pos("preposition"))
         self.assertIsNone(bmq.normalize_pos(None))
 
     def test_multiword_target_overrides_to_expression(self):
         self.assertEqual(bmq.normalize_pos("noun", "casa blanca"), "expression")
         self.assertEqual(bmq.normalize_pos("noun", "casa"), "noun")
+
+
+class SourcePosContractTest(unittest.TestCase):
+    def test_unions_all_english_side_sources_into_one_canonical_pos(self):
+        idx = make_indexes(
+            freedict={"affirmatively": [{
+                "target": "bestätigend", "notes": None,
+                "targetPos": "adjective", "sourcePos": "adverb",
+            }]},
+            apertium={"affirmatively": [{
+                "target": "affirmativ", "targetPos": "adjective", "sourcePos": "adv",
+            }]},
+            omw={"affirmatively": [(1, "in an affirming manner", ["affirmativ"], "r")]},
+            entr={"affirmatively": [{
+                "pos": "adverb", "gloss": "x", "tr": [["de", "affirmativ", []]],
+            }]},
+            wordnet_pos={"affirmatively": {"r"}},
+        )
+        candidates, canonical = bmq.build_source_pos_contract("affirmatively", idx)
+        self.assertEqual(candidates, ["adverb"])
+        self.assertEqual(canonical, "adverb")
+        alts, _, _, _ = bmq.build_alternatives_and_check_gate(
+            "de", "affirmatively", idx, min_votes=1)
+        self.assertEqual(alts[0]["sourcePosCandidates"], ["adverb"])
+
+    def test_sense_cache_authorizes_exact_pairs_and_preserves_pos_ambiguity(self):
+        idx = make_indexes(
+            ensense={
+                "octonary": [{
+                    "pos": "adjective", "tr": [["fr", "octonaire", []]],
+                }],
+                "quincentennial": [
+                    {"pos": "adjective", "tr": [["es", "quincentenario", []]]},
+                    {"pos": "noun", "tr": [["es", "quincentenario", ["masculine"]]]},
+                ],
+            },
+        )
+        self.assertEqual(
+            bmq.build_alternative_source_pos_contract(
+                "fr", "octonary", "octonaire", idx
+            ),
+            ["adjective"],
+        )
+        self.assertEqual(
+            bmq.build_alternative_source_pos_contract(
+                "es", "quincentennial", "quincentenario", idx
+            ),
+            ["noun", "adjective"],
+        )
+
+    def test_target_side_hint_is_not_the_english_source_pos(self):
+        # German `affirmativ` is attested target-side as an adjective, while the
+        # Apertium English source row and WordNet say `affirmatively` is adverb.
+        idx = make_indexes(
+            apertium={"affirmatively": [{
+                "target": "affirmativ", "targetPos": "adj", "sourcePos": "adv",
+                # A legacy target-facing value must be irrelevant to source auth.
+                "pos": "noun",
+            }]},
+            slim_pos={"affirmativ": {"adjective"}},
+            wordnet_pos={"affirmatively": {"r"}},
+        )
+        alts, _, _, diag = bmq.build_alternatives_and_check_gate(
+            "de", "affirmatively", idx, min_votes=1)
+        self.assertEqual(alts[0]["pos"], "adjective")
+        self.assertEqual(alts[0]["sourcePosCandidates"], ["adverb"])
+        self.assertEqual(diag["sourcePosCandidates"], ["adverb"])
+        self.assertEqual(diag["sourcePos"], "adverb")
+
+    def test_english_translation_cache_pos_is_source_only(self):
+        idx = make_indexes(entr={"affirmatively": [{
+            "pos": "adverb", "gloss": "in an affirmative manner",
+            "tr": [["de", "affirmativ", []]],
+        }]})
+        alts, _, _, diag = bmq.build_alternatives_and_check_gate(
+            "de", "affirmatively", idx, min_votes=1)
+        self.assertIsNone(alts[0]["pos"])
+        self.assertEqual(alts[0]["sourcePosCandidates"], ["adverb"])
+        self.assertEqual(diag["sourcePosCandidates"], ["adverb"])
+
+    def test_polysemy_keeps_deterministic_candidates_and_no_singleton(self):
+        idx = make_indexes(wordnet_pos={"prefab": {"s", "n"}})
+        candidates, canonical = bmq.build_source_pos_contract("prefab", idx)
+        self.assertEqual(candidates, ["noun", "adjective"])
+        self.assertIsNone(canonical)
+
+    def test_missing_english_evidence_is_explicit_and_fail_closed_downstream(self):
+        candidates, canonical = bmq.build_source_pos_contract("unlisted", make_indexes())
+        self.assertEqual(candidates, [])
+        self.assertIsNone(canonical)
+
+    def test_wordnet_loader_preserves_per_sense_pos_union(self):
+        idx = bmq.load_wordnet_pos_index({"prefab", "affirmatively", "notawordnetlemma"})
+        self.assertEqual(idx["prefab"], {"noun", "adjective"})
+        self.assertEqual(idx["affirmatively"], {"adverb"})
+        self.assertNotIn("notawordnetlemma", idx)
+
+
+class SourcePosLoaderTest(unittest.TestCase):
+    def test_side_specific_loaders_ignore_legacy_pos(self):
+        tmp = Path(tempfile.mkdtemp(prefix="mint-source-pos-loader-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        original = bmq.SOURCES_DIR
+        bmq.SOURCES_DIR = tmp
+        self.addCleanup(setattr, bmq, "SOURCES_DIR", original)
+
+        (tmp / "apertium-eng-de.jsonl").write_text(
+            json.dumps({
+                "en": "affirmatively", "target": "affirmativ",
+                "sourcePos": "adv", "targetPos": "adj", "pos": "noun",
+            }) + "\n",
+            encoding="utf-8",
+        )
+        (tmp / "freedict-eng-de.jsonl").write_text(
+            json.dumps({
+                "en": "attractively", "target": "anziehend", "notes": None,
+                "sourcePos": "adverb", "targetPos": "adjective", "pos": "noun",
+            }) + "\n",
+            encoding="utf-8",
+        )
+        (tmp / "omw-eng-fr.jsonl").write_text(
+            json.dumps({
+                "en": "prefab", "senseRank": 2, "gloss": "a prefabricated building",
+                "pos": "n", "targets": ["préfabriqué"],
+            }) + "\n",
+            encoding="utf-8",
+        )
+
+        self.assertEqual(
+            bmq.load_apertium_index("de")["affirmatively"], [{
+                "target": "affirmativ", "targetPos": "adj", "sourcePos": "adv",
+            }]
+        )
+        self.assertEqual(
+            bmq.load_freedict_index("de")["attractively"], [{
+                "target": "anziehend", "notes": None,
+                "targetPos": "adjective", "sourcePos": "adverb",
+            }]
+        )
+        self.assertEqual(
+            bmq.load_omw_index("fr")["prefab"],
+            [(2, "a prefabricated building", ["préfabriqué"], "n")],
+        )
+
+    def test_sense_cache_loader_flattens_sense_local_translation_tables(self):
+        tmp = Path(tempfile.mkdtemp(prefix="mint-ensense-loader-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        cache = tmp / "en-sense-cache.jsonl"
+        cache.write_text(json.dumps({
+            "w": "octonary", "pos": "adjective",
+            "senses": [
+                {"g": "Of eighth rank.", "tr": [["fr", "octonaire", []]]},
+                {"g": "Grouped in eights.", "tr": [["it", "ottonario", []]]},
+            ],
+        }) + "\n", encoding="utf-8")
+        original = bmq.ENSENSE_CACHE_PATH
+        bmq.ENSENSE_CACHE_PATH = cache
+        self.addCleanup(setattr, bmq, "ENSENSE_CACHE_PATH", original)
+
+        self.assertEqual(bmq.load_ensense_index()["octonary"], [{
+            "pos": "adjective",
+            "tr": [["fr", "octonaire", []], ["it", "ottonario", []]],
+        }])
+
+
+class SourcePosParserTest(unittest.TestCase):
+    def test_apertium_keeps_english_adverb_separate_from_target_adjective(self):
+        tmp = Path(tempfile.mkdtemp(prefix="apertium-source-pos-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        dix = tmp / "eng-deu.dix"
+        dix.write_text(
+            """<dictionary><section id="main" type="standard">
+            <e><p><l>affirmatively<s n="adv"/></l>
+            <r>affirmativ<s n="adj"/></r></p></e>
+            </section></dictionary>""",
+            encoding="utf-8",
+        )
+
+        rows, _stats = parse_apertium.parse_dix(dix, "l")
+        self.assertEqual(rows, [{
+            "en": "affirmatively", "target": "affirmativ",
+            "sourcePos": "adv", "targetPos": "adj", "pos": "adj", "gender": None,
+        }])
+
+    def test_apertium_respects_reversed_english_side(self):
+        tmp = Path(tempfile.mkdtemp(prefix="apertium-reversed-pos-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        dix = tmp / "fra-eng.dix"
+        dix.write_text(
+            """<dictionary><section id="main" type="standard">
+            <e><p><l>affirmatif<s n="adj"/></l>
+            <r>affirmatively<s n="adv"/></r></p></e>
+            </section></dictionary>""",
+            encoding="utf-8",
+        )
+
+        rows, _stats = parse_apertium.parse_dix(dix, "r")
+        self.assertEqual(rows[0]["sourcePos"], "adv")
+        self.assertEqual(rows[0]["targetPos"], "adj")
+        self.assertEqual(rows[0]["pos"], "adj")
+
+    def test_freedict_keeps_entry_adverb_separate_from_target_adjective(self):
+        tmp = Path(tempfile.mkdtemp(prefix="freedict-source-pos-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        tei = tmp / "eng-deu.tei"
+        tei.write_text(
+            """<TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body>
+            <entry><form><orth>attractively</orth></form>
+              <gramGrp><pos>adv</pos></gramGrp><sense>
+                <cit type="trans"><quote>anziehend</quote>
+                  <gramGrp><pos>adj</pos></gramGrp></cit>
+              </sense></entry>
+            </body></text></TEI>""",
+            encoding="utf-8",
+        )
+
+        rows = list(parse_freedict_eng.parse_tei(tei))
+        self.assertEqual(rows, [{
+            "en": "attractively", "target": "anziehend",
+            "sourcePos": "adverb", "targetPos": "adjective", "pos": "adjective",
+            "gender": None, "plural": None, "notes": None,
+        }])
+
+    def test_freedict_multiword_source_override_does_not_leak_to_target_fallback(self):
+        tmp = Path(tempfile.mkdtemp(prefix="freedict-source-shape-test-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        tei = tmp / "eng-ita.tei"
+        tei.write_text(
+            """<TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body>
+            <entry><form><orth>visually attractive</orth></form>
+              <gramGrp><pos>adj</pos></gramGrp><sense>
+                <cit type="trans"><quote>attraente</quote></cit>
+              </sense></entry>
+            </body></text></TEI>""",
+            encoding="utf-8",
+        )
+
+        row = list(parse_freedict_eng.parse_tei(tei))[0]
+        self.assertEqual(row["sourcePos"], "expression")
+        self.assertEqual(row["targetPos"], "adjective")
+        self.assertEqual(row["pos"], "adjective")
 
 
 class ClassifyAlternativeTest(unittest.TestCase):
@@ -612,11 +862,14 @@ class PreSkipTest(unittest.TestCase):
             langlinks={"mitochondria": wiki_entry("Mitochondrium", exists=True)},
             wikt_noun={"mitochondrium": [("neuter", None)]},   # gender, NULL plural
             slim_pos={"mitochondrium": {"noun"}},
+            wordnet_pos={"mitochondria": {"n"}},
         )
         alts, _, passes, diag = bmq.build_alternatives_and_check_gate(
             "de", "mitochondria", idx, min_votes=1)
         self.assertTrue(passes)  # still in the queue (never dropped)
-        self.assertEqual(diag["preSkip"], "noun_no_morph_any")
+        self.assertEqual(
+            diag["preSkip"], "source_contract_no_mintable_alternative"
+        )
         self.assertFalse(diag["shippableAlt"])
 
     def test_full_morph_noun_is_shippable_not_preskipped(self):
@@ -624,6 +877,7 @@ class PreSkipTest(unittest.TestCase):
             langlinks={"mitochondria": wiki_entry("Mitochondrium", exists=True)},
             wikt_noun={"mitochondrium": [("neuter", "Mitochondrien")]},
             slim_pos={"mitochondrium": {"noun"}},
+            wordnet_pos={"mitochondria": {"n"}},
         )
         _, _, _, diag = bmq.build_alternatives_and_check_gate(
             "de", "mitochondria", idx, min_votes=1)
@@ -634,25 +888,53 @@ class PreSkipTest(unittest.TestCase):
         # es "total" (adjective) == English "total": identical + non-noun -> the
         # runtime would never inject it. freedict tags it adjective (non-noun ev).
         idx = make_indexes(
-            freedict={"total": [("total", "whole", "adjective")]},
-            apertium={"total": ["total"]},
+            freedict={"total": [{
+                "target": "total", "notes": "whole",
+                "sourcePos": "adjective", "targetPos": "adjective",
+            }]},
+            apertium={"total": [{
+                "target": "total", "sourcePos": "adjective",
+                "targetPos": "adjective",
+            }]},
             slim_pos={"total": {"adjective"}},
         )
         alts, _, _, diag = bmq.build_alternatives_and_check_gate("es", "total", idx, min_votes=1)
         self.assertEqual(alts[0]["target"], "total")
-        self.assertEqual(diag["preSkip"], "cognate_nonnoun")
+        self.assertEqual(
+            diag["preSkip"], "source_contract_no_mintable_alternative"
+        )
 
     def test_nonnoun_alternative_escapes_noun_no_morph(self):
         # One alt is a noun without morph, another is a verb (mintable non-noun) ->
         # NOT preSkipped, and shippable.
         idx = make_indexes(
-            apertium={"run": ["Lauf", "laufen"]},
+            apertium={"run": [
+                {"target": "Lauf", "sourcePos": "noun", "targetPos": "noun"},
+                {"target": "laufen", "sourcePos": "verb", "targetPos": "verb"},
+            ]},
             wikt_noun={"lauf": [("masculine", None)]},  # noun, no plural
             slim_pos={"lauf": {"noun"}, "laufen": {"verb"}},
         )
         _, _, _, diag = bmq.build_alternatives_and_check_gate("de", "run", idx, min_votes=1)
         self.assertIsNone(diag["preSkip"])
         self.assertTrue(diag["shippableAlt"])
+
+    def test_target_noun_hint_cannot_gate_source_authorized_adverb(self):
+        # The target-side classifier says noun/no-morph and therefore
+        # mintable:false, but the exact English pair is an adverb. Source POS
+        # governs, so this row must remain adjudicable.
+        idx = make_indexes(freedict={"affirmatively": [{
+            "target": "bejahung", "notes": None,
+            "sourcePos": "adverb", "targetPos": "noun",
+        }]})
+        alternatives, _, _, diag = bmq.build_alternatives_and_check_gate(
+            "de", "affirmatively", idx, min_votes=1
+        )
+        self.assertEqual(alternatives[0]["pos"], "noun")
+        self.assertFalse(alternatives[0]["mintable"])
+        self.assertEqual(alternatives[0]["sourcePosCandidates"], ["adverb"])
+        self.assertTrue(diag["shippableAlt"])
+        self.assertIsNone(diag["preSkip"])
 
 
 def _write_json(path: Path, data):
@@ -687,7 +969,7 @@ class ComposedAuthorityAcceptedByApplyVerdictsTest(unittest.TestCase):
         })
         _write_jsonl(self.tmp / "pipeline" / "data" / "queues" / "mint-de.jsonl", [
             {"lang": "de", "key": "aardvark", "source": "aardvark", "enZipf": 3.0,
-             "shipTierHint": "tail",
+             "shipTierHint": "tail", "sourcePosCandidates": ["noun"], "sourcePos": "noun",
              # A genuinely-independent 2-vote pairing (apertium + wiktgloss) --
              # entr+wiktgloss no longer clears the gate, see WiktglossVoteTest.
              "alternatives": [{

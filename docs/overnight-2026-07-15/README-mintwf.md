@@ -8,7 +8,9 @@ the orchestrator runs `apply_verdicts.py` only for languages the panel ships.
 - `mint-adjudicate.workflow.js` — order one language's mint queue by evidence
   priority, then adjudicator -> refuter -> judge per batch, writing verdict files.
 - `mint-panel.workflow.js` — independently re-verify a sample of that language's
-  ship-stratum mints and emit a ship/block verdict.
+  ship-stratum mints and emit a ship/block verdict. Its sample, fingerprint,
+  reduction, and apply preflight are implemented by tracked
+  `pipeline.analysis.mint_panel_contract` code rather than agent-authored logic.
 
 Run **one language per launch** (the args carry the language). Launch all four in
 parallel if the concurrency budget allows; each is self-contained.
@@ -90,11 +92,16 @@ filesystem access**, all persistence and the resume checks live **inside the age
   not against raw, so a missing/empty raw file cannot erase reviewed verdicts.
 - **Judge** — if `fixup/mint-<lang>-<fi>.jsonl` already rules every disputed key,
   returns `resumed`.
-- **Panel** — sample file and each `panel-<lang>-<seed>-agent-<k>.jsonl` are reused if
-  present; the reducer always recomputes from the per-agent files.
+- **Panel** — tracked code recomputes the complete pending strict-mint universe from
+  the ordered queue plus effective final/fixup rows, excluding applied markers. A
+  sample file is reused only when its full deterministic content still matches; the
+  reducer requires exactly one judgment for every sampled key and retains every
+  panel-proven false key.
 
-Every file is written **atomically** (`<path>.tmp` then `mv`), so a kill mid-write
-never leaves a partial file that a resume would trust. `runIndex` for the panel is the
+Every file is written **atomically** through a temporary file, so a kill mid-write
+never leaves a partial file that a resume would trust. Panel contract outputs use
+unique temporary files and no-overwrite atomic publication, making concurrent resumes
+safe. `runIndex` for the panel is the
 seed (no clock available), so re-running the same seed targets the same output files.
 
 Resume safety is **applied-first, then final-first, then raw**. A
@@ -124,6 +131,32 @@ from a pre-existing panel JSON left at the same seed after an aborted run.
 - Panel per-agent: `pipeline/data/verdicts/panel/panel-<lang>-<seed>-agent-<k>.jsonl`
 - Panel verdict (orchestrator reads this): `pipeline/data/verdicts/panel/panel-<lang>-<seed>.json`
 
+Frozen queues carry a separate English source-POS contract on each row and
+alternative: `sourcePosCandidates` plus singleton-only row `sourcePos`. Existing
+ordered queues must be enriched in place with
+`python3 -m pipeline.analysis.enrich_mint_source_pos --write`; this preserves row/key
+order and keeps `.pre-source-pos` backups. Never rebuild an in-flight ordered queue.
+An alternative's legacy `pos`/`mintable` fields describe target shape only and cannot
+authorize or block the English source POS.
+
+The original ordered queues had already omitted some source-authorized rows under
+those legacy target gates. Before initializing the Codex runner, recover them once:
+
+```
+python3 -m pipeline.analysis.recover_mint_ordered_source_pos          # dry/verify
+python3 -m pipeline.analysis.recover_mint_ordered_source_pos --write  # one-shot append
+```
+
+The recovery preserves the old ordered files byte-for-byte as prefixes, verifies that
+every affected numeric batch index has no artifact, and appends only mechanically viable
+canonical rows. Its ignored manifest and `.pre-source-pos-recovery` backups make the
+2,369-row append independently verifiable; a runner manifest blocks a first-time write.
+
+Wave 1 source-POS contradictions are not auto-repairs: sparse exact-pair tables can
+select the wrong homographic POS. Only the ten historical fluent-panel failures were
+removed; 155 POS questions remain unchanged for sense-aware review in
+`wave1-source-pos-review.json`.
+
 ### Verdict schemas
 
 Final/fixup mint verdict line (consumed by `apply_verdicts.py`):
@@ -136,16 +169,22 @@ Final/fixup mint verdict line (consumed by `apply_verdicts.py`):
 ```
 
 `apply_verdicts.py` re-derives ground truth from the canonical queue: the target must
-be one of the key's `alternatives`; noun gender/plural come from that alternative's
-`morph` (missing morph => skip). `ship_stratum_ok` = `confidence>=0.8` AND
-(`refuter=="agree"` OR a `judge` field). This is why an upheld judge ruling keeps
+be one of the key's `alternatives`; verdict `pos` must be authorized by the chosen
+alternative's non-empty English `sourcePosCandidates`, falling back to the row union;
+source nouns take gender/plural from that alternative's `morph` (missing morph =>
+skip). `ship_stratum_ok` = `confidence>=0.8` AND
+(`refuter=="agree"` OR a non-empty judge identity from a fixup row). Final rows may
+never carry judge authority. This is why an upheld judge ruling keeps
 `confidence>=0.8`.
 
 Panel verdict json:
 
 ```
-{ "lang", "runIndex", "seed", "sampled", "errors", "errorRate", "decision": "ship"|"block",
-  "shipBar": 0.05, "perAgent": [{ "agent", "checked", "errors" }], "errorExamples": [...] }
+{ "schemaVersion", "lang", "runIndex", "seed", "requestedSampleSize",
+  "batchSize", "fileIndexBase", "eligible", "sampled", "errors", "errorRate",
+  "decision": "ship"|"block", "shipBar": 0.05,
+  "universeFingerprint", "sampleFingerprint", "sampleKeys", "falseKeys",
+  "perAgent": [{ "agent", "checked", "errors" }], "errorExamples": [...] }
 ```
 
 ## Prompt-policy deltas vs 2026-07-12
@@ -173,7 +212,8 @@ Added tonight:
 For each language whose `panel-<lang>-<seed>.json` says `"decision": "ship"`:
 
 ```
-python3 pipeline/analysis/apply_verdicts.py --language <lang> --mint-only --ship-stratum strict
+python3 pipeline/analysis/apply_verdicts.py --language <lang> --mint-only --ship-stratum strict \
+  --panel-verdict pipeline/data/verdicts/panel/panel-<lang>-<seed>.json
 npm run validate:language-packs   # MUST pass; if not, fix apply_verdicts.py (never hand-edit packs)
 npm run typecheck && npm test && npm run build
 ```
@@ -182,7 +222,11 @@ npm run typecheck && npm test && npm run build
 rows), never `audit-*`/`regloss-*`. `--ship-stratum strict` no-ops any mint that isn't
 refuter-agreed-or-judge-ruled with `confidence>=0.8`. Application is idempotent via
 `verdicts/applied/<file>.done` markers, so re-running only applies new verdict files.
-Languages whose panel says `block` ship nothing.
+The strict mint-only CLI fails closed without `--panel-verdict`; immediately before
+any pack or marker write it recomputes the exact universe/sample fingerprints,
+requires the fixed 5% ship decision and exact error arithmetic, and suppresses every
+key listed in the panel's complete `falseKeys`. Languages whose panel says `block`
+ship nothing.
 
 ## Validation performed
 

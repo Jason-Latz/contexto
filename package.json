@@ -15,7 +15,7 @@
     "test:live-tab-sync": "node tests/live/repro-bugs.mjs",
     "merge:language-pack-fragments": "node scripts/merge-language-pack-fragments.mjs",
     "validate:language-packs": "node scripts/validate-language-packs.mjs",
-    "test": "rm -rf .test-build && node node_modules/typescript/bin/tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js && python3 -m unittest discover pipeline/import_es/tests && python3 -m unittest discover pipeline/import_wikt/tests && python3 -m unittest pipeline.analysis.test_apply_verdicts && python3 -m unittest pipeline.analysis.test_build_mint_queue",
+    "test": "rm -rf .test-build && node node_modules/typescript/bin/tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js && python3 -m unittest discover pipeline/import_es/tests && python3 -m unittest discover pipeline/import_wikt/tests && python3 -m unittest pipeline.analysis.test_apply_verdicts && python3 -m unittest pipeline.analysis.test_build_mint_queue && python3 -m unittest pipeline.analysis.test_enrich_mint_source_pos && python3 -m unittest pipeline.analysis.test_mint_panel_contract && python3 -m unittest pipeline.analysis.test_recover_mint_ordered_source_pos",
     "package": "npm run build && node scripts/package-extension.mjs"
   },
   "dependencies": {

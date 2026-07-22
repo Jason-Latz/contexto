@@ -20,7 +20,10 @@ Inputs (per language):
       candidates are aligned against the entry's CURRENT target, regloss
       queues must be rebuilt after any audit pass that retargets entries.
   pipeline/data/queues/mint-{lang}.jsonl    - new-candidate records with
-      {key, source, enZipf, alternatives:[...same shape...], shipTierHint}
+      {key, source, enZipf, sourcePosCandidates, sourcePos,
+      alternatives:[...same shape...], shipTierHint}. sourcePosCandidates is
+      the authoritative English-side POS set; sourcePos is its singleton value
+      or null when the English lemma is polysemous / POS evidence is absent.
   pipeline/data/queues/minttrial-mixed.jsonl - a small stratified trial sample
       drawn from the mint-{lang} queues, same record shape plus a "lang" field
       (de/fr/it/es all mixed + shuffled together in one file). When applying a
@@ -56,6 +59,11 @@ QUEUE record, never trusted from the verdict payload alone (defense in depth --
 "You never invent a translation" / "gender-plural come ONLY from queue morph
 fields" are prompt rules, not code guarantees, so the code re-checks them):
   - retarget/mint targets must appear among that key's queue `alternatives`.
+  - mint POS must appear in the chosen alternative's English
+    `sourcePosCandidates` when an exact-pair proposer supplied any; otherwise it
+    must appear in the queue row's broader English `sourcePosCandidates` union.
+    Missing/empty legacy evidence fails closed; a target-side alternative POS
+    can never authorize the English source POS.
   - noun gender/plural come from the matched alternative's `morph` field; if it
     is missing or incomplete the row is downgraded (audit -> gate, mint -> skip)
     regardless of what the verdict claims.
@@ -74,7 +82,8 @@ this script (e.g. after a later batch of verdicts lands) only applies new work.
 
 Usage:
     python3 pipeline/analysis/apply_verdicts.py --language de
-    python3 pipeline/analysis/apply_verdicts.py --language de --mint-only --ship-stratum strict
+    python3 pipeline/analysis/apply_verdicts.py --language de --mint-only \
+      --ship-stratum strict --panel-verdict /path/to/panel-de-SEED.json
     python3 pipeline/analysis/apply_verdicts.py --language de --data-root /tmp/fixture
 """
 from __future__ import annotations
@@ -84,6 +93,23 @@ import json
 import re
 import sys
 from pathlib import Path
+
+try:  # package import (`python3 -m ...`, tests)
+    from pipeline.analysis.mint_panel_contract import (
+        DEFAULT_BATCH_SIZE as PANEL_DEFAULT_BATCH_SIZE,
+        DEFAULT_FILE_INDEX_BASE as PANEL_DEFAULT_FILE_INDEX_BASE,
+        PanelContractError,
+        ship_stratum_ok as _panel_ship_stratum_ok,
+        validate_panel_verdict,
+    )
+except ModuleNotFoundError:  # direct script path (`python3 pipeline/analysis/apply_verdicts.py`)
+    from mint_panel_contract import (  # type: ignore[no-redef]
+        DEFAULT_BATCH_SIZE as PANEL_DEFAULT_BATCH_SIZE,
+        DEFAULT_FILE_INDEX_BASE as PANEL_DEFAULT_FILE_INDEX_BASE,
+        PanelContractError,
+        ship_stratum_ok as _panel_ship_stratum_ok,
+        validate_panel_verdict,
+    )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -199,12 +225,7 @@ def ship_stratum_ok(row: dict) -> bool:
     re-derived from the row itself, never trusted from a "ships" flag some
     upstream agent could set -- same defense-in-depth spirit as the
     provenance/morphology re-checks elsewhere in this file."""
-    confidence = row.get("confidence")
-    if not isinstance(confidence, (int, float)) or confidence < 0.8:
-        return False
-    if row.get("refuter") == "agree":
-        return True
-    return bool(row.get("judge"))
+    return _panel_ship_stratum_ok(row)
 
 
 def find_alternative(record: dict | None, target) -> dict | None:
@@ -435,6 +456,32 @@ def apply_mint_row(core_entries: dict, tail_entries: dict, row: dict, queue_by_k
         reject(stats, "mint_bad_pos", key, f"pos {pos!r} not applicable")
         return
 
+    # English source POS is a queue-provenance field just like target and noun
+    # morphology. Never infer it from the selected alternative's target-side
+    # `pos` hint: e.g. German `affirmativ` is adjective-shaped, but English
+    # `affirmatively` must be stored as an adverb or the runtime will reject it.
+    # Legacy/malformed queues without the new candidate set deliberately fail
+    # closed rather than letting an LLM invent the source POS.
+    alt_source_pos_candidates = alt.get("sourcePosCandidates")
+    if alt_source_pos_candidates is None or alt_source_pos_candidates == []:
+        raw_source_pos_candidates = record.get("sourcePosCandidates")
+        pos_authority = "row"
+    else:
+        # A non-empty exact-pair set is strictly stronger than lemma-wide
+        # WordNet/polysemy evidence. A malformed non-empty value fails below; it
+        # must never silently fall back and widen authorization.
+        raw_source_pos_candidates = alt_source_pos_candidates
+        pos_authority = "alternative"
+    if (not isinstance(raw_source_pos_candidates, list)
+            or not raw_source_pos_candidates
+            or any(candidate not in CONTENT_POS for candidate in raw_source_pos_candidates)
+            or pos not in raw_source_pos_candidates):
+        shown = raw_source_pos_candidates if isinstance(raw_source_pos_candidates, list) else []
+        reject(stats, "mint_pos_not_authorized", key,
+               f"English source pos {pos!r} not authorized by {pos_authority} "
+               f"queue candidates {shown!r}")
+        return
+
     gender = plural = None
     if pos == NOUN:
         morph = alt.get("morph") or {}
@@ -515,9 +562,39 @@ def apply_mint_row(core_entries: dict, tail_entries: dict, row: dict, queue_by_k
 # --------------------------------------------------------------------------
 
 def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | None = None,
-                   mint_only: bool = False) -> dict:
+                   mint_only: bool = False, panel_verdict_path: Path | None = None,
+                   panel_batch_size: int = PANEL_DEFAULT_BATCH_SIZE,
+                   panel_file_index_base: int = PANEL_DEFAULT_FILE_INDEX_BASE) -> dict:
     if language not in GENDERS_BY_LANGUAGE:
         return {"ok": False, "language": language, "notes": f"unsupported language {language!r}"}
+
+    # Programmatic fixture/non-production uses remain backwards compatible.
+    # Whenever a caller explicitly supplies a panel, however, validate it
+    # before even creating an applied directory or loading mutable pack state.
+    # The CLI below makes this explicit panel mandatory for the production
+    # `--mint-only --ship-stratum strict` path.
+    panel_authorization = None
+    if panel_verdict_path is not None:
+        if not (mint_only and ship_stratum == "strict"):
+            return {
+                "ok": False,
+                "language": language,
+                "notes": "a panel verdict is valid only for strict mint-only apply",
+            }
+        try:
+            panel_authorization = validate_panel_verdict(
+                Path(root),
+                language,
+                Path(panel_verdict_path),
+                batch_size=panel_batch_size,
+                file_index_base=panel_file_index_base,
+            )
+        except PanelContractError as exc:
+            return {
+                "ok": False,
+                "language": language,
+                "notes": f"mint panel preflight failed: {exc}",
+            }
 
     paths = _paths(root)
     core_path = paths["packs"] / f"{language}.json"
@@ -542,16 +619,17 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
     minttrial_queue = load_minttrial_queue(paths, language)
 
     applied_dir = paths["applied"]
-    applied_dir.mkdir(parents=True, exist_ok=True)
 
     stats = Stats()
     applied_markers: list[str] = []
     applied_files: list[str] = []
     already_applied: list[str] = []
+    panel_suppression_hits: dict[str, int] = {}
 
     def process(final_paths: list[Path], queue_by_key: dict, apply_row,
                 lang_suffix: str | None = None, restrict_keys: set | None = None,
-                exclude_keys: set | None = None) -> None:
+                exclude_keys: set | None = None,
+                suppress_keys: frozenset[str] = frozenset()) -> None:
         for final_path in final_paths:
             marker_name = (f"{final_path.name}.{lang_suffix}.done" if lang_suffix
                            else f"{final_path.name}.done")
@@ -568,6 +646,12 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
                     # (mint OR skip) -- never let the plain mint-{lang} verdict
                     # for the same key apply, even if minttrial itself skipped it.
                     stats.bump("mint_superseded_by_minttrial")
+                    continue
+                if key in suppress_keys:
+                    # A ship decision approves the aggregate batch, not the
+                    # individual rows the panel explicitly proved false.
+                    stats.bump("mint_panel_false_noop")
+                    panel_suppression_hits[key] = panel_suppression_hits.get(key, 0) + 1
                     continue
                 apply_row(row, queue_by_key)
             applied_files.append(final_path.name)
@@ -588,12 +672,40 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
     # counts, never the plain mint-{lang} engine's verdict for that same key.
     process(minttrial_verdict_files(paths), minttrial_queue,
             lambda row, q: apply_mint_row(core_entries, tail_entries, row, q, language, stats, rank_state, ship_stratum),
-            lang_suffix=language, restrict_keys=set(minttrial_queue))
+            lang_suffix=language, restrict_keys=set(minttrial_queue),
+            suppress_keys=(panel_authorization.false_keys if panel_authorization else frozenset()))
     process(verdict_files_for(paths, "mint", language), mint_queue,
             lambda row, q: apply_mint_row(core_entries, tail_entries, row, q, language, stats, rank_state, ship_stratum),
-            exclude_keys=set(minttrial_queue))
+            exclude_keys=set(minttrial_queue),
+            suppress_keys=(panel_authorization.false_keys if panel_authorization else frozenset()))
+
+    if panel_authorization:
+        bad_suppression_counts = {
+            key: panel_suppression_hits.get(key, 0)
+            for key in sorted(panel_authorization.false_keys)
+            if panel_suppression_hits.get(key, 0) != 1
+        }
+        unexpected_suppressions = sorted(
+            set(panel_suppression_hits) - panel_authorization.false_keys
+        )
+        if bad_suppression_counts or unexpected_suppressions:
+            # This is deliberately checked after traversal but before the
+            # first filesystem mutation. It catches any future drift between
+            # the panel's universe builder and the applier's file traversal.
+            return {
+                "ok": False,
+                "language": language,
+                "counts": stats.counts,
+                "notes": (
+                    "mint panel suppression contract failed before writes: "
+                    f"expected each false key exactly once; "
+                    f"counts={bad_suppression_counts}, "
+                    f"unexpected={unexpected_suppressions}"
+                ),
+            }
 
     if applied_markers:
+        applied_dir.mkdir(parents=True, exist_ok=True)
         write_json_pack(core_path, core_pack)
         write_json_pack(tail_path, tail_pack)
         for name in applied_markers:
@@ -609,6 +721,14 @@ def apply_language(language: str, root: Path = REPO_ROOT, ship_stratum: str | No
         "counts": stats.counts,
         "coreEntries": len(core_entries),
         "tailEntries": len(tail_entries),
+        "panel": ({
+            "verdict": str(panel_authorization.panel_path),
+            "universeFingerprint": panel_authorization.universe_fingerprint,
+            "sampleFingerprint": panel_authorization.sample_fingerprint,
+            "sampled": panel_authorization.sampled,
+            "errors": panel_authorization.errors,
+            "suppressedKeys": sorted(panel_authorization.false_keys),
+        } if panel_authorization else None),
         "notes": f"{len(applied_markers)} verdict file(s) applied, {len(already_applied)} already-applied skipped",
     }
 
@@ -627,9 +747,34 @@ def main(argv=None) -> int:
                               "rows of minttrial-mixed-*.jsonl; never touch audit-*.jsonl "
                               "or regloss-*.jsonl (regloss is gated with audit because its "
                               "gloss candidates align against the post-audit target)")
+    parser.add_argument("--panel-verdict", type=Path,
+                         help="required for production --mint-only --ship-stratum strict; "
+                              "must be a fresh deterministic mint-panel verdict")
+    parser.add_argument("--panel-batch-size", type=int, default=PANEL_DEFAULT_BATCH_SIZE,
+                         help="ordered-queue batch size used by the panel fingerprint")
+    parser.add_argument("--panel-file-index-base", type=int,
+                         default=PANEL_DEFAULT_FILE_INDEX_BASE,
+                         help="first verdict file index used by the ordered mint queue")
     args = parser.parse_args(argv)
 
-    report = apply_language(args.language, args.data_root or REPO_ROOT, args.ship_stratum, args.mint_only)
+    if args.mint_only and args.ship_stratum == "strict" and args.panel_verdict is None:
+        report = {
+            "ok": False,
+            "language": args.language,
+            "notes": "--panel-verdict is required for --mint-only --ship-stratum strict",
+        }
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 1
+
+    report = apply_language(
+        args.language,
+        args.data_root or REPO_ROOT,
+        args.ship_stratum,
+        args.mint_only,
+        args.panel_verdict,
+        args.panel_batch_size,
+        args.panel_file_index_base,
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0 if report.get("ok") else 1
 

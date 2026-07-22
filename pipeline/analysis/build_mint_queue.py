@@ -80,20 +80,32 @@ regardless of how many rows they contribute:
   (teach the most useful missing words first), for the proposer/refuter/judge
   adjudication engine.
 
-  PRE-SKIP (mechanical shippability annotation, new 2026-07-15): every row carries
-  a "preSkip" field so downstream adjudication can drop the hopeless rows without
-  spending tokens (apply_verdicts stays the real gate -- rows are NEVER dropped
-  here):
-    - "cognate_nonnoun": the best alternative is an identical string (T == W) that
-      renders as a non-noun; the runtime never injects identical non-nouns.
-    - "noun_no_morph_any": every alternative is a provable noun lacking full
-      gender+plural, so none can clear apply_verdicts' noun morph gate.
-    - null otherwise.
-  A row is SHIPPABLE when preSkip is null AND >=1 alternative could clear
-  apply_verdicts (a non-noun, or a noun with full gender+plural) -- the honest
-  volume, reported per language. Each alternative also gains a "pos" hint (from
-  slim/entr/freedict/wiktinv POS + morph) and, when wiktinv proposed it, the
-  "wiktinvGloss" that matched; rows wiktinv alone unlocks carry "wiktinvOnly".
+  PRE-SKIP (mechanical shippability annotation): every row carries a `preSkip`
+  field. It is non-null only when NO listed alternative can clear the same
+  English-source-POS, standalone-target, non-noun-identity, and noun-morphology
+  gates enforced by the runner/applier (`source_contract_no_mintable_alternative`).
+  Rows are never dropped here; downstream ordering may omit only that exact
+  source-contract reason. Historical target-derived `cognate_nonnoun` and
+  `noun_no_morph_any` labels are not authoritative and must not be reused.
+  A row is SHIPPABLE when at least one alternative has such a source-authorized
+  path. Each alternative also gains a TARGET-side
+  "pos" hint (from slim/freedict/apertium/wiktinv alignment + morph) and, when
+  wiktinv proposed it, the "wiktinvGloss" that matched; rows wiktinv alone
+  unlocks carry "wiktinvOnly". The alternative hint is only a target
+  shippability signal. It MUST NOT be used as the English source POS.
+
+  ENGLISH SOURCE-POS CONTRACT: every emitted row separately carries
+  `sourcePosCandidates`, the deterministic union of canonical English POS
+  attested by the English translation + sense-level caches, FreeDict's English source
+  row, Apertium's English source row, OMW's English synset, and Princeton
+  WordNet's English synsets. `sourcePos` is set only when that union has exactly
+  one member; ambiguous or unavailable evidence leaves it null. Empty evidence
+  does not drop a queue row, preserving queue coverage, but apply_verdicts
+  treats an empty/missing authorization set as fail-closed and cannot mint it.
+  Each alternative also carries the narrower `sourcePosCandidates` from exact
+  source-target pair proposers (FreeDict/Apertium/OMW/entr). At apply time that
+  pair-aligned set takes precedence when non-empty; only an alternative without
+  pair-level POS evidence may fall back to the row-wide English union.
 
 Source availability per language (verified against the actual files in
 pipeline/data/sources/ — NOT symmetric, mirrors merge_evidence.py):
@@ -103,6 +115,7 @@ pipeline/data/sources/ — NOT symmetric, mirrors merge_evidence.py):
   - apertium-eng-{es,de,fr,it}.jsonl (all four)
   - omw-eng-{es,fr,it}.jsonl         (no de — no omw-eng-de.jsonl exists)
   - en-tr-cache.jsonl                (shared, filtered per lang by tr[].lc)
+  - en-sense-cache.jsonl             (shared, sense-local English POS/translation pairs)
 
 Morphology (gender/plural) is attached ONLY from the two authorities the rest of
 the pipeline treats as authoritative — wikidata-lexemes-{lang}.jsonl and the slim
@@ -142,6 +155,8 @@ import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from nltk.corpus import wordnet as wn
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PACKS_DIR = REPO_ROOT / "public" / "language-packs"
 SOURCES_DIR = REPO_ROOT / "pipeline" / "data" / "sources"
@@ -149,6 +164,7 @@ WIKT_CACHE_DIR = REPO_ROOT / "pipeline" / "data" / "wikt-cache"
 WIKIPEDIA_DIR = REPO_ROOT / "pipeline" / "data" / "wikipedia"
 UNIVERSE_PATH = REPO_ROOT / "pipeline" / "data" / "universe" / "en-candidates.jsonl"
 ENTR_CACHE_PATH = REPO_ROOT / "pipeline" / "data" / "en-tr-cache.jsonl"
+ENSENSE_CACHE_PATH = REPO_ROOT / "pipeline" / "data" / "en-sense-cache.jsonl"
 QUEUES_DIR = REPO_ROOT / "pipeline" / "data" / "queues"
 VERDICTS_FINAL_DIR = REPO_ROOT / "pipeline" / "data" / "verdicts" / "final"
 VERDICTS_FIXUP_DIR = REPO_ROOT / "pipeline" / "data" / "verdicts" / "fixup"
@@ -159,10 +175,10 @@ ES_WIKIDATA_DENYLIST_PATH = (
 LANGUAGES = ["es", "de", "fr", "it"]
 
 # Mirrors apply_verdicts.GENDERS_BY_LANGUAGE / validate-language-packs.mjs /
-# registry.ts (German adds neuter). Used ONLY by the preSkip shippability
-# annotations to predict whether apply_verdicts could mint an alternative as a
-# noun; apply_verdicts re-checks this itself at apply time, so a drift here can
-# never mint a bad entry -- only mis-annotate a queue row.
+# registry.ts (German adds neuter). Used by source-contract shippability to
+# predict whether apply_verdicts could mint an alternative as a noun;
+# apply_verdicts re-checks this itself at apply time, so a drift here can never
+# mint a bad entry -- only mis-annotate a queue row.
 GENDERS_BY_LANGUAGE = {
     "es": {"masculine", "feminine"},
     "fr": {"masculine", "feminine"},
@@ -211,6 +227,9 @@ WIKT_VOTE_FAMILY = {"entr", "wiktgloss", "wiktinv"}
 # GATE: it is the "how many candidates reach 2 independent votes" quality signal we
 # report the wiktgloss unlock / token-contains delta against.
 QUALITY_VOTE_BAR = 2
+# Stable order for the English source-POS authorization set emitted on every
+# queue row. Never rely on set/dict iteration for a persisted contract.
+SOURCE_POS_ORDER = ["noun", "verb", "adjective", "adverb", "expression"]
 
 
 def log(msg: str) -> None:
@@ -342,8 +361,15 @@ def load_universe() -> list[dict]:
 # Raw source loaders (indexed by normalized English join key)
 # ---------------------------------------------------------------------------
 
-def load_freedict_index(lang: str) -> dict[str, list[tuple[str, str | None, str | None]]]:
-    idx: dict[str, list[tuple[str, str | None, str | None]]] = defaultdict(list)
+def load_freedict_index(lang: str) -> dict[str, list[dict]]:
+    """English key -> explicitly side-specific FreeDict rows.
+
+    The legacy `pos` field is target-facing and is deliberately ignored. Older
+    generated source files therefore contribute no POS until they are rebuilt
+    with `sourcePos`/`targetPos`; silently treating legacy POS as English-side
+    evidence would recreate the bug this contract is meant to prevent.
+    """
+    idx: dict[str, list[dict]] = defaultdict(list)
     if lang not in HAS_FREEDICT:
         return idx
     path = SOURCES_DIR / f"freedict-eng-{lang}.jsonl"
@@ -353,24 +379,40 @@ def load_freedict_index(lang: str) -> dict[str, list[tuple[str, str | None, str 
             target = r.get("target") or ""
             if not target:
                 continue
-            idx[norm(r.get("en"))].append((target, r.get("notes"), r.get("pos")))
+            idx[norm(r.get("en"))].append({
+                "target": target,
+                "notes": r.get("notes"),
+                "targetPos": r.get("targetPos"),
+                "sourcePos": r.get("sourcePos"),
+            })
     return idx
 
 
-def load_apertium_index(lang: str) -> dict[str, list[str]]:
-    idx: dict[str, list[str]] = defaultdict(list)
+def load_apertium_index(lang: str) -> dict[str, list[dict]]:
+    """English key -> explicitly side-specific Apertium rows.
+
+    The legacy `pos` field is target-facing and is deliberately ignored. Both
+    sides must come from the parser's explicit fields so a target adjective can
+    never authorize an English adverb as an adjective.
+    """
+    idx: dict[str, list[dict]] = defaultdict(list)
     path = SOURCES_DIR / f"apertium-eng-{lang}.jsonl"
     with open(path, encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
             target = r.get("target") or ""
             if target:
-                idx[norm(r.get("en"))].append(target)
+                idx[norm(r.get("en"))].append({
+                    "target": target,
+                    "targetPos": r.get("targetPos"),
+                    "sourcePos": r.get("sourcePos"),
+                })
     return idx
 
 
-def load_omw_index(lang: str) -> dict[str, list[tuple[int, str, list[str]]]]:
-    idx: dict[str, list[tuple[int, str, list[str]]]] = defaultdict(list)
+def load_omw_index(lang: str) -> dict[str, list[tuple[int, str, list[str], str | None]]]:
+    """English key -> (sense rank, gloss, targets, English synset POS) rows."""
+    idx: dict[str, list[tuple[int, str, list[str], str | None]]] = defaultdict(list)
     if lang not in HAS_OMW:
         return idx
     path = SOURCES_DIR / f"omw-eng-{lang}.jsonl"
@@ -380,7 +422,28 @@ def load_omw_index(lang: str) -> dict[str, list[tuple[int, str, list[str]]]]:
             targets = r.get("targets") or []
             if not targets:
                 continue
-            idx[norm(r.get("en"))].append((r.get("senseRank") or 999, r.get("gloss") or "", targets))
+            idx[norm(r.get("en"))].append(
+                (r.get("senseRank") or 999, r.get("gloss") or "", targets, r.get("pos"))
+            )
+    return idx
+
+
+def load_wordnet_pos_index(words: list[str] | set[str]) -> dict[str, set[str]]:
+    """Load Princeton WordNet's per-sense English POS for the requested words.
+
+    WordNet is language-independent, so main() builds this index once and shares
+    it across all four language runs. Every synset contributes independently;
+    the downstream contract keeps the deterministic UNION rather than guessing
+    one dominant POS for a polysemous word. NLTK/WordNet is already the source
+    dependency used by pipeline/sources/build_omw.py, so a missing corpus is an
+    environment error and is deliberately not hidden as "no evidence".
+    """
+    idx: dict[str, set[str]] = defaultdict(set)
+    for en_key in sorted({norm(word) for word in words if norm(word)}):
+        for synset in wn.synsets(en_key.replace(" ", "_")):
+            pos = normalize_pos(synset.pos(), en_key)
+            if pos:
+                idx[en_key].add(pos)
     return idx
 
 
@@ -430,6 +493,29 @@ def load_entr_index() -> dict[str, list[dict]]:
                 "pos": r.get("pos"),
                 "gloss": r.get("g") or "",
                 "tr": r.get("tr") or [],
+            })
+    return idx
+
+
+def load_ensense_index() -> dict[str, list[dict]]:
+    """English key -> POS-scoped sense translation buckets.
+
+    Unlike the older merged en-tr cache, this cache retains separate English
+    POS records and sense-local target tables. It contributes source-POS
+    authorization only; it is not counted as a second dictionary vote.
+    """
+    idx: dict[str, list[dict]] = defaultdict(list)
+    with open(ENSENSE_CACHE_PATH, encoding="utf-8") as handle:
+        for line in handle:
+            row = json.loads(line)
+            translations = [
+                translation
+                for sense in (row.get("senses") or [])
+                for translation in (sense.get("tr") or [])
+            ]
+            idx[norm(row.get("w"))].append({
+                "pos": row.get("pos"),
+                "tr": translations,
             })
     return idx
 
@@ -696,8 +782,10 @@ def gloss_strict_keys(gloss: str) -> set[str]:
 _POS_NORM = {
     "noun": "noun", "n": "noun", "pn": "noun", "proper noun": "noun", "name": "noun",
     "verb": "verb", "v": "verb",
-    "adj": "adjective", "adjective": "adjective",
-    "adv": "adverb", "adverb": "adverb",
+    # WordNet uses `a` for adjectives and `s` for adjective satellites.
+    "adj": "adjective", "adjective": "adjective", "a": "adjective", "s": "adjective",
+    # WordNet uses `r` for adverbs.
+    "adv": "adverb", "adverb": "adverb", "r": "adverb",
     "phrase": "expression", "expression": "expression", "proverb": "expression",
     "phraseologicalunit": "expression",
 }
@@ -714,6 +802,110 @@ def normalize_pos(raw: str | None, target: str | None = None) -> str | None:
     if mapped and mapped != "expression" and target and " " in target.strip():
         return "expression"
     return mapped
+
+
+def build_source_pos_contract(en_key: str, indexes: dict) -> tuple[list[str], str | None]:
+    """Return (`sourcePosCandidates`, `sourcePos`) for one English queue key.
+
+    Only ENGLISH-side fields are consulted here. In particular, slim target POS,
+    wiktinv POS, target morphology, and alternative `pos` hints are forbidden:
+    a translation such as English adverb "affirmatively" -> German adjective-
+    shaped "affirmativ" must stay an English adverb at runtime.
+
+    The candidate set is a union across independent per-sense/per-row evidence,
+    not a majority vote. A source can legitimately be polysemous, so `sourcePos`
+    is canonical only when the union is a singleton; otherwise it is null and an
+    adjudicator must choose one of the explicitly authorized candidates. If no
+    source recognizes a content POS, both [] and null are emitted. Queue coverage
+    is preserved, while apply_verdicts fails closed until English POS evidence is
+    available.
+
+    FreeDict and Apertium only authorize source POS through the explicit
+    `sourcePos` schema. Their legacy `pos` fields are target-facing and are
+    never consulted here.
+    """
+    candidates: set[str] = set()
+
+    def add(raw: str | None) -> None:
+        pos = normalize_pos(raw, en_key)
+        if pos:
+            candidates.add(pos)
+
+    for row in indexes.get("freedict", {}).get(en_key, []):
+        if isinstance(row, dict):
+            add(row.get("sourcePos"))
+
+    for row in indexes.get("apertium", {}).get(en_key, []):
+        if isinstance(row, dict):
+            add(row.get("sourcePos"))
+
+    for row in indexes.get("omw", {}).get(en_key, []):
+        if isinstance(row, (tuple, list)) and len(row) >= 4:
+            add(row[3])
+
+    for bucket in indexes.get("entr", {}).get(en_key, []):
+        if isinstance(bucket, dict):
+            add(bucket.get("pos"))
+
+    for bucket in indexes.get("ensense", {}).get(en_key, []):
+        if isinstance(bucket, dict):
+            add(bucket.get("pos"))
+
+    for raw in indexes.get("wordnet_pos", {}).get(en_key, set()):
+        add(raw)
+
+    ordered = [pos for pos in SOURCE_POS_ORDER if pos in candidates]
+    canonical = ordered[0] if len(ordered) == 1 else None
+    return ordered, canonical
+
+
+def build_alternative_source_pos_contract(
+    lang: str, en_key: str, target: str, indexes: dict
+) -> list[str]:
+    """Return English POS attested for this exact normalized source/target pair.
+
+    This is deliberately narrower than :func:`build_source_pos_contract` and is
+    therefore the first authority checked by the applier. Only sources that
+    bind an English POS to the selected translation pair participate. Princeton
+    WordNet is lemma-wide, so it belongs only in the row-level fallback.
+    """
+    target_key = norm(target)
+    candidates: set[str] = set()
+
+    def add(raw: str | None) -> None:
+        pos = normalize_pos(raw, en_key)
+        if pos:
+            candidates.add(pos)
+
+    for row in indexes.get("freedict", {}).get(en_key, []):
+        if isinstance(row, dict) and norm(row.get("target")) == target_key:
+            add(row.get("sourcePos"))
+
+    for row in indexes.get("apertium", {}).get(en_key, []):
+        if isinstance(row, dict) and norm(row.get("target")) == target_key:
+            add(row.get("sourcePos"))
+
+    for row in indexes.get("omw", {}).get(en_key, []):
+        if not isinstance(row, (tuple, list)) or len(row) < 4:
+            continue
+        if any(norm(candidate) == target_key for candidate in row[2]):
+            add(row[3])
+
+    for bucket in indexes.get("entr", {}).get(en_key, []):
+        if not isinstance(bucket, dict):
+            continue
+        if any(lc == lang and norm(candidate) == target_key
+               for lc, candidate, _tags in bucket.get("tr", [])):
+            add(bucket.get("pos"))
+
+    for bucket in indexes.get("ensense", {}).get(en_key, []):
+        if not isinstance(bucket, dict):
+            continue
+        if any(lc == lang and norm(candidate) == target_key
+               for lc, candidate, _tags in bucket.get("tr", [])):
+            add(bucket.get("pos"))
+
+    return [pos for pos in SOURCE_POS_ORDER if pos in candidates]
 
 
 # ---------------------------------------------------------------------------
@@ -788,11 +980,68 @@ def full_noun_morph(morph: dict | None, lang: str) -> bool:
             and _is_standalone(morph.get("plural")))
 
 
+def source_contract_path(
+    en_key: str,
+    alternative: dict,
+    row_source_pos_candidates: list[str],
+    lang: str,
+) -> dict:
+    """Classify one alternative using only gates that can authorize a mint.
+
+    A non-empty exact-pair English POS set is authoritative; only an empty set
+    falls back to the row-wide English POS union. Target-side `pos` and
+    `mintable` are deliberately ignored. The result mirrors the mechanical
+    target/POS/morphology gates in the Wave 2 runner and `apply_mint_row`.
+    """
+    if (
+        not isinstance(row_source_pos_candidates, list)
+        or any(not isinstance(pos, str) for pos in row_source_pos_candidates)
+        or len(row_source_pos_candidates) != len(set(row_source_pos_candidates))
+        or any(pos not in SOURCE_POS_ORDER for pos in row_source_pos_candidates)
+    ):
+        raise ValueError("malformed row sourcePosCandidates")
+    exact_candidates = alternative.get("sourcePosCandidates")
+    if (
+        not isinstance(exact_candidates, list)
+        or any(not isinstance(pos, str) for pos in exact_candidates)
+        or len(exact_candidates) != len(set(exact_candidates))
+        or any(pos not in SOURCE_POS_ORDER for pos in exact_candidates)
+    ):
+        raise ValueError("malformed alternative sourcePosCandidates")
+    if any(pos not in row_source_pos_candidates for pos in exact_candidates):
+        raise ValueError("alternative sourcePosCandidates are not a row subset")
+
+    governing = exact_candidates if exact_candidates else row_source_pos_candidates
+    target = alternative.get("target")
+    target_standalone = _is_standalone(target)
+    source_identical = norm(target) == norm(en_key)
+    nonnoun = (
+        target_standalone
+        and not source_identical
+        and bool(set(governing) & _NONNOUN_CONTENT_POS)
+    )
+    noun = (
+        target_standalone
+        and "noun" in governing
+        and full_noun_morph(alternative.get("morph"), lang)
+    )
+    return {
+        "governingCandidates": list(governing),
+        "targetStandalone": target_standalone,
+        "sourceIdentical": source_identical,
+        "nonnoun": nonnoun,
+        "noun": noun,
+        "mintable": nonnoun or noun,
+    }
+
+
 def classify_alternative(morph: dict | None, pos_evidence: set[str], lang: str) -> dict:
-    """Mechanical POS / mintability signals for ONE alternative, used by the
-    preSkip shippability annotations. `pos_evidence` is the union of every content
-    POS any authority attests for this target (freedict/entr/wiktinv rows + the
-    slim target-side POS set + a gender in the morph).
+    """Target-side POS / render-shape hints for ONE alternative.
+
+    `pos_evidence` is the union of every content POS any authority attests for
+    the translated target (freedict/apertium/wiktinv rows + the slim target-side
+    POS set + a gender in the morph). These hints never authorize the English
+    source token and are not used by source-contract preSkip/shippability.
 
       - fullNounMorph: apply_verdicts could mint it as a noun (see full_noun_morph).
       - nounEvidence:  some authority attests a NOUN reading.
@@ -844,31 +1093,11 @@ def gate_vote_count(sources: set[str]) -> int:
     return n
 
 
-def compute_preskip(en_key: str, alternatives: list[dict], classifications: list[dict],
-                    lang: str) -> str | None:
-    """Mechanical shippability annotation for a queue row -- NEVER drops the row,
-    just labels the ones downstream LLM adjudication can skip without spending
-    tokens (apply_verdicts remains the real gate):
-      - "cognate_nonnoun": the BEST (top-ranked) alternative is an identical string
-        (target == W, case-insensitive) that renders as a non-noun. The runtime
-        never injects identical non-nouns (no article to distinguish them from the
-        English word), so such a mint teaches nothing.
-      - "noun_no_morph_any": EVERY alternative is a provable noun lacking full
-        gender+plural (classify's nounOnly) -- none can clear apply_verdicts' noun
-        morph gate no matter the verdict, and no non-noun alternative exists.
-      - None otherwise.
-    cognate_nonnoun is checked first (it is about the target the adjudicator will
-    most likely pick)."""
-    if not alternatives:
+def compute_preskip(source_paths: list[dict]) -> str | None:
+    """Return the one fail-closed preSkip reason derived from source authority."""
+    if source_paths and any(path["mintable"] for path in source_paths):
         return None
-    best, bk = alternatives[0], classifications[0]
-    if (norm(best.get("target")) == en_key
-            and bk["nonnounEvidence"] and not bk["nounEvidence"]
-            and not bk["fullNounMorph"]):
-        return "cognate_nonnoun"
-    if all(k["nounOnly"] for k in classifications):
-        return "noun_no_morph_any"
-    return None
+    return "source_contract_no_mintable_alternative"
 
 
 # ---------------------------------------------------------------------------
@@ -890,25 +1119,26 @@ def build_alternatives_and_check_gate(
     collapsed to one English-Wiktionary vote), and, when wikipedia proposed a
     target for this candidate, evidenceTier (T1/T2/T3) + wikipediaOnly."""
     freedict_rows = indexes["freedict"].get(en_key, [])
-    apertium_targets = indexes["apertium"].get(en_key, [])
+    apertium_rows = indexes["apertium"].get(en_key, [])
     omw_rows = indexes["omw"].get(en_key, [])
     entr_buckets = indexes["entr"].get(en_key, [])
+    source_pos_candidates, source_pos = build_source_pos_contract(en_key, indexes)
 
     alt_sources: dict[str, set[str]] = defaultdict(set)
     alt_orig_case: dict[str, str] = {}
     alt_omw_best_rank: dict[str, int] = {}
     alt_omw_glosses: dict[str, list[str]] = defaultdict(list)
     alt_freedict_notes: dict[str, list[str]] = defaultdict(list)
-    # POS evidence per alternative, gathered from the sources that carry a POS
-    # (freedict/entr/wiktinv). Consumed by the preSkip shippability annotations
-    # (Task C) together with the slim target-side POS authority + noun morph.
+    # POS evidence per alternative, gathered from the sources that carry a
+    # target-side POS (freedict/apertium/wiktinv). This produces only the
+    # display/render hint below; source-contract shippability never reads it.
     alt_pos_ev: dict[str, set[str]] = defaultdict(set)
     # wiktinv provenance per alternative: the matched sense's (pos, gloss), noun
     # sense preferred for display. Used for the alt "pos" hint + QA sampling.
     alt_wiktinv: dict[str, dict] = {}
 
     def register(cand_raw: str, source_name: str, sense_rank: int | None = None,
-                 omw_gloss: str | None = None, pos: str | None = None) -> None:
+                 omw_gloss: str | None = None, target_pos: str | None = None) -> None:
         cn = norm(cand_raw)
         if not cn:
             return
@@ -919,25 +1149,46 @@ def build_alternatives_and_check_gate(
                 alt_omw_best_rank[cn] = sense_rank
         if omw_gloss and len(alt_omw_glosses[cn]) < MAX_GLOSSES:
             alt_omw_glosses[cn].append(omw_gloss)
-        if pos:
-            alt_pos_ev[cn].add(pos)
+        if target_pos:
+            alt_pos_ev[cn].add(target_pos)
 
-    for target, notes, fd_pos in freedict_rows:
-        register(target, "freedict", pos=normalize_pos(fd_pos, target))
+    for fd_row in freedict_rows:
+        if isinstance(fd_row, dict):
+            target = fd_row.get("target") or ""
+            notes = fd_row.get("notes")
+            target_pos = fd_row.get("targetPos")
+        else:
+            # Target-only compatibility for older focused tests/callers. Tuple
+            # POS slots are intentionally ignored because their side is unclear.
+            target = fd_row[0] if isinstance(fd_row, (tuple, list)) else str(fd_row)
+            notes = fd_row[1] if isinstance(fd_row, (tuple, list)) and len(fd_row) > 1 else None
+            target_pos = None
+        register(target, "freedict",
+                 target_pos=normalize_pos(target_pos, target))
         if notes:
             cn = norm(target)
             if len(alt_freedict_notes[cn]) < MAX_GLOSSES:
                 alt_freedict_notes[cn].append(notes)
-    for target in apertium_targets:
-        register(target, "apertium")
-    for sense_rank, gloss, targets in omw_rows:
+    for apertium_row in apertium_rows:
+        if isinstance(apertium_row, dict):
+            target = apertium_row.get("target") or ""
+            target_pos = apertium_row.get("targetPos")
+        else:
+            # Target-only compatibility; never interpret an old tuple's POS.
+            target = apertium_row if isinstance(apertium_row, str) else apertium_row[0]
+            target_pos = None
+        register(target, "apertium",
+                 target_pos=normalize_pos(target_pos, target))
+    for omw_row in omw_rows:
+        # Production rows have a fourth English source-POS field; the first
+        # three fields remain the target-alternative contract.
+        sense_rank, gloss, targets = omw_row[:3]
         for target in targets:
             register(target, "omw", sense_rank, gloss)
     for bucket in entr_buckets:
-        bucket_pos = normalize_pos(bucket.get("pos"))
         for lc, target, _tags in bucket["tr"]:
             if lc == lang:
-                register(target, "entr", pos=normalize_pos(bucket.get("pos"), target) or bucket_pos)
+                register(target, "entr")
 
     # wiktinv: the slim-gloss INVERSION proposer. Every distinct target headword
     # whose slim English gloss STRICT-matches this candidate is proposed (homograph
@@ -947,7 +1198,7 @@ def build_alternatives_and_check_gate(
     # the translation dictionaries so a dictionary's own casing still wins.
     for prop in indexes.get("wiktinv", {}).get(en_key, []):
         target = prop["target"]
-        register(target, "wiktinv", pos=prop.get("pos"))
+        register(target, "wiktinv", target_pos=prop.get("pos"))
         cn = norm(target)
         prior = alt_wiktinv.get(cn)
         # Prefer a noun sense for the display pos/gloss (renders with an article).
@@ -970,7 +1221,9 @@ def build_alternatives_and_check_gate(
         return [], set(), False, {"trueBest": 0, "strictBest": 0, "tcBest": 0,
                                   "gateBest": 0, "evidenceTier": None,
                                   "wikipediaOnly": False, "wiktinvOnly": False,
-                                  "shippableAlt": False, "preSkip": None}
+                                  "shippableAlt": False, "preSkip": None,
+                                  "sourcePosCandidates": source_pos_candidates,
+                                  "sourcePos": source_pos}
 
     noun_idx = indexes["wikt_noun"]
     gloss_idx = indexes["wikt_gloss"]
@@ -1028,7 +1281,9 @@ def build_alternatives_and_check_gate(
 
     diag = {"trueBest": true_best, "strictBest": strict_best, "tcBest": tc_best,
             "gateBest": gate_best, "evidenceTier": evidence_tier,
-            "wikipediaOnly": wikipedia_only}
+            "wikipediaOnly": wikipedia_only,
+            "sourcePosCandidates": source_pos_candidates,
+            "sourcePos": source_pos}
 
     ranked = sorted(
         alt_sources.keys(),
@@ -1052,8 +1307,8 @@ def build_alternatives_and_check_gate(
             fallback = list(alt_omw_glosses.get(cn, [])) + list(alt_freedict_notes.get(cn, []))
             glosses = [f"(en) {g}" for g in fallback[:MAX_GLOSSES]]
 
-        # POS evidence for this target: the source-row POS (freedict/entr/wiktinv)
-        # + the slim target-side POS authority + a gender in the morph.
+        # POS evidence for this translated target + the slim target-side POS
+        # authority. It is intentionally separate from English source POS.
         wprov = alt_wiktinv.get(cn)
         pos_evidence = set(alt_pos_ev.get(cn, ())) | set(slim_pos_idx.get(cn, ()))
         if wprov and wprov.get("pos"):
@@ -1069,6 +1324,9 @@ def build_alternatives_and_check_gate(
             "glosses": glosses,
             "morph": morph,
             "pos": klass["posHint"],
+            "sourcePosCandidates": build_alternative_source_pos_contract(
+                lang, en_key, alt_orig_case[cn], indexes
+            ),
             "mintable": klass["mintable"],  # could clear apply_verdicts for some verdict
         }
         if wprov and wprov.get("gloss"):
@@ -1086,10 +1344,16 @@ def build_alternatives_and_check_gate(
     wiktinv_only = bool("wiktinv" in best_sources and all_proposers <= WIKT_VOTE_FAMILY)
 
     diag["wiktinvOnly"] = wiktinv_only
-    # A row is SHIPPABLE when it is not preSkipped AND at least one alternative
-    # could clear apply_verdicts (non-noun, or noun with full gender+plural).
-    diag["shippableAlt"] = any(k["mintable"] for k in classifications)
-    diag["preSkip"] = compute_preskip(en_key, alternatives, classifications, lang)
+    # Source-side authority, not the translated target's POS shape, decides
+    # whether any alternative can mechanically reach the applier. This is the
+    # same predicate used by the append-only recovery of the already-frozen
+    # Wave 2 ordered queues.
+    source_paths = [
+        source_contract_path(en_key, alternative, source_pos_candidates, lang)
+        for alternative in alternatives
+    ]
+    diag["shippableAlt"] = any(path["mintable"] for path in source_paths)
+    diag["preSkip"] = compute_preskip(source_paths)
 
     return alternatives, set(alt_sources.keys()), passes, diag
 
@@ -1122,7 +1386,8 @@ def _legacy_morph(wd_pairs, wx_pairs) -> tuple[str | None, str | None]:
     return None, None
 
 
-def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int) -> dict:
+def run_language(lang: str, universe: list[dict], entr_idx: dict, ensense_idx: dict,
+                 wordnet_pos_idx: dict[str, set[str]], min_votes: int) -> dict:
     log(f"=== {lang} (min_votes={min_votes}) ===")
     t0 = time.time()
     pack_keys = load_pack_keys(lang)
@@ -1141,6 +1406,7 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
         "apertium": load_apertium_index(lang),
         "omw": load_omw_index(lang),
         "entr": entr_idx,
+        "ensense": ensense_idx,
         "wikidata": wikidata_idx,
         "wikt_noun": noun_idx,
         "wikt_gloss": gloss_idx,
@@ -1148,6 +1414,9 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
         "langlinks": langlinks_idx,
         "wiktinv": wiktinv_idx,
         "slim_pos": slim_pos_idx,
+        # English-side only. This shared Princeton WordNet index must never be
+        # folded into an alternative's target-side `pos` hint.
+        "wordnet_pos": wordnet_pos_idx,
     }
     log(f"  indexes loaded in {time.time() - t0:.1f}s "
         f"(pack_keys={len(pack_keys)}, already_adjudicated={len(excluded_keys)}, "
@@ -1265,6 +1534,8 @@ def run_language(lang: str, universe: list[dict], entr_idx: dict, min_votes: int
             "key": key,
             "source": word,
             "enZipf": enzipf,
+            "sourcePosCandidates": diag["sourcePosCandidates"],
+            "sourcePos": diag["sourcePos"],
             "entrSenses": entr_senses,
             "alternatives": alternatives,
             "shipTierHint": "tail" if enzipf < 5.0 else "core-gap",
@@ -1318,9 +1589,21 @@ def main(argv=None) -> None:
     entr_idx = load_entr_index()
     log(f"  {len(entr_idx)} keys in {time.time() - t0:.1f}s")
 
+    log("loading shared en-sense-cache source-POS index ...")
+    t0 = time.time()
+    ensense_idx = load_ensense_index()
+    log(f"  {len(ensense_idx)} keys in {time.time() - t0:.1f}s")
+
+    log("loading shared Princeton WordNet English POS index ...")
+    t0 = time.time()
+    wordnet_pos_idx = load_wordnet_pos_index({row["word"] for row in universe})
+    log(f"  {len(wordnet_pos_idx)} keys in {time.time() - t0:.1f}s")
+
     results = {}
     for lang in langs:
-        results[lang] = run_language(lang, universe, entr_idx, min_votes)
+        results[lang] = run_language(
+            lang, universe, entr_idx, ensense_idx, wordnet_pos_idx, min_votes
+        )
 
     counts = {lang: r["queueSize"] for lang, r in results.items()}
     log(f"=== SUMMARY === {json.dumps(counts)}")
