@@ -35,7 +35,10 @@
       }
     });
     var pct = Math.round(d * 100);
-    read.textContent = pct + "% · " + on + (on === 1 ? " word" : " words");
+    var count = on + (on === 1 ? " word" : " words");
+    // At the top of the dial the percentage stops earning its place (and reads
+    // like a claim the extension replaces whole pages), so show only the count.
+    read.textContent = pct === 100 ? count : pct + "% · " + count;
     // Track fill, per the reference. Set as background-image (not the background
     // shorthand) so the stylesheet's background-clip survives on mobile, where the
     // track is padded to a 44px touch target but should still read as a thin line.
@@ -45,7 +48,9 @@
     // Keep the screen-reader value text describing how much Spanish is shown.
     range.setAttribute(
       "aria-valuetext",
-      pct + " percent Spanish, " + on + (on === 1 ? " word" : " words") + " shown"
+      pct === 100
+        ? "Every eligible word in Spanish, " + count + " shown"
+        : pct + " percent Spanish, " + count + " shown"
     );
   }
 

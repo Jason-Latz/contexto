@@ -716,12 +716,15 @@ h3 {
 }
 
 /* Hero install row, mirrors the CTA block at the bottom of the page. */
+/* Shares the measure column with the headline, lede, and demo card, so the
+   button lines up with them instead of running out to the wrap's gutter. */
 .hero-actions {
+  max-width: var(--measure);
+  margin: 26px auto 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 18px;
-  margin-top: 26px;
 }
 
 .hero-actions-note {
