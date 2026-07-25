@@ -210,6 +210,21 @@ a:hover {
   white-space: nowrap;
 }
 
+/* The pill carries a long label on desktop and a short one on narrow screens,
+   so it never crowds the brand. display:none keeps the unused one out of the
+   accessibility tree too. */
+.pill-short {
+  display: none;
+}
+
+.pill-link:hover,
+.pill-link:focus-visible {
+  text-decoration: none;
+  color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  background: var(--accent-line);
+}
+
 /* =========================================================================
    Section rhythm
    ========================================================================= */
@@ -632,8 +647,8 @@ h3 {
   align-items: center;
 }
 
-/* The "Coming soon" badge — looks like a button, is not a link. */
-.badge-btn {
+/* The primary install button. */
+.btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -646,11 +661,17 @@ h3 {
   padding: 13px 22px;
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
-  cursor: not-allowed;
   position: relative;
 }
 
-.badge-btn .chrome-dot {
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  text-decoration: none;
+  color: #fff;
+  background: var(--accent-strong);
+}
+
+.btn-primary .chrome-dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
@@ -686,10 +707,18 @@ h3 {
   background: var(--canvas-2);
 }
 
-.cta-star {
-  margin-top: 22px;
-  font-size: 15px;
-  color: var(--ink-2);
+/* Hero install row, mirrors the CTA block at the bottom of the page. */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 26px;
+}
+
+.hero-actions-note {
+  font-size: 14px;
+  color: var(--ink-3);
 }
 
 /* =========================================================================
@@ -820,6 +849,14 @@ h3 {
 
   .footer-links {
     margin-left: 0;
+  }
+
+  .pill-full {
+    display: none;
+  }
+
+  .pill-short {
+    display: inline;
   }
 }
 
