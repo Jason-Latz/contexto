@@ -320,6 +320,7 @@ What we can't render faithfully gets gated or disabled, not engineered around:
   `contexto`, Root Directory `site`, domain registered through Vercel with its
   nameservers). Site copy now covers all four target languages and links to the
   listing from the header pill, the hero, and the CTA; canonical/OG/Twitter URLs
-  point at the apex domain. Redeploy with `vercel deploy --prod --yes` from `site/`.
-  Not yet done: a `www.trycontexto.org` redirect, and the site's older prose still
-  uses em dashes.
+  point at the apex domain, and `www.trycontexto.org` 308-redirects to it.
+  Redeploy with `vercel deploy --prod --yes` from `site/`. The demo paragraph
+  closes on "context" turning into **contexto** (lowest `data-th`, so it is the
+  first word to flip); keep that word the punchline if the copy is reworked.
