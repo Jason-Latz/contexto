@@ -1,5 +1,5 @@
 /* =========================================================================
-   Contexto — landing site
+   Contexto landing site
    Academic, literary, restrained. Slate = system-translated word.
    Tan = a word you saved. All design tokens pulled from the product.
    ========================================================================= */
@@ -363,7 +363,7 @@ h3 {
   text-align: right;
 }
 
-/* The range input — track fill set inline via JS as a linear-gradient
+/* The range input: track fill set inline via JS as a linear-gradient
    (background-image). Painted into the content box so the mobile padding that
    grows the touch target to 44px keeps the visible track a thin line. */
 #ctx-range {
@@ -431,7 +431,7 @@ h3 {
   color: var(--ink);
 }
 
-/* A swappable word — neutral until turned on. */
+/* A swappable word: neutral until turned on. */
 .manifesto .w {
   border-radius: 2px;
   transition: color 0.18s ease, background-color 0.18s ease,
@@ -445,6 +445,14 @@ h3 {
   border-bottom: 1px solid var(--accent-line);
   padding: 0 1px;
   cursor: help;
+}
+
+/* The closing "context" turns into the product's own name, so it gets a little
+   more weight than the other swaps once it flips. */
+.manifesto .w-brand.on {
+  font-weight: 600;
+  color: var(--accent-strong);
+  border-bottom-color: var(--accent-strong);
 }
 
 .cap {

@@ -1,5 +1,5 @@
 /* =========================================================================
-   Contexto landing — the live density self-demo (reference implementation).
+   Contexto landing: the live density self-demo (reference implementation).
    No frameworks, no network. Plain ES5-friendly JS.
    ========================================================================= */
 
