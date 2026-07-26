@@ -524,9 +524,15 @@ h3 {
    How it works
    ========================================================================= */
 
+/* The .num badges ARE the numbering, so the list's own markers have to go, or
+   every card renders a second number out in the grid gutter. The ol keeps an
+   explicit role="list" because Safari drops list semantics when a list is
+   styled with list-style: none. */
 .steps {
   max-width: 880px;
   margin-inline: auto;
+  list-style: none;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 18px;
