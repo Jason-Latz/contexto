@@ -177,5 +177,10 @@ export type PageStatusKind =
 export interface PageStatus {
   kind: PageStatusKind
   swapped: number
+  // Unique English lemmas recorded by this tab's in-memory page session. The
+  // count is carried explicitly for the stats row; the lemmas also drive the
+  // popup's saved-unknown "This session" filter from the same live snapshot.
+  replacedThisSession: number
+  sessionLemmas: string[]
   language: TargetLanguage
 }

@@ -736,26 +736,40 @@ async function reconcileWithStoredSettings(): Promise<void> {
 function describePageStatus(): PageStatus {
   const language = getTargetLanguage()
   const swapped = document.querySelectorAll('[data-contexto="true"]').length
+  const sessionLemmas = [...new Set(
+    getSessionForStorage().wordsSeen.map(word => word.englishLemma),
+  )]
+  const replacedThisSession = sessionLemmas.length
 
-  if (!areReplacementsEnabled()) return { kind: 'off', swapped: 0, language }
-  if (pipelineFailed) return { kind: 'error', swapped: 0, language }
+  if (!areReplacementsEnabled()) {
+    return { kind: 'off', swapped: 0, replacedThisSession, sessionLemmas, language }
+  }
+  if (pipelineFailed) {
+    return { kind: 'error', swapped: 0, replacedThisSession, sessionLemmas, language }
+  }
 
   // Blocked and paused look the same on the page but have different escape
   // hatches, so the popup needs to tell them apart.
   const hostname = window.location.hostname.replace(/^www\./, '')
-  if (isDomainBlocked(hostname)) return { kind: 'blocked', swapped: 0, language }
-  if (getDomainDecision(hostname) === false) return { kind: 'paused', swapped: 0, language }
+  if (isDomainBlocked(hostname)) {
+    return { kind: 'blocked', swapped: 0, replacedThisSession, sessionLemmas, language }
+  }
+  if (getDomainDecision(hostname) === false) {
+    return { kind: 'paused', swapped: 0, replacedThisSession, sessionLemmas, language }
+  }
 
   // Mid-run, or readable content is present but no pass has landed yet (the
   // content watcher is about to fire). Never report "too short" for a full page.
-  if (isReplacementPipelineRunning) return { kind: 'loading', swapped, language }
+  if (isReplacementPipelineRunning) {
+    return { kind: 'loading', swapped, replacedThisSession, sessionLemmas, language }
+  }
   if (!isReplacementPipelineActive) {
     return countPageWords() >= MIN_PAGE_WORD_COUNT
-      ? { kind: 'loading', swapped, language }
-      : { kind: 'too-short', swapped: 0, language }
+      ? { kind: 'loading', swapped, replacedThisSession, sessionLemmas, language }
+      : { kind: 'too-short', swapped: 0, replacedThisSession, sessionLemmas, language }
   }
 
-  return { kind: 'active', swapped, language }
+  return { kind: 'active', swapped, replacedThisSession, sessionLemmas, language }
 }
 
 async function main(): Promise<void> {

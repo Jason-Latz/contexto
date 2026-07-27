@@ -1,22 +1,12 @@
 import type { LexiconEntry } from '../types/index.js'
 import { WordLifecycleState } from '../types/index.js'
 
-interface SessionStore {
-  wordsSeen?: Array<{ englishLemma: string }>
-}
-
 interface Stats {
-  replacedThisSession: number
   unknownWords: number
   totalLearning: number
 }
 
-function computeStats(
-  lexicon: Record<string, LexiconEntry>,
-  session: SessionStore,
-): Stats {
-  const seenLemmas = new Set((session.wordsSeen ?? []).map(w => w.englishLemma))
-
+function computeStats(lexicon: Record<string, LexiconEntry>): Stats {
   let unknownWords = 0
   let totalLearning = 0
 
@@ -35,7 +25,6 @@ function computeStats(
   }
 
   return {
-    replacedThisSession: seenLemmas.size,
     unknownWords,
     totalLearning,
   }
@@ -44,15 +33,15 @@ function computeStats(
 // Handle returned to the popup so a later action (mark-known, practice) can update
 // a live count without rebuilding the whole panel.
 export interface StatsPanelHandle {
+  setReplacedThisSession(count: number): void
   setSavedUnknown(count: number): void
 }
 
 export function renderStatsPanel(
   container: HTMLElement,
   lexicon: Record<string, LexiconEntry>,
-  session: SessionStore,
 ): StatsPanelHandle {
-  const stats = computeStats(lexicon, session)
+  const stats = computeStats(lexicon)
 
   const section = document.createElement('div')
   section.className = 'section'
@@ -63,12 +52,15 @@ export function renderStatsPanel(
   section.appendChild(title)
 
   const rows: [string, string | number][] = [
-    ['Replaced this session', stats.replacedThisSession],
+    // The active-tab query updates this asynchronously; zero is the safe
+    // no-script/timeout/version-skew fallback.
+    ['Replaced this session', 0],
     ['Saved unknown', stats.unknownWords],
     ['In learning queue', stats.totalLearning],
   ]
 
-  // Captured so setSavedUnknown can update the "Saved unknown" value in place.
+  // Captured so live popup data can update either value without rebuilding the panel.
+  let replacedThisSessionValue: HTMLSpanElement | null = null
   let savedUnknownValue: HTMLSpanElement | null = null
 
   for (const [label, value] of rows) {
@@ -81,6 +73,7 @@ export function renderStatsPanel(
     const val = document.createElement('span')
     val.className = 'stat-value'
     val.textContent = String(value)
+    if (label === 'Replaced this session') replacedThisSessionValue = val
     if (label === 'Saved unknown') savedUnknownValue = val
 
     row.appendChild(lbl)
@@ -91,6 +84,9 @@ export function renderStatsPanel(
   container.appendChild(section)
 
   return {
+    setReplacedThisSession(count: number): void {
+      if (replacedThisSessionValue) replacedThisSessionValue.textContent = String(count)
+    },
     setSavedUnknown(count: number): void {
       if (savedUnknownValue) savedUnknownValue.textContent = String(count)
     },

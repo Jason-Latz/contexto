@@ -138,6 +138,12 @@ async function readPageStatus(popup, pageUnderTest) {
   }
 }
 
+async function readStatValue(popup, label) {
+  const row = popup.locator('.stat-row').filter({ hasText: label }).first()
+  await row.waitFor({ timeout: 8000 })
+  return Number(await row.locator('.stat-value').innerText())
+}
+
 const report = []
 function check(id, title, passed, detail) {
   report.push({ id, title, passed, detail })
@@ -265,6 +271,79 @@ async function bug3(base) {
     /\d+ words swapped into Spanish/.test(active.headline) && active.working,
     JSON.stringify(active.headline))
 
+  // Opening the popup does not hide the article, so its session has not reached
+  // the visibilitychange/3-minute storage flush. The row must come directly from
+  // this active tab's in-memory session rather than the stale global snapshot.
+  const expectedSessionCount = await spans(article).evaluateAll(els =>
+    new Set(els.map(el => el.getAttribute('data-lemma')).filter(Boolean)).size)
+  await popup.waitForFunction(() => {
+    const row = [...document.querySelectorAll('.stat-row')]
+      .find(el => el.firstElementChild?.textContent === 'Replaced this session')
+    return Number(row?.querySelector('.stat-value')?.textContent) > 0
+  }, undefined, { timeout: 8000 }).catch(() => {})
+  const liveSessionCount = await readStatValue(popup, 'Replaced this session')
+  check('BUG3-session-live', 'Session counter reads the active tab before storage flushes',
+    expectedSessionCount > 0 && liveSessionCount > 0 && liveSessionCount <= expectedSessionCount,
+    `popup=${liveSessionCount}, active-tab unique lemmas=${expectedSessionCount}`)
+
+  // Save one word that really appeared on this page, then deliberately replace
+  // the global session snapshot with an empty one (the same last-writer-wins
+  // failure another tab can cause). The active tab's live lemma set must still
+  // drive both the filter count and the filtered chips.
+  const savedSpan = article.locator('p [data-contexto="true"]').first()
+  await savedSpan.waitFor({ timeout: 8000 })
+  const savedLemma = await savedSpan.getAttribute('data-lemma') ?? ''
+  await savedSpan.click()
+  await sw.evaluate(async (lemma) => {
+    for (let attempt = 0; attempt < 50; attempt++) {
+      const stored = await chrome.storage.local.get('contexto_lexicon')
+      const lexicon = stored.contexto_lexicon ?? {}
+      if (lexicon[lemma]?.selfMarkedUnknown) return
+      await new Promise(resolve => setTimeout(resolve, 50))
+    }
+    throw new Error(`Saved-unknown write did not land for ${lemma}`)
+  }, savedLemma)
+
+  const offSessionLemma = 'contexto-off-page'
+  await sw.evaluate(async ({ lemma, offPage }) => {
+    const stored = (await chrome.storage.local.get('contexto_lexicon')).contexto_lexicon ?? {}
+    const template = stored[lemma]
+    await chrome.storage.local.set({
+      contexto_lexicon: {
+        ...stored,
+        [offPage]: {
+          ...template,
+          selfMarkedUnknown: true,
+          selfMarkedUnknownAt: Date.now(),
+        },
+      },
+      contexto_session: {
+        pageUrl: 'https://stale.example/',
+        startedAt: Date.now(),
+        wordsSeen: [],
+      },
+    })
+  }, { lemma: savedLemma, offPage: offSessionLemma })
+
+  await readPageStatus(popup, article)
+  await popup.waitForFunction(() => {
+    const button = [...document.querySelectorAll('.filter-btn')]
+      .find(el => el.textContent?.startsWith('This session'))
+    return button?.textContent === 'This session (1)'
+  }, undefined, { timeout: 8000 }).catch(() => {})
+  const sessionFilter = popup.locator('.filter-btn').filter({ hasText: 'This session' }).first()
+  const sessionFilterLabel = await sessionFilter.innerText()
+  await sessionFilter.click()
+  const filteredLemmas = await popup.locator('.word-chip__known').evaluateAll(buttons =>
+    buttons.map(button =>
+      (button.getAttribute('aria-label') ?? '').replace(/^Mark /, '').replace(/ as known$/, '')))
+  check('BUG3-session-filter', 'Saved-word session filter follows the active tab, not global storage',
+    sessionFilterLabel === 'This session (1)' &&
+      filteredLemmas.length === 1 &&
+      filteredLemmas[0] === savedLemma &&
+      !filteredLemmas.includes(offSessionLemma),
+    `filter=${JSON.stringify(sessionFilterLabel)}, chips=${JSON.stringify(filteredLemmas)}`)
+
   const short = await context.newPage()
   await short.goto(`${base}/too-short.html`, { waitUntil: 'domcontentloaded' })
   await short.waitForTimeout(1200)
@@ -279,6 +358,12 @@ async function bug3(base) {
   check('BUG3-unreachable', 'Popup names native Chrome pages as the reason it cannot run',
     /native Chrome pages/.test(blankStatus.headline),
     JSON.stringify(blankStatus.headline))
+  const blankSessionCount = await readStatValue(popup, 'Replaced this session')
+  const blankSessionFilter = await popup.locator('.filter-btn')
+    .filter({ hasText: 'This session' }).first().innerText()
+  check('REG-session-noscript', 'A page with no content script falls back to an empty session',
+    blankSessionCount === 0 && blankSessionFilter === 'This session (0)',
+    `counter=${blankSessionCount}, filter=${JSON.stringify(blankSessionFilter)}`)
 
   await setSetting(sw, { replacementsEnabled: false })
   await article.waitForTimeout(800)

@@ -1,56 +1,135 @@
-# Morning Checklist — Ship Contexto
+# Contexto v0.3.0 Chrome Web Store Update Checklist
 
-Ordered manual steps to finish the Chrome Web Store submission. Do them top to bottom.
+Contexto v0.2.0 is already public. This checklist updates the existing item
+`ogoledejcmghodooklpmeeeggpafnejo`; it is not a first-time submission.
 
-_Status: site merged to `main` and DEPLOYED to production (https://contexto-mauve.vercel.app). Steps 1, 2, and both polish items are done. Only Step 3 — fill the listing + submit — is left._
+Use staged publishing so Chrome Web Store approval and public rollout remain
+separate, observable steps.
 
-## 1. Deploy the landing site to Vercel — DONE
+## 1. Freeze the v0.3.0 Source State
 
-Deployed to production via Vercel CLI — project `contexto` (scope `jason-latzs-projects`), the
-`site/` folder as a static project.
+- [x] Spanish, Italian, and French finished their complete frozen Wave 2
+      universes; German remains safely resumable with 60 adjudications pending.
+- [x] The unused deterministic seed `20260720` panel completed for each finished
+      language: es 8/120, it 9/120, fr 14/120.
+- [x] All three finished languages exceeded the 5% ship bar and are blocked.
+      No Wave 2 verdict was applied and no language pack changed.
+- [x] German received no partial panel or application.
+- [x] Confirm the working tree contains no unrelated generated or personal
+      files.
+- [x] Set `version` to `0.3.0` in both `package.json` and `manifest.json`.
+- [x] Keep the manifest and store short descriptions aligned.
 
-- [x] Live site: **https://contexto-mauve.vercel.app**
-- [x] Privacy URL (for the listing): **https://contexto-mauve.vercel.app/privacy/**
-- Redeploy after changes: `vercel deploy --prod --cwd site`.
-- Optional: add a custom domain (e.g. contexto.jasonlatz.com) in the Vercel dashboard, then
-  update `og:url` / `og:image` in `site/index.html` to match.
+## 2. Run the Release Gates
 
-## 2. Extension store screenshots (1280x800) — DONE
+Run against the exact source state that will be packaged:
 
-Captured with the real extension (`dist/`) loaded via Playwright, all exactly 1280x800, in
-`store-assets/screenshots/` — upload all four:
+```bash
+npm run typecheck
+npm test
+npm run build
+```
 
-- [x] `01-immersion.png` — the demo article with words replaced in Spanish (slate underline).
-- [x] `02-hover-tooltip.png` — the hover card (English + definition + Spanish). The page is a live
-      capture; the tooltip overlay is a faithful composite of the extension's exact tooltip
-      (overlay layers don't paint in a headless-driven window). Re-grab in real Chrome if you want a pure capture.
-- [x] `03-saved-word.png` — a saved word shown with the warm-tan underline.
-- [x] `04-popup.png` — the popup (density slider, session stats, CSV/Quizlet export, blocked domains).
+Run those three source gates in that exact order and stop at the first failure.
+After they pass, install the pinned live-test browser if this machine does not
+already have it, then run the data and browser gates:
 
-Demo page: `store-assets/demo-article.html` (the content script needs >=100 words to activate, which is
-why the short `fixtures/spanish-article.html` rendered nothing). Optionally add a real-article capture from your own Chrome.
+```bash
+npx playwright install chromium
+npm run validate:language-packs
+npm run test:live-multilang
+npm run test:live-tab-sync
+node tests/live/run-perf.mjs
+```
 
-## 3. Fill the Chrome Web Store listing
+- [x] Every required command exits successfully.
+- [x] Review the live-test screenshots and logs, not only their exit codes.
+- [x] Confirm the core first pass remains independent of progressive tail
+      loading.
+- [x] Confirm no runtime network or remote-code dependency was introduced.
 
-- [ ] Open the Chrome Web Store developer dashboard for the item.
-- [ ] Fill the listing fields from `store-assets/listing-draft.md` (name, short + detailed
-      description, permission rationale, developer website).
-- [ ] Set the **Privacy policy URL** to the deployed `/privacy/` page (from step 1).
-- [ ] Complete the **data-use disclosures**: no data collected, no data sold or transferred,
-      all processing on-device (no runtime network calls).
-- [ ] Upload the package: `release/contexto-extension-v0.2.0.zip`.
-- [ ] Submit for review.
+## 3. Capture Current Store Screenshots
 
-## 4. After approval
+The June screenshots show retired interface elements and must not be reused.
+After the final build passes:
 
-- [ ] Flip the site CTA from "Coming soon" to a real Chrome Web Store link
-      (the `.badge-btn` span in `site/index.html`).
+```bash
+npm run capture:store-assets
+```
 
-## Polish items — RESOLVED
+The capture uses the real built extension, a clean temporary Chrome profile, and
+the stable `store-assets/demo-article.html` fixture. It publishes these five
+files only after all five 1280×800 captures succeed:
 
-- [x] **Accessibility — focusable disabled CTA badge.** Fixed: dropped `role="button"` and
-      `tabindex` from the "Coming soon" `.badge-btn`, so it leaves the tab order and no longer
-      announces as a do-nothing disabled button.
-- [x] **SEO/meta — placeholder Open Graph URL.** Fixed: removed the fake `og:url`. After you deploy,
-      optionally re-add `<meta property="og:url">` with the real domain and make `og:image` an
-      absolute URL on that domain for the most reliable link unfurls.
+- [x] `store-assets/screenshots/01-immersion-es.png`
+- [x] `store-assets/screenshots/02-hover-de-grammar.png`
+- [x] `store-assets/screenshots/03-popup-languages-status.png`
+- [x] `store-assets/screenshots/04-popup-controls.png`
+- [x] `store-assets/screenshots/05-popup-review.png`
+
+Visually confirm:
+
+- [x] Replacements are legible without overwhelming the article.
+- [x] The German hover card teaches `der Satz` and `pl. Sätze`.
+- [x] All four target languages and a real active-page status are visible.
+- [x] Aggressive Mode, the Quizzes toggle, and onboarding do not appear.
+- [x] Word Types, target-first saved words, and Practice match the final build.
+- [x] No browser profile data, unrelated tabs, or developer-only UI is visible.
+
+## 4. Build and Inspect the Upload
+
+- [ ] Review the complete release diff, commit the exact v0.3.0 source and
+      metadata state, and push it to `main`.
+- [ ] Record the release commit SHA.
+
+```bash
+npm run package
+shasum -a 256 release/contexto-extension-v0.3.0.zip
+```
+
+- [x] The package is `release/contexto-extension-v0.3.0.zip`.
+- [x] Its embedded manifest reports v0.3.0.
+- [x] The ZIP contains only the production extension.
+- [x] It contains no `.DS_Store`, source maps, test service worker, test profile,
+      screenshots, or development cache.
+- [ ] Record the final post-commit SHA-256 alongside the release/tag notes.
+- [ ] Confirm the ZIP was produced from the recorded release commit.
+- [x] Smoke-test the packaged build in a clean Chrome profile.
+
+## 5. Update the Existing Store Item
+
+Open the Chrome Web Store Developer Dashboard and select the existing Contexto
+item.
+
+- [ ] Upload `release/contexto-extension-v0.3.0.zip`.
+- [ ] Apply the copy from `store-assets/listing-draft.md`.
+- [ ] Set the homepage to `https://trycontexto.org/`.
+- [ ] Set the privacy policy to `https://trycontexto.org/privacy/`.
+- [ ] Upload all five current screenshots in their numbered order.
+- [ ] Reconfirm the single-purpose and data-use disclosures.
+- [ ] Reconfirm that `storage` and broad page access match their disclosed,
+      on-device purposes.
+- [ ] Resolve every dashboard warning.
+- [ ] Submit the update for review with staged publishing.
+
+## 6. Monitor Review and Release
+
+- [ ] Save the submission timestamp and submitted ZIP SHA-256.
+- [ ] Monitor the item status until review completes.
+- [ ] If Chrome rejects the update, preserve its exact feedback before changing
+      the package or listing.
+- [ ] Once approved, verify the approved version and package before releasing
+      the staged update.
+- [ ] Release v0.3.0 publicly.
+- [ ] Confirm the public listing reports v0.3.0.
+- [ ] Install/update from the public listing and perform one final article,
+      hover-card, language-switch, saved-word, and Practice smoke test.
+- [ ] Tag the recorded release commit as v0.3.0, push the tag, and record the
+      store publication date.
+
+## Already Complete
+
+- The production site is live at https://trycontexto.org/.
+- The privacy policy is live at https://trycontexto.org/privacy/.
+- The site already links to the public Chrome Web Store item.
+- `www.trycontexto.org` redirects to the apex domain.

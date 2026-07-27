@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { describeNoScript } from '../src/popup/PageStatus.js'
+import { describeNoScript, normalizePageSession } from '../src/popup/PageStatus.js'
 
 // When no content script answers, the popup classifies the cause from the tab
 // URL. The URL is only visible on pages our host permissions cover, so a
@@ -38,4 +38,21 @@ test('an ordinary web page with no script asks for a reload instead', () => {
 test('local files point at the file-access permission', () => {
   const copy = describeNoScript('file:///Users/x/notes.html')
   assert.match(copy.hint ?? '', /file URLs/)
+})
+
+test('an older content script without session lemmas fails closed to an empty session', () => {
+  assert.deepEqual(normalizePageSession({ replacedThisSession: 9 }), {
+    replacedThisSession: 0,
+    sessionLemmas: [],
+  })
+})
+
+test('the live page session drops malformed values and de-duplicates lemmas', () => {
+  assert.deepEqual(normalizePageSession({
+    replacedThisSession: 99,
+    sessionLemmas: ['market', 'market', '', 42, 'river'],
+  }), {
+    replacedThisSession: 2,
+    sessionLemmas: ['market', 'river'],
+  })
 })

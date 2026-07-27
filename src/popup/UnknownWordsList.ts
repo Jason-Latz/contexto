@@ -34,6 +34,10 @@ export interface UnknownWordsListHandlers {
   onUnknownTotalChange: (total: number) => void
 }
 
+export interface UnknownWordsListHandle {
+  setSessionLemmas(lemmas: ReadonlySet<string>): void
+}
+
 // How long the "Marked known · Undo" affordance stays before auto-dismissing. The
 // Undo control is a real focusable button, so this timeout is convenience, not the
 // only way to undo.
@@ -42,10 +46,10 @@ const UNDO_VISIBLE_MS = 6000
 export async function renderUnknownWordsList(
   container: HTMLElement,
   lexicon: Record<string, LexiconEntry>,
-  sessionLemmas: ReadonlySet<string>,
+  initialSessionLemmas: ReadonlySet<string>,
   handlers: UnknownWordsListHandlers,
   activeLanguage: TargetLanguage,
-): Promise<void> {
+): Promise<UnknownWordsListHandle> {
   // BCP-47 tag for the active language, applied to rendered target text so
   // speech/spellcheck pick the right language.
   const targetLang = getLanguageInfo(activeLanguage).htmlLang
@@ -60,6 +64,7 @@ export async function renderUnknownWordsList(
 
   // Mutable model — mark-known removes from here; Undo re-inserts.
   let allUnknown = collectUnknownWords(lexicon)
+  let sessionLemmas = new Set(initialSessionLemmas)
   let currentFilter: Filter = 'all'
 
   function wordsForFilter(): UnknownWord[] {
@@ -284,6 +289,22 @@ export async function renderUnknownWordsList(
   updateCounts()
   renderList()
   container.appendChild(section)
+
+  return {
+    setSessionLemmas(lemmas: ReadonlySet<string>): void {
+      const next = new Set(lemmas)
+      if (
+        next.size === sessionLemmas.size &&
+        [...next].every(lemma => sessionLemmas.has(lemma))
+      ) {
+        return
+      }
+
+      sessionLemmas = next
+      updateCounts()
+      if (currentFilter === 'session') renderList()
+    },
+  }
 }
 
 function compareUnknown(a: UnknownWord, b: UnknownWord): number {

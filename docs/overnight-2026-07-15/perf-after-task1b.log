@@ -1,11 +1,11 @@
-perf-after-task1b (2026-07-15T11:21:43.389Z)
-core first-pass avg: 3187ms (baseline 3357ms, delta -5.1%)
-heap, post-GC, like-for-like: core-only 27.5MB vs full (core+tail) 38.4MB — the tail retains ~10.9MB
-default percolation-complete avg: 5174ms
-longest percolation-window main-thread task: 82ms (budget 250ms; no-tail page-work max in the same window 70ms)
-longest main-thread task overall (incl. the core first pass itself): 3964ms
-  wikipedia-photosynthesis   core 1616/2296ms/27.3MB  default 1870/38MB  percolationTask 0ms (page work 0ms)
-  wikipedia-roman-empire     core 4492/5118ms/28.4MB  default 4792/39MB  percolationTask 82ms (page work 70ms)
-  gutenberg-alice            core 2338/4506ms/27.1MB  default 2584/38.4MB  percolationTask 0ms (page work 0ms)
-  pg-essay                   core 1081/2630ms/26.7MB  default 1146/37.7MB  percolationTask 0ms (page work 0ms)
-  mdn-array                  core 750/1385ms/28.2MB  default 779/38.9MB  percolationTask 0ms (page work 0ms)
+perf-after-task1b (2026-07-27T04:22:54.974Z)
+core first-pass avg: 3223ms (baseline 3357ms, delta -4.0%)
+heap, post-GC, like-for-like: core-only 27.5MB vs full (core+tail) 38.6MB — the tail retains ~11.1MB
+default percolation-complete avg: 5287ms
+longest percolation-window main-thread task: 83ms (budget 250ms; no-tail page-work max in the same window 70ms)
+longest main-thread task overall (incl. the core first pass itself): 3985ms
+  wikipedia-photosynthesis   core 1616/2321ms/27.3MB  default 1888/38.2MB  percolationTask 0ms (page work 0ms)
+  wikipedia-roman-empire     core 4492/5147ms/28.4MB  default 4813/39.2MB  percolationTask 83ms (page work 70ms)
+  gutenberg-alice            core 2338/4580ms/26.9MB  default 2625/38.6MB  percolationTask 0ms (page work 0ms)
+  pg-essay                   core 1081/2658ms/26.7MB  default 1146/37.9MB  percolationTask 0ms (page work 0ms)
+  mdn-array                  core 750/1408ms/28.2MB  default 779/39.1MB  percolationTask 0ms (page work 0ms)

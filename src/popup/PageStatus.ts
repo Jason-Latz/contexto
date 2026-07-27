@@ -46,6 +46,31 @@ export interface StatusCopy {
 // all, in which case its URL (when visible) is the evidence for why.
 type PopupPageStatus = PageStatus | { kind: 'no-script'; url: string | undefined }
 
+export interface PageSessionSnapshot {
+  replacedThisSession: number
+  sessionLemmas: string[]
+}
+
+// Runtime-normalize because an already-open tab can keep running the previous
+// content-script version after an extension update. Missing/malformed lemma data
+// must fail closed to an empty active-page session, never revive a stale global
+// storage snapshot. Deriving the count from the normalized set keeps both popup
+// surfaces coherent even if a reply's explicit count is inconsistent.
+export function normalizePageSession(
+  status: { sessionLemmas?: unknown; replacedThisSession?: unknown } | null | undefined,
+): PageSessionSnapshot {
+  if (!Array.isArray(status?.sessionLemmas)) {
+    return { replacedThisSession: 0, sessionLemmas: [] }
+  }
+
+  const sessionLemmas = [...new Set(
+    status.sessionLemmas.filter(
+      (lemma): lemma is string => typeof lemma === 'string' && lemma.length > 0,
+    ),
+  )]
+  return { replacedThisSession: sessionLemmas.length, sessionLemmas }
+}
+
 function describe(status: PageStatus): StatusCopy {
   switch (status.kind) {
     case 'active': {
@@ -131,7 +156,13 @@ export function describeNoScript(url: string | undefined): StatusCopy {
   }
 }
 
-const LOADING: PageStatus = { kind: 'loading', swapped: 0, language: 'es' }
+const LOADING: PageStatus = {
+  kind: 'loading',
+  swapped: 0,
+  replacedThisSession: 0,
+  sessionLemmas: [],
+  language: 'es',
+}
 
 // Ask the active tab's content script for its status. Any failure to reach one
 // means there is no content script there, which is itself an answer — the tab's
@@ -157,7 +188,10 @@ async function queryActiveTab(): Promise<PopupPageStatus> {
   }
 }
 
-export function renderPageStatus(container: HTMLElement): void {
+export function renderPageStatus(
+  container: HTMLElement,
+  onPageSession: (snapshot: PageSessionSnapshot) => void = () => {},
+): void {
   const section = document.createElement('div')
   section.className = 'section page-status'
   // The one line users check to answer "is it working?", so announce updates.
@@ -191,6 +225,11 @@ export function renderPageStatus(container: HTMLElement): void {
     const token = ++queryToken
     const status = await queryActiveTab()
     if (token !== queryToken) return
+
+    // The active content script owns the authoritative in-memory page session.
+    // A no-script response has no readable session; normalizePageSession also
+    // provides the empty fallback for a timeout or an older content script.
+    onPageSession(normalizePageSession(status.kind === 'no-script' ? null : status))
 
     const copy = status.kind === 'no-script' ? describeNoScript(status.url) : describe(status)
     headline.textContent = copy.headline

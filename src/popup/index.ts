@@ -12,15 +12,14 @@ import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
 import { renderLanguagePicker } from './LanguagePicker.js'
 import { renderPageStatus } from './PageStatus.js'
-import { renderUnknownWordsList, type UnknownWordsListHandlers } from './UnknownWordsList.js'
+import {
+  renderUnknownWordsList,
+  type UnknownWordsListHandle,
+  type UnknownWordsListHandlers,
+} from './UnknownWordsList.js'
 
 const LEXICON_KEY  = 'contexto_lexicon'
-const SESSION_KEY  = 'contexto_session'
 const SETTINGS_KEY = 'contexto_settings'
-
-interface SessionStore {
-  wordsSeen?: Array<{ englishLemma: string }>
-}
 
 interface PopupSettings {
   replacementsEnabled?: boolean
@@ -40,9 +39,8 @@ function readTargetLanguage(settings: PopupSettings): TargetLanguage {
 async function init(): Promise<void> {
   const root = document.getElementById('root')!
 
-  const stored = await chrome.storage.local.get([LEXICON_KEY, SESSION_KEY, SETTINGS_KEY])
+  const stored = await chrome.storage.local.get([LEXICON_KEY, SETTINGS_KEY])
   const lexicon  = (stored[LEXICON_KEY]  ?? {}) as Record<string, LexiconEntry>
-  const session  = (stored[SESSION_KEY]  ?? {}) as SessionStore
   const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
 
   // Load the lexicon store so mark-known / practice writes go through the
@@ -50,11 +48,20 @@ async function init(): Promise<void> {
   await loadLexicon()
 
   let activeLanguage = readTargetLanguage(settings)
+  let latestReplacedThisSession = 0
+  let latestSessionLemmas = new Set<string>()
+  let liveStatsHandle: ReturnType<typeof renderStatsPanel> | null = null
+  let liveUnknownWordsHandle: UnknownWordsListHandle | null = null
 
   // First card: what Contexto is doing on the page behind the popup. Answers
   // "is this thing working?" before the user has to guess from the controls.
   // Fills in asynchronously — the controls below must never wait on the page.
-  renderPageStatus(root)
+  renderPageStatus(root, snapshot => {
+    latestReplacedThisSession = snapshot.replacedThisSession
+    latestSessionLemmas = new Set(snapshot.sessionLemmas)
+    liveStatsHandle?.setReplacedThisSession(snapshot.replacedThisSession)
+    liveUnknownWordsHandle?.setSessionLemmas(latestSessionLemmas)
+  })
 
   renderLanguagePicker(root, activeLanguage, {
     // Persist the choice, then rebuild the language-dependent panels so the
@@ -69,17 +76,16 @@ async function init(): Promise<void> {
   renderWordTypeToggles(root, settings)
 
   // Stats — session word count, unknown words, learning queue size.
-  const statsHandle = renderStatsPanel(root, lexicon, session)
+  const statsHandle = renderStatsPanel(root, lexicon)
+  liveStatsHandle = statsHandle
+  // Do not show a delayed/global storage snapshot while the active-tab query is
+  // in flight. Its live reply updates this nonblockingly; no-script/timeout is 0.
+  statsHandle.setReplacedThisSession(latestReplacedThisSession)
 
   // Density slider — reads and writes chrome.storage.local directly.
   await renderDensitySlider(root)
 
   renderBlockedDomains(root, settings)
-
-  // Unknown words list — all / session filter with local exports.
-  const sessionLemmas = new Set(
-    (session.wordsSeen ?? []).map(w => w.englishLemma),
-  )
 
   const handlers: UnknownWordsListHandlers = {
     // Soft-remove: drop from the review list without permanently excluding the
@@ -108,8 +114,18 @@ async function init(): Promise<void> {
   root.appendChild(languagePanels)
 
   async function renderLanguageDependentPanels(): Promise<void> {
+    liveUnknownWordsHandle = null
     while (languagePanels.firstChild) languagePanels.removeChild(languagePanels.firstChild)
-    await renderUnknownWordsList(languagePanels, lexicon, sessionLemmas, handlers, activeLanguage)
+    const handle = await renderUnknownWordsList(
+      languagePanels,
+      lexicon,
+      latestSessionLemmas,
+      handlers,
+      activeLanguage,
+    )
+    liveUnknownWordsHandle = handle
+    // The active-tab reply can land while the language pack is loading.
+    handle.setSessionLemmas(latestSessionLemmas)
   }
 
   await renderLanguageDependentPanels()

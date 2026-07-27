@@ -1,5 +1,5 @@
 import { readdir, readFile, stat } from 'node:fs/promises'
-import { join, posix, relative, sep } from 'node:path'
+import { join, posix } from 'node:path'
 import { deflateRawSync } from 'node:zlib'
 
 const CRC_TABLE = new Uint32Array(256)
@@ -45,16 +45,17 @@ function u32(value) {
 export class ZipArchive {
   #files = []
 
-  async addDirectory(root, prefix) {
+  async addDirectory(root, prefix, shouldInclude = () => true) {
     const entries = await readdir(root)
     for (const entry of entries) {
       const absolute = join(root, entry)
       const info = await stat(absolute)
+      const archivePath = posix.join(prefix, entry)
+      if (!shouldInclude(archivePath, info)) continue
       if (info.isDirectory()) {
-        await this.addDirectory(absolute, posix.join(prefix, entry))
+        await this.addDirectory(absolute, archivePath, shouldInclude)
       } else if (info.isFile()) {
-        const rel = relative(root, absolute).split(sep).join('/')
-        await this.addFile(absolute, posix.join(prefix, rel), info.mtime)
+        await this.addFile(absolute, archivePath, info.mtime)
       }
     }
   }
