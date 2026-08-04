@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Contexto",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Learn Spanish, German, French, or Italian while you read — words change in context, fully on-device.",
 
   "permissions": [

@@ -9,6 +9,9 @@
 - In the Contexto popup, keep the global replacement on/off control and the
   immersion slider at the top immediately after page status; language, review,
   and advanced settings follow them.
+- For release-preparation work with independent audits, Jason prefers parallel
+  subagents to reduce turnaround time; keep shared-worktree subtasks read-only
+  unless their file ownership is explicitly isolated.
 - Before starting a high-volume model workflow, tell Jason the expected call
   volume, whether it uses included plan allowance or paid credits, and whether
   auto top-up could create a charge. Never start potentially billable usage
@@ -19,6 +22,10 @@
 - For Chrome Web Store developer operations, use `jasonlatz0@gmail.com`, not
   the browser's default Google account, and verify the visible account before
   any upload or submission.
+- Before preparing a Chrome Web Store update, verify the version currently
+  published in the dashboard or with Jason, then increment both `package.json`
+  and `manifest.json`. Never infer the next version from a stale release
+  checklist or reuse an already-published manifest version.
 - Before controlling Chrome through Computer Use, tell Jason not to interact
   with Chrome until the next handoff; refresh the app state after any user
   interaction because prior accessibility element IDs are stale.

@@ -1,12 +1,12 @@
-# Contexto v0.3.0 Chrome Web Store Update Checklist
+# Contexto v0.3.1 Chrome Web Store Update Checklist
 
-Contexto v0.2.0 is already public. This checklist updates the existing item
+Contexto v0.3.0 is already public. This checklist updates the existing item
 `ogoledejcmghodooklpmeeeggpafnejo`; it is not a first-time submission.
 
 Use staged publishing so Chrome Web Store approval and public rollout remain
 separate, observable steps.
 
-## 1. Freeze the v0.3.0 Source State
+## 1. Freeze the v0.3.1 Source State
 
 - [x] Spanish, Italian, and French finished their complete frozen Wave 2
       universes; German remains safely resumable with 60 adjudications pending.
@@ -17,7 +17,7 @@ separate, observable steps.
 - [x] German received no partial panel or application.
 - [x] Confirm the working tree contains no unrelated generated or personal
       files.
-- [x] Set `version` to `0.3.0` in both `package.json` and `manifest.json`.
+- [x] Set `version` to `0.3.1` in both `package.json` and `manifest.json`.
 - [x] Keep the manifest and store short descriptions aligned.
 
 ## 2. Run the Release Gates
@@ -78,32 +78,30 @@ Visually confirm:
 
 ## 4. Build and Inspect the Upload
 
-- [ ] Review the complete release diff, commit the exact v0.3.0 source and
+- [ ] Review the complete release diff, commit the exact v0.3.1 source and
       metadata state, and push it to `main`.
-- [x] Record the release commit SHA:
-      `c7993ceda03423740b4e01fda8b61ddc0f3416c8`.
+- [ ] Record the release commit SHA.
 
 ```bash
 npm run package
-shasum -a 256 release/contexto-extension-v0.3.0.zip
+shasum -a 256 release/contexto-extension-v0.3.1.zip
 ```
 
-- [x] The package is `release/contexto-extension-v0.3.0.zip`.
-- [x] Its embedded manifest reports v0.3.0.
-- [x] The ZIP contains only the production extension.
-- [x] It contains no `.DS_Store`, source maps, test service worker, test profile,
+- [ ] The package is `release/contexto-extension-v0.3.1.zip`.
+- [ ] Its embedded manifest reports v0.3.1.
+- [ ] The ZIP contains only the production extension.
+- [ ] It contains no `.DS_Store`, source maps, test service worker, test profile,
       screenshots, or development cache.
-- [x] Record the final post-commit SHA-256 alongside the release/tag notes:
-      `089b0ababee15b9b3a6b0b31a259829876652cd12a8195459ab9df1a5306ed1b`.
-- [x] Confirm the ZIP was produced from the recorded release commit.
-- [x] Smoke-test the packaged build in a clean Chrome profile.
+- [ ] Record the final post-commit SHA-256 alongside the release/tag notes.
+- [ ] Confirm the ZIP was produced from the recorded release commit.
+- [ ] Smoke-test the packaged build in a clean Chrome profile.
 
 ## 5. Update the Existing Store Item
 
 Open the Chrome Web Store Developer Dashboard and select the existing Contexto
 item.
 
-- [ ] Upload `release/contexto-extension-v0.3.0.zip`.
+- [ ] Upload `release/contexto-extension-v0.3.1.zip`.
 - [ ] Apply the copy from `store-assets/listing-draft.md`.
 - [ ] Set the homepage to `https://trycontexto.org/`.
 - [ ] Set the privacy policy to `https://trycontexto.org/privacy/`.
@@ -122,11 +120,11 @@ item.
       the package or listing.
 - [ ] Once approved, verify the approved version and package before releasing
       the staged update.
-- [ ] Release v0.3.0 publicly.
-- [ ] Confirm the public listing reports v0.3.0.
+- [ ] Release v0.3.1 publicly.
+- [ ] Confirm the public listing reports v0.3.1.
 - [ ] Install/update from the public listing and perform one final article,
       hover-card, language-switch, saved-word, and Practice smoke test.
-- [ ] Tag the recorded release commit as v0.3.0, push the tag, and record the
+- [ ] Tag the recorded release commit as v0.3.1, push the tag, and record the
       store publication date.
 
 ## Already Complete

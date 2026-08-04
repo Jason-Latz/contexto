@@ -1,4 +1,4 @@
-# Chrome Web Store Listing — v0.3.0 Update
+# Chrome Web Store Listing — v0.3.1 Update
 
 ## Existing Item
 
@@ -69,9 +69,9 @@ local extension storage.
 - Privacy policy: https://trycontexto.org/privacy/
 - Support: https://github.com/Jason-Latz/contexto/issues
 
-## v0.3.0 Asset Set
+## v0.3.1 Asset Set
 
-Capture these from the final v0.3.0 build with
+Capture these from the final v0.3.1 build with
 `npm run capture:store-assets`. Each image must be exactly 1280×800:
 
 1. `01-immersion-es.png` — Spanish immersion at a readable density.
@@ -81,15 +81,15 @@ Capture these from the final v0.3.0 build with
 4. `04-popup-controls.png` — per-language difficulty, Word Types, domain controls, privacy, and feedback.
 5. `05-popup-review.png` — target-first Saved Words and the Practice launcher.
 
-Do not reuse the pre-v0.3.0 screenshots: they show retired interface elements.
+Do not reuse the pre-v0.3.1 screenshots: they show retired interface elements.
 
 ## Release Checks
 
 - [x] No Wave 2 language passed its final panel; no Wave 2 pack data is included.
-- [x] Package and manifest versions are both `0.3.0`.
+- [x] Package and manifest versions are both `0.3.1`.
 - [x] Typecheck, tests, language-pack validation, build, and live gates pass.
-- [x] The five v0.3.0 screenshots are freshly captured and visually reviewed.
-- [x] `release/contexto-extension-v0.3.0.zip` is built and inspected.
+- [x] The five v0.3.1 screenshots are freshly captured and visually reviewed.
+- [ ] `release/contexto-extension-v0.3.1.zip` is built and inspected.
 - [ ] Listing text, links, screenshots, permissions, and privacy answers match
       this document.
 - [ ] The update is uploaded to the existing item and submitted with staged
