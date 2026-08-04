@@ -89,7 +89,7 @@ Do not reuse the pre-v0.3.1 screenshots: they show retired interface elements.
 - [x] Package and manifest versions are both `0.3.1`.
 - [x] Typecheck, tests, language-pack validation, build, and live gates pass.
 - [x] The five v0.3.1 screenshots are freshly captured and visually reviewed.
-- [ ] `release/contexto-extension-v0.3.1.zip` is built and inspected.
+- [x] `release/contexto-extension-v0.3.1.zip` is built and inspected.
 - [ ] Listing text, links, screenshots, permissions, and privacy answers match
       this document.
 - [ ] The update is uploaded to the existing item and submitted with staged

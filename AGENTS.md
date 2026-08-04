@@ -6,6 +6,10 @@
 
 ## Agent reliability
 
+- Playwright `Worker` objects do not provide `waitForFunction`; poll worker-side
+  state with repeated `worker.evaluate()` calls and a bounded deadline.
+- Repeated extension smoke runs must start from cleared extension storage or a
+  fresh disposable browser profile; saved-word clicks toggle prior state.
 - In the Contexto popup, keep the global replacement on/off control and the
   immersion slider at the top immediately after page status; language, review,
   and advanced settings follow them.
