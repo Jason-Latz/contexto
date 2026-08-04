@@ -80,7 +80,8 @@ Visually confirm:
 
 - [ ] Review the complete release diff, commit the exact v0.3.0 source and
       metadata state, and push it to `main`.
-- [ ] Record the release commit SHA.
+- [x] Record the release commit SHA:
+      `c7993ceda03423740b4e01fda8b61ddc0f3416c8`.
 
 ```bash
 npm run package
@@ -92,8 +93,9 @@ shasum -a 256 release/contexto-extension-v0.3.0.zip
 - [x] The ZIP contains only the production extension.
 - [x] It contains no `.DS_Store`, source maps, test service worker, test profile,
       screenshots, or development cache.
-- [ ] Record the final post-commit SHA-256 alongside the release/tag notes.
-- [ ] Confirm the ZIP was produced from the recorded release commit.
+- [x] Record the final post-commit SHA-256 alongside the release/tag notes:
+      `089b0ababee15b9b3a6b0b31a259829876652cd12a8195459ab9df1a5306ed1b`.
+- [x] Confirm the ZIP was produced from the recorded release commit.
 - [x] Smoke-test the packaged build in a clean Chrome profile.
 
 ## 5. Update the Existing Store Item
