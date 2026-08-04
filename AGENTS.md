@@ -92,6 +92,9 @@
   redirection; compare in one script or with process substitution.
 - Before hardcoding a live-test or screenshot target, verify that its source
   token exists in the chosen fixture and run the exact workflow end to end.
+- When a browser test asserts a heading that contains tooltip or helper
+  descendants, read the heading's direct label node or a dedicated label
+  element; `innerText`/`textContent` can fold hidden helper copy into the title.
 - Do not describe a multi-file publication as atomic unless the final
   replacement itself is atomic or has an explicit rollback path.
 - Popup actions for an already-injected page must use the hostname reported by
