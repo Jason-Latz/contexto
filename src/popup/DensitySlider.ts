@@ -3,7 +3,7 @@ const MIN_DENSITY = 0.00  // 0%
 const MAX_DENSITY = 1.00  // 100%
 const STORAGE_WRITE_THROTTLE_MS = 150
 const DENSITY_TOOLTIP =
-  'Not every word can be replaced: some words change meaning in context, and the current language-pack dictionary is intentionally limited.'
+  'Controls how much eligible English text changes. Vocabulary difficulty and dictionary coverage also affect the final amount.'
 
 // Density is stored as a 0–1 fraction; display as percentage (e.g. 0.20 → "20%").
 function toPercent(density: number): string {
@@ -84,7 +84,7 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   title.className = 'section-title section-title-with-info'
 
   const titleText = document.createElement('span')
-  titleText.textContent = 'Eligible Word Density'
+  titleText.textContent = 'Immersion Amount'
 
   const infoIcon = document.createElement('button')
   infoIcon.type = 'button'
@@ -113,6 +113,7 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   slider.max = String(Math.round(MAX_DENSITY * 100))
   slider.step = '1'
   slider.value = String(Math.round(currentDensity * 100))
+  slider.setAttribute('aria-label', 'Immersion amount')
 
   const label = document.createElement('span')
   label.className = 'slider-label'

@@ -17,6 +17,9 @@ const LEVEL_DENSITY: Record<OnboardingLevel, number> = {
 interface Settings {
   onboarded: boolean
   level: OnboardingLevel | null
+  // Target-language proficiency must not bleed across languages. `level` stays
+  // as the legacy/default fallback for existing installs.
+  languageLevels: Partial<Record<TargetLanguage, OnboardingLevel>>
   targetLanguage: TargetLanguage
   density: number
   replacementsEnabled: boolean
@@ -36,6 +39,7 @@ function makeDefaultSettings(): Settings {
   return {
     onboarded: false,
     level: null,
+    languageLevels: {},
     targetLanguage: 'es',
     density: LEVEL_DENSITY.beginner,
     replacementsEnabled: true,
@@ -55,6 +59,7 @@ export async function loadSettings(): Promise<void> {
       ...makeDefaultSettings(),
       ...raw,
       targetLanguage: raw.targetLanguage ?? 'es',
+      languageLevels: raw.languageLevels ?? {},
       replacementsEnabled: raw.replacementsEnabled ?? true,
       blockedDomains: raw.blockedDomains ?? [],
       disabledPartsOfSpeech: raw.disabledPartsOfSpeech ?? [...DEFAULT_DISABLED_PARTS_OF_SPEECH],
@@ -91,6 +96,10 @@ export async function completeOnboarding(level: OnboardingLevel): Promise<void> 
   await persistSettings({
     onboarded: true,
     level,
+    languageLevels: {
+      ...settings.languageLevels,
+      [settings.targetLanguage]: level,
+    },
     density: LEVEL_DENSITY[level],
   })
 }
@@ -102,7 +111,7 @@ export function getDensity(): number {
 // The learner's level, or null before first-run init completes. Drives the
 // skip-what-you-know frequency floor in candidate selection.
 export function getLevel(): OnboardingLevel | null {
-  return settings.level
+  return settings.languageLevels[settings.targetLanguage] ?? settings.level
 }
 
 export function areReplacementsEnabled(): boolean {

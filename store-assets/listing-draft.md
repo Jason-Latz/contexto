@@ -77,9 +77,9 @@ Capture these from the final v0.3.0 build with
 1. `01-immersion-es.png` — Spanish immersion at a readable density.
 2. `02-hover-de-grammar.png` — German `der Satz` hover card with its irregular
    plural, `Sätze`.
-3. `03-popup-languages-status.png` — live page status and four-language picker.
-4. `04-popup-controls.png` — Word Types, session, density, and domain controls.
-5. `05-popup-review.png` — target-first saved words and the Practice launcher.
+3. `03-popup-languages-status.png` — live page status, top quick controls, and language selector.
+4. `04-popup-controls.png` — per-language difficulty, Word Types, domain controls, privacy, and feedback.
+5. `05-popup-review.png` — target-first Saved Words and the Practice launcher.
 
 Do not reuse the pre-v0.3.0 screenshots: they show retired interface elements.
 

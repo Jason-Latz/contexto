@@ -5,8 +5,12 @@ import {
   flushLexiconMerge,
   getDirtyEntries,
   isDirty,
+  lexiconStorageKey,
+  loadLexicon,
   markUnknown,
 } from '../src/store/lexiconStore.js'
+
+const ES_KEY = lexiconStorageKey('es')
 
 // In-memory chrome.storage.local stub. setGate, when set, lets a test hold a set()
 // in flight to exercise the "dirtied during the await" path.
@@ -44,12 +48,13 @@ function deferred(): { promise: Promise<void>; resolve: () => void } {
 
 test('merge-write preserves stored lemmas this writer never touched (anti-clobber)', async () => {
   reset()
-  storage.contexto_lexicon = { other: { seenCount: 99 } }
+  storage[ES_KEY] = { other: { seenCount: 99 } }
+  await loadLexicon('es')
 
   markUnknown('mine', true)
   await flushLexiconMerge()
 
-  const written = storage.contexto_lexicon as Record<string, any>
+  const written = storage[ES_KEY] as Record<string, any>
   assert.ok('other' in written, 'untouched lemma survives the merge')
   assert.equal(written.other.seenCount, 99)
   assert.equal(written.mine.selfMarkedUnknown, true)
@@ -57,6 +62,7 @@ test('merge-write preserves stored lemmas this writer never touched (anti-clobbe
 
 test('a no-op flush never calls storage.set', async () => {
   reset()
+  await loadLexicon('es')
   await flushLexiconMerge()
   assert.equal(setCalls, 0)
   assert.equal(isDirty(), false)
@@ -64,6 +70,7 @@ test('a no-op flush never calls storage.set', async () => {
 
 test('a lemma dirtied during the set() await stays pending after the flush settles', async () => {
   reset()
+  await loadLexicon('es')
   markUnknown('a', true)
 
   const gate = deferred()
@@ -80,20 +87,21 @@ test('a lemma dirtied during the set() await stays pending after the flush settl
 
   assert.ok('c' in getDirtyEntries(), 'c remains pending')
   assert.equal(isDirty(), true)
-  const written = storage.contexto_lexicon as Record<string, any>
+  const written = storage[ES_KEY] as Record<string, any>
   assert.ok('a' in written, 'a was persisted')
   assert.ok(!('c' in written), 'c was not persisted by this flush')
 })
 
 test('serialized flushes both persist their lemmas', async () => {
   reset()
+  await loadLexicon('es')
   markUnknown('a', true)
   const first = flushLexiconMerge()
   markUnknown('b', true)
   const second = flushLexiconMerge()
   await Promise.all([first, second])
 
-  const written = storage.contexto_lexicon as Record<string, any>
+  const written = storage[ES_KEY] as Record<string, any>
   assert.ok('a' in written)
   assert.ok('b' in written)
   assert.equal(isDirty(), false)

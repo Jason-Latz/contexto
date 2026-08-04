@@ -149,9 +149,13 @@ export type OnboardingLevel = 'beginner' | 'intermediate' | 'advanced';
 // Mode toggle used, now driven purely by loader state).
 export interface RuntimeSettings {
   density?: number
+  level?: OnboardingLevel | null
   replacementsEnabled?: boolean
   tailLoaded?: boolean
   blockedDomains?: string[]
+  // Current hostname's explicit high-stakes decision. Included in the live diff
+  // so the popup's Enable-on-this-site action can start a previously paused page.
+  domainDecision?: boolean | null
   targetLanguage?: TargetLanguage
   disabledPartsOfSpeech?: PartOfSpeech[]
 }
@@ -177,6 +181,10 @@ export type PageStatusKind =
 export interface PageStatus {
   kind: PageStatusKind
   swapped: number
+  // Supplied by the content script because chrome.tabs.query can withhold a
+  // readable page's URL even though the already-injected script can reply.
+  // Optional for compatibility with tabs still running an older script.
+  hostname?: string
   // Unique English lemmas recorded by this tab's in-memory page session. The
   // count is carried explicitly for the stats row; the lemmas also drive the
   // popup's saved-unknown "This session" filter from the same live snapshot.

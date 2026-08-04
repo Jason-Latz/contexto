@@ -39,7 +39,7 @@ const RETIRED_OUTPUTS = [
 ]
 
 const SETTINGS_KEY = 'contexto_settings'
-const LEXICON_KEY = 'contexto_lexicon'
+const LEXICON_KEY_PREFIX = 'contexto_lexicon_'
 const SESSION_KEY = 'contexto_session'
 
 const FIXED_NOW = Date.UTC(2026, 6, 26, 12, 0, 0)
@@ -136,7 +136,7 @@ async function seedStorage(worker, targetLanguage, density, includeReviewData = 
     })
   }, {
     settingsKey: SETTINGS_KEY,
-    lexiconKey: LEXICON_KEY,
+    lexiconKey: `${LEXICON_KEY_PREFIX}${targetLanguage}`,
     sessionKey: SESSION_KEY,
     settings: settingsFor(targetLanguage, density),
     lexicon: includeReviewData ? seededLexicon() : {},
@@ -202,7 +202,7 @@ async function preparePopup(popup, articlePage) {
   // script rather than describing the popup page itself.
   await articlePage.bringToFront()
   await popup.reload({ waitUntil: 'domcontentloaded' })
-  await popup.waitForSelector('.lang-option', { timeout: 10000 })
+  await popup.waitForSelector('.lang-select', { timeout: 10000 })
   await popup.waitForSelector('.page-status__headline:not(:empty)', { timeout: 10000 })
   await popup.waitForSelector('.word-chip', { timeout: 10000 })
 
@@ -340,10 +340,12 @@ async function run() {
     await popup.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
     await captureViewport(popup, tempOutput, '03-popup-languages-status.png')
 
+    await popup.locator('.advanced-settings__summary').click()
     await scrollSectionToTop(popup, 'Word Types')
     await captureViewport(popup, tempOutput, '04-popup-controls.png')
 
-    await scrollSectionToTop(popup, 'Unknown Words')
+    await popup.locator('.advanced-settings__summary').click()
+    await scrollSectionToTop(popup, 'Saved Italian Words')
     await captureViewport(popup, tempOutput, '05-popup-review.png')
 
     await popup.close()

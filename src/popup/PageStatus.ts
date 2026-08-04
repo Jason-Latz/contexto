@@ -42,9 +42,15 @@ export interface StatusCopy {
   tone: 'working' | 'idle'
 }
 
-// The active tab either answered with a PageStatus or has no content script at
-// all, in which case its URL (when visible) is the evidence for why.
-type PopupPageStatus = PageStatus | { kind: 'no-script'; url: string | undefined }
+// Keep the active tab identity alongside its answer so every status can offer a
+// direct recovery action (pause/resume/enable/reload) without another query.
+// For pages with a content script, the reply's hostname is authoritative because
+// Chrome may withhold tab.url even while that content script can answer.
+interface PopupPageStatus {
+  status: PageStatus | null
+  url: string | undefined
+  tabId: number | undefined
+}
 
 export interface PageSessionSnapshot {
   replacedThisSession: number
@@ -71,19 +77,19 @@ export function normalizePageSession(
   return { replacedThisSession: sessionLemmas.length, sessionLemmas }
 }
 
-function describe(status: PageStatus): StatusCopy {
+export function describe(status: PageStatus): StatusCopy {
   switch (status.kind) {
     case 'active': {
       if (status.swapped === 0) {
         return {
           tone: 'idle',
-          headline: 'No swappable words on this page.',
-          hint: 'Raise the density below to swap more words.',
+          headline: 'No eligible words found on this page.',
+          hint: 'Your immersion amount, word types, and available vocabulary all affect what can change.',
         }
       }
       const language = getLanguageInfo(status.language).displayName
       const words = status.swapped === 1 ? '1 word' : `${status.swapped} words`
-      return { tone: 'working', headline: `${words} swapped into ${language} on this page.` }
+      return { tone: 'working', headline: `${words} changed to ${language} on this page.` }
     }
     case 'loading':
       return { tone: 'working', headline: 'Looking for words to swap...' }
@@ -97,19 +103,19 @@ function describe(status: PageStatus): StatusCopy {
       return {
         tone: 'idle',
         headline: 'Paused on this site.',
-        hint: 'Remove it from Blocked Domains below to resume.',
+        hint: 'Resume here whenever you want to continue immersing.',
       }
     case 'paused':
       return {
         tone: 'idle',
-        headline: 'Paused on this site.',
-        hint: 'You chose to skip Contexto here when you first visited.',
+        headline: 'Waiting for permission on this site.',
+        hint: 'Contexto pauses by default on medical, legal, financial, and other sensitive sites.',
       }
     case 'off':
       return {
         tone: 'idle',
-        headline: 'Text replacement is off.',
-        hint: 'Turn it back on under Features.',
+        headline: 'Contexto is off everywhere.',
+        hint: 'Turn it on here or with the control directly below.',
       }
     case 'error':
       return {
@@ -172,20 +178,121 @@ async function queryActiveTab(): Promise<PopupPageStatus> {
   try {
     [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
   } catch {
-    return { kind: 'no-script', url: undefined }
+    return { status: null, url: undefined, tabId: undefined }
   }
-  if (typeof tab?.id !== 'number') return { kind: 'no-script', url: tab?.url }
+  if (typeof tab?.id !== 'number') {
+    return { status: null, url: tab?.url, tabId: undefined }
+  }
 
   try {
     const reply = chrome.tabs.sendMessage(tab.id, { type: PAGE_STATUS_MESSAGE })
     const timeout = new Promise<PageStatus>(resolve =>
       setTimeout(() => resolve(LOADING), QUERY_TIMEOUT_MS))
 
-    return (await Promise.race([reply, timeout]) as PageStatus | undefined)
-      ?? { kind: 'no-script', url: tab.url }
+    return {
+      status: (await Promise.race([reply, timeout]) as PageStatus | undefined) ?? null,
+      url: tab.url,
+      tabId: tab.id,
+    }
   } catch {
-    return { kind: 'no-script', url: tab.url }
+    return { status: null, url: tab.url, tabId: tab.id }
   }
+}
+
+function hostnameFromUrl(url: string | undefined): string | null {
+  if (!url) return null
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null
+    return parsed.hostname.replace(/^www\./, '')
+  } catch {
+    return null
+  }
+}
+
+async function updateSettings(
+  mutate: (settings: Record<string, unknown>) => Record<string, unknown>,
+): Promise<void> {
+  const stored = await chrome.storage.local.get(SETTINGS_KEY)
+  const current = (stored[SETTINGS_KEY] ?? {}) as Record<string, unknown>
+  await chrome.storage.local.set({ [SETTINGS_KEY]: mutate(current) })
+}
+
+interface StatusAction {
+  label: string
+  run: () => Promise<void>
+}
+
+function actionFor(result: PopupPageStatus): StatusAction | null {
+  const hostname = result.status?.hostname || hostnameFromUrl(result.url)
+  const kind = result.status?.kind
+
+  if (kind === 'active' && hostname) {
+    return {
+      label: 'Pause on this site',
+      run: () => updateSettings(settings => {
+        const blocked = Array.isArray(settings.blockedDomains)
+          ? settings.blockedDomains.filter((item): item is string => typeof item === 'string')
+          : []
+        return {
+          ...settings,
+          blockedDomains: [...new Set([...blocked, hostname])].sort(),
+        }
+      }),
+    }
+  }
+
+  if (kind === 'blocked' && hostname) {
+    return {
+      label: 'Resume on this site',
+      run: () => updateSettings(settings => {
+        const blocked = Array.isArray(settings.blockedDomains)
+          ? settings.blockedDomains.filter((item): item is string => typeof item === 'string')
+          : []
+        return {
+          ...settings,
+          // Remove every parent-domain rule that currently covers this hostname;
+          // otherwise a button labelled Resume would appear to do nothing.
+          blockedDomains: blocked.filter(domain =>
+            hostname !== domain && !hostname.endsWith(`.${domain}`)),
+        }
+      }),
+    }
+  }
+
+  if (kind === 'paused' && hostname) {
+    return {
+      label: 'Enable on this site',
+      run: () => updateSettings(settings => ({
+        ...settings,
+        domainDecisions: {
+          ...(
+            settings.domainDecisions && typeof settings.domainDecisions === 'object'
+              ? settings.domainDecisions as Record<string, boolean>
+              : {}
+          ),
+          [hostname]: true,
+        },
+      })),
+    }
+  }
+
+  if (kind === 'off') {
+    return {
+      label: 'Turn Contexto on',
+      run: () => updateSettings(settings => ({ ...settings, replacementsEnabled: true })),
+    }
+  }
+
+  if ((kind === 'error' || result.status === null) && result.tabId !== undefined && hostname) {
+    const tabId = result.tabId
+    return {
+      label: 'Reload this tab',
+      run: () => chrome.tabs.reload(tabId),
+    }
+  }
+
+  return null
 }
 
 export function renderPageStatus(
@@ -194,9 +301,6 @@ export function renderPageStatus(
 ): void {
   const section = document.createElement('div')
   section.className = 'section page-status'
-  // The one line users check to answer "is it working?", so announce updates.
-  section.setAttribute('role', 'status')
-  section.setAttribute('aria-live', 'polite')
 
   const row = document.createElement('div')
   row.className = 'page-status__row'
@@ -205,6 +309,11 @@ export function renderPageStatus(
   dot.className = 'page-status__dot'
 
   const text = document.createElement('div')
+  text.className = 'page-status__text'
+  // The one line users check to answer "is it working?", so announce updates
+  // without putting the adjacent action button inside a live-status role.
+  text.setAttribute('role', 'status')
+  text.setAttribute('aria-live', 'polite')
   const headline = document.createElement('div')
   headline.className = 'page-status__headline'
   const hint = document.createElement('div')
@@ -215,6 +324,12 @@ export function renderPageStatus(
   row.appendChild(dot)
   row.appendChild(text)
   section.appendChild(row)
+
+  const action = document.createElement('button')
+  action.type = 'button'
+  action.className = 'page-status__action'
+  action.hidden = true
+  section.appendChild(action)
   container.appendChild(section)
 
   // Only the newest query may paint: a settings change can overtake an in-flight
@@ -223,21 +338,38 @@ export function renderPageStatus(
 
   async function refresh(loadingRetriesLeft = MAX_LOADING_RETRIES): Promise<void> {
     const token = ++queryToken
-    const status = await queryActiveTab()
+    const result = await queryActiveTab()
     if (token !== queryToken) return
 
     // The active content script owns the authoritative in-memory page session.
     // A no-script response has no readable session; normalizePageSession also
     // provides the empty fallback for a timeout or an older content script.
-    onPageSession(normalizePageSession(status.kind === 'no-script' ? null : status))
+    onPageSession(normalizePageSession(result.status))
 
-    const copy = status.kind === 'no-script' ? describeNoScript(status.url) : describe(status)
+    const copy = result.status ? describe(result.status) : describeNoScript(result.url)
     headline.textContent = copy.headline
     hint.textContent = copy.hint ?? ''
     hint.hidden = !copy.hint
     section.classList.toggle('is-working', copy.tone === 'working')
 
-    if (status.kind === 'loading' && loadingRetriesLeft > 0) {
+    const nextAction = actionFor(result)
+    action.hidden = nextAction === null
+    action.disabled = false
+    action.textContent = nextAction?.label ?? ''
+    action.onclick = nextAction
+      ? () => {
+          action.disabled = true
+          action.textContent = 'Working…'
+          void nextAction.run()
+            .then(() => setTimeout(() => void refresh(), SETTLE_AFTER_CHANGE_MS))
+            .catch(() => {
+              action.disabled = false
+              action.textContent = nextAction.label
+            })
+        }
+      : null
+
+    if (result.status?.kind === 'loading' && loadingRetriesLeft > 0) {
       setTimeout(() => {
         if (token === queryToken) void refresh(loadingRetriesLeft - 1)
       }, LOADING_RETRY_MS)

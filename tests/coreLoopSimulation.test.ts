@@ -9,6 +9,7 @@ import {
   clearDirty,
   flushLexiconMerge,
   getEntry,
+  lexiconStorageKey,
   loadLexicon,
   recordSeen,
 } from '../src/store/lexiconStore.js'
@@ -59,6 +60,7 @@ after(() => {
 // ---- chrome + fetch stubs ---------------------------------------------------
 
 let storage: Record<string, unknown> = {}
+const DE_LEXICON_KEY = lexiconStorageKey('de')
 
 globalThis.chrome = {
   runtime: {
@@ -212,13 +214,13 @@ async function freshInstall(): Promise<void> {
   storage = {
     // Explicit not-yet-onboarded settings + empty lexicon force loadSettings /
     // loadLexicon to overwrite module-level state left by earlier tests.
-    contexto_settings: { onboarded: false },
-    contexto_lexicon: {},
+    contexto_settings: { onboarded: false, targetLanguage: 'de' },
+    [DE_LEXICON_KEY]: {},
   }
   clearDirty()
   await loadSettings()
   await loadLanguagePack('de')
-  await loadLexicon()
+  await loadLexicon('de')
   await ensureFirstRunInit()
 
   // Post-conditions of the silent (pretest-free) first run that the whole
@@ -226,7 +228,7 @@ async function freshInstall(): Promise<void> {
   assert.equal(getLevel(), 'intermediate', 'fresh install must default to the intermediate level')
   assert.equal(getDensity(), 0.15, 'fresh install must default to 0.15 density')
   assert.equal(
-    Object.keys(storage.contexto_lexicon as object).length,
+    Object.keys(storage[DE_LEXICON_KEY] as object).length,
     FIRST_RUN_PREPOPULATE_COUNT,
     'first run must seed exactly the top-1500 lemmas',
   )
@@ -488,9 +490,9 @@ test('D: hover-card save-unknown reaches the popup and keeps the word in rotatio
   await flushLexiconMerge()
 
   // (i) It appears in the saved-unknown set the popup reads: the popup loads
-  // contexto_lexicon from chrome.storage and filters on selfMarkedUnknown
+  // the active language's lexicon from chrome.storage and filters on selfMarkedUnknown
   // (collectUnknownWords in src/popup/UnknownWordsList.ts).
-  const stored = storage.contexto_lexicon as Record<string, LexiconEntry>
+  const stored = storage[DE_LEXICON_KEY] as Record<string, LexiconEntry>
   const popupUnknownList = Object.entries(stored)
     .filter(([, entry]) => entry.selfMarkedUnknown)
     .map(([lemma]) => lemma)
@@ -514,7 +516,7 @@ test('D: hover-card save-unknown reaches the popup and keeps the word in rotatio
   const allScoredAfter = selectTokens(afterKnown, afterKnown.length).map((t) => t.lemma)
   assert.equal(allScoredAfter.includes(target), false, 'a self-marked-known word must never be selected')
 
-  const storedAfter = storage.contexto_lexicon as Record<string, LexiconEntry>
+  const storedAfter = storage[DE_LEXICON_KEY] as Record<string, LexiconEntry>
   assert.equal(storedAfter[target].selfMarkedKnown, true)
   assert.equal(
     storedAfter[target].selfMarkedUnknown,

@@ -13,7 +13,7 @@ interface UnknownWord {
 
 interface ExportRow {
   english: string
-  spanish: string
+  target: string
   partOfSpeech: string
   gloss: string
   gender: string
@@ -24,21 +24,19 @@ interface ExportRow {
 // Persistence + cross-section callbacks owned by the popup entry (index.ts), which
 // holds the lexicon store. Keeps this module DOM-only — it never touches storage.
 export interface UnknownWordsListHandlers {
-  // Soft-remove: drop the word from the review list without permanently excluding it
-  // from replacement (clears selfMarkedUnknown only).
-  onMarkKnown: (lemma: string) => void | Promise<void>
+  // Remove from the saved/review list without claiming the learner knows it or
+  // permanently excluding it from future replacement.
+  onRemoveSaved: (lemma: string) => void | Promise<void>
   // Undo a soft-remove, restoring the word's ORIGINAL save time so it returns to its
   // previous list position rather than jumping to the top.
   onRestore: (lemma: string, markedAt: number) => void | Promise<void>
-  // Notify the popup that the saved-unknown total changed (updates the stats panel).
-  onUnknownTotalChange: (total: number) => void
 }
 
 export interface UnknownWordsListHandle {
   setSessionLemmas(lemmas: ReadonlySet<string>): void
 }
 
-// How long the "Marked known · Undo" affordance stays before auto-dismissing. The
+// How long the "Removed from saved words · Undo" affordance stays before auto-dismissing. The
 // Undo control is a real focusable button, so this timeout is convenience, not the
 // only way to undo.
 const UNDO_VISIBLE_MS = 6000
@@ -62,7 +60,7 @@ export async function renderUnknownWordsList(
     console.warn('[Contexto] Language pack unavailable in popup; showing saved words without target enrichment:', err)
   }
 
-  // Mutable model — mark-known removes from here; Undo re-inserts.
+  // Mutable model — removing a saved word drops it from here; Undo re-inserts.
   let allUnknown = collectUnknownWords(lexicon)
   let sessionLemmas = new Set(initialSessionLemmas)
   let currentFilter: Filter = 'all'
@@ -82,7 +80,7 @@ export async function renderUnknownWordsList(
 
   const title = document.createElement('div')
   title.className = 'section-title'
-  title.textContent = 'Unknown Words'
+  title.textContent = `Saved ${getLanguageInfo(activeLanguage).displayName} Words`
   section.appendChild(title)
 
   const filterBar = document.createElement('div')
@@ -134,9 +132,8 @@ export async function renderUnknownWordsList(
 
   exportActions.appendChild(csvBtn)
   exportActions.appendChild(quizletBtn)
-  bodyWrap.appendChild(exportActions)
 
-  // Transient "Marked known · Undo" affordance (aria-live so it is announced).
+  // Transient "Removed from saved words · Undo" affordance (aria-live so it is announced).
   const undoBar = document.createElement('div')
   undoBar.className = 'word-undo'
   undoBar.setAttribute('role', 'status')
@@ -174,11 +171,11 @@ export async function renderUnknownWordsList(
 
   function showUndo(word: UnknownWord): void {
     pendingUndo = word
-    undoText.textContent = `Marked “${word.lemma}” as known. `
+    undoText.textContent = `Removed “${word.lemma}” from saved words. `
     undoBar.classList.add('is-visible')
     if (undoTimer !== null) clearTimeout(undoTimer)
     undoTimer = setTimeout(hideUndo, UNDO_VISIBLE_MS)
-    // Marking known removes the chip (and its focus); move focus to Undo so keyboard
+    // Removing the chip also removes its focus; move focus to Undo so keyboard
     // and screen-reader users can actually reach the time-limited control.
     undoBtn.focus()
   }
@@ -204,10 +201,10 @@ export async function renderUnknownWordsList(
   list.className = 'word-list'
   bodyWrap.appendChild(list)
 
-  function handleMarkKnown(word: UnknownWord, chipEl: HTMLElement): void {
+  function handleRemoveSaved(word: UnknownWord, chipEl: HTMLElement): void {
     // Optimistic fade, then drop from the model and persist the soft-remove.
     chipEl.classList.add('word-chip--leaving')
-    void handlers.onMarkKnown(word.lemma)
+    void handlers.onRemoveSaved(word.lemma)
     clearRemovalTimer()
     removalTimer = setTimeout(() => {
       removalTimer = null
@@ -221,12 +218,11 @@ export async function renderUnknownWordsList(
   function afterModelChange(): void {
     updateCounts()
     renderList()
-    handlers.onUnknownTotalChange(allUnknown.length)
   }
 
   function updateCounts(): void {
     allBtn.textContent = `All (${allUnknown.length})`
-    sessionBtn.textContent = `This session (${sessionCount()})`
+    sessionBtn.textContent = `On this page (${sessionCount()})`
     // Practiceable count comes from the store (answerable saved-unknown words), which
     // mark-known / Undo keep in sync. Disabled when there is nothing to practice or
     // the pack failed to load (every lookup misses).
@@ -247,16 +243,24 @@ export async function renderUnknownWordsList(
       const empty = document.createElement('span')
       empty.className = 'empty-msg'
       empty.textContent = currentFilter === 'session'
-        ? 'No unknown words saved this session.'
-        : 'No unknown words saved yet.'
+        ? 'No saved words from this page.'
+        : `No saved ${getLanguageInfo(activeLanguage).displayName} words yet. Click a translated word on a page to save it.`
       list.appendChild(empty)
       return
     }
 
     for (const word of words) {
-      list.appendChild(buildChip(word, targetLang, chipEl => handleMarkKnown(word, chipEl)))
+      list.appendChild(buildChip(word, targetLang, chipEl => handleRemoveSaved(word, chipEl)))
     }
   }
+
+  const exportDetails = document.createElement('details')
+  exportDetails.className = 'export-details'
+  const exportSummary = document.createElement('summary')
+  exportSummary.textContent = 'Export saved words'
+  exportDetails.appendChild(exportSummary)
+  exportDetails.appendChild(exportActions)
+  bodyWrap.appendChild(exportDetails)
 
   allBtn.addEventListener('click', () => {
     currentFilter = 'all'
@@ -279,7 +283,7 @@ export async function renderUnknownWordsList(
     title.textContent = 'Practice'
     void openPracticePanel(section, activeLanguage, {
       onClose: () => {
-        title.textContent = 'Unknown Words'
+        title.textContent = `Saved ${getLanguageInfo(activeLanguage).displayName} Words`
         bodyWrap.style.display = ''
         updateCounts()
       },
@@ -328,7 +332,7 @@ function collectUnknownWords(lexicon: Record<string, LexiconEntry>): UnknownWord
 // or low-confidence entry, or a failed pack load — the chip falls back to showing the
 // English lemma exactly as before, with no reveal. `targetLang` is the active
 // language's BCP-47 tag, applied to the target text for speech/spellcheck.
-function buildChip(word: UnknownWord, targetLang: string, onMarkKnown: (chipEl: HTMLElement) => void): HTMLElement {
+function buildChip(word: UnknownWord, targetLang: string, onRemoveSaved: (chipEl: HTMLElement) => void): HTMLElement {
   const entry = lookup(word.lemma)
   const target = entry?.target ?? ''
 
@@ -380,18 +384,18 @@ function buildChip(word: UnknownWord, targetLang: string, onMarkKnown: (chipEl: 
     chip.appendChild(body)
   }
 
-  // Mark-known: a separate target from the reveal body so revealing English never
-  // graduates the word by accident.
+  // Removal is a separate target from the reveal body so revealing English never
+  // changes saved/review state by accident.
   const knownBtn = document.createElement('button')
   knownBtn.type = 'button'
   knownBtn.className = 'word-chip__known'
-  knownBtn.setAttribute('aria-label', `Mark ${word.lemma} as known`)
-  knownBtn.title = 'Mark as known'
+  knownBtn.setAttribute('aria-label', `Remove ${word.lemma} from saved words`)
+  knownBtn.title = 'Remove from saved words'
   const check = document.createElement('span')
   check.setAttribute('aria-hidden', 'true')
-  check.textContent = '✓'
+  check.textContent = '×'
   knownBtn.appendChild(check)
-  knownBtn.addEventListener('click', () => onMarkKnown(chip))
+  knownBtn.addEventListener('click', () => onRemoveSaved(chip))
   chip.appendChild(knownBtn)
 
   return chip
@@ -427,7 +431,7 @@ function toExportRows(words: readonly UnknownWord[]): ExportRow[] {
 
     return {
       english: word.lemma,
-      spanish: entry?.target ?? '',
+      target: entry?.target ?? '',
       partOfSpeech: entry?.partOfSpeech ?? '',
       gloss: cleanGloss(entry?.sourceGloss),
       gender: noun?.gender ?? '',
@@ -448,7 +452,7 @@ function buildCsv(words: readonly UnknownWord[], languageName: string): string {
     header.map(escapeCsvCell).join(','),
     ...rows.map(row => [
       row.english,
-      row.spanish,
+      row.target,
       row.partOfSpeech,
       row.gloss,
       row.gender,
@@ -462,7 +466,7 @@ function buildQuizletTsv(words: readonly UnknownWord[]): string {
   return toExportRows(words)
     .map(row => {
       const definition = row.gloss ? `${row.english} - ${row.gloss}` : row.english
-      return [row.spanish || row.english, definition].map(escapeTsvCell).join('\t')
+      return [row.target || row.english, definition].map(escapeTsvCell).join('\t')
     })
     .join('\n')
 }

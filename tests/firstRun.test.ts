@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { ensureFirstRunInit, FIRST_RUN_PREPOPULATE_COUNT } from '../src/content/firstRun.js'
 import { getDensity, getLevel, isOnboarded, loadSettings } from '../src/store/settingsStore.js'
-import { clearDirty, loadLexicon } from '../src/store/lexiconStore.js'
+import { clearDirty, lexiconStorageKey, loadLexicon } from '../src/store/lexiconStore.js'
 import { loadLanguagePack } from '../src/language/loader.js'
 import type { LexiconEntry } from '../src/types/index.js'
 
@@ -26,7 +26,7 @@ globalThis.chrome = {
       },
       async set(obj: Record<string, unknown>) {
         if ('contexto_settings' in obj) settingsSetCalls++
-        if ('contexto_lexicon' in obj) lexiconSetCalls++
+        if (lexiconStorageKey('es') in obj) lexiconSetCalls++
         Object.assign(storage, obj)
       },
     },
@@ -61,8 +61,8 @@ for (let rank = 0; rank < PACK_SIZE; rank++) {
 const SYNTHETIC_PACK = JSON.stringify({
   version: 'test',
   sourceLanguage: 'en',
-  targetLanguage: 'de',
-  displayName: 'German',
+  targetLanguage: 'es',
+  displayName: 'Spanish',
   sources: { test: { name: 'test', url: 'https://example.test', license: 'CC' } },
   entries: packEntries,
 })
@@ -72,8 +72,8 @@ globalThis.fetch = async () => new Response(SYNTHETIC_PACK, { status: 200 })
 // Mirror the content-script startup order: settings -> pack -> lexicon -> init.
 async function startupThroughInit(): Promise<void> {
   await loadSettings()
-  await loadLanguagePack('de')
-  await loadLexicon()
+  await loadLanguagePack('es')
+  await loadLexicon('es')
   await ensureFirstRunInit()
 }
 
@@ -82,7 +82,7 @@ function storedSettings(): Record<string, unknown> {
 }
 
 function storedLexicon(): Record<string, LexiconEntry> {
-  return (storage.contexto_lexicon ?? {}) as Record<string, LexiconEntry>
+  return (storage[lexiconStorageKey('es')] ?? {}) as Record<string, LexiconEntry>
 }
 
 function reset(): void {
@@ -113,6 +113,7 @@ test('first run silently applies intermediate defaults and prepopulates the top 
   // Defaults are persisted immediately (no reload needed for other contexts).
   assert.equal(storedSettings().onboarded, true)
   assert.equal(storedSettings().level, 'intermediate')
+  assert.deepEqual(storedSettings().languageLevels, { es: 'intermediate' })
   assert.equal(storedSettings().density, 0.15)
 
   // Exactly the top-1500 lemmas by frequencyRank are seeded, at seenCount 3.

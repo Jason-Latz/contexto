@@ -1,14 +1,14 @@
-import type { LexiconEntry, PartOfSpeech, TargetLanguage } from '../types/index.js'
-import { isTargetLanguage } from '../language/registry.js'
+import type { OnboardingLevel, PartOfSpeech, TargetLanguage } from '../types/index.js'
+import { getLanguageInfo, isTargetLanguage } from '../language/registry.js'
 import { DEFAULT_DISABLED_PARTS_OF_SPEECH } from '../store/settingsStore.js'
 import {
+  getLexiconForStorage,
   loadLexicon,
   getEntry,
   markUnknown,
   updateEntry,
   flushLexiconMerge,
 } from '../store/lexiconStore.js'
-import { renderStatsPanel } from './StatsPanel.js'
 import { renderDensitySlider } from './DensitySlider.js'
 import { renderLanguagePicker } from './LanguagePicker.js'
 import { renderPageStatus } from './PageStatus.js'
@@ -18,13 +18,14 @@ import {
   type UnknownWordsListHandlers,
 } from './UnknownWordsList.js'
 
-const LEXICON_KEY  = 'contexto_lexicon'
 const SETTINGS_KEY = 'contexto_settings'
 
 interface PopupSettings {
   replacementsEnabled?: boolean
   blockedDomains?: string[]
   targetLanguage?: TargetLanguage
+  level?: OnboardingLevel | null
+  languageLevels?: Partial<Record<TargetLanguage, OnboardingLevel>>
   [key: string]: unknown
 }
 
@@ -39,58 +40,55 @@ function readTargetLanguage(settings: PopupSettings): TargetLanguage {
 async function init(): Promise<void> {
   const root = document.getElementById('root')!
 
-  const stored = await chrome.storage.local.get([LEXICON_KEY, SETTINGS_KEY])
-  const lexicon  = (stored[LEXICON_KEY]  ?? {}) as Record<string, LexiconEntry>
+  const stored = await chrome.storage.local.get(SETTINGS_KEY)
   const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
 
-  // Load the lexicon store so mark-known / practice writes go through the
-  // clobber-safe merge path instead of overwriting the whole map.
-  await loadLexicon()
-
   let activeLanguage = readTargetLanguage(settings)
-  let latestReplacedThisSession = 0
+
+  // Learning state belongs to the selected target language. Loading through the
+  // store also performs the one-time migration from the original shared map.
+  await loadLexicon(activeLanguage)
+  let lexicon = getLexiconForStorage()
+
   let latestSessionLemmas = new Set<string>()
-  let liveStatsHandle: ReturnType<typeof renderStatsPanel> | null = null
   let liveUnknownWordsHandle: UnknownWordsListHandle | null = null
+  let advancedSettingsElement: HTMLDetailsElement | null = null
 
   // First card: what Contexto is doing on the page behind the popup. Answers
   // "is this thing working?" before the user has to guess from the controls.
   // Fills in asynchronously — the controls below must never wait on the page.
   renderPageStatus(root, snapshot => {
-    latestReplacedThisSession = snapshot.replacedThisSession
     latestSessionLemmas = new Set(snapshot.sessionLemmas)
-    liveStatsHandle?.setReplacedThisSession(snapshot.replacedThisSession)
     liveUnknownWordsHandle?.setSessionLemmas(latestSessionLemmas)
   })
 
-  renderLanguagePicker(root, activeLanguage, {
-    // Persist the choice, then rebuild the language-dependent panels so the
-    // Practice + Unknown Words cards immediately reflect the new pack.
-    onChange: async (language) => {
-      activeLanguage = language
-      await updateSettings({ targetLanguage: language })
-      await renderLanguageDependentPanels()
-    },
-  })
+  // Jason's preferred quick-control order: global on/off and immersion amount
+  // stay at the top, immediately after the current-page status.
   renderFeatureToggles(root, settings)
-  renderWordTypeToggles(root, settings)
-
-  // Stats — session word count, unknown words, learning queue size.
-  const statsHandle = renderStatsPanel(root, lexicon)
-  liveStatsHandle = statsHandle
-  // Do not show a delayed/global storage snapshot while the active-tab query is
-  // in flight. Its live reply updates this nonblockingly; no-script/timeout is 0.
-  statsHandle.setReplacedThisSession(latestReplacedThisSession)
-
-  // Density slider — reads and writes chrome.storage.local directly.
   await renderDensitySlider(root)
 
-  renderBlockedDomains(root, settings)
+  renderLanguagePicker(root, activeLanguage, {
+    // Persist the choice, then rebuild the language-dependent panels so the
+    // Practice + Saved Words card immediately reflects the new pack.
+    onChange: async (language) => {
+      activeLanguage = language
+      settings.targetLanguage = language
+      await updateSettings({ targetLanguage: language })
+      await loadLexicon(language)
+      lexicon = getLexiconForStorage()
+      latestSessionLemmas = new Set()
+      await renderLanguageDependentPanels()
+      if (advancedSettingsElement) {
+        advancedSettingsElement.remove()
+        advancedSettingsElement = renderAdvancedSettings(root, settings, activeLanguage)
+      }
+    },
+  })
 
   const handlers: UnknownWordsListHandlers = {
-    // Soft-remove: drop from the review list without permanently excluding the
-    // word from replacement (markUnknown(false) leaves selfMarkedKnown untouched).
-    onMarkKnown: async (lemma) => {
+    // Remove from Saved Words without claiming the learner knows it or excluding
+    // it from future replacement (markUnknown(false) leaves known state untouched).
+    onRemoveSaved: async (lemma) => {
       markUnknown(lemma, false)
       await flushLexiconMerge()
     },
@@ -104,10 +102,9 @@ async function init(): Promise<void> {
       })
       await flushLexiconMerge()
     },
-    onUnknownTotalChange: (total) => statsHandle.setSavedUnknown(total),
   }
 
-  // Container the language-dependent Unknown Words / Practice panels live in, so
+  // Container the language-dependent Saved Words / Practice panel lives in, so
   // a language switch can rebuild them in place without re-rendering the popup.
   const languagePanels = document.createElement('div')
   languagePanels.className = 'lang-dependent'
@@ -129,6 +126,7 @@ async function init(): Promise<void> {
   }
 
   await renderLanguageDependentPanels()
+  advancedSettingsElement = renderAdvancedSettings(root, settings, activeLanguage)
 }
 
 init().catch((err) => {
@@ -160,13 +158,13 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
 
   const title = document.createElement('div')
   title.className = 'section-title'
-  title.textContent = 'Features'
+  title.textContent = 'Contexto Everywhere'
 
   const rows = document.createElement('div')
   rows.className = 'toggle-list'
 
   const replacementToggle = buildToggleRow(
-    'Text Replacement',
+    'Replace words on websites',
     settings.replacementsEnabled,
     async enabled => {
       settings.replacementsEnabled = enabled
@@ -177,6 +175,115 @@ function renderFeatureToggles(container: HTMLElement, initialSettings: PopupSett
   rows.appendChild(replacementToggle)
   section.appendChild(title)
   section.appendChild(rows)
+  container.appendChild(section)
+
+  // A page-status recovery action can turn the global setting back on. Keep
+  // this top control truthful without rebuilding the popup.
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== 'local') return
+    const next = changes[SETTINGS_KEY]?.newValue as PopupSettings | undefined
+    if (!next || typeof next.replacementsEnabled !== 'boolean') return
+    settings.replacementsEnabled = next.replacementsEnabled
+    replacementToggle.setEnabled(next.replacementsEnabled)
+  })
+}
+
+function renderAdvancedSettings(
+  container: HTMLElement,
+  settings: PopupSettings,
+  activeLanguage: TargetLanguage,
+): HTMLDetailsElement {
+  const details = document.createElement('details')
+  details.className = 'section advanced-settings'
+
+  const summary = document.createElement('summary')
+  summary.className = 'advanced-settings__summary'
+  summary.textContent = 'Advanced settings'
+
+  const body = document.createElement('div')
+  body.className = 'advanced-settings__body'
+  renderVocabularyDifficulty(body, settings, activeLanguage)
+  renderWordTypeToggles(body, settings)
+  renderBlockedDomains(body, settings)
+
+  const privacy = document.createElement('p')
+  privacy.className = 'privacy-note'
+  privacy.textContent = 'Processed on device. Page text and learning data never leave Chrome.'
+  body.appendChild(privacy)
+
+  const feedback = document.createElement('a')
+  feedback.className = 'feedback-link'
+  feedback.href = 'https://github.com/Jason-Latz/contexto/issues/new?labels=translation'
+  feedback.target = '_blank'
+  feedback.rel = 'noopener noreferrer'
+  feedback.textContent = 'Report a translation issue ↗'
+  body.appendChild(feedback)
+
+  details.appendChild(summary)
+  details.appendChild(body)
+  container.appendChild(details)
+  return details
+}
+
+function renderVocabularyDifficulty(
+  container: HTMLElement,
+  settings: PopupSettings,
+  language: TargetLanguage,
+): void {
+  const levels = settings.languageLevels ?? {}
+  let selected = levels[language] ?? settings.level ?? 'intermediate'
+
+  const section = document.createElement('div')
+  section.className = 'section'
+
+  const title = document.createElement('div')
+  title.className = 'section-title'
+  title.textContent = 'Vocabulary Difficulty'
+
+  const hint = document.createElement('p')
+  hint.className = 'setting-hint'
+  hint.textContent = `What Contexto assumes you already know in ${getLanguageInfo(language).displayName}. Separate from immersion amount.`
+
+  const group = document.createElement('div')
+  group.className = 'level-picker'
+  group.setAttribute('role', 'group')
+  group.setAttribute('aria-label', `${getLanguageInfo(language).displayName} vocabulary difficulty`)
+
+  const options: Array<{ level: OnboardingLevel; label: string }> = [
+    { level: 'beginner', label: 'New' },
+    { level: 'intermediate', label: 'Some' },
+    { level: 'advanced', label: 'Comfortable' },
+  ]
+  const buttons = new Map<OnboardingLevel, HTMLButtonElement>()
+
+  function sync(): void {
+    for (const [level, button] of buttons) {
+      const active = level === selected
+      button.classList.toggle('is-active', active)
+      button.setAttribute('aria-pressed', String(active))
+    }
+  }
+
+  for (const option of options) {
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = 'level-option'
+    button.textContent = option.label
+    button.addEventListener('click', () => {
+      if (selected === option.level) return
+      selected = option.level
+      settings.languageLevels = { ...(settings.languageLevels ?? {}), [language]: selected }
+      sync()
+      void updateSettings({ languageLevels: settings.languageLevels })
+    })
+    buttons.set(option.level, button)
+    group.appendChild(button)
+  }
+
+  sync()
+  section.appendChild(title)
+  section.appendChild(hint)
+  section.appendChild(group)
   container.appendChild(section)
 }
 
@@ -224,15 +331,17 @@ function renderWordTypeToggles(container: HTMLElement, initialSettings: PopupSet
   container.appendChild(section)
 }
 
+type ToggleRow = HTMLDivElement & { setEnabled(value: boolean): void }
+
 function buildToggleRow(
   labelText: string,
   initialEnabled: boolean,
   onChange: (enabled: boolean) => Promise<void>,
   hintText?: string,
-): HTMLDivElement {
+): ToggleRow {
   let enabled = initialEnabled
 
-  const row = document.createElement('div')
+  const row = document.createElement('div') as ToggleRow
   row.className = 'toggle-row'
 
   const label = document.createElement('span')
@@ -263,12 +372,23 @@ function buildToggleRow(
   }
 
   button.addEventListener('click', () => {
-    enabled = !enabled
+    const previous = enabled
+    enabled = !previous
     render()
+    button.disabled = true
     void onChange(enabled)
+      .catch(() => {
+        enabled = previous
+        render()
+      })
+      .finally(() => { button.disabled = false })
   })
 
   render()
+  row.setEnabled = (value: boolean) => {
+    enabled = value
+    render()
+  }
   // When there's a hint the label is already inside a wrapper appended above.
   if (!hintText) row.appendChild(label)
   row.appendChild(button)
@@ -346,4 +466,16 @@ function renderBlockedDomains(container: HTMLElement, settings: PopupSettings): 
   section.appendChild(list)
   renderList()
   container.appendChild(section)
+
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== 'local') return
+    const next = changes[SETTINGS_KEY]?.newValue as PopupSettings | undefined
+    if (!next || !Array.isArray(next.blockedDomains)) return
+    blockedDomains.splice(
+      0,
+      blockedDomains.length,
+      ...next.blockedDomains.filter((domain): domain is string => typeof domain === 'string'),
+    )
+    renderList()
+  })
 }

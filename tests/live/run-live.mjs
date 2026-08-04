@@ -111,12 +111,12 @@ async function runFirstRun(context) {
     res.spanCount = spans
     if (spans === 0) res.failures.push('no injection on the first page load')
     const stored = await sw.evaluate(async () =>
-      chrome.storage.local.get(['contexto_settings', 'contexto_lexicon']))
+      chrome.storage.local.get(['contexto_settings', 'contexto_lexicon_es']))
     const s = stored.contexto_settings ?? {}
     if (s.onboarded !== true) res.failures.push('onboarded flag not persisted')
     if (s.level !== 'intermediate') res.failures.push(`level=${s.level} (expected intermediate)`)
     if (s.density !== 0.15) res.failures.push(`density=${s.density} (expected 0.15)`)
-    res.lexiconCount = Object.keys(stored.contexto_lexicon ?? {}).length
+    res.lexiconCount = Object.keys(stored.contexto_lexicon_es ?? {}).length
     if (res.lexiconCount < 1500) {
       res.failures.push(`lexicon prepopulated with ${res.lexiconCount} entries (expected >= 1500)`)
     }
@@ -138,7 +138,7 @@ async function runPopup(context) {
   await sw.evaluate(async () => {
     await chrome.storage.local.set({
       contexto_settings: { onboarded: true, level: 'intermediate', targetLanguage: 'es', density: 0.15, replacementsEnabled: true, blockedDomains: ['example.com'], domainDecisions: {} },
-      contexto_lexicon: { dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000000000 }, house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000001000 } },
+      contexto_lexicon_es: { dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000000000 }, house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 1700000001000 } },
     })
   })
   const id = await extId(context)
@@ -155,6 +155,7 @@ async function runPopup(context) {
     if (res.exportButtons < 2) res.failures.push('missing export buttons (CSV/Quizlet)')
     if (res.creditLink < 1) res.failures.push('missing jasonlatz.com credit link')
     // CSV export download
+    await page.locator('.export-details summary').click()
     const csvBtn = page.locator('.export-button', { hasText: /CSV/i }).first()
     if (await csvBtn.count()) {
       const [dl] = await Promise.all([

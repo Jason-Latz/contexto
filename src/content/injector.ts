@@ -1,5 +1,6 @@
 import nlp from 'compromise'
 import { getActiveTargetLanguage, lookup } from '../language/loader.js'
+import { getLanguageInfo } from '../language/registry.js'
 import { scanExpressions } from './expressionScanner.js'
 import { buildReplacement } from '../language/replacement.js'
 import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
@@ -191,6 +192,9 @@ function buildSpan(
 ): HTMLSpanElement {
   const span = document.createElement('span')
   span.textContent = displayText
+  // Let screen readers and speech tools pronounce the injected target word in
+  // the language actually displayed rather than inheriting the English page.
+  span.lang = getLanguageInfo(getActiveTargetLanguage()).htmlLang
   span.setAttribute('data-contexto', 'true')
   span.setAttribute('data-source', originalEnglish)
   span.setAttribute('data-target', displayText)
@@ -261,8 +265,7 @@ function isReplaceable(entry: TranslationEntry): boolean {
 
 // The English-frequency ceiling above which words are assumed already known and
 // are skipped, based on the current level.
-function knownWordCeiling(): number {
-  const level = getLevel()
+function knownWordCeiling(level: OnboardingLevel | null = getLevel()): number {
   return level ? LEVEL_FLOOR[level] : Infinity
 }
 
@@ -530,10 +533,11 @@ function replaceTextNode(
 export function extractPageCandidates(
   nodes: Text[],
   disabledPartsOfSpeech: readonly PartOfSpeech[] = [],
+  level: OnboardingLevel | null = getLevel(),
 ): CandidateToken[] {
   const seenLemmas = new Set<string>()
   const candidates: CandidateToken[] = []
-  const ceiling = knownWordCeiling()
+  const ceiling = knownWordCeiling(level)
   const disabledPos = new Set<PartOfSpeech>(disabledPartsOfSpeech)
 
   for (const node of nodes) {

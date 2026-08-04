@@ -2,7 +2,12 @@ import { ensureTailLoaded, getActiveTargetLanguage, isTailLoaded, loadLanguagePa
 import { collectTextNodes } from './domWalker.js'
 import { extractPageCandidates, injectReplacements, restoreReplacements } from './injector.js'
 import { removeHoverUI, setupHoverHandler } from './hoverHandler.js'
-import { loadLexicon, flushLexiconMerge, isDirty } from '../store/lexiconStore.js'
+import {
+  getLexiconLanguage,
+  loadLexicon,
+  flushLexiconMerge,
+  isDirty,
+} from '../store/lexiconStore.js'
 import {
   DEFAULT_DISABLED_PARTS_OF_SPEECH,
   areReplacementsEnabled,
@@ -10,6 +15,7 @@ import {
   getDensity,
   getDisabledPartsOfSpeech,
   getDomainDecision,
+  getLevel,
   getTargetLanguage,
   isDomainBlocked,
   loadSettings,
@@ -70,15 +76,21 @@ function countPageWords(): number {
   return (document.body?.innerText ?? '').trim().split(/\s+/).filter(Boolean).length
 }
 
+function currentHostname(): string {
+  return window.location.hostname.replace(/^www\./, '')
+}
+
 // The settings currently in memory, in the shape change detection compares.
 // `tailLoaded` reads live loader state (not a stored setting): once the niche
 // tail has percolated in, this flips true and the diff re-renders to inject it.
 function currentRuntimeSettings(): RuntimeSettings {
   return {
     density: getDensity(),
+    level: getLevel(),
     replacementsEnabled: areReplacementsEnabled(),
     tailLoaded: isTailLoaded(),
     blockedDomains: [...getBlockedDomains()],
+    domainDecision: getDomainDecision(currentHostname()),
     targetLanguage: getTargetLanguage(),
     disabledPartsOfSpeech: [...getDisabledPartsOfSpeech()],
   }
@@ -100,14 +112,17 @@ function currentRuntimeSettings(): RuntimeSettings {
 // no-op, stranding the page without its tail words.
 function renderedRuntimeSettings(
   density: number,
+  level: RuntimeSettings['level'],
   disabledPartsOfSpeech: readonly PartOfSpeech[],
   tailLoadedAtExtraction: boolean,
 ): RuntimeSettings {
   return {
     density,
+    level,
     replacementsEnabled: true,
     tailLoaded: tailLoadedAtExtraction,
     blockedDomains: [...getBlockedDomains()],
+    domainDecision: getDomainDecision(currentHostname()),
     targetLanguage: getActiveTargetLanguage(),
     disabledPartsOfSpeech: [...disabledPartsOfSpeech],
   }
@@ -125,9 +140,11 @@ function normalizedDisabledPos(settings: RuntimeSettings): string {
 function rendersDifferently(previous: RuntimeSettings, next: RuntimeSettings): boolean {
   return (
     next.density !== previous.density ||
+    next.level !== previous.level ||
     (next.targetLanguage ?? 'es') !== (previous.targetLanguage ?? 'es') ||
     (next.tailLoaded ?? false) !== (previous.tailLoaded ?? false) ||
     JSON.stringify(next.blockedDomains ?? []) !== JSON.stringify(previous.blockedDomains ?? []) ||
+    next.domainDecision !== previous.domainDecision ||
     normalizedDisabledPos(next) !== normalizedDisabledPos(previous)
   )
 }
@@ -143,8 +160,10 @@ function isTailArrivalOnly(previous: RuntimeSettings, next: RuntimeSettings): bo
     (next.tailLoaded ?? false) &&
     !(previous.tailLoaded ?? false) &&
     next.density === previous.density &&
+    next.level === previous.level &&
     (next.targetLanguage ?? 'es') === (previous.targetLanguage ?? 'es') &&
     JSON.stringify(next.blockedDomains ?? []) === JSON.stringify(previous.blockedDomains ?? []) &&
+    next.domainDecision === previous.domainDecision &&
     normalizedDisabledPos(next) === normalizedDisabledPos(previous)
   )
 }
@@ -308,6 +327,7 @@ interface RenderPassResult {
 
 async function renderReplacementPass(
   density: number,
+  level: RuntimeSettings['level'],
   disabledPartsOfSpeech: readonly PartOfSpeech[],
   shouldRecordExposure?: (lemma: string) => boolean,
   isCurrentRun: () => boolean = () => true,
@@ -326,7 +346,7 @@ async function renderReplacementPass(
   // nodes, then run the word selector once for the whole page. This ensures
   // that once a lemma is chosen it is replaced in every text node, not just
   // the first node where it happened to beat the per-node density cap.
-  const pageCandidates = extractPageCandidates(textNodes, disabledPartsOfSpeech)
+  const pageCandidates = extractPageCandidates(textNodes, disabledPartsOfSpeech, level)
   const maxReplacements = Math.floor(density * pageCandidates.length)
   const rankedLemmas = updateRankedPageLemmas(pageCandidates)
   const approvedLemmas = new Set(rankedLemmas.slice(0, maxReplacements))
@@ -374,6 +394,7 @@ const INCREMENTAL_SLICE_BUDGET_MS = 30
 //   freezes the main thread the way the restore+re-render reconcile did.
 async function renderIncrementalTailPass(
   density: number,
+  level: RuntimeSettings['level'],
   disabledPartsOfSpeech: readonly PartOfSpeech[],
   isCurrentRun: () => boolean,
 ): Promise<RenderPassResult> {
@@ -395,7 +416,7 @@ async function renderIncrementalTailPass(
       // Per-node extraction so the time budget is honored between nodes; the
       // per-lemma dedupe extractPageCandidates does within one call is applied
       // across slices here.
-      for (const candidate of extractPageCandidates([textNodes[index]], disabledPartsOfSpeech)) {
+      for (const candidate of extractPageCandidates([textNodes[index]], disabledPartsOfSpeech, level)) {
         if (seenLemmas.has(candidate.lemma)) continue
         seenLemmas.add(candidate.lemma)
         pageCandidates.push(candidate)
@@ -515,7 +536,7 @@ async function startReplacementPipeline(): Promise<void> {
     // Only the CORE shard here — the first paint never waits on the niche tail,
     // which percolates in afterwards (schedulePercolation, below).
     await loadLanguagePack(getTargetLanguage())
-    await loadLexicon()
+    await loadLexicon(getTargetLanguage())
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     // Reset the in-memory session for this page load.
@@ -531,9 +552,11 @@ async function startReplacementPipeline(): Promise<void> {
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
     const density = computeDensity()
+    const level = getLevel()
     const disabledPos = [...getDisabledPartsOfSpeech()]
     const pass = await renderReplacementPass(
       density,
+      level,
       disabledPos,
       undefined,
       () => isCurrentReplacementPipelineRun(runVersion),
@@ -542,7 +565,7 @@ async function startReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
+    appliedSettings = renderedRuntimeSettings(density, level, disabledPos, pass.tailLoadedAtExtraction)
     // First core-only pass has rendered; now bring the niche tail in behind it.
     schedulePercolation()
   } catch (err) {
@@ -591,8 +614,24 @@ async function refreshReplacementPipeline(): Promise<void> {
     // switch resets the tail so it re-percolates for the new language below). The
     // niche tail is never loaded synchronously here — it comes in via
     // schedulePercolation once this pass has rendered.
-    await loadLanguagePack(getTargetLanguage())
+    const targetLanguage = getTargetLanguage()
+    const languageChanged = getLexiconLanguage() !== targetLanguage
+    await loadLanguagePack(targetLanguage)
     if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    // Exposure, saved-word, and review state belong to the target language.
+    // Switch maps only when the language changed; density/tail refreshes retain
+    // this tab's unflushed in-memory exposure state.
+    if (languageChanged) {
+      await loadLexicon(targetLanguage)
+      if (!isCurrentReplacementPipelineRun(runVersion)) return
+      // A page session and its exposure de-duplication are language-specific too.
+      // The same English lemma encountered after a language switch teaches a
+      // different target word and must be counted for the new language.
+      initSession()
+      recordedApprovedLemmas = new Set()
+      rankedPageLemmas = []
+    }
 
     // Tail arrival is ADDITIVE: nothing on the page went stale, so do not tear
     // it down — inject the marginal tail vocabulary incrementally instead of
@@ -603,9 +642,11 @@ async function refreshReplacementPipeline(): Promise<void> {
       mutationObserver = null
 
       const density = computeDensity()
+      const level = getLevel()
       const disabledPos = [...getDisabledPartsOfSpeech()]
       const pass = await renderIncrementalTailPass(
         density,
+        level,
         disabledPos,
         () => isCurrentReplacementPipelineRun(runVersion),
       )
@@ -613,7 +654,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
       rememberRecordedLemmas(activeApprovedLemmas)
       isReplacementPipelineActive = true
-      appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
+      appliedSettings = renderedRuntimeSettings(density, level, disabledPos, pass.tailLoadedAtExtraction)
       return
     }
 
@@ -632,9 +673,11 @@ async function refreshReplacementPipeline(): Promise<void> {
     }
 
     const density = computeDensity()
+    const level = getLevel()
     const disabledPos = [...getDisabledPartsOfSpeech()]
     const pass = await renderReplacementPass(
       density,
+      level,
       disabledPos,
       lemma => !recordedApprovedLemmas.has(lemma),
       () => isCurrentReplacementPipelineRun(runVersion),
@@ -643,7 +686,7 @@ async function refreshReplacementPipeline(): Promise<void> {
 
     rememberRecordedLemmas(activeApprovedLemmas)
     isReplacementPipelineActive = true
-    appliedSettings = renderedRuntimeSettings(density, disabledPos, pass.tailLoadedAtExtraction)
+    appliedSettings = renderedRuntimeSettings(density, level, disabledPos, pass.tailLoadedAtExtraction)
     // Keep the tail percolating: a language switch reset it, and until it is
     // loaded this re-arms the background load (idempotent once loaded).
     schedulePercolation()
@@ -735,41 +778,42 @@ async function reconcileWithStoredSettings(): Promise<void> {
 // stale behind a page that has since grown, shrunk, or been re-rendered.
 function describePageStatus(): PageStatus {
   const language = getTargetLanguage()
+  const hostname = currentHostname()
   const swapped = document.querySelectorAll('[data-contexto="true"]').length
   const sessionLemmas = [...new Set(
     getSessionForStorage().wordsSeen.map(word => word.englishLemma),
   )]
   const replacedThisSession = sessionLemmas.length
+  const context = { replacedThisSession, sessionLemmas, language, hostname }
 
   if (!areReplacementsEnabled()) {
-    return { kind: 'off', swapped: 0, replacedThisSession, sessionLemmas, language }
+    return { kind: 'off', swapped: 0, ...context }
   }
   if (pipelineFailed) {
-    return { kind: 'error', swapped: 0, replacedThisSession, sessionLemmas, language }
+    return { kind: 'error', swapped: 0, ...context }
   }
 
   // Blocked and paused look the same on the page but have different escape
   // hatches, so the popup needs to tell them apart.
-  const hostname = window.location.hostname.replace(/^www\./, '')
   if (isDomainBlocked(hostname)) {
-    return { kind: 'blocked', swapped: 0, replacedThisSession, sessionLemmas, language }
+    return { kind: 'blocked', swapped: 0, ...context }
   }
   if (getDomainDecision(hostname) === false) {
-    return { kind: 'paused', swapped: 0, replacedThisSession, sessionLemmas, language }
+    return { kind: 'paused', swapped: 0, ...context }
   }
 
   // Mid-run, or readable content is present but no pass has landed yet (the
   // content watcher is about to fire). Never report "too short" for a full page.
   if (isReplacementPipelineRunning) {
-    return { kind: 'loading', swapped, replacedThisSession, sessionLemmas, language }
+    return { kind: 'loading', swapped, ...context }
   }
   if (!isReplacementPipelineActive) {
     return countPageWords() >= MIN_PAGE_WORD_COUNT
-      ? { kind: 'loading', swapped, replacedThisSession, sessionLemmas, language }
-      : { kind: 'too-short', swapped: 0, replacedThisSession, sessionLemmas, language }
+      ? { kind: 'loading', swapped, ...context }
+      : { kind: 'too-short', swapped: 0, ...context }
   }
 
-  return { kind: 'active', swapped, replacedThisSession, sessionLemmas, language }
+  return { kind: 'active', swapped, ...context }
 }
 
 async function main(): Promise<void> {

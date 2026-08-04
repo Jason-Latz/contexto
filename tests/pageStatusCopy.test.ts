@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { describeNoScript, normalizePageSession } from '../src/popup/PageStatus.js'
+import { describe, describeNoScript, normalizePageSession } from '../src/popup/PageStatus.js'
 
 // When no content script answers, the popup classifies the cause from the tab
 // URL. The URL is only visible on pages our host permissions cover, so a
@@ -38,6 +38,30 @@ test('an ordinary web page with no script asks for a reload instead', () => {
 test('local files point at the file-access permission', () => {
   const copy = describeNoScript('file:///Users/x/notes.html')
   assert.match(copy.hint ?? '', /file URLs/)
+})
+
+test('zero eligible words does not promise that raising density will fix it', () => {
+  const copy = describe({
+    kind: 'active',
+    swapped: 0,
+    replacedThisSession: 0,
+    sessionLemmas: [],
+    language: 'es',
+  })
+  assert.match(copy.headline, /No eligible words/)
+  assert.doesNotMatch(copy.hint ?? '', /Raise/)
+})
+
+test('the safety pause explains why permission is needed', () => {
+  const copy = describe({
+    kind: 'paused',
+    swapped: 0,
+    replacedThisSession: 0,
+    sessionLemmas: [],
+    language: 'de',
+  })
+  assert.match(copy.headline, /Waiting for permission/)
+  assert.match(copy.hint ?? '', /sensitive sites/)
 })
 
 test('an older content script without session lemmas fails closed to an empty session', () => {

@@ -6,6 +6,9 @@
 
 ## Agent reliability
 
+- In the Contexto popup, keep the global replacement on/off control and the
+  immersion slider at the top immediately after page status; language, review,
+  and advanced settings follow them.
 - Before starting a high-volume model workflow, tell Jason the expected call
   volume, whether it uses included plan allowance or paid credits, and whether
   auto top-up could create a charge. Never start potentially billable usage
@@ -13,6 +16,18 @@
 - When intentionally using down a plan/reset allowance, target roughly 20%
   usage remaining for Jason when feasible; flag the tradeoff before going
   lower unless he explicitly requests a different buffer.
+- For Chrome Web Store developer operations, use `jasonlatz0@gmail.com`, not
+  the browser's default Google account, and verify the visible account before
+  any upload or submission.
+- Before controlling Chrome through Computer Use, tell Jason not to interact
+  with Chrome until the next handoff; refresh the app state after any user
+  interaction because prior accessibility element IDs are stale.
+- Chrome Web Store Computer Use can return before a long `type_text` paste
+  finishes replaying. Issue only one paste, then wait for its character counter
+  to stabilize before any focus change or corrective edit.
+- In Chrome text fields controlled through Computer Use, use `ctrl+a` for
+  select-all rather than `super+a`, then verify the field value or character
+  counter again after focus leaves the field.
 - Do not default every high-volume model stage to the flagship tier. Prefer
   GPT-5.6 Luna over Terra for Jason's high-volume structured worker calls when
   Luna is available and has passed a representative calibration; retain
@@ -53,10 +68,22 @@
   command before the tool runs. Use `find`, an explicit path, or a guarded glob.
 - Run independent Git diagnostics (`status`, `diff --stat`, `diff --check`) as
   separate commands; do not join them with shell control operators.
+- In a shared worktree, re-check `HEAD`, the reflog, and the staged diff
+  immediately before and after staging. Another agent can commit the shared
+  index; never assume staged files still belong exclusively to the current task.
 - Shell `rm -rf` cleanup is blocked in tool commands even for `mktemp` paths;
   remove a validated disposable temp tree with Node's `fs.rmSync` instead.
+- A Node REPL call that intentionally waits near 30 seconds needs an explicit
+  timeout above 30 seconds; otherwise the default timeout resets the kernel.
+- Contexto tests do not install `tsx`; compile with `tsconfig.test.json` and run
+  the emitted `.test-build/tests/*.test.js`, or use `npm test`.
+- Contexto's source manifest is the repository-root `manifest.json`, not
+  `public/manifest.json`; locate release metadata with `rg --files` before
+  scripting comparisons instead of assuming a framework-standard path.
 - When an `rg` pattern begins with `--`, put the `--` option terminator before
   the pattern so ripgrep does not parse the pattern as a flag.
+- Put all `rg` options such as `--glob` before the `--` option terminator;
+  everything after the terminator is parsed as a pattern or file path.
 - Do not use contextual `rg` output on minified JSON or JSONL records; extract
   the needed keys with a parser so one match cannot dump an entire huge line.
 - Verify status totals before sending commentary; never leave a placeholder or
@@ -67,6 +94,9 @@
   token exists in the chosen fixture and run the exact workflow end to end.
 - Do not describe a multi-file publication as atomic unless the final
   replacement itself is atomic or has an explicit rollback path.
+- Popup actions for an already-injected page must use the hostname reported by
+  the content script; `chrome.tabs.query()` can withhold `tab.url` even when the
+  page can answer messages, so the tab URL is only a no-script fallback.
 - The overnight `*.workflow.js` files are host snippets that combine ESM
   `export` declarations with intentional top-level `return`/`await`; neither
   plain `node --check` nor wrapping the whole file in `AsyncFunction` is valid.
@@ -146,6 +176,13 @@ The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**
   Extracts cache under `pipeline/data/wikt-cache/` (gitignored; re-download from kaikki.org).
   ≥50k entries each; all `medium` tier so the rare long-tail renders and the common band is
   gated (mirrors Spanish). `enZipf` MUST match `qa_language_pack.py` (re-QA must be a no-op).
+- **Learning state is per target language:** runtime stores use
+  `contexto_lexicon_<lang>`. The former shared `contexto_lexicon` is copied once
+  into the language active during migration and retained as a recoverable backup;
+  the migration marker prevents its progress from leaking into other languages.
+  Language switches must change the active lexicon and reset page-session exposure
+  de-duplication. Vocabulary difficulty is likewise stored per language, with the
+  legacy global level only as an existing-user fallback.
 - **Adding a language:** add it to `TargetLanguage`, `src/language/registry.ts`,
   `GENDERS_BY_LANGUAGE` in the validator, a `<lang>Adapter.ts` + dispatch entry, and build
   the pack. The loader/injector/popup are already language-generic.
@@ -216,12 +253,21 @@ Conventions to preserve:
   status live on every query, so it cannot go stale. **No manifest permission is needed**
   to message an already-injected content script (verified: the error is "Receiving end
   does not exist", not a permission error).
+- Page status is actionable: active sites can be paused, blocked sites resumed,
+  high-stakes safety pauses explicitly enabled, global-off restored, and stale
+  tabs reloaded from the status card. The current hostname's high-stakes decision
+  is part of the live render diff so enabling a paused site actually starts it.
 
 Measured facts worth not re-deriving: a **frozen** background tab DOES receive its queued
 `storage.onChanged` on resume (so it self-heals), and real **bfcache** is unreachable
 under Playwright because attaching CDP disables it.
 
 ## Popup review features (2026-06)
+
+The popup is a quick current-page remote, not a full settings page. Its order is:
+page status -> global on/off -> immersion amount -> compact language selector ->
+Saved Words/Practice -> collapsed Advanced settings. "On this page" means the
+active tab's page-scoped in-memory session; do not relabel it as a browsing session.
 
 Quizzing is on-demand only, via the popup Practice panel. The auto-popping quiz
 banner (`src/quiz/`), its "Quizzes" toggle (`settings.quizzesEnabled`), and the
@@ -241,9 +287,10 @@ The popup "Unknown Words" card is a review surface for saved-unknown words:
   the English source + gloss inline on hover/focus (English also on `aria-label`); words
   with no usable target fall back to an English-only chip. Practice + chips load the
   active-language pack and tag target text with the right BCP-47 `lang`.
-- **Mark known = soft remove** — the ✓ clears `selfMarkedUnknown` only (does NOT set
+- **Remove saved word = soft remove** — the × clears `selfMarkedUnknown` only (does NOT set
   `selfMarkedKnown`), so the word leaves the list but stays eligible for replacement;
-  an aria-live Undo restores it with its original save time.
+  user-facing copy calls this "Remove from saved words," never "Mark known," and an
+  aria-live Undo restores it with its original save time.
 - **Practice**: `src/popup/PracticePanel.ts` body-swaps the card into a self-graded
   flashcard quiz (target word, reveal English + gloss, know / don't-know) over
   saved-unknown words only, ordered stalest-first by

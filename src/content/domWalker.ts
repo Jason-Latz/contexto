@@ -80,8 +80,14 @@ const HIGH_STAKES_DOMAINS: { pattern: RegExp; category: string }[] = [
 // The banner is removed from the DOM as soon as a choice is made.
 function showHighStakesBanner(hostname: string, category: string): Promise<boolean> {
   return new Promise((resolve) => {
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null
     const banner = document.createElement('div')
     banner.setAttribute('id', 'contexto-hsd-banner')
+    banner.setAttribute('role', 'dialog')
+    banner.setAttribute('aria-modal', 'false')
+    banner.setAttribute('aria-labelledby', 'contexto-hsd-message')
     banner.setAttribute('style', [
       'position: fixed',
       'top: 0',
@@ -94,19 +100,21 @@ function showHighStakesBanner(hostname: string, category: string): Promise<boole
       'font-size: 14px',
       'padding: 12px 20px',
       'display: flex',
+      'flex-wrap: wrap',
       'align-items: center',
       'gap: 16px',
       'box-shadow: 0 2px 8px rgba(0,0,0,0.4)',
     ].join('; '))
 
     const message = document.createElement('span')
+    message.id = 'contexto-hsd-message'
     message.style.flex = '1'
     banner.setAttribute('data-contexto-ui', 'true')
     message.textContent =
-      `Contexto: ${category} site detected (${hostname}). Enable language immersion here?`
+      `Contexto is paused because ${hostname} may contain ${category} information. Enable immersion here?`
 
     const enableBtn = document.createElement('button')
-    enableBtn.textContent = 'Enable'
+    enableBtn.textContent = 'Enable here'
     enableBtn.setAttribute('style', [
       'padding: 6px 14px',
       'background: #3a7bd5',
@@ -132,17 +140,27 @@ function showHighStakesBanner(hostname: string, category: string): Promise<boole
     ].join('; '))
 
     function dismiss(enabled: boolean): void {
+      document.removeEventListener('keydown', onKeydown)
       banner.remove()
+      previousFocus?.focus?.()
       resolve(enabled)
+    }
+
+    function onKeydown(event: KeyboardEvent): void {
+      if (event.key !== 'Escape') return
+      event.preventDefault()
+      dismiss(false)
     }
 
     enableBtn.addEventListener('click', () => dismiss(true), { once: true })
     pauseBtn.addEventListener('click', () => dismiss(false), { once: true })
+    document.addEventListener('keydown', onKeydown)
 
     banner.appendChild(message)
     banner.appendChild(enableBtn)
     banner.appendChild(pauseBtn)
     document.body.appendChild(banner)
+    enableBtn.focus()
   })
 }
 

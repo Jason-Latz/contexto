@@ -12,58 +12,58 @@
     {
       "site": "wikipedia-photosynthesis",
       "core": {
-        "ms": 2321,
+        "ms": 2407,
         "count": 1616,
         "heap": 27.3,
         "postCoreMaxLongtaskMs": 0,
         "errors": 0
       },
       "default": {
-        "coreDoneMs": 1875,
+        "coreDoneMs": 1929,
         "coreCount": 1616,
-        "percolateDoneMs": 3074,
+        "percolateDoneMs": 3081,
         "finalCount": 1888,
-        "maxLongtaskMs": 1554,
+        "maxLongtaskMs": 1602,
         "maxPercolationLongtaskMs": 0,
-        "heap": 38.2,
+        "heap": 38.3,
         "errors": 0
       }
     },
     {
       "site": "wikipedia-roman-empire",
       "core": {
-        "ms": 5147,
+        "ms": 5507,
         "count": 4492,
-        "heap": 28.4,
-        "postCoreMaxLongtaskMs": 70,
+        "heap": 28.2,
+        "postCoreMaxLongtaskMs": 249,
         "errors": 0
       },
       "default": {
-        "coreDoneMs": 4414,
+        "coreDoneMs": 4498,
         "coreCount": 4492,
-        "percolateDoneMs": 7573,
+        "percolateDoneMs": 27679,
         "finalCount": 4813,
-        "maxLongtaskMs": 3985,
-        "maxPercolationLongtaskMs": 83,
-        "heap": 39.2,
+        "maxLongtaskMs": 4071,
+        "maxPercolationLongtaskMs": 89,
+        "heap": 39.5,
         "errors": 0
       }
     },
     {
       "site": "gutenberg-alice",
       "core": {
-        "ms": 4580,
+        "ms": 4879,
         "count": 2338,
-        "heap": 26.9,
-        "postCoreMaxLongtaskMs": 0,
+        "heap": 27.2,
+        "postCoreMaxLongtaskMs": 108,
         "errors": 0
       },
       "default": {
-        "coreDoneMs": 4173,
+        "coreDoneMs": 4217,
         "coreCount": 2338,
-        "percolateDoneMs": 9140,
+        "percolateDoneMs": 9154,
         "finalCount": 2625,
-        "maxLongtaskMs": 3969,
+        "maxLongtaskMs": 4004,
         "maxPercolationLongtaskMs": 0,
         "heap": 38.6,
         "errors": 0
@@ -72,18 +72,18 @@
     {
       "site": "pg-essay",
       "core": {
-        "ms": 2658,
+        "ms": 2721,
         "count": 1081,
         "heap": 26.7,
-        "postCoreMaxLongtaskMs": 0,
+        "postCoreMaxLongtaskMs": 58,
         "errors": 0
       },
       "default": {
-        "coreDoneMs": 2203,
+        "coreDoneMs": 2319,
         "coreCount": 1081,
-        "percolateDoneMs": 4980,
+        "percolateDoneMs": 5205,
         "finalCount": 1146,
-        "maxLongtaskMs": 1904,
+        "maxLongtaskMs": 2001,
         "maxPercolationLongtaskMs": 0,
         "heap": 37.9,
         "errors": 0
@@ -92,18 +92,18 @@
     {
       "site": "mdn-array",
       "core": {
-        "ms": 1408,
+        "ms": 1433,
         "count": 750,
         "heap": 28.2,
         "postCoreMaxLongtaskMs": 0,
         "errors": 0
       },
       "default": {
-        "coreDoneMs": 1050,
+        "coreDoneMs": 1193,
         "coreCount": 750,
-        "percolateDoneMs": 1668,
+        "percolateDoneMs": 1750,
         "finalCount": 779,
-        "maxLongtaskMs": 678,
+        "maxLongtaskMs": 693,
         "maxPercolationLongtaskMs": 0,
         "heap": 39.1,
         "errors": 0
@@ -111,12 +111,12 @@
     }
   ],
   "aggregate": {
-    "coreFirstPassAvgMs": 3223,
+    "coreFirstPassAvgMs": 3389,
     "coreAvgHeapMB": 27.5,
-    "defaultPercolateDoneAvgMs": 5287,
-    "defaultSteadyHeapMB": 38.6,
-    "maxPercolationLongtaskMs": 83,
-    "maxPageWorkBaselineMs": 70,
-    "maxLongtaskMs": 3985
+    "defaultPercolateDoneAvgMs": 9374,
+    "defaultSteadyHeapMB": 38.7,
+    "maxPercolationLongtaskMs": 89,
+    "maxPageWorkBaselineMs": 249,
+    "maxLongtaskMs": 4071
   }
 }

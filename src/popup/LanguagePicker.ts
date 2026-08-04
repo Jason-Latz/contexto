@@ -1,9 +1,9 @@
 /**
- * LanguagePicker.ts — Target-language segmented control for the popup.
+ * LanguagePicker.ts — Compact target-language selector for the popup.
  *
- * Lists every language in the registry (English name + endonym) as a pill
- * group, marks the active one with aria-pressed, and calls back on change. The
- * caller (index.ts) owns persistence and re-rendering the language-dependent
+ * Lists every language in a compact native selector (English name + endonym)
+ * and calls back on change. The caller (index.ts) owns persistence and
+ * re-rendering the language-dependent
  * panels — this module is DOM-only and never touches storage.
  */
 
@@ -21,8 +21,6 @@ export function renderLanguagePicker(
   activeLanguage: TargetLanguage,
   handlers: LanguagePickerHandlers,
 ): void {
-  let current = activeLanguage
-
   const section = document.createElement('div')
   section.className = 'section'
 
@@ -31,55 +29,25 @@ export function renderLanguagePicker(
   title.id = 'language-picker-label'
   title.textContent = 'Target Language'
 
-  const group = document.createElement('div')
-  group.className = 'lang-picker'
-  group.setAttribute('role', 'group')
-  group.setAttribute('aria-labelledby', 'language-picker-label')
-
-  const buttons = new Map<TargetLanguage, HTMLButtonElement>()
-
-  function syncPressed(): void {
-    for (const [code, btn] of buttons) {
-      const isActive = code === current
-      btn.setAttribute('aria-pressed', String(isActive))
-      btn.classList.toggle('is-active', isActive)
-    }
-  }
+  const select = document.createElement('select')
+  select.className = 'lang-select'
+  select.setAttribute('aria-labelledby', 'language-picker-label')
 
   for (const info of LANGUAGES) {
-    const btn = document.createElement('button')
-    btn.type = 'button'
-    btn.className = 'lang-option'
-    btn.lang = info.htmlLang
-    // English name leads (matches the rest of the UI's language); the endonym is
-    // a quieter sub-label so a learner recognises the language by sight too.
-    btn.setAttribute('aria-label', `${info.displayName} (${info.endonym})`)
-
-    const name = document.createElement('span')
-    name.className = 'lang-option__name'
-    name.textContent = info.displayName
-
-    const endonym = document.createElement('span')
-    endonym.className = 'lang-option__endonym'
-    endonym.textContent = info.endonym
-
-    btn.appendChild(name)
-    btn.appendChild(endonym)
-
-    btn.addEventListener('click', () => {
-      if (current === info.code) return
-      current = info.code
-      syncPressed()
-      void handlers.onChange(info.code)
-    })
-
-    buttons.set(info.code, btn)
-    group.appendChild(btn)
+    const option = document.createElement('option')
+    option.value = info.code
+    option.textContent = `${info.displayName} — ${info.endonym}`
+    option.lang = info.htmlLang
+    option.selected = info.code === activeLanguage
+    select.appendChild(option)
   }
 
-  syncPressed()
+  select.addEventListener('change', () => {
+    const language = select.value as TargetLanguage
+    void handlers.onChange(language)
+  })
 
   section.appendChild(title)
-  section.appendChild(group)
+  section.appendChild(select)
   container.appendChild(section)
 }

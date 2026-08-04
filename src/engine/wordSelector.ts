@@ -51,13 +51,12 @@ function noveltyScore(seenCount: number): number {
 // at one day past due. Beyond one day the score stays at 1.0 — the word is
 // already maximally prioritised and further staleness adds no extra signal.
 //
-// lastSeenAt is used as a proxy for last-quizzed-at because the lexicon does
-// not track quiz timestamps separately. This is a reasonable approximation —
-// words are typically shown on the same session they are quizzed.
+// Review scheduling is anchored to an explicit quiz/review timestamp. Passive
+// page exposure must not postpone a word that is due for active recall.
 function srsOverdueScore(entry: LexiconEntry): number {
   if (entry.srsInterval === 0) return 0  // no SM-2 schedule yet
 
-  const dueAt      = entry.lastSeenAt + entry.srsInterval * MS_PER_DAY
+  const dueAt      = entry.lastReviewedAt + entry.srsInterval * MS_PER_DAY
   const overdueDays = (Date.now() - dueAt) / MS_PER_DAY
   return Math.min(1, Math.max(0, overdueDays))
 }

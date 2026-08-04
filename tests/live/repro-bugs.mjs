@@ -109,8 +109,10 @@ function sameLanguageAs(reference, actual) {
 async function clickLanguageInPopup(context, extId, displayName) {
   const popup = await context.newPage()
   await popup.goto(`chrome-extension://${extId}/popup/index.html`, { waitUntil: 'domcontentloaded' })
-  await popup.waitForSelector('.lang-option')
-  await popup.locator('.lang-option', { hasText: displayName }).first().click()
+  await popup.waitForSelector('.lang-select')
+  const optionValue = await popup.locator('.lang-select option', { hasText: displayName }).first().getAttribute('value')
+  if (!optionValue) throw new Error(`No language option for ${displayName}`)
+  await popup.locator('.lang-select').selectOption(optionValue)
   await popup.waitForTimeout(600)
   await popup.close()
 }
@@ -129,19 +131,14 @@ async function readPageStatus(popup, pageUnderTest) {
     await popup.waitForSelector('.page-status__headline:not(:empty)', { timeout: 8000 })
   } catch {
     // No status card at all — the state this whole feature exists to remove.
-    return { headline: '(no page-status card)', hint: '', working: false }
+    return { headline: '(no page-status card)', hint: '', working: false, action: '' }
   }
   return {
     headline: await popup.locator('.page-status__headline').innerText(),
     hint: await popup.locator('.page-status__hint').innerText().catch(() => ''),
     working: await popup.locator('.page-status').evaluate(el => el.classList.contains('is-working')),
+    action: await popup.locator('.page-status__action:not([hidden])').innerText().catch(() => ''),
   }
-}
-
-async function readStatValue(popup, label) {
-  const row = popup.locator('.stat-row').filter({ hasText: label }).first()
-  await row.waitFor({ timeout: 8000 })
-  return Number(await row.locator('.stat-value').innerText())
 }
 
 const report = []
@@ -268,23 +265,16 @@ async function bug3(base) {
   await spans(article).first().waitFor({ timeout: 8000 })
   const active = await readPageStatus(popup, article)
   check('BUG3-active', 'Popup reports the swap count on a working page',
-    /\d+ words swapped into Spanish/.test(active.headline) && active.working,
+    /\d+ words changed to Spanish/.test(active.headline) && active.working,
     JSON.stringify(active.headline))
 
-  // Opening the popup does not hide the article, so its session has not reached
-  // the visibilitychange/3-minute storage flush. The row must come directly from
-  // this active tab's in-memory session rather than the stale global snapshot.
+  // Opening the popup does not hide the article, so the page session has not
+  // reached the visibilitychange/3-minute storage flush. The saved-word page
+  // filter must still use the active tab's in-memory session.
   const expectedSessionCount = await spans(article).evaluateAll(els =>
     new Set(els.map(el => el.getAttribute('data-lemma')).filter(Boolean)).size)
-  await popup.waitForFunction(() => {
-    const row = [...document.querySelectorAll('.stat-row')]
-      .find(el => el.firstElementChild?.textContent === 'Replaced this session')
-    return Number(row?.querySelector('.stat-value')?.textContent) > 0
-  }, undefined, { timeout: 8000 }).catch(() => {})
-  const liveSessionCount = await readStatValue(popup, 'Replaced this session')
-  check('BUG3-session-live', 'Session counter reads the active tab before storage flushes',
-    expectedSessionCount > 0 && liveSessionCount > 0 && liveSessionCount <= expectedSessionCount,
-    `popup=${liveSessionCount}, active-tab unique lemmas=${expectedSessionCount}`)
+  check('BUG3-session-live', 'Active page exposes a non-empty live lemma session',
+    expectedSessionCount > 0, `active-tab unique lemmas=${expectedSessionCount}`)
 
   // Save one word that really appeared on this page, then deliberately replace
   // the global session snapshot with an empty one (the same last-writer-wins
@@ -296,8 +286,8 @@ async function bug3(base) {
   await savedSpan.click()
   await sw.evaluate(async (lemma) => {
     for (let attempt = 0; attempt < 50; attempt++) {
-      const stored = await chrome.storage.local.get('contexto_lexicon')
-      const lexicon = stored.contexto_lexicon ?? {}
+      const stored = await chrome.storage.local.get('contexto_lexicon_es')
+      const lexicon = stored.contexto_lexicon_es ?? {}
       if (lexicon[lemma]?.selfMarkedUnknown) return
       await new Promise(resolve => setTimeout(resolve, 50))
     }
@@ -306,10 +296,10 @@ async function bug3(base) {
 
   const offSessionLemma = 'contexto-off-page'
   await sw.evaluate(async ({ lemma, offPage }) => {
-    const stored = (await chrome.storage.local.get('contexto_lexicon')).contexto_lexicon ?? {}
+    const stored = (await chrome.storage.local.get('contexto_lexicon_es')).contexto_lexicon_es ?? {}
     const template = stored[lemma]
     await chrome.storage.local.set({
-      contexto_lexicon: {
+      contexto_lexicon_es: {
         ...stored,
         [offPage]: {
           ...template,
@@ -328,17 +318,17 @@ async function bug3(base) {
   await readPageStatus(popup, article)
   await popup.waitForFunction(() => {
     const button = [...document.querySelectorAll('.filter-btn')]
-      .find(el => el.textContent?.startsWith('This session'))
-    return button?.textContent === 'This session (1)'
+      .find(el => el.textContent?.startsWith('On this page'))
+    return button?.textContent === 'On this page (1)'
   }, undefined, { timeout: 8000 }).catch(() => {})
-  const sessionFilter = popup.locator('.filter-btn').filter({ hasText: 'This session' }).first()
+  const sessionFilter = popup.locator('.filter-btn').filter({ hasText: 'On this page' }).first()
   const sessionFilterLabel = await sessionFilter.innerText()
   await sessionFilter.click()
   const filteredLemmas = await popup.locator('.word-chip__known').evaluateAll(buttons =>
     buttons.map(button =>
-      (button.getAttribute('aria-label') ?? '').replace(/^Mark /, '').replace(/ as known$/, '')))
+      (button.getAttribute('aria-label') ?? '').replace(/^Remove /, '').replace(/ from saved words$/, '')))
   check('BUG3-session-filter', 'Saved-word session filter follows the active tab, not global storage',
-    sessionFilterLabel === 'This session (1)' &&
+    sessionFilterLabel === 'On this page (1)' &&
       filteredLemmas.length === 1 &&
       filteredLemmas[0] === savedLemma &&
       !filteredLemmas.includes(offSessionLemma),
@@ -358,24 +348,52 @@ async function bug3(base) {
   check('BUG3-unreachable', 'Popup names native Chrome pages as the reason it cannot run',
     /native Chrome pages/.test(blankStatus.headline),
     JSON.stringify(blankStatus.headline))
-  const blankSessionCount = await readStatValue(popup, 'Replaced this session')
   const blankSessionFilter = await popup.locator('.filter-btn')
-    .filter({ hasText: 'This session' }).first().innerText()
+    .filter({ hasText: 'On this page' }).first().innerText()
   check('REG-session-noscript', 'A page with no content script falls back to an empty session',
-    blankSessionCount === 0 && blankSessionFilter === 'This session (0)',
-    `counter=${blankSessionCount}, filter=${JSON.stringify(blankSessionFilter)}`)
+    blankSessionFilter === 'On this page (0)',
+    `filter=${JSON.stringify(blankSessionFilter)}`)
 
   await setSetting(sw, { replacementsEnabled: false })
   await article.waitForTimeout(800)
   const offStatus = await readPageStatus(popup, article)
   check('BUG3-off', 'Popup explains that replacement is switched off',
-    /Text replacement is off/.test(offStatus.headline), JSON.stringify(offStatus.headline))
+    /Contexto is off everywhere/.test(offStatus.headline) && offStatus.action === 'Turn Contexto on',
+    `${JSON.stringify(offStatus.headline)} / action=${JSON.stringify(offStatus.action)}`)
 
-  await setSetting(sw, { replacementsEnabled: true, blockedDomains: ['127.0.0.1'] })
+  await popup.locator('.page-status__action').click()
+  await article.waitForFunction(() => document.querySelectorAll('[data-contexto="true"]').length > 0)
+  const enabledByStatus = await sw.evaluate(async () =>
+    (await chrome.storage.local.get('contexto_settings')).contexto_settings?.replacementsEnabled)
+  check('UX-status-enable', 'Page status can turn Contexto back on directly',
+    enabledByStatus === true, `replacementsEnabled=${JSON.stringify(enabledByStatus)}`)
+
+  await setSetting(sw, { blockedDomains: ['127.0.0.1'] })
   await article.waitForTimeout(1200)
   const pausedStatus = await readPageStatus(popup, article)
   check('BUG3-paused', 'Popup explains a blocked domain',
-    /Paused on this site/.test(pausedStatus.headline), JSON.stringify(pausedStatus.headline))
+    /Paused on this site/.test(pausedStatus.headline) && pausedStatus.action === 'Resume on this site',
+    `${JSON.stringify(pausedStatus.headline)} / action=${JSON.stringify(pausedStatus.action)}`)
+
+  await popup.locator('.page-status__action').click()
+  await article.waitForFunction(() => document.querySelectorAll('[data-contexto="true"]').length > 0)
+  await article.waitForTimeout(700)
+  const resumedStatus = await readPageStatus(popup, article)
+  const domainsAfterResume = await sw.evaluate(async () =>
+    (await chrome.storage.local.get('contexto_settings')).contexto_settings?.blockedDomains ?? [])
+  check('UX-status-resume', 'Page status resumes the current site directly',
+    domainsAfterResume.length === 0 && resumedStatus.action === 'Pause on this site',
+    `blocked=${JSON.stringify(domainsAfterResume)} / action=${JSON.stringify(resumedStatus.action)}`)
+
+  await popup.locator('.page-status__action').click()
+  await article.waitForFunction(() => document.querySelectorAll('[data-contexto="true"]').length === 0)
+  const domainsAfterPause = await sw.evaluate(async () =>
+    (await chrome.storage.local.get('contexto_settings')).contexto_settings?.blockedDomains ?? [])
+  check('UX-status-pause', 'Page status pauses the current site directly',
+    domainsAfterPause.includes('127.0.0.1'), `blocked=${JSON.stringify(domainsAfterPause)}`)
+
+  // Leave the fixture unblocked for the unrelated wedged-tab scenario below.
+  await setSetting(sw, { blockedDomains: [] })
 
   // A page whose main thread is wedged cannot answer the status query. The rest
   // of the popup must not wait on it: the user still gets their controls.
@@ -387,7 +405,7 @@ async function bug3(base) {
   await wedged.waitForTimeout(200)
   await wedged.bringToFront()
   await popup.evaluate(() => location.reload())
-  const controlsAppeared = await popup.locator('.lang-option').first()
+  const controlsAppeared = await popup.locator('.lang-select').first()
     .waitFor({ timeout: 2500 }).then(() => true).catch(() => false)
   check('REG-popup-nonblocking', 'Popup renders its controls even when the page cannot reply',
     controlsAppeared, controlsAppeared ? 'language picker present within 2.5s' : 'popup was blank')

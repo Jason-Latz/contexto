@@ -1,7 +1,21 @@
-import type { LexiconEntry } from '../types/index.js'
+import type { LexiconEntry, TargetLanguage } from '../types/index.js'
 import { WordLifecycleState } from '../types/index.js'
 
-const STORAGE_KEY = 'contexto_lexicon'
+// Learning state is target-language specific. The original single
+// `contexto_lexicon` map made a Spanish save/review/known decision leak into
+// German, French, and Italian because every record was keyed only by its English
+// lemma. New stores use one key per language; the legacy map is retained as a
+// recoverable backup after it is copied into the language active at migration.
+const LEGACY_STORAGE_KEY = 'contexto_lexicon'
+const MIGRATION_KEY = 'contexto_lexicon_migrated_to_language'
+
+export function lexiconStorageKey(language: TargetLanguage): string {
+  return `contexto_lexicon_${language}`
+}
+
+export function getLexiconLanguage(): TargetLanguage {
+  return activeLanguage
+}
 
 // Baseline seenCount applied to pre-populated words during first-run init.
 // High enough to depress novelty scores (noveltyScore = 1/(1+seenCount)),
@@ -26,6 +40,7 @@ const DEFAULT_ENTRY: Readonly<LexiconEntry> = {
 // Never written on every injection — only flushed on visibilitychange or the
 // 3-minute interval fallback (per CLAUDE.md storage write strategy).
 let lexicon: Map<string, LexiconEntry> = new Map()
+let activeLanguage: TargetLanguage = 'es'
 
 // True when the in-memory lexicon has unsaved changes.
 let dirty = false
@@ -65,23 +80,54 @@ export function normalizeEntry(raw: Partial<LexiconEntry>): LexiconEntry {
   }
 }
 
-// Read persisted lexicon data from chrome.storage.local and REPLACE the in-memory
-// map. Not idempotent — every call re-reads and overwrites, discarding any unflushed
-// changes — so it must run once at startup before any mutation. Serialised through
-// writeChain so it cannot interleave with an in-flight merge-write.
-export function loadLexicon(): Promise<void> {
-  const run = writeChain.then(() => doLoad())
+// Read one language's persisted lexicon and REPLACE the in-memory map. Startup
+// loads once; a live language switch flushes any pending old-language mutations
+// before loading the new map. Serialised through writeChain so it cannot
+// interleave with an in-flight merge-write.
+export function loadLexicon(language: TargetLanguage = 'es'): Promise<void> {
+  const run = writeChain.then(async () => {
+    // A live language switch must never strand dirty progress in the previous
+    // language's in-memory map. Flush it to that language's key before replacing
+    // the map with the newly selected language.
+    if (dirty) await doMergeWrite()
+    await doLoad(language)
+  })
   writeChain = run.catch(() => {})
   return run
 }
 
-async function doLoad(): Promise<void> {
-  const result = await chrome.storage.local.get(STORAGE_KEY)
-  const raw = result[STORAGE_KEY] as Record<string, Partial<LexiconEntry>> | undefined
+async function doLoad(language: TargetLanguage): Promise<void> {
+  const storageKey = lexiconStorageKey(language)
+  const result = await chrome.storage.local.get(storageKey)
+  let raw = result[storageKey] as Record<string, Partial<LexiconEntry>> | undefined
+
+  // One-time migration for pre-multilingual storage. The settings-selected
+  // language owns the old progress; other languages start clean. The marker and
+  // copied store publish together, while the legacy value stays untouched as a
+  // rollback/recovery source.
+  if (!raw) {
+    const migration = await chrome.storage.local.get(MIGRATION_KEY)
+    if (!migration[MIGRATION_KEY]) {
+      const legacy = await chrome.storage.local.get(LEGACY_STORAGE_KEY)
+      const legacyRaw = legacy[LEGACY_STORAGE_KEY] as Record<string, Partial<LexiconEntry>> | undefined
+      if (legacyRaw && Object.keys(legacyRaw).length > 0) {
+        raw = legacyRaw
+        await chrome.storage.local.set({
+          [storageKey]: legacyRaw,
+          [MIGRATION_KEY]: language,
+        })
+      }
+    }
+  }
+
+  activeLanguage = language
+  clearDirty()
   if (raw) {
     lexicon = new Map(
       Object.entries(raw).map(([lemma, entry]) => [lemma, normalizeEntry(entry)]),
     )
+  } else {
+    lexicon = new Map()
   }
 }
 
@@ -193,9 +239,10 @@ async function doMergeWrite(): Promise<void> {
     return
   }
 
-  const result = await chrome.storage.local.get(STORAGE_KEY)
-  const stored = (result[STORAGE_KEY] ?? {}) as Record<string, LexiconEntry>
-  await chrome.storage.local.set({ [STORAGE_KEY]: { ...stored, ...pending } })
+  const storageKey = lexiconStorageKey(activeLanguage)
+  const result = await chrome.storage.local.get(storageKey)
+  const stored = (result[storageKey] ?? {}) as Record<string, LexiconEntry>
+  await chrome.storage.local.set({ [storageKey]: { ...stored, ...pending } })
 
   // Clear only the lemmas actually written; anything dirtied during the await
   // stays pending for the next flush.
