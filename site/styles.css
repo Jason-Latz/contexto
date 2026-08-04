@@ -62,7 +62,11 @@ body {
   font-size: clamp(16px, 1.05vw + 14px, 18px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* clip, not hidden: hidden makes the body a scroll container, which is what
+     breaks position: sticky for the pinned demo. Browsers without clip keep
+     the hidden fallback above it. */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img {
@@ -302,8 +306,27 @@ h3 {
    The live dial-in self-demo
    ========================================================================= */
 
-.dial {
+/* The demo pins while the reader scrolls through the stage, and that scroll
+   drives the dial (main.js). .dial-scrub is the empty run of page that buys the
+   travel; main.js measures it rather than assuming a length, and only turns the
+   whole thing on when the card actually fits in the viewport. */
+.dial-stage {
+  position: relative;
   padding-top: clamp(36px, 5vw, 56px);
+}
+
+.dial-scrub {
+  display: none;
+}
+
+.dial-stage.is-scrubbing .dial-scrub {
+  display: block;
+  height: clamp(340px, 60vh, 560px);
+}
+
+.dial-stage.is-scrubbing .dial {
+  position: sticky;
+  top: var(--dial-top, 96px);
 }
 
 .dial-head {
@@ -319,6 +342,48 @@ h3 {
   color: var(--ink-2);
   margin-top: 8px;
   font-size: 16px;
+}
+
+/* The nudge that stops readers scrolling past the slider. It fades the moment
+   the dial actually moves, and holds its line so nothing shifts while pinned. */
+.dial-head .dial-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent-strong);
+  transition: opacity 0.4s ease;
+}
+
+.dial-head .dial-cue.is-hidden {
+  opacity: 0;
+}
+
+.dial-cue-arrow {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  /* Only the lower two borders are drawn, so the mark's visual weight sits
+     below the box centre. Lift it to read level with the text. */
+  margin-bottom: 2px;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(45deg);
+  animation: cue-bob 1.7s ease-in-out infinite;
+}
+
+/* Rotated 45deg, so an equal x/y nudge reads as straight down. */
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: rotate(45deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(45deg) translate(2.5px, 2.5px);
+  }
 }
 
 #ctx-live {
@@ -421,6 +486,29 @@ h3 {
   height: 6px;
   border-radius: var(--radius-pill);
   background: var(--accent);
+}
+
+/* A handful of slow halos on the thumb, added by JS once the card is actually
+   on screen and dropped the instant the dial moves. Vendor thumb selectors can
+   never share a rule: one unknown pseudo-element voids the whole selector list. */
+#ctx-range.is-idle::-webkit-slider-thumb {
+  animation: thumb-pulse 2.4s ease-out 6;
+}
+
+#ctx-range.is-idle::-moz-range-thumb {
+  animation: thumb-pulse 2.4s ease-out 6;
+}
+
+@keyframes thumb-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 93, 128, 0.38);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(47, 93, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(47, 93, 128, 0);
+  }
 }
 
 /* ---- the manifesto ---- */
@@ -879,7 +967,7 @@ h3 {
 
 /* =========================================================================
    Reduced motion: no smooth scroll.
-   (The dial drift is disabled in JS.)
+   (The dial drift and the scroll-driven pin are both disabled in JS.)
    ========================================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -889,7 +977,20 @@ h3 {
 
   .manifesto .w,
   .tip,
+  .dial-head .dial-cue,
   .faq-list summary::after {
     transition: none;
+  }
+
+  .dial-cue-arrow {
+    animation: none;
+  }
+
+  #ctx-range.is-idle::-webkit-slider-thumb {
+    animation: none;
+  }
+
+  #ctx-range.is-idle::-moz-range-thumb {
+    animation: none;
   }
 }

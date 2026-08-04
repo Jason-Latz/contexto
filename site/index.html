@@ -88,106 +88,118 @@
           </div>
 
           <!-- ---- The live dial-in ---- -->
-          <div class="dial">
-            <div class="dial-head">
-              <h2>Try it on this page.</h2>
-              <p>
-                Slide toward Spanish. Watch the paragraph below change under your
-                hand, then hover any underlined word.
-              </p>
-            </div>
-
-            <div id="ctx-live">
-              <h2 class="visually-hidden">Live Spanish density demo</h2>
-              <div class="frame">
-                <div class="bar">
-                  <span class="lab">Spanish</span>
-                  <input
-                    id="ctx-range"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="0"
-                    step="1"
-                    aria-label="Spanish density"
-                    aria-valuetext="0 percent Spanish, 0 words shown"
-                  />
-                  <span class="read" id="ctx-read">0% · 0 words</span>
-                </div>
-
-                <p class="manifesto" id="ctx-text">
-                  You did not learn your
-                  <span class="w" data-en="first" data-es="primer" data-th="0.80"
-                    >first</span
-                  >
-                  <span class="w" data-en="language" data-es="idioma" data-th="0.36"
-                    >language</span
-                  >
-                  from flashcards. You learned it out in the
-                  <span class="w" data-en="world" data-es="mundo" data-th="0.62"
-                    >world</span
-                  >, meeting each new
-                  <span class="w" data-en="word" data-es="palabra" data-th="0.40"
-                    >word</span
-                  >
-                  wrapped in a
-                  <span class="w" data-en="sentence" data-es="frase" data-th="0.50"
-                    >sentence</span
-                  >
-                  you already understood, and guessing the
-                  <span class="w" data-en="rest" data-es="resto" data-th="0.68"
-                    >rest</span
-                  >. That
-                  <span class="w" data-en="quiet" data-es="silenciosa" data-th="0.90"
-                    >quiet</span
-                  >
-                  <span
-                    class="w"
-                    data-en="inference"
-                    data-es="inferencia"
-                    data-th="0.30"
-                    >inference</span
-                  >, repeated a thousand times, is how
-                  <span class="w" data-en="fluency" data-es="fluidez" data-th="0.24"
-                    >fluency</span
-                  >
-                  is built. Contexto brings the same
-                  <span
-                    class="w"
-                    data-en="immersion"
-                    data-es="inmersión"
-                    data-th="0.12"
-                    >immersion</span
-                  >
-                  to the
-                  <span class="w" data-en="pages" data-es="páginas" data-th="0.56"
-                    >pages</span
-                  >
-                  you already read, a few
-                  <span class="w" data-en="words" data-es="palabras" data-th="0.45"
-                    >words</span
-                  >
-                  at a time, in
-                  <span class="w" data-en="Spanish" data-es="español" data-th="0.18"
-                    >Spanish</span
-                  >, in
-                  <span
-                    class="w w-brand"
-                    data-en="context"
-                    data-es="contexto"
-                    data-th="0.08"
-                    >context</span
-                  >.
+          <!-- Readers were scrolling straight past the slider, so the demo now
+               pins: while .dial-stage is on screen the card sticks and page
+               scroll drives the dial. The empty .dial-scrub under the card is
+               the scroll distance that buys; main.js maps it onto the slider
+               and lets go the moment the reader grabs the thumb. -->
+          <div class="dial-stage" id="ctx-stage">
+            <div class="dial" id="ctx-pin">
+              <div class="dial-head">
+                <h2>Try it on this page.</h2>
+                <p>
+                  Keep scrolling and the dial rises on its own. Grab it any time to
+                  set your own level, then hover any underlined word.
                 </p>
-
-                <p class="cap">
-                  This is the actual extension behavior: a dial from your reading
-                  to gentle immersion. And yes, the first word to turn is where
-                  the name came from.
+                <p class="dial-cue" id="ctx-cue" aria-hidden="true">
+                  <span class="dial-cue-arrow"></span>
+                  <span id="ctx-cue-text">Drag the dial toward Spanish</span>
                 </p>
               </div>
-              <div class="tip" id="ctx-tip" role="status" aria-live="off"></div>
+
+              <div id="ctx-live">
+                <h2 class="visually-hidden">Live Spanish density demo</h2>
+                <div class="frame">
+                  <div class="bar">
+                    <span class="lab">Spanish</span>
+                    <input
+                      id="ctx-range"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                      step="1"
+                      aria-label="Spanish density"
+                      aria-valuetext="0 percent Spanish, 0 words shown"
+                    />
+                    <span class="read" id="ctx-read">0% · 0 words</span>
+                  </div>
+
+                  <p class="manifesto" id="ctx-text">
+                    You did not learn your
+                    <span class="w" data-en="first" data-es="primer" data-th="0.80"
+                      >first</span
+                    >
+                    <span class="w" data-en="language" data-es="idioma" data-th="0.36"
+                      >language</span
+                    >
+                    from flashcards. You learned it out in the
+                    <span class="w" data-en="world" data-es="mundo" data-th="0.62"
+                      >world</span
+                    >, meeting each new
+                    <span class="w" data-en="word" data-es="palabra" data-th="0.40"
+                      >word</span
+                    >
+                    wrapped in a
+                    <span class="w" data-en="sentence" data-es="frase" data-th="0.50"
+                      >sentence</span
+                    >
+                    you already understood, and guessing the
+                    <span class="w" data-en="rest" data-es="resto" data-th="0.68"
+                      >rest</span
+                    >. That
+                    <span class="w" data-en="quiet" data-es="silenciosa" data-th="0.90"
+                      >quiet</span
+                    >
+                    <span
+                      class="w"
+                      data-en="inference"
+                      data-es="inferencia"
+                      data-th="0.30"
+                      >inference</span
+                    >, repeated a thousand times, is how
+                    <span class="w" data-en="fluency" data-es="fluidez" data-th="0.24"
+                      >fluency</span
+                    >
+                    is built. Contexto brings the same
+                    <span
+                      class="w"
+                      data-en="immersion"
+                      data-es="inmersión"
+                      data-th="0.12"
+                      >immersion</span
+                    >
+                    to the
+                    <span class="w" data-en="pages" data-es="páginas" data-th="0.56"
+                      >pages</span
+                    >
+                    you already read, a few
+                    <span class="w" data-en="words" data-es="palabras" data-th="0.45"
+                      >words</span
+                    >
+                    at a time, in
+                    <span class="w" data-en="Spanish" data-es="español" data-th="0.18"
+                      >Spanish</span
+                    >, in
+                    <span
+                      class="w w-brand"
+                      data-en="context"
+                      data-es="contexto"
+                      data-th="0.08"
+                      >context</span
+                    >.
+                  </p>
+
+                  <p class="cap">
+                    This is the actual extension behavior: a dial from your reading
+                    to gentle immersion. And yes, the first word to turn is where
+                    the name came from.
+                  </p>
+                </div>
+                <div class="tip" id="ctx-tip" role="status" aria-live="off"></div>
+              </div>
             </div>
+            <div class="dial-scrub" id="ctx-scrub" aria-hidden="true"></div>
           </div>
         </div>
       </section>
