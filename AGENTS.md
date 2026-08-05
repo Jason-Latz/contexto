@@ -6,6 +6,11 @@
 
 ## Agent reliability
 
+- Jason prefers frequent, small checkpoint commits. After a coherent unit is
+  verified, commit it promptly instead of accumulating several unrelated units;
+  never sweep another agent's or the user's unrelated changes into that commit.
+- When Jason identifies an asset as created in a Claude chat, search the local
+  Claude conversation/session history before searching Drive or browser state.
 - Playwright `Worker` objects do not provide `waitForFunction`; poll worker-side
   state with repeated `worker.evaluate()` calls and a bounded deadline.
 - Repeated extension smoke runs must start from cleared extension storage or a

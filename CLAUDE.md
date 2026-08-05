@@ -4,6 +4,13 @@
 > no volatile selectors, regexes, or line numbers. Update it when structure,
 > commands, conventions, or state change.
 
+## Working conventions
+
+- Prefer frequent, small checkpoint commits. Once a coherent unit of work is
+  verified, commit it promptly rather than accumulating unrelated changes.
+- Keep each commit single-purpose and exclude unrelated user or agent work from
+  the shared working tree.
+
 ## Product contract
 
 Contexto is a Chrome extension for passive language immersion: it swaps a
