@@ -13,6 +13,7 @@
     "build:language-pack": "python3 -m pipeline.import_wikt.build",
     "test:live-multilang": "node tests/live/run-multilang.mjs",
     "test:live-tab-sync": "node tests/live/repro-bugs.mjs",
+    "test:site-dial": "node tests/live/run-site-dial.mjs",
     "capture:store-assets": "node tests/live/capture-store-assets.mjs",
     "merge:language-pack-fragments": "node scripts/merge-language-pack-fragments.mjs",
     "validate:language-packs": "node scripts/validate-language-packs.mjs",
