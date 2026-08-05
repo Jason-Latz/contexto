@@ -279,7 +279,7 @@ h3 {
    ========================================================================= */
 
 .hero {
-  padding-top: clamp(48px, 8vw, 84px);
+  padding-top: clamp(32px, 5vw, 56px);
   padding-bottom: clamp(40px, 6vw, 64px);
 }
 
@@ -312,16 +312,17 @@ h3 {
    whole thing on when the card actually fits in the viewport. */
 .dial-stage {
   position: relative;
-  padding-top: clamp(36px, 5vw, 56px);
+  padding-top: clamp(24px, 3vw, 36px);
 }
 
 .dial-scrub {
   display: none;
 }
 
-.dial-stage.is-scrubbing .dial-scrub {
+.dial-stage.is-scrubbing .dial-scrub,
+.dial-stage.is-complete .dial-scrub {
   display: block;
-  height: clamp(340px, 60vh, 560px);
+  height: clamp(760px, 130vh, 1080px);
 }
 
 .dial-stage.is-scrubbing .dial {
@@ -814,7 +815,7 @@ h3 {
    button lines up with them instead of running out to the wrap's gutter. */
 .hero-actions {
   max-width: var(--measure);
-  margin: 26px auto 0;
+  margin: 22px auto 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -967,7 +968,7 @@ h3 {
 
 /* =========================================================================
    Reduced motion: no smooth scroll.
-   (The dial drift and the scroll-driven pin are both disabled in JS.)
+   (The approach nudge and the scroll-driven pin are both disabled in JS.)
    ========================================================================= */
 
 @media (prefers-reduced-motion: reduce) {

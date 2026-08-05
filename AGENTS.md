@@ -10,6 +10,16 @@
   over formal or academic phrasing; explain ideas without unexplained jargon and
   use his LinkedIn profile at `https://www.linkedin.com/in/jasonlatz` for personal
   feedback invitations.
+- Keep all landing-site copy and metadata target-language neutral: never name the
+  source language or individual supported languages; default to "your target
+  language" so the product does not read as language-specific.
+- After completing and verifying Jason's requested Contexto changes, commit only
+  the task-owned files and push them promptly; do not wait for a separate
+  commit-and-push follow-up.
+- Do not assume a push deploys the Contexto landing site: the Vercel `contexto`
+  project currently has no Git repository link and the repo has no deployment
+  workflow. Until Git integration is configured, deploy explicitly from `site/`
+  and verify the production domain afterward.
 - Playwright `Worker` objects do not provide `waitForFunction`; poll worker-side
   state with repeated `worker.evaluate()` calls and a bounded deadline.
 - Repeated extension smoke runs must start from cleared extension storage or a

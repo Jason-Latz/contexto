@@ -210,23 +210,28 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 
 - **Site: the demo dial is scroll-driven (2026-07-27).** Beta feedback was that readers
   scrolled straight past the slider. The demo card now **pins** while `.dial-stage` is on
-  screen and page scroll drives the dial from the drift's level up to 100%; `.dial-scrub`
-  is the empty run of page that buys the travel, and `main.js` measures it rather than
-  assuming a length. Conventions to preserve: the scrub **picks up from wherever the drift
-  got to** (`scrubBase = driftValue` at engage) so the handoff cannot jump; **the reader's
-  hand wins permanently** once they touch the slider; the pin **disarms** under reduced
+  screen and page scroll drives the dial from a gentle 0-to-22% approach nudge up to 100%;
+  nothing moves on page open, and the nudge advances only with the reader's first downward
+  scroll. `.dial-scrub` is the empty run of page that buys the travel, and `main.js`
+  measures it rather than assuming a length. Conventions to preserve: the scrub **picks
+  up from wherever the approach nudge got to** (`scrubBase = nudgeValue` at engage) so the
+  handoff cannot jump; once the reader scrolls fully past the card, the scroll behavior
+  **retires permanently for that visit** (the spacer stays to prevent a layout jump, but
+  scrolling back never pins or rewinds the dial); **the reader's hand wins permanently**
+  once they touch the slider; the pin **disarms** under reduced
   motion or when the card does not fit the window (measured, not guessed by breakpoint),
   and disarming **rebases on the on-screen value** so a resize never yanks the dial back.
   A zero `innerHeight` (background-tab load) defers the verdict instead of deciding "does
   not fit". Affordances: a fading "Keep scrolling to raise the dial" cue (it swaps to
-  "Drag the dial toward Spanish" when the pin is off) plus a few slow halos on the thumb.
-  Gate: `npm run test:site-dial` (29 scenarios, headless Chromium, red/green proven).
+  "Drag toward your target language" when the pin is off) plus a few slow halos on the
+  thumb.
+  Gate: `npm run test:site-dial` (headless Chromium, red/green proven).
   `body` moved to `overflow-x: clip` because `hidden` makes the body a scroll container
   and breaks `position: sticky`.
 - **Site: the demo paragraph carries no verb swaps (2026-07-27).** `living -> vivir` and
   `read -> leer` rendered infinitives where English had a gerund/present, which advertised
   exactly the failure the extension avoids by shipping verbs disabled. All four verb swaps
-  are gone; the 14 swaps are now nouns and adjectives only (`world -> mundo`,
+  are gone; the demo swaps are nouns and adjectives only (`world -> mundo`,
   `pages -> páginas`, `first -> primer`, `quiet -> silenciosa` demoing gender agreement).
   The scroll dial takes every reader to 100%, so the high-threshold words are now seen by
   everyone: keep this paragraph verb-free. `test:site-dial` asserts it.

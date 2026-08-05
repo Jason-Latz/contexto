@@ -53,6 +53,7 @@ const state = (page) =>
     const rg = document.getElementById("ctx-range");
     return {
       scrubbing: st.classList.contains("is-scrubbing"),
+      completed: st.classList.contains("is-complete"),
       value: Number(rg.value),
       pinTop: Math.round(document.getElementById("ctx-pin").getBoundingClientRect().top),
       onWords: document.querySelectorAll(".manifesto .w.on").length,
@@ -70,6 +71,7 @@ const anchors = (page) =>
     return {
       engage: st.getBoundingClientRect().top + scrollY + pad - sticky,
       scrub: document.getElementById("ctx-scrub").offsetHeight,
+      pinHeight: document.getElementById("ctx-pin").offsetHeight,
       sticky,
     };
   });
@@ -89,14 +91,20 @@ const browser = await chromium.launch();
   await settle(page);
 
   check("desktop: pin is armed", (await state(page)).scrubbing === true);
+  await page.waitForTimeout(900);
+  const opened = await state(page);
+  check("opening stays still until page scroll", opened.value === 0);
+  check("opening does not pulse before page scroll", opened.idle === false);
 
   const a = await anchors(page);
-  check("scrub distance is real", a.scrub > 200, `${a.scrub}px`);
+  check("demo arrives sooner", a.engage > 0 && a.engage < 400, `${Math.round(a.engage)}px`);
+  check("scrub moves the dial slowly", a.scrub > 950, `${a.scrub}px`);
 
   await to(page, a.engage);
   const p0 = await state(page);
-  // The drift hands the dial to the scroll scrub on the very first pixel; that
-  // handoff must not jump, whenever in the drift it happens to land.
+  check("approach scroll reaches the gentle floor", p0.value >= 14 && p0.value <= 16);
+  // The approach nudge hands the dial to the pinned scrub on the first pixel;
+  // that handoff must not jump.
   await to(page, a.engage + 2);
   const p0b = await state(page);
   check(
@@ -116,7 +124,7 @@ const browser = await chromium.launch();
     `${p0.value}% -> ${p50.value}% -> ${p100.value}%`
   );
   check("dial reaches the top", p100.value === 100);
-  check("every word flips by the top", p100.onWords === 14, `${p100.onWords}/14`);
+  check("every word flips by the top", p100.onWords === 13, `${p100.onWords}/13`);
   check(
     "card stays pinned across the scrub",
     Math.abs(p0.pinTop - a.sticky) <= 1 && Math.abs(p100.pinTop - a.sticky) <= 1,
@@ -144,8 +152,8 @@ const browser = await chromium.launch();
   const tabbed = await state(page);
   check(
     "Tab does not steal the dial from scroll",
-    tabbed.value > 65 && tabbed.value < 85,
-    `${tabbed.value}%, wanted ~75 (25 would mean Tab froze it)`
+    tabbed.value > back.value + 30 && tabbed.value < 95,
+    `${back.value}% -> ${tabbed.value}% (no change would mean Tab froze it)`
   );
 
   /* ---- the hand still wins, and keeps winning ---- */
@@ -175,6 +183,50 @@ const browser = await chromium.launch();
     "vivir / leer are gone",
     !swaps.some(([, es]) => es === "vivir" || es === "leer")
   );
+  const publicCopy = await page.evaluate(() =>
+    [
+      document.title,
+      ...[...document.querySelectorAll("meta[content]")].map((meta) => meta.content),
+      document.body.innerText,
+    ].join(" ")
+  );
+  check(
+    "public copy stays target-language neutral",
+    !/\b(English|Spanish|German|French|Italian)\b/i.test(publicCopy)
+  );
+  await page.close();
+}
+
+/* -------- scrolling past retires the behavior for the whole visit -------- */
+{
+  const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await page.goto(ORIGIN + "/", { waitUntil: "load" });
+  await settle(page);
+  const a = await anchors(page);
+
+  await to(page, a.engage + a.scrub + a.pinHeight + 80);
+  const passed = await state(page);
+  check("passing the demo completes the one-shot", passed.completed === true);
+  check("passing the demo removes sticky behavior", passed.scrubbing === false);
+  check("the first pass still reaches the top", passed.value === 100, `${passed.value}%`);
+
+  await to(page, a.engage + a.scrub * 0.25);
+  const returned = await state(page);
+  check("scrolling back does not re-arm the demo", returned.completed && !returned.scrubbing);
+  check("scrolling back does not rewind the dial", returned.value === 100, `${returned.value}%`);
+  check(
+    "the completed card no longer pins",
+    Math.abs(returned.pinTop - a.sticky) > 20,
+    `top ${returned.pinTop}, former sticky ${a.sticky}`
+  );
+
+  await page.evaluate(() => {
+    const rg = document.getElementById("ctx-range");
+    rg.value = 45;
+    rg.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await to(page, a.engage + a.scrub * 0.75);
+  check("manual control still works after retirement", (await state(page)).value === 45);
   await page.close();
 }
 
@@ -196,7 +248,8 @@ const browser = await chromium.launch();
   check("shrunk window holds the dial", shrunk.value === 100, `${shrunk.value}%, wanted 100`);
   check(
     "shrunk window says drag, not scroll",
-    (await page.textContent("#ctx-cue-text")).trim() === "Drag the dial toward Spanish"
+    (await page.textContent("#ctx-cue-text")).trim() ===
+      "Drag toward your target language"
   );
 
   // Growing back re-arms the pin, but the dial is the reader's now: it must not
@@ -208,36 +261,47 @@ const browser = await chromium.launch();
   check("re-armed window does not lurch the dial", grown.value === 100, `${grown.value}%`);
   check(
     "re-armed window keeps the drag wording",
-    (await page.textContent("#ctx-cue-text")).trim() === "Drag the dial toward Spanish"
+    (await page.textContent("#ctx-cue-text")).trim() ===
+      "Drag toward your target language"
   );
   await page.close();
 }
 
-/* -------- the real handoff: drift fully settled, then scroll in -------- */
+/* -------- the approach nudge moves only when the page moves -------- */
 {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
   await page.goto(ORIGIN + "/", { waitUntil: "load" });
-  // The opening drift runs 0 -> 42% -> 22% over 6s once the card is on screen.
-  await page.waitForTimeout(6600);
-  const settled = await state(page);
-  check("drift settles at the floor", settled.value === 22, `${settled.value}%`);
-
+  await page.waitForTimeout(1200);
+  check("waiting on the opening copy does not move the dial", (await state(page)).value === 0);
   const a = await anchors(page);
+  await to(page, a.engage * 0.5);
+  const approached = await state(page);
+  check(
+    "first downward scroll gently raises the dial",
+    approached.value >= 6 && approached.value <= 9,
+    `${approached.value}%`
+  );
+  await page.waitForTimeout(900);
+  check(
+    "the nudge stops when page scroll stops",
+    (await state(page)).value === approached.value
+  );
+
   await to(page, a.engage);
   const at0 = await state(page);
   await to(page, a.engage + 3);
   const at1 = await state(page);
   check(
-    "settled drift hands over without a jump",
-    at0.value === 22 && Math.abs(at1.value - 22) <= 2,
-    `${settled.value}% -> ${at0.value}% -> ${at1.value}%`
+    "approach nudge hands over without a jump",
+    at0.value === 15 && Math.abs(at1.value - 15) <= 2,
+    `${approached.value}% -> ${at0.value}% -> ${at1.value}%`
   );
 
   await to(page, a.engage + a.scrub * 0.5);
   const half = await state(page);
   check(
     "scrub uses its whole length from the floor",
-    half.value > 55 && half.value < 70,
+    half.value > 50 && half.value < 65,
     `halfway = ${half.value}%`
   );
   await page.close();
@@ -251,7 +315,8 @@ const browser = await chromium.launch();
   check("short viewport: pin stays off", (await state(page)).scrubbing === false);
   check(
     "short viewport: cue says drag",
-    (await page.textContent("#ctx-cue-text")).trim() === "Drag the dial toward Spanish"
+    (await page.textContent("#ctx-cue-text")).trim() ===
+      "Drag toward your target language"
   );
   await page.close();
 }
@@ -266,7 +331,7 @@ const browser = await chromium.launch();
   await settle(page);
   const s = await state(page);
   check("reduced motion: pin stays off", s.scrubbing === false);
-  check("reduced motion: dial pre-set", s.value === 22, `${s.value}%`);
+  check("reduced motion: dial stays still", s.value === 0, `${s.value}%`);
   await page.close();
 }
 

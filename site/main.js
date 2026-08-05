@@ -5,9 +5,11 @@
    Three things can move the dial, in this order of authority:
      1. the reader, once they touch the slider (they keep it for good)
      2. page scroll, while the pinned card is on screen
-     3. the opening drift, a short teaser that runs when the card first appears
-   3 hands off to 2 by anchoring the scrub on the level the drift had reached,
-   so the paragraph never jumps or snaps backwards at the changeover.
+     3. the reader's first downward scroll, which gently nudges the dial while
+        they approach the pinned card
+   Nothing moves on page open. 3 hands off to 2 by anchoring the scrub on the
+   nudge's current level, so the paragraph never jumps at the changeover. Once
+   the reader scrolls fully past the demo, scroll control retires for the visit.
    ========================================================================= */
 
 (function () {
@@ -29,8 +31,8 @@
     window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* Where the opening drift settles if nobody scrolls. */
-  var FLOOR = 0.22;
+  /* Where the gentle approach nudge lands when the card pins. */
+  var FLOOR = 0.15;
 
   function apply(d) {
     var on = 0;
@@ -62,32 +64,29 @@
     range.style.backgroundImage =
       "linear-gradient(to right,#2f5d80 " + pct + "%,#dce3ea " + pct + "%)";
     range.value = pct;
-    // Keep the screen-reader value text describing how much Spanish is shown.
+    // Keep the screen-reader value text target-language neutral too.
     range.setAttribute(
       "aria-valuetext",
       pct === 100
-        ? "Every eligible word in Spanish, " + count + " shown"
-        : pct + " percent Spanish, " + count + " shown"
+        ? "Every eligible target-language word, " + count + " shown"
+        : pct + " percent target-language words, " + count + " shown"
     );
   }
 
   var userControl = false,
-    rafId = null,
-    start = null,
-    driftValue = 0,
-    driftStarted = false,
+    nudgeValue = 0,
+    nudgeStarted = false,
+    nudgeStartY = window.scrollY,
     scrubBase = 0,
     scrubEngaged = false,
+    scrollComplete = false,
     scrollDriven = false,
     stickyTop = 0,
     stagePadTop = 0,
     scrub = 0,
+    lastScrollY = window.scrollY,
     ticking = false,
     settled = false;
-
-  function ease(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
 
   /* ---- the cue, and the idle halo on the thumb ---- */
 
@@ -98,6 +97,21 @@
     settled = true;
     if (cue) cue.classList.add("is-hidden");
     range.classList.remove("is-idle");
+  }
+
+  // The scroll demo gets one pass. Keep the spacer after completion so removing
+  // sticky positioning cannot move the page underneath the reader.
+  function completeScrollDemo() {
+    if (scrollComplete) return;
+    scrollComplete = true;
+    scrollDriven = false;
+    if (!userControl) {
+      apply(1);
+      userControl = true;
+    }
+    stage.classList.remove("is-scrubbing");
+    stage.classList.add("is-complete");
+    settle();
   }
 
   /* ---- the pinned scroll scrub ---- */
@@ -111,11 +125,18 @@
     // "the card does not fit" off that would kill the pin for the whole visit.
     // Leave the verdict to the next measure instead.
     if (!window.innerHeight) return;
+    if (scrollComplete) {
+      scrollDriven = false;
+      stage.classList.remove("is-scrubbing");
+      stage.classList.add("is-complete");
+      return;
+    }
     var minTop = (header ? header.offsetHeight : 0) + 10;
     var pinH = pin.offsetHeight;
     var fits = pinH + minTop <= window.innerHeight - 10;
 
     scrollDriven = !reduce && fits;
+    stage.classList.remove("is-complete");
     stage.classList.toggle("is-scrubbing", scrollDriven);
 
     if (!scrollDriven) {
@@ -123,10 +144,10 @@
       stage.style.removeProperty("--dial-top");
       // A window shrunk mid-scrub disarms the pin, and progress collapses to 0.
       // The page cannot drive the dial any more, so the reader owns it from
-      // here: freezing it where it stands beats snapping back to the drift, and
+      // here: freezing it where it stands beats snapping back to the nudge, and
       // it keeps the scrub from re-arming at a compressed range later.
       if (scrubEngaged) userControl = true;
-      if (cueText) cueText.textContent = "Drag the dial toward Spanish";
+      if (cueText) cueText.textContent = "Drag toward your target language";
       return;
     }
 
@@ -155,59 +176,66 @@
   function render() {
     if (userControl) return;
     var p = progress();
-    // The scrub picks up exactly where the drift had got to and stretches that
-    // to the top of the dial, so the handoff cannot jump however early it
-    // happens, and the whole scrub length stays useful.
+    // The scrub picks up exactly where the approach nudge got to and stretches
+    // that to the top of the dial, so the handoff cannot jump.
     if (p > 0 && !scrubEngaged) {
       scrubEngaged = true;
-      scrubBase = driftValue;
-      if (rafId) cancelAnimationFrame(rafId);
+      scrubBase = nudgeValue;
     }
-    apply(scrubEngaged ? scrubBase + (1 - scrubBase) * p : driftValue);
+    apply(scrubEngaged ? scrubBase + (1 - scrubBase) * p : nudgeValue);
     // Let the cue stand through the first stretch, so the reader connects their
     // own scrolling to the words turning over, then retire it.
     if (p > 0.15) settle();
   }
 
-  /* ---- the opening drift ---- */
-
-  function drift(ts) {
-    if (userControl || scrubEngaged) return;
-    if (start === null) start = ts;
-    var e = ts - start,
-      d;
-    if (e < 2400) {
-      d = 0.42 * ease(e / 2400);
-    } else if (e < 4000) {
-      d = 0.42;
-    } else if (e < 6000) {
-      d = 0.42 - (0.42 - FLOOR) * ease((e - 4000) / 2000);
-    } else {
-      driftValue = FLOOR;
-      render();
-      return;
+  function retireIfPassed() {
+    if (scrollComplete || !scrollDriven) return;
+    // At this point sticky has already released and the card is fully behind
+    // the header, so retiring it cannot make visible content jump.
+    if (stage.getBoundingClientRect().bottom <= stickyTop + 1) {
+      completeScrollDemo();
     }
-    driftValue = d;
-    render();
-    // render() may have just handed the dial to the scroll scrub.
-    if (scrubEngaged) return;
-    rafId = requestAnimationFrame(drift);
   }
 
-  // Held back until the card is actually on screen, so the teaser is not spent
-  // above the fold on the phones that load with the demo still below it.
-  function startDrift() {
-    if (driftStarted || userControl || reduce) return;
-    driftStarted = true;
+  /* ---- the gentle, scroll-only approach nudge ---- */
+
+  function stageIsNear() {
+    var box = stage.getBoundingClientRect();
+    return box.bottom > 0 && box.top < window.innerHeight * 0.95;
+  }
+
+  // The first downward page scroll starts the nudge, but only when the demo is
+  // near enough to see. It never runs from a timer, so a reader who is still
+  // reading the headline sees a completely still dial.
+  function startNudge(previousY) {
+    if (
+      nudgeStarted ||
+      userControl ||
+      scrubEngaged ||
+      reduce ||
+      !scrollDriven ||
+      !stageIsNear()
+    )
+      return;
+    nudgeStarted = true;
+    nudgeStartY = previousY;
     range.classList.add("is-idle");
-    rafId = requestAnimationFrame(drift);
+  }
+
+  function updateNudge(scrollY) {
+    if (!nudgeStarted || userControl || scrubEngaged) return;
+    var stageTop = stage.getBoundingClientRect().top + scrollY + stagePadTop;
+    var engageY = stageTop - stickyTop;
+    var run = Math.max(1, engageY - nudgeStartY);
+    var p = (scrollY - nudgeStartY) / run;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    nudgeValue = FLOOR * p;
   }
 
   /* ---- the reader takes over, and keeps it ---- */
 
   function takeManual() {
     userControl = true;
-    if (rafId) cancelAnimationFrame(rafId);
     settle();
   }
 
@@ -245,11 +273,17 @@
   window.addEventListener(
     "scroll",
     function () {
+      var previousY = lastScrollY;
+      var currentY = window.scrollY;
+      if (currentY > previousY) startNudge(previousY);
+      lastScrollY = currentY;
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(function () {
         ticking = false;
+        updateNudge(window.scrollY);
         render();
+        retireIfPassed();
       });
     },
     { passive: true }
@@ -275,26 +309,6 @@
   });
 
   measure();
-
-  if (reduce) {
-    driftValue = FLOOR;
-  } else if (window.IntersectionObserver) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-          if (entries[i].isIntersecting) {
-            io.disconnect();
-            startDrift();
-            return;
-          }
-        }
-      },
-      { threshold: 0.3 }
-    );
-    io.observe(root);
-  } else {
-    startDrift();
-  }
 
   render();
 })();
