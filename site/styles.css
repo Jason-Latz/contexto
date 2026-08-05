@@ -205,16 +205,18 @@ a:hover {
   display: inline-flex;
   align-items: center;
   font-size: 13px;
-  color: var(--accent-strong);
-  background: var(--accent-wash);
-  border: 1px solid var(--accent-line);
-  padding: 5px 13px;
-  border-radius: var(--radius-pill);
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent-strong);
+  border: 1px solid var(--accent-strong);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
   letter-spacing: 0.01em;
   white-space: nowrap;
+  box-shadow: var(--shadow-card);
 }
 
-/* The pill carries a long label on desktop and a short one on narrow screens,
+/* The button carries a long label on desktop and a short one on narrow screens,
    so it never crowds the brand. display:none keeps the unused one out of the
    accessibility tree too. */
 .pill-short {
@@ -224,9 +226,9 @@ a:hover {
 .pill-link:hover,
 .pill-link:focus-visible {
   text-decoration: none;
-  color: var(--accent-strong);
-  border-color: var(--accent-strong);
-  background: var(--accent-line);
+  color: #fff;
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 /* =========================================================================

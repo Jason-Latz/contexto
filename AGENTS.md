@@ -13,6 +13,9 @@
 - Keep all landing-site copy and metadata target-language neutral: never name the
   source language or individual supported languages; default to "your target
   language" so the product does not read as language-specific.
+- Keep the landing site's header Chrome Web Store CTA as a compact dark-blue
+  "Download for Chrome" button on every site page, shortened to "Download" on
+  narrow screens.
 - After completing and verifying Jason's requested Contexto changes, commit only
   the task-owned files and push them promptly; do not wait for a separate
   commit-and-push follow-up.
