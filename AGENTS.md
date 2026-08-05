@@ -6,6 +6,10 @@
 
 ## Agent reliability
 
+- For Contexto landing-site copy, Jason prefers playful, direct plain language
+  over formal or academic phrasing; explain ideas without unexplained jargon and
+  use his LinkedIn profile at `https://www.linkedin.com/in/jasonlatz` for personal
+  feedback invitations.
 - Playwright `Worker` objects do not provide `waitForFunction`; poll worker-side
   state with repeated `worker.evaluate()` calls and a bounded deadline.
 - Repeated extension smoke runs must start from cleared extension storage or a
