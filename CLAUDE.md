@@ -60,6 +60,9 @@ Site (static, no build step):
 ```bash
 # preview the site
 cd site && python3 -m http.server
+
+# headless gate for the landing page's scroll-driven dial (serves site/ itself)
+npm run test:site-dial
 ```
 
 The site lives in `site/` and deploys to **Vercel with Root Directory = `site`**.
@@ -204,6 +207,29 @@ What we can't render faithfully gets gated or disabled, not engineered around:
 - Adjectives keep their known no-agreement problem by choice (accepted for now).
 
 ## Current state
+
+- **Site: the demo dial is scroll-driven (2026-07-27).** Beta feedback was that readers
+  scrolled straight past the slider. The demo card now **pins** while `.dial-stage` is on
+  screen and page scroll drives the dial from the drift's level up to 100%; `.dial-scrub`
+  is the empty run of page that buys the travel, and `main.js` measures it rather than
+  assuming a length. Conventions to preserve: the scrub **picks up from wherever the drift
+  got to** (`scrubBase = driftValue` at engage) so the handoff cannot jump; **the reader's
+  hand wins permanently** once they touch the slider; the pin **disarms** under reduced
+  motion or when the card does not fit the window (measured, not guessed by breakpoint),
+  and disarming **rebases on the on-screen value** so a resize never yanks the dial back.
+  A zero `innerHeight` (background-tab load) defers the verdict instead of deciding "does
+  not fit". Affordances: a fading "Keep scrolling to raise the dial" cue (it swaps to
+  "Drag the dial toward Spanish" when the pin is off) plus a few slow halos on the thumb.
+  Gate: `npm run test:site-dial` (29 scenarios, headless Chromium, red/green proven).
+  `body` moved to `overflow-x: clip` because `hidden` makes the body a scroll container
+  and breaks `position: sticky`.
+- **Site: the demo paragraph carries no verb swaps (2026-07-27).** `living -> vivir` and
+  `read -> leer` rendered infinitives where English had a gerund/present, which advertised
+  exactly the failure the extension avoids by shipping verbs disabled. All four verb swaps
+  are gone; the 14 swaps are now nouns and adjectives only (`world -> mundo`,
+  `pages -> páginas`, `first -> primer`, `quiet -> silenciosa` demoing gender agreement).
+  The scroll dial takes every reader to 100%, so the high-threshold words are now seen by
+  everyone: keep this paragraph verb-free. `test:site-dial` asserts it.
 
 - **Long-tail expansion wave 1 landed (2026-07-16, on main):** +5,357 panel-verified
   tail words (fr +1,339 / it +1,869 / de +1,073 / es +1,076); tails now es 39,440 ·
