@@ -16,10 +16,10 @@
 - After completing and verifying Jason's requested Contexto changes, commit only
   the task-owned files and push them promptly; do not wait for a separate
   commit-and-push follow-up.
-- Do not assume a push deploys the Contexto landing site: the Vercel `contexto`
-  project currently has no Git repository link and the repo has no deployment
-  workflow. Until Git integration is configured, deploy explicitly from `site/`
-  and verify the production domain afterward.
+- The Vercel `contexto` project is Git-linked to `Jason-Latz/contexto`, with
+  Root Directory `site` and production branch `main`. Pushes to `main` deploy
+  production automatically and other branches create previews; do not also run
+  a manual production deployment unless the Git-triggered deployment fails.
 - Playwright `Worker` objects do not provide `waitForFunction`; poll worker-side
   state with repeated `worker.evaluate()` calls and a bounded deadline.
 - Repeated extension smoke runs must start from cleared extension storage or a
