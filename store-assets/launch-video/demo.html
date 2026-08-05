@@ -1,0 +1,437 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Contexto — launch demo</title>
+<style>
+  :root {
+    --ink: #1b2733;
+    --ink2: #475569;
+    --ink3: #8a98a8;
+    --eyebrow: #64748b;
+    --accent: #2f5d80;
+    --accent-strong: #244b69;
+    --surface: #ffffff;
+    --canvas: #f4f6f9;
+    --canvas2: #eef2f6;
+    --border: #dce3ea;
+    --border-strong: #c3cdd7;
+    --cream: #f6f2ea;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--canvas); }
+  #stage {
+    position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    font-family: var(--sans); color: var(--ink);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+
+  /* ---- background art ---- */
+  #bg { position: absolute; inset: 0;
+    background:
+      radial-gradient(1400px 900px at 62% 8%, #ffffff 0%, var(--canvas2) 46%, var(--canvas) 100%); }
+  #bg .hair { position: absolute; top: -80px; height: 1240px; width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(47,93,128,0.10), transparent); }
+  #bg .wm { position: absolute; right: -80px; bottom: -220px; font-family: var(--serif);
+    font-size: 900px; line-height: 1; color: rgba(47,93,128,0.035); user-select: none; }
+  #vignette { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(1300px 1000px at 50% 44%, transparent 60%, rgba(27,39,51,0.06) 100%); }
+
+  /* ---- browser window ---- */
+  #browser { position: absolute; left: 300px; top: 108px; width: 1320px; height: 720px;
+    background: var(--surface); border-radius: 14px; border: 1px solid var(--border);
+    box-shadow: 0 40px 90px -30px rgba(27,39,51,0.28), 0 8px 24px -12px rgba(27,39,51,0.14);
+    overflow: hidden; transform-origin: 50% 42%; }
+  #chrome { position: absolute; inset: 0 0 auto 0; height: 56px; background: #f7f9fb;
+    border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .dots { display: flex; gap: 9px; padding-left: 22px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; background: #d3dce4; display: block; }
+  #url { position: absolute; left: 50%; transform: translateX(-50%); top: 13px;
+    width: 520px; height: 30px; background: #eef2f6; border: 1px solid var(--border);
+    border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    gap: 8px; color: var(--ink3); font-size: 13px; }
+  #url .lock { width: 11px; height: 11px; border: 1.5px solid var(--ink3); border-radius: 3px;
+    position: relative; margin-top: -2px; }
+  #url .lock::before { content:""; position:absolute; left:1px; top:-4px; width:7px; height:6px;
+    border:1.5px solid var(--ink3); border-bottom:none; border-radius:5px 5px 0 0; }
+  #tb { position: absolute; right: 20px; top: 12px; display: flex; align-items: center; gap: 14px; }
+  #tb .ic { width: 30px; height: 30px; border-radius: 7px; }
+  #ext { display: inline-flex; align-items: center; justify-content: center;
+    background: var(--cream); border: 1.5px solid var(--accent); }
+  #ext span { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--accent);
+    transform: translateY(-1px); }
+
+  /* ---- article ---- */
+  #page { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; }
+  .article { max-width: 760px; margin: 0 auto; padding: 52px 40px 40px; }
+  .eyebrow { font-size: 14px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--eyebrow); margin-bottom: 16px; }
+  .article h1 { font-family: var(--serif); font-size: 46px; line-height: 1.14; font-weight: 600;
+    letter-spacing: 0.005em; margin-bottom: 12px; }
+  .byline { color: var(--ink3); font-size: 19px; margin-bottom: 34px; }
+  .article p.body { font-size: 21px; line-height: 1.66; margin-bottom: 22px; }
+
+  /* replaceable word: box width hugs the visible text and eases between the two;
+     a leading zero-width space holds the text baseline so alignment stays put */
+  .w { position: relative; display: inline-block; white-space: nowrap; border-radius: 2px;
+    border-bottom: 1px solid transparent; text-align: center; }
+  .w .en, .w .es { position: absolute; left: 50%; top: 0; white-space: nowrap;
+    transform: translateX(-50%); will-change: transform, opacity; }
+  .w .es { opacity: 0; color: var(--ink); }
+
+  /* ---- extension popup ---- */
+  #popup { position: absolute; left: 1298px; top: 168px; width: 312px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 22px 50px -16px rgba(27,39,51,0.30), 0 4px 12px -6px rgba(27,39,51,0.14);
+    transform-origin: 90% 0; opacity: 0; }
+  #popup .nub { position: absolute; top: -7px; right: 22px; width: 13px; height: 13px;
+    background: var(--surface); border-left: 1px solid var(--border); border-top: 1px solid var(--border);
+    transform: rotate(45deg); }
+  #popup .head { display: flex; align-items: center; gap: 11px; padding: 15px 16px 14px; }
+  #popup .mark { width: 32px; height: 32px; border-radius: 8px; background: var(--cream);
+    border: 1.5px solid var(--accent); display: inline-flex; align-items: center; justify-content: center; }
+  #popup .mark span { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--accent);
+    transform: translateY(-1px); }
+  #popup .name { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); }
+  #popup .sub { font-size: 11px; color: var(--ink3); margin-top: 1px; }
+  #popup .sec { border-top: 1px solid var(--border); padding: 15px 16px 17px; }
+  #popup .lbl { display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--eyebrow); margin-bottom: 15px; }
+  #popup .info { width: 15px; height: 15px; border: 1px solid var(--border-strong); border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700;
+    color: var(--ink3); font-style: italic; }
+  .srow { display: flex; align-items: center; gap: 14px; }
+  #track { position: relative; flex: 1; height: 6px; border-radius: 999px; background: var(--border); }
+  #fill { position: absolute; left: 0; top: 0; height: 6px; border-radius: 999px; background: var(--accent); }
+  #thumb { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); transform: translate(-50%, -50%);
+    box-shadow: 0 1px 2px rgba(27,39,51,0.30); }
+  #pct { font-size: 14px; font-weight: 600; color: var(--accent);
+    font-variant-numeric: tabular-nums; min-width: 42px; text-align: right; }
+
+  /* ---- hover tooltip (content-script style) ---- */
+  #tip { position: absolute; left: 0; top: 0; padding: 10px 12px; background: var(--ink);
+    color: #eef2f6; border-radius: 6px; max-width: 280px;
+    box-shadow: 0 6px 24px rgba(27,39,51,0.30); opacity: 0; transform-origin: 20% 0;
+    font-size: 13px; line-height: 1.45; pointer-events: none; }
+  #tip .t-src { font-weight: 600; color: #eef2f6; }
+  #tip .t-gloss { font-size: 12px; color: #aab6c2; margin-top: 2px; }
+  #tip .t-tgt { font-size: 13px; font-weight: 600; color: #9ec3e0; margin-top: 6px; }
+  #tip .t-hint { font-size: 10px; color: #7f8d9b; margin-top: 8px; padding-top: 6px;
+    text-transform: uppercase; letter-spacing: 0.07em; border-top: 1px solid rgba(255,255,255,0.10); }
+
+  /* ---- cursor ---- */
+  #cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; opacity: 0;
+    filter: drop-shadow(0 2px 3px rgba(27,39,51,0.32)); pointer-events: none; }
+
+  /* ---- caption ---- */
+  #cap { position: absolute; left: 0; right: 0; top: 868px; text-align: center;
+    font-family: var(--serif); font-style: italic; font-size: 23px; color: var(--ink2); opacity: 0; }
+
+  /* ---- title + end overlays ---- */
+  .overlay { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(1200px 900px at 50% 42%, #ffffff 0%, var(--canvas2) 55%, var(--canvas) 100%); }
+  #title .mk, #end .mk { width: 92px; height: 92px; border-radius: 22px; background: var(--cream);
+    display: inline-flex; align-items: center; justify-content: center; position: relative; }
+  #title .mk span, #end .mk span { font-family: var(--serif); font-size: 60px; font-weight: 600;
+    color: var(--accent); transform: translateY(-2px); }
+  #title .mk .ring, #end .mk .ring { position: absolute; inset: 0; border-radius: 22px;
+    border: 2px solid var(--accent); }
+  #title .word { font-family: var(--serif); font-size: 76px; font-weight: 600; color: var(--ink);
+    letter-spacing: 0.01em; margin-top: 30px; }
+  #title .rule { width: 0; height: 1px; background: var(--border-strong); margin: 22px 0; }
+  #title .tag { font-size: 21px; letter-spacing: 0.02em; color: var(--ink3); }
+
+  #end { opacity: 0; }
+  #end .word { font-family: var(--serif); font-size: 62px; font-weight: 600; color: var(--ink);
+    margin-top: 26px; }
+  #end .line { font-family: var(--serif); font-size: 27px; color: var(--ink2); margin-top: 14px; }
+  #end .cta { margin-top: 34px; padding: 15px 30px; border-radius: 999px; background: var(--accent);
+    color: #fff; font-size: 18px; font-weight: 600; letter-spacing: 0.01em;
+    box-shadow: 0 12px 30px -10px rgba(47,93,128,0.6); }
+  #end .langs { margin-top: 22px; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink3); }
+</style>
+
+<div id="stage">
+  <div id="bg">
+    <div class="hair" id="h1" style="left:250px"></div>
+    <div class="hair" id="h2" style="left:1670px"></div>
+    <div class="wm">ñ</div>
+  </div>
+
+  <div id="browser">
+    <div id="chrome">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div id="url"><span class="lock"></span>the-quiet-reader.com</div>
+      <div id="tb">
+        <div class="ic" id="ext"><span>ñ</span></div>
+      </div>
+    </div>
+    <div id="page">
+      <article class="article">
+        <div class="eyebrow">Essay</div>
+        <h1>The quiet <!--T--></h1>
+        <div class="byline"><!--B--></div>
+        <p class="body" id="p1"></p>
+        <p class="body" id="p2"></p>
+      </article>
+    </div>
+  </div>
+
+  <div id="popup">
+    <div class="nub"></div>
+    <div class="head">
+      <div class="mark"><span>ñ</span></div>
+      <div>
+        <div class="name">Contexto</div>
+        <div class="sub">Passive Spanish immersion</div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="lbl">Eligible Word Density <span class="info">i</span></div>
+      <div class="srow">
+        <div id="track"><div id="fill"></div><div id="thumb"></div></div>
+        <div id="pct">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tip">
+    <div class="t-src">word</div>
+    <div class="t-gloss">unit of language</div>
+    <div class="t-tgt">Spanish · palabra</div>
+    <div class="t-hint">Click to save as unknown</div>
+  </div>
+
+  <svg id="cursor" viewBox="0 0 26 26"><path d="M3 2 L3 20 L8 15.5 L11.5 23 L14.5 21.6 L11 14.2 L18 14 Z"
+    fill="#fff" stroke="#1b2733" stroke-width="1.4" stroke-linejoin="round"/></svg>
+
+  <div id="cap"></div>
+
+  <div id="title" class="overlay">
+    <div class="mk"><div class="ring"></div><span>ñ</span></div>
+    <div class="word">Contexto</div>
+    <div class="rule"></div>
+    <div class="tag">Passive language immersion</div>
+  </div>
+
+  <div id="end" class="overlay">
+    <div class="mk"><div class="ring"></div><span>ñ</span></div>
+    <div class="word">Contexto</div>
+    <div class="line">Immersion, one page at a time.</div>
+    <div class="cta">Add to Chrome · Free</div>
+    <div class="langs">Spanish · German · French · Italian</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // ---------- easing ----------
+  const clamp = (x, a=0, b=1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = (e0, e1, x) => { const t = clamp((x - e0) / (e1 - e0)); return t*t*(3-2*t); };
+  const easeInOut = x => (x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2);
+  const easeOut = x => 1 - Math.pow(1-x, 3);
+  const seg = (t, t0, t1) => clamp((t - t0) / (t1 - t0));
+
+  // ---------- build article ----------
+  const T = "[power|poder] of [reading|lectura]";
+  const B = "[Notes|Notas] on how we [actually|en realidad] learn [a language|un idioma]";
+  const P1 = "Every [morning|mañana], before [the city|la ciudad] wakes, [a student|un estudiante] sits by [the window|la ventana] with [a book|un libro] and [a cup|una taza] of [coffee|café]. She reads one [article|artículo] about [science|ciencia], another about [history|historia], and a short story about [a family|una familia] in a small [town|pueblo]. Each [page|página] brings a new {{word|palabra}} she has never seen, but [the sentence|la oración] around it carries enough meaning for her to continue without stopping.";
+  const P2 = "Her [teacher|profesor] at [the university|la universidad] [often|a menudo] says that [a language|un idioma] is not learned in a single class. It grows [slowly|lentamente], through practice, the way [a child|un niño] learns to speak at [home|hogar]. [A person|Una persona] meets the same [word|palabra] in a dozen places, in a song, on a street sign, in [a question|una pregunta] from [a friend|un amigo], until its meaning feels [almost|casi] obvious.";
+
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function render(str) {
+    return str.replace(/\{\{([^|]+)\|([^}]+)\}\}|\[([^|]+)\|([^\]]+)\]/g,
+      (m, ten, tes, en, es) => {
+        const isTgt = ten !== undefined;
+        const E = esc(isTgt ? ten : en), S = esc(isTgt ? tes : es);
+        return `<span class="w"${isTgt ? ' id="target"' : ''}>&#8203;` +
+          `<span class="en">${E}</span><span class="es">${S}</span></span>`;
+      });
+  }
+  document.querySelector('h1').insertAdjacentHTML('beforeend', render(T));
+  document.querySelector('.byline').innerHTML = render(B);
+  document.getElementById('p1').innerHTML = render(P1);
+  document.getElementById('p2').innerHTML = render(P2);
+
+  const words = [...document.querySelectorAll('.w')].map((el) => ({
+    el, en: el.querySelector('.en'), es: el.querySelector('.es'), wEn: 0, wEs: 0,
+    lemma: el.querySelector('.en').textContent.replace(/^(a|an|the)\s+/i, '').toLowerCase(),
+  }));
+  // Group by lemma (English source minus any leading article) so EVERY occurrence of a
+  // lemma shares one trigger and flips together — matching the engine's per-lemma,
+  // all-or-nothing replacement (a lemma is never English here and Spanish there).
+  const lemmas = []; const lemmaIdx = new Map();
+  words.forEach(w => { if (!lemmaIdx.has(w.lemma)) { lemmaIdx.set(w.lemma, lemmas.length); lemmas.push(w.lemma); } });
+  const M = lemmas.length;
+  // Convert each lemma's density threshold into a fixed trigger TIME by inverting density(t),
+  // so at the 35% / 65% plateaus every word is fully English or fully Spanish, never mid-flip.
+  const invEaseInOut = y => (y < 0.5 ? Math.cbrt(y / 4) : 1 - Math.cbrt(2 * (1 - y)) / 2);
+  const triggerTime = thr => thr <= 0.35 ? 4 + 5 * invEaseInOut(thr / 0.35)
+                           : thr <= 0.65 ? 13 + 3 * invEaseInOut((thr - 0.35) / 0.30)
+                           : Infinity; // top ~35% of lemmas stay English at the 65% ceiling
+  words.forEach(w => { const idx = lemmaIdx.get(w.lemma);
+    w.thr = (((idx * 7 + 3) % M) + 0.5) / M; w.trig = triggerTime(w.thr); });
+
+  // ---------- geometry ----------
+  const track = document.getElementById('track');
+  const trackBox = () => { const r = track.getBoundingClientRect(); return { x0: r.left, x1: r.right, y: r.top + r.height/2 }; };
+
+  // ---------- density timeline ----------
+  function density(t) {
+    if (t < 4)  return 0;
+    if (t < 9)  return 0.35 * easeInOut(seg(t, 4, 9));
+    if (t < 13) return 0.35;
+    if (t < 16) return 0.35 + 0.30 * easeInOut(seg(t, 13, 16));
+    return 0.65;
+  }
+
+  // ---------- elements ----------
+  const stage = document.getElementById('stage');
+  const browser = document.getElementById('browser');
+  const popup = document.getElementById('popup');
+  const fill = document.getElementById('fill');
+  const thumb = document.getElementById('thumb');
+  const pct = document.getElementById('pct');
+  const cursor = document.getElementById('cursor');
+  const tip = document.getElementById('tip');
+  const cap = document.getElementById('cap');
+  const titleEl = document.getElementById('title');
+  const endEl = document.getElementById('end');
+  const target = document.getElementById('target');
+  const h1 = document.getElementById('h1'), h2 = document.getElementById('h2');
+  const tMk = titleEl.querySelector('.mk'), tRing = titleEl.querySelector('.ring'),
+        tWord = titleEl.querySelector('.word'), tRule = titleEl.querySelector('.rule'),
+        tTag = titleEl.querySelector('.tag');
+
+  const CAPS = [
+    { t0: 4.5, t1: 8.7, txt: "One slider, and the page you're reading turns Spanish." },
+    { t0: 9.9, t1: 12.6, txt: "Hover any word for the original and its meaning." },
+    { t0: 13.4, t1: 15.7, txt: "Dial the density up as you grow." },
+  ];
+
+  // cursor hotspot path helpers
+  function thumbPoint(d) { const b = trackBox(); return { x: lerp(b.x0, b.x1, d), y: b.y }; }
+  function targetPoint() { const r = target.getBoundingClientRect(); return { x: r.left + r.width*0.5, y: r.top + r.height*0.55 }; }
+
+  // ---------- main ----------
+  function frame(t) {
+    const d = density(t);
+
+    // background drift
+    h1.style.transform = `translateX(${Math.sin(t*0.22)*16}px)`;
+    h2.style.transform = `translateX(${Math.sin(t*0.19+1.4)*16}px)`;
+
+    // browser intro
+    const bIn = seg(t, 2.55, 3.5);
+    browser.style.opacity = bIn;
+    browser.style.transform = `scale(${lerp(0.965, 1, easeOut(bIn))})`;
+
+    // popup drop
+    const pIn = seg(t, 3.35, 4.0), pOut = 1 - seg(t, 16.0, 16.7);
+    popup.style.opacity = pIn * pOut;
+    popup.style.transform = `translateY(${lerp(-14, 0, easeOut(pIn))}px) scale(${lerp(0.96, 1, easeOut(pIn))})`;
+
+    // slider
+    const b = trackBox();
+    const relX = clamp(d) * (b.x1 - b.x0);
+    fill.style.width = relX + 'px';
+    thumb.style.left = relX + 'px';
+    const dragging = (t > 3.9 && t < 9.05) || (t >= 13.0 && t < 16.0);
+    thumb.style.transform = `translate(-50%, -50%) scale(${dragging ? 1.16 : 1})`;
+    pct.textContent = Math.round(d * 100) + '%';
+
+    // words: each a pure function of t via its trigger time. A sum-to-one crossfade with a
+    // brief blur means a word never drops out mid-flip; the box width eases between the two
+    // word widths so spacing stays natural and no gap ever opens.
+    const FLIP = 0.34;
+    for (const w of words) {
+      const p = isFinite(w.trig) ? smooth(w.trig, w.trig + FLIP, t) : 0;
+      const blur = Math.sin(Math.PI * p) * 0.9; // 0 at rest, peaks mid-flip
+      const fil = blur > 0.02 ? `blur(${blur.toFixed(2)}px)` : 'none';
+      w.el.style.width = lerp(w.wEn, w.wEs, p) + 'px';
+      w.en.style.opacity = 1 - p; w.en.style.filter = fil;
+      w.es.style.opacity = p; w.es.style.filter = fil;
+      w.es.style.transform = `translateX(-50%) scale(${lerp(0.965, 1, p)})`;
+      const ub = smooth(0.12, 1, p);
+      let bg = 0.07 * ub;
+      if (w.el === target) bg = lerp(bg, 0.14, seg(t, 10.0, 10.5) * (1 - seg(t, 12.3, 12.7)));
+      w.el.style.borderBottomColor = `rgba(47,93,128,${0.55*ub})`;
+      w.el.style.background = `rgba(47,93,128,${bg})`;
+    }
+
+    // cursor path
+    let cx = 0, cy = 0, cop = 0;
+    if (t >= 3.0) {
+      cop = seg(t, 3.0, 3.4) * (1 - seg(t, 15.9, 16.3));
+      const enter = { x: 980, y: 560 };
+      if (t < 3.95) { const p0 = easeInOut(seg(t, 3.2, 3.95)); const tp = thumbPoint(0); cx = lerp(enter.x, tp.x, p0); cy = lerp(enter.y, tp.y, p0); }
+      else if (t < 9.0) { const tp = thumbPoint(density(t)); cx = tp.x; cy = tp.y; }
+      else if (t < 9.8) { const p0 = easeInOut(seg(t, 9.0, 9.8)); const a = thumbPoint(0.35), c = targetPoint(); cx = lerp(a.x, c.x, p0); cy = lerp(a.y, c.y, p0); }
+      else if (t < 12.55) { const c = targetPoint(); cx = c.x + Math.sin(t*1.6)*1.0; cy = c.y; }
+      else if (t < 13.0) { const p0 = easeInOut(seg(t, 12.55, 13.0)); const c = targetPoint(), a = thumbPoint(0.35); cx = lerp(c.x, a.x, p0); cy = lerp(c.y, a.y, p0); }
+      else { const tp = thumbPoint(density(t)); cx = tp.x; cy = tp.y; }
+    }
+    cursor.style.opacity = cop;
+    cursor.style.transform = `translate(${cx - 3}px, ${cy - 2}px)`;
+
+    // tooltip
+    const tShow = seg(t, 9.85, 10.3) * (1 - seg(t, 12.5, 12.8));
+    tip.style.opacity = tShow;
+    if (tShow > 0) {
+      const r = target.getBoundingClientRect();
+      tip.style.left = (r.left - 4) + 'px';
+      tip.style.top = (r.bottom + 12) + 'px';
+      tip.style.transform = `translateY(${lerp(-6, 0, easeOut(seg(t,9.85,10.3)))}px) scale(${lerp(0.97,1,easeOut(seg(t,9.85,10.3)))})`;
+    }
+
+    // caption
+    let capTxt = '', capOp = 0;
+    for (const c of CAPS) { const o = seg(t, c.t0, c.t0+0.5) * (1 - seg(t, c.t1, c.t1+0.5)); if (o > capOp) { capOp = o; capTxt = c.txt; } }
+    cap.textContent = capTxt;
+    cap.style.opacity = capOp;
+    cap.style.transform = `translateY(${lerp(8, 0, capOp)}px)`;
+
+    // title overlay
+    const tiOut = seg(t, 2.0, 2.5);
+    titleEl.style.opacity = 1 - tiOut;
+    titleEl.style.display = tiOut >= 1 ? 'none' : 'flex';
+    tMk.style.opacity = seg(t, 0.15, 0.9);
+    tMk.style.transform = `translateY(${lerp(14,0,easeOut(seg(t,0.15,0.9)))}px)`;
+    tRing.style.clipPath = `inset(0 ${100 - 100*easeInOut(seg(t,0.35,1.35))}% 0 0)`;
+    tWord.style.opacity = seg(t, 0.5, 1.2);
+    tWord.style.transform = `translateY(${lerp(16,0,easeOut(seg(t,0.5,1.2)))}px)`;
+    tRule.style.width = lerp(0, 150, easeInOut(seg(t, 0.9, 1.7))) + 'px';
+    tTag.style.opacity = seg(t, 1.0, 1.7);
+    tTag.style.transform = `translateY(${lerp(10,0,easeOut(seg(t,1.0,1.7)))}px)`;
+
+    // end overlay
+    const eIn = seg(t, 16.1, 17.1);
+    endEl.style.opacity = eIn;
+    endEl.style.display = eIn <= 0 ? 'none' : 'flex';
+    const kids = endEl.children;
+    for (let i = 0; i < kids.length; i++) {
+      const o = seg(t, 16.4 + i*0.14, 17.2 + i*0.14);
+      kids[i].style.opacity = o;
+      kids[i].style.transform = `translateY(${lerp(14,0,easeOut(o))}px)`;
+    }
+    endEl.querySelector('.ring').style.clipPath = `inset(0 ${100 - 100*easeInOut(seg(t,16.5,17.5))}% 0 0)`;
+  }
+
+  window.__seek = (t) => frame(t);
+  window.__ready = (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+    words.forEach(w => { w.wEn = w.en.offsetWidth; w.wEs = w.es.offsetWidth; w.el.style.width = w.wEn + 'px'; });
+    frame(0); return true;
+  });
+
+  // Live preview: in a normal browser (not the deterministic frame renderer), loop the timeline.
+  if (!window.__RENDER) {
+    let start = null;
+    const loop = ts => { if (start === null) start = ts; frame(((ts - start) / 1000) % 20); requestAnimationFrame(loop); };
+    window.__ready.then(() => requestAnimationFrame(loop));
+  }
+})();
+</script>
