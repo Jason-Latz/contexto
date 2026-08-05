@@ -99,10 +99,19 @@
     range.classList.remove("is-idle");
   }
 
-  // The scroll demo gets one pass. Keep the spacer after completion so removing
-  // sticky positioning cannot move the page underneath the reader.
+  // The scroll demo gets one pass. Collapse the spacer after completion, then
+  // compensate against the following section so the visible page does not jump.
   function completeScrollDemo() {
     if (scrollComplete) return;
+    var section = stage.parentElement && stage.parentElement.parentElement;
+    var nextSection = section && section.nextElementSibling;
+    var anchorTop = nextSection ? nextSection.getBoundingClientRect().top : null;
+    var documentElement = document.documentElement;
+    var previousOverflowAnchor = documentElement.style.overflowAnchor;
+
+    // Prevent the browser's own scroll anchoring from racing our measured
+    // compensation when the 1,040px scrub spacer leaves layout.
+    documentElement.style.overflowAnchor = "none";
     scrollComplete = true;
     scrollDriven = false;
     if (!userControl) {
@@ -111,6 +120,18 @@
     }
     stage.classList.remove("is-scrubbing");
     stage.classList.add("is-complete");
+    if (nextSection && anchorTop !== null) {
+      var shiftedTop = nextSection.getBoundingClientRect().top;
+      window.scrollBy({
+        top: shiftedTop - anchorTop,
+        left: 0,
+        behavior: "instant",
+      });
+      lastScrollY = window.scrollY;
+    }
+    requestAnimationFrame(function () {
+      documentElement.style.overflowAnchor = previousOverflowAnchor;
+    });
     settle();
   }
 
@@ -192,7 +213,7 @@
     if (scrollComplete || !scrollDriven) return;
     // At this point sticky has already released and the card is fully behind
     // the header, so retiring it cannot make visible content jump.
-    if (stage.getBoundingClientRect().bottom <= stickyTop + 1) {
+    if (pin.getBoundingClientRect().bottom <= stickyTop + 1) {
       completeScrollDemo();
     }
   }

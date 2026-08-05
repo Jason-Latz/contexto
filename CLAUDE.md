@@ -216,9 +216,11 @@ What we can't render faithfully gets gated or disabled, not engineered around:
   measures it rather than assuming a length. Conventions to preserve: the scrub **picks
   up from wherever the approach nudge got to** (`scrubBase = nudgeValue` at engage) so the
   handoff cannot jump; once the reader scrolls fully past the card, the scroll behavior
-  **retires permanently for that visit** (the spacer stays to prevent a layout jump, but
-  scrolling back never pins or rewinds the dial); **the reader's hand wins permanently**
-  once they touch the slider; the pin **disarms** under reduced
+  **retires permanently for that visit**. Completion collapses the scrub spacer and
+  compensates the scroll position against the following section, so the viewport does not
+  jump and scrolling back exposes no empty gap; scrolling back never pins or rewinds the
+  dial. **The reader's hand wins permanently** once they touch the slider; the pin
+  **disarms** under reduced
   motion or when the card does not fit the window (measured, not guessed by breakpoint),
   and disarming **rebases on the on-screen value** so a resize never yanks the dial back.
   A zero `innerHeight` (background-tab load) defers the verdict instead of deciding "does

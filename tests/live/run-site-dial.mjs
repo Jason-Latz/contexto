@@ -56,6 +56,13 @@ const state = (page) =>
       completed: st.classList.contains("is-complete"),
       value: Number(rg.value),
       pinTop: Math.round(document.getElementById("ctx-pin").getBoundingClientRect().top),
+      pinBottom: Math.round(document.getElementById("ctx-pin").getBoundingClientRect().bottom),
+      pinHeight: document.getElementById("ctx-pin").offsetHeight,
+      scrubHeight: document.getElementById("ctx-scrub").offsetHeight,
+      stageHeight: st.offsetHeight,
+      stageBottom: Math.round(st.getBoundingClientRect().bottom),
+      scrollY: Math.round(window.scrollY),
+      thesisTop: Math.round(document.querySelector(".thesis").getBoundingClientRect().top),
       onWords: document.querySelectorAll(".manifesto .w.on").length,
       cueHidden: document.getElementById("ctx-cue").classList.contains("is-hidden"),
       idle: rg.classList.contains("is-idle"),
@@ -204,11 +211,51 @@ const browser = await chromium.launch();
   await settle(page);
   const a = await anchors(page);
 
-  await to(page, a.engage + a.scrub + a.pinHeight + 80);
+  await to(page, a.engage + a.scrub);
+  const transition = await page.evaluate(async (maxSteps) => {
+    const st = document.getElementById("ctx-stage");
+    const thesis = document.querySelector(".thesis");
+    const twoFrames = () =>
+      new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    for (let step = 0; step < maxSteps; step += 1) {
+      const before = {
+        scrollY: Math.round(window.scrollY),
+        thesisTop: Math.round(thesis.getBoundingClientRect().top),
+      };
+      window.scrollBy(0, 1);
+      await twoFrames();
+      if (st.classList.contains("is-complete")) {
+        return {
+          before,
+          after: {
+            scrollY: Math.round(window.scrollY),
+            thesisTop: Math.round(thesis.getBoundingClientRect().top),
+          },
+          steps: step + 1,
+        };
+      }
+    }
+    return null;
+  }, a.pinHeight + 100);
   const passed = await state(page);
-  check("passing the demo completes the one-shot", passed.completed === true);
+  check(
+    "passing the demo completes the one-shot",
+    transition !== null && passed.completed === true,
+    transition
+      ? `${transition.steps}px beyond the scrub, scroll ${passed.scrollY}px`
+      : `never completed; pin bottom ${passed.pinBottom}px`
+  );
   check("passing the demo removes sticky behavior", passed.scrubbing === false);
   check("the first pass still reaches the top", passed.value === 100, `${passed.value}%`);
+  check("completion removes the empty scrub spacer", passed.scrubHeight === 0);
+  check(
+    "collapsing the spacer does not jump the next section",
+    transition !== null &&
+      Math.abs(transition.after.thesisTop - (transition.before.thesisTop - 1)) <= 3,
+    transition
+      ? `${transition.before.thesisTop}px -> ${transition.after.thesisTop}px`
+      : "no completion transition"
+  );
 
   await to(page, a.engage + a.scrub * 0.25);
   const returned = await state(page);
@@ -218,6 +265,18 @@ const browser = await chromium.launch();
     "the completed card no longer pins",
     Math.abs(returned.pinTop - a.sticky) > 20,
     `top ${returned.pinTop}, former sticky ${a.sticky}`
+  );
+  check(
+    "the completed stage contains no gray gap",
+    returned.scrubHeight === 0 && returned.stageHeight < returned.pinHeight + 100,
+    `stage ${returned.stageHeight}px, card ${returned.pinHeight}px`
+  );
+
+  await to(page, a.engage + a.pinHeight + 220);
+  const secondPass = await state(page);
+  check(
+    "down-up-down keeps the empty spacer gone",
+    secondPass.completed && secondPass.scrubHeight === 0
   );
 
   await page.evaluate(() => {

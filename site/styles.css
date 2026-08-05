@@ -321,8 +321,7 @@ h3 {
   display: none;
 }
 
-.dial-stage.is-scrubbing .dial-scrub,
-.dial-stage.is-complete .dial-scrub {
+.dial-stage.is-scrubbing .dial-scrub {
   display: block;
   height: clamp(760px, 130vh, 1080px);
 }

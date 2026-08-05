@@ -19,6 +19,10 @@
 - After completing and verifying Jason's requested Contexto changes, commit only
   the task-owned files and push them promptly; do not wait for a separate
   commit-and-push follow-up.
+- When retiring the landing page's one-shot scroll dial, collapse its scrub
+  spacer and compensate against the following section so the viewport stays
+  stable. Never leave the completed spacer in layout; it becomes a large empty
+  gap when the reader scrolls back through the page.
 - The Vercel `contexto` project is Git-linked to `Jason-Latz/contexto`, with
   Root Directory `site` and production branch `main`. Pushes to `main` deploy
   production automatically and other branches create previews; do not also run
