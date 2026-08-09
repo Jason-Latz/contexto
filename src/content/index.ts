@@ -25,6 +25,7 @@ import { computeDensity } from '../engine/proficiencyModel.js'
 import { selectTokens } from '../engine/wordSelector.js'
 import { ensureFirstRunInit } from './firstRun.js'
 import { setupMutationObserver, type MutationObserverHandle } from './mutationObserver.js'
+import { isCommunicationSite } from './communicationSites.js'
 import {
   isExtensionContextAvailable,
   isExtensionContextInvalidatedError,
@@ -521,6 +522,11 @@ async function startReplacementPipeline(): Promise<void> {
     await loadSettings()
     if (!isCurrentReplacementPipelineRun(runVersion)) return
 
+    // Hard stop: communication sites are never eligible for replacement, even
+    // if the global toggle is on or the user previously allowed the hostname.
+    // Exit before loading packs/lexicon or attaching any DOM observer.
+    if (isCommunicationSite(currentHostname())) return
+
     if (!areReplacementsEnabled()) return
 
     // Silently exit on pages with too little content — no readable immersion
@@ -604,6 +610,11 @@ async function refreshReplacementPipeline(): Promise<void> {
   try {
     await loadSettings()
     if (!isCurrentReplacementPipelineRun(runVersion)) return
+
+    if (isCommunicationSite(currentHostname())) {
+      deactivateReplacementPipeline(true)
+      return
+    }
 
     if (!areReplacementsEnabled()) {
       deactivateReplacementPipeline(true)
@@ -716,6 +727,11 @@ function stopReplacementPipeline(): void {
 function applyCurrentSettings(): void {
   if (extensionContextInvalidated) return
 
+  if (isCommunicationSite(currentHostname())) {
+    stopReplacementPipeline()
+    return
+  }
+
   if (!areReplacementsEnabled()) {
     stopReplacementPipeline()
     return
@@ -786,6 +802,9 @@ function describePageStatus(): PageStatus {
   const replacedThisSession = sessionLemmas.length
   const context = { replacedThisSession, sessionLemmas, language, hostname }
 
+  if (isCommunicationSite(hostname)) {
+    return { kind: 'communication-site', swapped: 0, ...context }
+  }
   if (!areReplacementsEnabled()) {
     return { kind: 'off', swapped: 0, ...context }
   }

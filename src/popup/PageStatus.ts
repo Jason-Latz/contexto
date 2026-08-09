@@ -79,6 +79,12 @@ export function normalizePageSession(
 
 export function describe(status: PageStatus): StatusCopy {
   switch (status.kind) {
+    case 'communication-site':
+      return {
+        tone: 'idle',
+        headline: 'Disabled on email and chat sites.',
+        hint: 'Contexto never changes pages where text could become an outgoing message.',
+      }
     case 'active': {
       if (status.swapped === 0) {
         return {

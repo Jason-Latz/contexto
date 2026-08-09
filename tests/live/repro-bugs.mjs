@@ -595,6 +595,125 @@ async function mislabeledLang(base) {
   await context.close()
 }
 
+// --- Dynamic email/message composers must be an absolute safety boundary ---
+// The initial DOM walk already skipped [contenteditable], but the SPA observer
+// used to walk an added descendant as an independent root. Because its ancestor
+// scan stopped at that root, nested wrappers mounted by Gmail/LinkedIn-style
+// editors could receive replacement spans and corrupt the app's draft state.
+async function dynamicComposerSafety(base) {
+  const { context, sw } = await launch('composer')
+  await seed(sw, {
+    ...ONBOARDED_ES,
+    targetLanguage: 'de',
+    density: 1,
+    level: null,
+    languageLevels: {},
+  })
+
+  const page = await context.newPage()
+  await page.goto(`${base}/email-composer.html`, { waitUntil: 'domcontentloaded' })
+
+  // Sanity: Contexto is active and the same lemmas used in the draft are
+  // approved on the reading surface. This makes the old observer path go red.
+  await page.locator('main [data-contexto="true"]').first().waitFor({ timeout: 8000 })
+  await page.locator('#draft-text').waitFor({ timeout: 8000 })
+  await page.waitForTimeout(1400) // observer debounce + injection work
+
+  const expectedDraft =
+    'The lawyer reviewed the contract with the doctor and sent a letter to the sailor.'
+  const expectedRoleDraft =
+    'The painter carried a canvas over the bridge after meeting the musician.'
+
+  const beforeRefresh = await page.evaluate(() => ({
+    draftText: document.getElementById('draft-text')?.textContent ?? '',
+    draftHtml: document.getElementById('draft-mount')?.innerHTML ?? '',
+    roleDraftText: document.getElementById('role-draft-text')?.textContent ?? '',
+    roleDraftHtml: document.getElementById('role-draft-mount')?.innerHTML ?? '',
+    composerSpans: document.querySelectorAll(
+      '#composer [data-contexto="true"], #role-editor [data-contexto="true"]',
+    ).length,
+    readingSpans: document.querySelectorAll('main [data-contexto="true"]').length,
+  }))
+
+  check('COMPOSE-dynamic', 'Dynamically mounted email/message drafts are never rewritten',
+    beforeRefresh.readingSpans > 0 &&
+      beforeRefresh.composerSpans === 0 &&
+      beforeRefresh.draftText === expectedDraft &&
+      beforeRefresh.roleDraftText === expectedRoleDraft &&
+      beforeRefresh.draftHtml === `<span id="draft-text">${expectedDraft}</span>` &&
+      beforeRefresh.roleDraftHtml === `<span id="role-draft-text">${expectedRoleDraft}</span>`,
+    `${beforeRefresh.readingSpans} reading span(s), ${beforeRefresh.composerSpans} composer span(s); ` +
+      `draft=${JSON.stringify(beforeRefresh.draftText)}`)
+
+  // A normal settings refresh tears down and rebuilds reading replacements.
+  // It must leave both editor DOMs byte-for-byte unchanged as well.
+  await setSetting(sw, { density: 0.75 })
+  await page.waitForTimeout(1800)
+  const afterRefresh = await page.evaluate(() => ({
+    draftHtml: document.getElementById('draft-mount')?.innerHTML ?? '',
+    roleDraftHtml: document.getElementById('role-draft-mount')?.innerHTML ?? '',
+    composerSpans: document.querySelectorAll(
+      '#composer [data-contexto="true"], #role-editor [data-contexto="true"]',
+    ).length,
+  }))
+  check('COMPOSE-refresh', 'Settings refreshes leave composer DOM and draft state untouched',
+    afterRefresh.composerSpans === 0 &&
+      afterRefresh.draftHtml === beforeRefresh.draftHtml &&
+      afterRefresh.roleDraftHtml === beforeRefresh.roleDraftHtml,
+    `${afterRefresh.composerSpans} composer span(s); DOM unchanged=${
+      afterRefresh.draftHtml === beforeRefresh.draftHtml &&
+      afterRefresh.roleDraftHtml === beforeRefresh.roleDraftHtml}`)
+
+  await context.close()
+}
+
+// --- Contexto never starts at all on email or chat sites --------------------
+// Route local deterministic HTML under real communication-site URLs. This
+// proves the hard site policy runs before pack loading/DOM injection while the
+// ordinary-site composer test above continues to prove the universal fallback.
+async function communicationSiteHardStop() {
+  const { context, sw } = await launch('communication-site')
+  await seed(sw, {
+    ...ONBOARDED_ES,
+    targetLanguage: 'de',
+    density: 1,
+    level: null,
+    languageLevels: {},
+  })
+
+  const fixture = fs.readFileSync(path.join(FIXDIR, 'email-composer.html'), 'utf8')
+  const urls = [
+    'https://mail.google.com/contexto-safety-test',
+    'https://www.linkedin.com/messaging/contexto-safety-test',
+  ]
+
+  for (const url of urls) {
+    const page = await context.newPage()
+    await page.route(url, route => route.fulfill({
+      status: 200,
+      contentType: 'text/html; charset=utf-8',
+      body: fixture,
+    }))
+    await page.goto(url, { waitUntil: 'domcontentloaded' })
+    await page.locator('#draft-text').waitFor({ timeout: 8000 })
+    await page.waitForTimeout(1400)
+
+    const result = await page.evaluate(() => ({
+      spans: document.querySelectorAll('[data-contexto="true"]').length,
+      draft: document.getElementById('draft-text')?.textContent ?? '',
+    }))
+    check(`COMM-SITE-${new URL(url).hostname}`, 'Email/chat sites receive no replacements anywhere',
+      result.spans === 0 &&
+        result.draft ===
+          'The lawyer reviewed the contract with the doctor and sent a letter to the sailor.',
+      `${result.spans} replacement span(s); draft=${JSON.stringify(result.draft)}`)
+
+    await page.close()
+  }
+
+  await context.close()
+}
+
 // --- The niche tail loads by default and percolates in, no toggle -----------
 // The tail is no longer gated behind Aggressive Mode. After the core-only first
 // paint, the content script loads the tail off the critical path and re-renders
@@ -668,6 +787,8 @@ async function run() {
     await raceBackAndForth(base)
     await tooltipSelfReplacement(base)
     await mislabeledLang(base)
+    await dynamicComposerSafety(base)
+    await communicationSiteHardStop()
     await tailPercolation(base)
   } finally {
     server.close()

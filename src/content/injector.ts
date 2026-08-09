@@ -5,6 +5,7 @@ import { scanExpressions } from './expressionScanner.js'
 import { buildReplacement } from '../language/replacement.js'
 import { baseSpanStyle, unknownSpanStyle } from './spanStyles.js'
 import { cleanGloss, posLabel } from './hoverCard.js'
+import { isTextNodeSafeToRewrite } from './domWalker.js'
 import type { CandidateToken, ExpressionMatch, NounTranslationEntry, PartOfSpeech, TranslationEntry } from '../types/index.js'
 import { getEntry, recordSeen } from '../store/lexiconStore.js'
 import { recordWordSeen } from '../store/sessionStore.js'
@@ -609,6 +610,12 @@ export function injectReplacements(
   options: InjectionOptions = {},
 ): void {
   if (processedNodes.has(node)) return
+
+  // The DOM walker excludes authoring surfaces, but injection is the final
+  // mutation boundary and must enforce that invariant itself. Dynamic apps can
+  // move a collected text node into a contenteditable composer before this
+  // function runs, and direct callers must not be able to bypass compose safety.
+  if (!isTextNodeSafeToRewrite(node)) return
 
   const parsed = parseTextNode(node)
   if (!parsed) return

@@ -166,6 +166,7 @@ export interface RuntimeSettings {
 export const PAGE_STATUS_MESSAGE = 'contexto:page-status'
 
 // Why the current page looks the way it does.
+//   communication-site email/chat/messaging sites are always disabled
 //   off          replacements are switched off entirely
 //   blocked      this domain is on the user's blocked list
 //   paused       the user chose Keep Paused on this domain's high-stakes banner
@@ -176,7 +177,8 @@ export const PAGE_STATUS_MESSAGE = 'contexto:page-status'
 // A tab with no content script never answers at all; the popup classifies that
 // case itself from the tab's URL (see PageStatus.ts describeNoScript).
 export type PageStatusKind =
-  | 'off' | 'blocked' | 'paused' | 'too-short' | 'loading' | 'active' | 'error'
+  | 'communication-site' | 'off' | 'blocked' | 'paused'
+  | 'too-short' | 'loading' | 'active' | 'error'
 
 export interface PageStatus {
   kind: PageStatusKind

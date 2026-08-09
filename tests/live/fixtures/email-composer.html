@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dynamic email composer safety fixture</title>
+  </head>
+  <body>
+    <main>
+      <h1>Reading surface</h1>
+      <p>
+        Every morning the small town wakes to the sound of the market. A farmer brings fresh
+        bread and cheese, and a young woman sells flowers near the old church. The water in the
+        fountain is cold, and children run across the square while their mothers buy fruit and
+        vegetables for the week. A teacher walks to school with a heavy book under his arm.
+      </p>
+      <p>
+        The baker opens his door before the sun rises. He works with flour and salt, and the
+        warm smell of the oven fills the street. A friend stops to talk about the weather, the
+        news, and the price of coffee. The dog of the house sleeps near the wall, happy and
+        quiet, while a cat watches a bird on the roof of the building.
+      </p>
+      <p>
+        By noon the square is full of people. A doctor reads a letter from the city, a lawyer
+        argues about a contract, and an old sailor tells a long story about the sea. The river
+        runs slowly under the bridge, and a painter tries to capture the light on the water with
+        a brush and a small canvas. Nothing here is in a hurry.
+      </p>
+    </main>
+
+    <section aria-label="Compose email">
+      <div id="composer" contenteditable="true" role="textbox" aria-multiline="true">
+        <div id="draft-mount"></div>
+      </div>
+    </section>
+
+    <section aria-label="Custom message editor">
+      <div id="role-editor" role="textbox" aria-multiline="true">
+        <div id="role-draft-mount"></div>
+      </div>
+    </section>
+
+    <script>
+      // Gmail/LinkedIn-style editors commonly mount nested wrapper elements
+      // after the extension's initial page walk. The added span becomes the SPA
+      // observer's walk root even though its ancestors own editability.
+      setTimeout(() => {
+        const draft = document.createElement('span')
+        draft.id = 'draft-text'
+        draft.textContent =
+          'The lawyer reviewed the contract with the doctor and sent a letter to the sailor.'
+        document.getElementById('draft-mount').appendChild(draft)
+
+        const roleDraft = document.createElement('span')
+        roleDraft.id = 'role-draft-text'
+        roleDraft.textContent =
+          'The painter carried a canvas over the bridge after meeting the musician.'
+        document.getElementById('role-draft-mount').appendChild(roleDraft)
+      }, 1800)
+    </script>
+  </body>
+</html>

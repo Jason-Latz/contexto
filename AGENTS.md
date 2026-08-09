@@ -139,6 +139,16 @@
 - Popup actions for an already-injected page must use the hostname reported by
   the content script; `chrome.tabs.query()` can withhold `tab.url` even when the
   page can answer messages, so the tab URL is only a no-script fallback.
+- Contexto must never run on recognized email, chat, messaging, or collaboration-
+  chat sites; this is a hard, non-overrideable safety boundary, including sites
+  such as LinkedIn that mix reading with direct messaging and custom hosts using
+  mail/webmail/inbox/chat/message subdomains. Independently treat every editable/
+  composer surface (including inherited `contenteditable`, semantic textbox
+  roles, designMode documents, and rich-text editor hosts) as an unbounded safety
+  boundary in both DOM discovery and the final injector. Keep live regressions
+  for both whole-site exclusion and a nested subtree dynamically added inside an
+  editor on an otherwise ordinary site, because immediate-root checks do not
+  cover that path.
 - The overnight `*.workflow.js` files are host snippets that combine ESM
   `export` declarations with intentional top-level `return`/`await`; neither
   plain `node --check` nor wrapping the whole file in `AsyncFunction` is valid.

@@ -52,6 +52,19 @@ test('zero eligible words does not promise that raising density will fix it', ()
   assert.doesNotMatch(copy.hint ?? '', /Raise/)
 })
 
+test('communication sites explain the non-overrideable outbound-text safety boundary', () => {
+  const copy = describe({
+    kind: 'communication-site',
+    swapped: 0,
+    replacedThisSession: 0,
+    sessionLemmas: [],
+    language: 'de',
+  })
+  assert.match(copy.headline, /Disabled on email and chat sites/)
+  assert.match(copy.hint ?? '', /outgoing message/)
+  assert.equal(copy.tone, 'idle')
+})
+
 test('the safety pause explains why permission is needed', () => {
   const copy = describe({
     kind: 'paused',

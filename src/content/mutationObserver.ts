@@ -34,6 +34,8 @@ export interface MutationObserverHandle {
  * The observer is SPA-safe:
  *   - 500 ms debounce absorbs rapid bursts (route transitions, infinite scroll)
  *   - isInjecting guard prevents re-entrant cycles from span insertions
+ *   - the DOM walker applies unbounded editable-ancestor checks, so descendants
+ *     dynamically inserted into email/message composers are never rewritten
  *   - characterData processing is gated on the parent carrying data-contexto,
  *     so routine text edits on the page are never processed
  */

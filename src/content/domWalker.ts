@@ -3,11 +3,14 @@ import {
   isDomainBlocked,
   setDomainDecision,
 } from '../store/settingsStore.js'
+import { isCommunicationSite } from './communicationSites.js'
 
-// CSS selectors for elements whose text nodes must never be processed.
-// Replacing words inside these elements would break functionality, corrupt code
-// samples, or confuse the user by altering UI chrome and form inputs.
-const SKIP_SELECTORS: readonly string[] = [
+// CSS selectors for elements whose text nodes must never be rewritten. These
+// exclusions are safe to check with closest() all the way to the top of the
+// document. That matters for dynamic editors: the SPA observer may receive a
+// newly inserted <span> as its walk root even though that span is several levels
+// inside a contenteditable email composer.
+const UNBOUNDED_SKIP_SELECTORS: readonly string[] = [
   'script',
   'style',
   'noscript',
@@ -21,33 +24,42 @@ const SKIP_SELECTORS: readonly string[] = [
   'label',
   'svg',
   'math',
+  // Any authoring surface is a hard safety boundary. Contexto must never mutate
+  // user-authored text: doing so can corrupt a framework's draft state and can
+  // change the content that an email/message form submits.
   '[contenteditable]',
-  '[contenteditable="true"]',
+  '[role="textbox"]',
+  '[role="searchbox"]',
+  '[aria-multiline="true"]',
   // Common code editor containers
   '.ace_editor',
   '.CodeMirror',
   '.cm-editor',
   // Monaco editor (VS Code web, GitHub Codespaces)
   '.monaco-editor',
+  // Rich-text editor containers. Most also carry contenteditable, but keeping
+  // their stable host markers here makes the safety rule fail closed if an app
+  // toggles contenteditable while mounting or reconciling an editor.
+  '.ProseMirror',
+  '.ql-editor',
+  '.mce-content-body',
+  '.cke_editable',
+  '[data-lexical-editor]',
+  '[data-slate-editor]',
   // Contexto-managed UI and replacement spans must never be translated.
   '[data-contexto]',
   '[data-contexto-ui]',
   '#contexto-tooltip',
-  // Elements explicitly tagged as non-English — skip to avoid double-translation.
-  // An empty lang attribute declares nothing, so it must not match.
-  '[lang]:not([lang^="en"]):not([lang=""])',
 ]
 
-// One compound selector so closest()/matches() checks are a single call.
-const SKIP_SELECTOR = SKIP_SELECTORS.join(', ')
+// Elements explicitly tagged as non-English are skipped to avoid translating
+// them twice. This selector is deliberately scoped to the current walk root:
+// checking it with an unbounded closest() would let <html lang="de"> disable an
+// otherwise-English page whose CMS mislabeled the document language.
+const FOREIGN_LANGUAGE_SELECTOR = '[lang]:not([lang^="en"]):not([lang=""])'
 
-// Extension-owned UI only. This is the subset safe to check with closest():
-// closest() walks ancestors without a boundary, and running the FULL skip list
-// through it lets the [lang] rule reach <html> — a page-level lang="de"/"und"
-// would silently disable the whole pipeline on an English page. Our own UI
-// markers can never legitimately wrap page content, so an unbounded walk for
-// them is always correct.
-const EXTENSION_UI_SELECTOR = '[data-contexto], [data-contexto-ui], #contexto-tooltip'
+// One compound selector so each matches()/closest() safety check is one call.
+const UNBOUNDED_SKIP_SELECTOR = UNBOUNDED_SKIP_SELECTORS.join(', ')
 
 // Domains where involuntary word replacement carries a real risk of harm:
 // misreading a medical dosage, misinterpreting a legal clause, or misunderstanding
@@ -172,6 +184,11 @@ function showHighStakesBanner(hostname: string, category: string): Promise<boole
 async function checkHighStakesDomain(): Promise<boolean> {
   const hostname = window.location.hostname.replace(/^www\./, '')
 
+  // Email/chat sites are a non-overrideable product safety boundary, not a
+  // high-stakes banner choice. The startup path also exits before loading a
+  // language pack; this duplicate guard protects direct walker callers.
+  if (isCommunicationSite(hostname)) return false
+
   if (isDomainBlocked(hostname)) return false
 
   for (const { pattern, category } of HIGH_STAKES_DOMAINS) {
@@ -190,12 +207,29 @@ async function checkHighStakesDomain(): Promise<boolean> {
   return true
 }
 
-// Return true if any ancestor of `node` (up to but not including `root`)
-// matches any selector in SKIP_SELECTORS.
-function isInsideSkippedElement(node: Node, root: Element): boolean {
-  let ancestor: Node | null = node.parentElement
-  while (ancestor && ancestor !== root) {
-    if (ancestor instanceof Element && ancestor.matches(SKIP_SELECTOR)) return true
+function documentIsEditable(doc: Document | null): boolean {
+  return doc?.designMode?.toLowerCase() === 'on'
+}
+
+// Defense-in-depth predicate used by both the walker and the injector. The
+// injector checks again immediately before its DOM write, so a node collected
+// as ordinary article text cannot be moved into a composer between collection
+// and replacement.
+export function isTextNodeSafeToRewrite(node: Text): boolean {
+  const parent = node.parentElement
+  if (!parent) return false
+  if (documentIsEditable(parent.ownerDocument)) return false
+  if (parent instanceof HTMLElement && parent.isContentEditable) return false
+  return parent.closest(UNBOUNDED_SKIP_SELECTOR) === null
+}
+
+// The language exclusion is scoped to the supplied walk root. All structural
+// and editable exclusions above are intentionally unbounded.
+function isInsideForeignLanguageElement(node: Text, root: Element): boolean {
+  let ancestor: Element | null = node.parentElement
+  while (ancestor) {
+    if (ancestor.matches(FOREIGN_LANGUAGE_SELECTOR)) return true
+    if (ancestor === root) break
     ancestor = ancestor.parentElement
   }
   return false
@@ -205,14 +239,15 @@ function isInsideSkippedElement(node: Node, root: Element): boolean {
 // The acceptNode filter rejects empty/whitespace-only nodes and any node
 // whose ancestor matches SKIP_SELECTORS.
 function buildTextWalker(root: Element): TreeWalker {
-  // Two checks with different reach. matches() covers the root itself against
-  // the full skip list. closest() additionally covers roots NESTED inside our
-  // own UI: the MutationObserver queues the immediate parent of an added text
-  // node as its walk root, and for the hover tooltip that parent is a plain
-  // inner span of the marked #contexto-tooltip container — checking only the
-  // root itself let replacement spans get injected into our own hover card.
-  // closest() must stay restricted to EXTENSION_UI_SELECTOR (see above).
-  if (root.matches(SKIP_SELECTOR) || root.closest(EXTENSION_UI_SELECTOR)) {
+  // closest() is essential here. The MutationObserver queues the immediate
+  // added subtree, which can be a plain descendant inside an email composer,
+  // rich-text editor, form control, or our own hover UI.
+  if (
+    documentIsEditable(root.ownerDocument) ||
+    (root instanceof HTMLElement && root.isContentEditable) ||
+    root.closest(UNBOUNDED_SKIP_SELECTOR) ||
+    root.matches(FOREIGN_LANGUAGE_SELECTOR)
+  ) {
     return document.createTreeWalker(document.createElement('div'), NodeFilter.SHOW_TEXT)
   }
 
@@ -222,7 +257,7 @@ function buildTextWalker(root: Element): TreeWalker {
       if (!node.nodeValue || node.nodeValue.trim().length === 0) {
         return NodeFilter.FILTER_REJECT
       }
-      if (isInsideSkippedElement(node, root)) {
+      if (!isTextNodeSafeToRewrite(node) || isInsideForeignLanguageElement(node, root)) {
         return NodeFilter.FILTER_REJECT
       }
       return NodeFilter.FILTER_ACCEPT
