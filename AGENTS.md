@@ -65,12 +65,19 @@
   Luna is available and has passed a representative calibration; retain
   GPT-5.6 Sol for the independent judge and final panel unless an eval
   demonstrates equivalent Luna quality there.
+- When Jason explicitly budgets the remainder of an included-plan allowance to
+  the vocabulary factory and restricts models to Luna/Terra, use Luna for all
+  normal stages, Terra only for necessary retries or independent gates, and do
+  not fall back to Sol, paid API credits, or auto-top-up.
 - If a Luna worker response fails the factory's full artifact validation,
   preserve the rejected evidence, never relax the validator, and retry that
   exact batch with Terra before resuming Luna for other batches.
 - When auditing Wave 2 response caches, inspect the runner schema and read the
   stage-specific payload (`reviews` for refute, `decisions` otherwise); do not
   assume a generic response field.
+- Report factory progress with explicit 100-row batch counts and candidate-row
+  counts, and distinguish both from model-call counts. Never abbreviate an
+  unfinished batch as a single "adjudication."
 - In Wave 2 refutation, a legacy skip row's `pos` field is inert historical
   metadata, not source-POS authority and not a reason to dispute the skip by
   itself. Sol judging remains mandatory for every actual dispute.
@@ -361,9 +368,13 @@ What we can't render faithfully gets gated or disabled, not engineered around:
   (2026-07-27):** the complete frozen Spanish, Italian, and French universes
   were independently paneled with unused seed 20260720 and exceeded the 5%
   ship bar (es 8/120, it 9/120, fr 14/120). Apply zero Wave 2 entries from
-  those verdicts. German remains resumable with 60 adjudications pending and
-  received no partial panel/application. The public language packs are
-  unchanged by this run.
+  those verdicts. The 2026-08-08 German resume advanced 28 full 100-row batches
+  to complete and 4 more to refutation: across its 178 batches, 27 are already
+  applied, 119 are complete, 4 need refutation, and 28 need adjudication. Batch
+  10118 remains unresolved after Luna and a Terra retry independently selected
+  a non-standalone target; both invalid responses were preserved but not cached.
+  German still has no Wave 2 panel/application, so the public language packs
+  remain unchanged.
 - **Long-tail expansion wave 1 landed (2026-07-16, on main):** +5,357 panel-verified
   tail words (fr +1,339 / it +1,869 / de +1,073 / es +1,076); tails now es 39,440 ·
   de 19,367 · fr 17,638 · it 12,580. Every language batch shipped under an independent
