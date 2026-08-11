@@ -37,6 +37,11 @@
 - For release-preparation work with independent audits, Jason prefers parallel
   subagents to reduce turnaround time; keep shared-worktree subtasks read-only
   unless their file ownership is explicitly isolated.
+- For the daily automated bug audit, treat the cadence as an audit—not a quota
+  to change code. Ship at most one minimal fix and make no change unless the bug
+  has an exact reproduction, a fail-before/pass-after regression test, an
+  independent adversarial review that cannot disprove it, and all verification
+  gates pass. Ambiguous evidence must end in a no-change report.
 - Before starting a high-volume model workflow, tell Jason the expected call
   volume, whether it uses included plan allowance or paid credits, and whether
   auto top-up could create a charge. Never start potentially billable usage
