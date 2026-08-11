@@ -35,6 +35,10 @@ test('custom mail, webmail, inbox, and chat subdomains fail closed', () => {
   }
 })
 
+test('custom singular message subdomains fail closed', () => {
+  assert.equal(isCommunicationSite('message.company.test'), true)
+})
+
 test('ordinary reading sites remain eligible', () => {
   for (const hostname of [
     'example.com',

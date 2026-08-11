@@ -685,6 +685,7 @@ async function communicationSiteHardStop() {
   const urls = [
     'https://mail.google.com/contexto-safety-test',
     'https://www.linkedin.com/messaging/contexto-safety-test',
+    'https://message.company.test/contexto-safety-test',
   ]
 
   for (const url of urls) {
