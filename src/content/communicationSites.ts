@@ -65,6 +65,7 @@ const COMMUNICATION_SUBDOMAIN_LABELS = new Set([
   'inbox',
   'email',
   'chat',
+  'message',
   'messages',
   'messenger',
 ])

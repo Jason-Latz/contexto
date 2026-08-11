@@ -115,12 +115,18 @@
 - In a shared worktree, re-check `HEAD`, the reflog, and the staged diff
   immediately before and after staging. Another agent can commit the shared
   index; never assume staged files still belong exclusively to the current task.
+- If linked-worktree branch creation fails while updating `HEAD`, verify whether
+  Git already created the branch ref before retrying; switch to that exact ref
+  instead of blindly repeating `git switch -c`.
 - Shell `rm -rf` cleanup is blocked in tool commands even for `mktemp` paths;
   remove a validated disposable temp tree with Node's `fs.rmSync` instead.
 - A Node REPL call that intentionally waits near 30 seconds needs an explicit
   timeout above 30 seconds; otherwise the default timeout resets the kernel.
 - Contexto tests do not install `tsx`; compile with `tsconfig.test.json` and run
   the emitted `.test-build/tests/*.test.js`, or use `npm test`.
+- Before running Contexto's Node-based tests or verification gates in a fresh
+  scheduled worktree, verify `node_modules` exists; if it does not, install the
+  locked dependencies before treating a missing tool as a product failure.
 - Contexto's source manifest is the repository-root `manifest.json`, not
   `public/manifest.json`; locate release metadata with `rg --files` before
   scripting comparisons instead of assuming a framework-standard path.
