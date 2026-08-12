@@ -45,7 +45,7 @@ export function firstWord(target: string): string {
 
 // Vowel-initial test (covers accented vowels) for élision and article selection
 // in French and Italian.
-const VOWEL_INITIAL = /^[aeiouàâäáåèéêëìíîïòóôöøùúûü]/i
+const VOWEL_INITIAL = /^[aeiouàâäáåèéêëìíîïòóôöøœùúûü]/i
 
 export function startsWithVowel(word: string): boolean {
   return VOWEL_INITIAL.test(firstWord(word))
