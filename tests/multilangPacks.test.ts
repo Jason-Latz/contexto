@@ -69,6 +69,7 @@ test('French pack élides l’ before a vowel from real data', async () => {
   await loadLanguagePack('fr')
   assert.equal(genderOf('water'), 'feminine')
   assert.equal(render('fr', 'water', 'the water rose', 4), "l'eau")
+  assert.equal(render('fr', 'egg', 'the egg cracked', 4), "l'œuf")
   assert.equal(render('fr', 'house', 'the house stood', 4), 'la maison')
   assert.equal(render('fr', 'book', 'the book fell', 4), 'le livre')
 })
