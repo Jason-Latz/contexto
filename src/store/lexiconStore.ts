@@ -50,10 +50,16 @@ let dirty = false
 // content-script write (and vice-versa) for lemmas neither of them touched.
 const dirtyLemmas = new Set<string>()
 
+// A Set alone cannot distinguish "this lemma was already pending" from "this
+// same lemma changed again while its write was in flight." Keep a generation so
+// a completed write clears only the exact mutation version it accepted.
+const dirtyVersions = new Map<string, number>()
+
 // Mark a single lemma as having unsaved changes.
 function touch(englishLemma: string): void {
   dirty = true
   dirtyLemmas.add(englishLemma)
+  dirtyVersions.set(englishLemma, (dirtyVersions.get(englishLemma) ?? 0) + 1)
 }
 
 // Serialises every storage read/replace (loadLexicon) and merge-write
@@ -238,7 +244,9 @@ async function doMergeWrite(): Promise<void> {
     clearDirty()
     return
   }
-
+  const pendingVersions = new Map(
+    pendingLemmas.map(lemma => [lemma, dirtyVersions.get(lemma)]),
+  )
   const storageKey = lexiconStorageKey(activeLanguage)
   const result = await chrome.storage.local.get(storageKey)
   const stored = (result[storageKey] ?? {}) as Record<string, LexiconEntry>
@@ -246,7 +254,11 @@ async function doMergeWrite(): Promise<void> {
 
   // Clear only the lemmas actually written; anything dirtied during the await
   // stays pending for the next flush.
-  for (const lemma of pendingLemmas) dirtyLemmas.delete(lemma)
+  for (const lemma of pendingLemmas) {
+    if (dirtyVersions.get(lemma) !== pendingVersions.get(lemma)) continue
+    dirtyLemmas.delete(lemma)
+    dirtyVersions.delete(lemma)
+  }
   dirty = dirtyLemmas.size > 0
 }
 
@@ -254,4 +266,5 @@ export function isDirty(): boolean { return dirty }
 export function clearDirty(): void {
   dirty = false
   dirtyLemmas.clear()
+  dirtyVersions.clear()
 }

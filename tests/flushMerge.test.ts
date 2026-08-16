@@ -26,8 +26,12 @@ globalThis.chrome = {
       },
       async set(obj: Record<string, unknown>) {
         setCalls++
+        // Chrome serializes API arguments when set() is invoked, before the
+        // returned promise settles. Snapshot here so the gate models that
+        // boundary instead of retaining live references to mutable entries.
+        const accepted = structuredClone(obj)
         if (setGate) await setGate
-        Object.assign(storage, obj)
+        Object.assign(storage, accepted)
       },
     },
   },
@@ -90,6 +94,32 @@ test('a lemma dirtied during the set() await stays pending after the flush settl
   const written = storage[ES_KEY] as Record<string, any>
   assert.ok('a' in written, 'a was persisted')
   assert.ok(!('c' in written), 'c was not persisted by this flush')
+})
+
+test('removing a saved word during its in-flight save persists the second click', async () => {
+  reset()
+  await loadLexicon('es')
+  markUnknown('toggle', true)
+
+  const gate = deferred()
+  setGate = gate.promise
+
+  const saving = flushLexiconMerge()
+  // Let storage.set accept a snapshot of the saved state, but hold completion.
+  await new Promise(resolve => setTimeout(resolve, 0))
+
+  // The on-page word remains clickable while that promise is pending. A second
+  // click removes it and queues another serialized flush for the same lemma.
+  markUnknown('toggle', false)
+  const removing = flushLexiconMerge()
+
+  gate.resolve()
+  await Promise.all([saving, removing])
+
+  const written = storage[ES_KEY] as Record<string, any>
+  assert.equal(setCalls, 2, 'the second mutation must reach storage')
+  assert.equal(written.toggle.selfMarkedUnknown, false)
+  assert.equal(isDirty(), false)
 })
 
 test('serialized flushes both persist their lemmas', async () => {
