@@ -413,6 +413,34 @@ async function bug3(base) {
   await context.close()
 }
 
+// --- Fresh-install popup must show the actual silent first-run density ------
+// First-run initialization applies 15% before the first eligible page renders.
+// Opening the popup earlier must show that same default, not a legacy value.
+async function popupFirstRunDensity(base) {
+  const { context, sw, extId } = await launch('popup-first-run-density')
+  await seed(sw, null)
+
+  const popup = await context.newPage()
+  await popup.goto(`chrome-extension://${extId}/popup/index.html`, { waitUntil: 'domcontentloaded' })
+  const beforeFirstPage = await popup.locator('.slider-label').innerText()
+  const beforeSliderValue = await popup.locator('.slider-row input').inputValue()
+  await popup.close()
+
+  const page = await context.newPage()
+  await page.goto(`${base}/article-light.html`, { waitUntil: 'domcontentloaded' })
+  await spans(page).first().waitFor({ timeout: 8000 })
+  const persistedDensity = await sw.evaluate(async () =>
+    (await chrome.storage.local.get('contexto_settings')).contexto_settings?.density)
+
+  check('POPUP-first-run-density', 'Fresh-install popup shows the actual first-run immersion amount',
+    beforeFirstPage === '15%' && beforeSliderValue === '15' &&
+      persistedDensity === 0.15,
+    `popup=${JSON.stringify(beforeFirstPage)}, slider=${JSON.stringify(beforeSliderValue)}, ` +
+      `stored=${JSON.stringify(persistedDensity)}`)
+
+  await context.close()
+}
+
 // --- A tab frozen while the language changes -------------------------------
 // Chrome freezes idle background tabs. Freeze one through CDP, change the
 // language while it cannot run a line of JS, then resume it.
@@ -784,6 +812,7 @@ async function run() {
     await bug2(base)
     await bug4(base)
     await bug3(base)
+    await popupFirstRunDensity(base)
     await frozenTab(base)
     await raceBackAndForth(base)
     await tooltipSelfReplacement(base)

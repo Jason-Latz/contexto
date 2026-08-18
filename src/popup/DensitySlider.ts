@@ -28,7 +28,7 @@ export async function renderDensitySlider(container: HTMLElement): Promise<void>
   const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
   const currentDensity: number = typeof settings.density === 'number'
     ? settings.density
-    : 0.20
+    : 0.15
   let lastPersistedDensity = currentDensity
   let queuedDensity = currentDensity
   let lastWriteAt = 0
