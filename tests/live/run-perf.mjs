@@ -46,7 +46,12 @@ const SITES = [
   'gutenberg-alice',
   'pg-essay',
   'mdn-array',
-].filter((name) => fs.existsSync(path.join(FIXDIR, `${name}.html`)))
+]
+const missingSites = SITES.filter((name) => !fs.existsSync(path.join(FIXDIR, `${name}.html`)))
+if (missingSites.length) {
+  console.error(`FAIL: missing performance fixture(s): ${missingSites.join(', ')}`)
+  process.exit(1)
+}
 
 // Copy dist/ into a test build and point the background at a stub service worker
 // (the only handle Playwright gives us on the extension origin). `stripTail`
