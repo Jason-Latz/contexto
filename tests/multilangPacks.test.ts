@@ -9,6 +9,7 @@ import {
   lookup,
 } from '../src/language/loader.js'
 import { buildReplacement } from '../src/language/replacement.js'
+import { extractPageCandidates } from '../src/content/injector.js'
 import { formatTooltipText } from '../src/content/hoverHandler.js'
 import type { TargetLanguage } from '../src/types/index.js'
 
@@ -72,6 +73,14 @@ test('French pack élides l’ before a vowel from real data', async () => {
   assert.equal(render('fr', 'egg', 'the egg cracked', 4), "l'œuf")
   assert.equal(render('fr', 'house', 'the house stood', 4), 'la maison')
   assert.equal(render('fr', 'book', 'the book fell', 4), 'le livre')
+})
+
+test('French shipped hamburger blocks elision for its aspirated h', async () => {
+  await loadLanguagePack('fr')
+  const text = 'Today our patient reader ordered the hamburger beside a quiet window while friends discussed books and music together.'
+  const candidates = extractPageCandidates([{ nodeValue: text } as Text], [], 'intermediate')
+  assert.ok(candidates.some(candidate => candidate.lemma === 'hamburger'))
+  assert.equal(render('fr', 'hamburger', text, text.indexOf('hamburger')), 'le hamburger')
 })
 
 test('hover tooltip labels the target line with the ACTIVE language, not always Spanish', async () => {
