@@ -6,7 +6,7 @@ import { type ReplacementResult, detectArticle, firstWord, startsWithVowel } fro
 // frequent exceptions. (héros is aspirated, but héroïne/héroïque are mute — so the
 // check is per-word, not by prefix.)
 const ASPIRATED_H = new Set([
-  'hache', 'haie', 'haine', 'hall', 'halle', 'halte', 'hamac', 'hameau', 'hamster',
+  'hache', 'haie', 'haine', 'hall', 'halle', 'halte', 'hamac', 'hamburger', 'hameau', 'hamster',
   'hanche', 'handicap', 'hangar', 'hareng', 'hargne', 'haricot', 'harnais', 'harpe',
   'hasard', 'hâte', 'hausse', 'haut', 'hauteur', 'havre', 'hérisson', 'hernie',
   'héron', 'héros', 'hêtre', 'hibou', 'hiérarchie', 'hochet', 'hockey', 'homard',
