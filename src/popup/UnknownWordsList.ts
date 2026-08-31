@@ -148,16 +148,17 @@ export async function renderUnknownWordsList(
   bodyWrap.appendChild(undoBar)
 
   let undoTimer: ReturnType<typeof setTimeout> | null = null
-  // The pending optimistic-removal timer (the 140ms fade). Tracked so an Undo within
-  // the fade window can cancel it instead of letting it strip the restored word out.
-  let removalTimer: ReturnType<typeof setTimeout> | null = null
+  // Pending optimistic-removal timers (the 140ms fade), tracked per word so a
+  // second fast removal cannot cancel the first word's model update. Undo only
+  // cancels the timer for the word it restores.
+  const removalTimers = new Map<string, ReturnType<typeof setTimeout>>()
   let pendingUndo: UnknownWord | null = null
 
-  function clearRemovalTimer(): void {
-    if (removalTimer !== null) {
-      clearTimeout(removalTimer)
-      removalTimer = null
-    }
+  function clearRemovalTimer(lemma: string): void {
+    const timer = removalTimers.get(lemma)
+    if (timer === undefined) return
+    clearTimeout(timer)
+    removalTimers.delete(lemma)
   }
 
   function hideUndo(): void {
@@ -185,7 +186,7 @@ export async function renderUnknownWordsList(
     const word = pendingUndo
     // Cancel any still-pending optimistic removal so it can't strip the word back out
     // after we restore it.
-    clearRemovalTimer()
+    clearRemovalTimer(word.lemma)
     hideUndo()
     // Re-add only if the removal already fired; otherwise the word is still present.
     if (!allUnknown.some(w => w.lemma === word.lemma)) {
@@ -205,12 +206,13 @@ export async function renderUnknownWordsList(
     // Optimistic fade, then drop from the model and persist the soft-remove.
     chipEl.classList.add('word-chip--leaving')
     void handlers.onRemoveSaved(word.lemma)
-    clearRemovalTimer()
-    removalTimer = setTimeout(() => {
-      removalTimer = null
+    clearRemovalTimer(word.lemma)
+    const timer = setTimeout(() => {
+      removalTimers.delete(word.lemma)
       allUnknown = allUnknown.filter(w => w.lemma !== word.lemma)
       afterModelChange()
     }, 140)
+    removalTimers.set(word.lemma, timer)
     showUndo(word)
   }
 

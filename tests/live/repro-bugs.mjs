@@ -413,6 +413,64 @@ async function bug3(base) {
   await context.close()
 }
 
+// --- Two fast saved-word removals must both leave the visible list ----------
+// Chips remain in the DOM for a 140ms exit fade. A user can click the next chip
+// during that window; both storage mutations and both model removals must land.
+async function popupRapidSavedRemovals() {
+  const { context, sw, extId } = await launch('popup-rapid-saved-removals')
+  await seed(sw, ONBOARDED_ES)
+  await sw.evaluate(async () => {
+    await chrome.storage.local.set({
+      contexto_lexicon_migrated_to_language: 'es',
+      contexto_lexicon_es: {
+        dog: { selfMarkedUnknown: true, selfMarkedUnknownAt: 200 },
+        house: { selfMarkedUnknown: true, selfMarkedUnknownAt: 100 },
+      },
+    })
+  })
+
+  const popup = await context.newPage()
+  await popup.goto(`chrome-extension://${extId}/popup/index.html`, { waitUntil: 'domcontentloaded' })
+  await popup.locator('.word-chip__known').first().waitFor({ timeout: 8000 })
+  const before = await popup.locator('.word-chip__known').count()
+
+  // Fifty milliseconds is inside the visible exit animation while still being
+  // a plausible quick pair of user clicks, rather than two synthetic events in
+  // the same JavaScript task.
+  await popup.locator('.word-chip__known').evaluateAll(async buttons => {
+    buttons[0].click()
+    await new Promise(resolve => setTimeout(resolve, 50))
+    buttons[1].click()
+  })
+
+  const stored = await sw.evaluate(async () => {
+    for (let attempt = 0; attempt < 100; attempt++) {
+      const lexicon = (await chrome.storage.local.get('contexto_lexicon_es')).contexto_lexicon_es
+      if (
+        lexicon?.dog?.selfMarkedUnknown === false &&
+        lexicon?.house?.selfMarkedUnknown === false
+      ) return lexicon
+      await new Promise(resolve => setTimeout(resolve, 20))
+    }
+    throw new Error('Both saved-word removals did not persist')
+  })
+  await popup.waitForTimeout(300)
+
+  const allLabel = await popup.locator('.filter-btn').filter({ hasText: 'All' }).innerText()
+  const visible = await popup.locator('.word-chip__known').evaluateAll(buttons =>
+    buttons.map(button => button.getAttribute('aria-label')))
+  check('POPUP-rapid-saved-removals', 'Rapid removals do not leave a persisted-unsaved chip visible',
+    before === 2 &&
+      stored.dog.selfMarkedUnknown === false &&
+      stored.house.selfMarkedUnknown === false &&
+      allLabel === 'All (0)' &&
+      visible.length === 0,
+    `before=${before}, filter=${JSON.stringify(allLabel)}, visible=${JSON.stringify(visible)}, ` +
+      `stored=${JSON.stringify({ dog: stored.dog.selfMarkedUnknown, house: stored.house.selfMarkedUnknown })}`)
+
+  await context.close()
+}
+
 // --- Fresh-install popup must show the actual silent first-run density ------
 // First-run initialization applies 15% before the first eligible page renders.
 // Opening the popup earlier must show that same default, not a legacy value.
@@ -812,6 +870,7 @@ async function run() {
     await bug2(base)
     await bug4(base)
     await bug3(base)
+    await popupRapidSavedRemovals()
     await popupFirstRunDensity(base)
     await frozenTab(base)
     await raceBackAndForth(base)
