@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url'
 import {
   ensureTailLoaded,
   getActiveLanguagePack,
+  getActiveTargetLanguage,
   getExpressionKeys,
   loadLanguagePack,
   lookup,
@@ -234,4 +235,43 @@ test('a re-run after an absent tail does not re-fetch', async () => {
   // The empty tail is committed, so a second ensureTailLoaded is a no-op.
   await ensureTailLoaded('it')
   assert.equal(counts.manifest, firstManifest, 'absent tail is not re-fetched on every percolation')
+})
+
+test('an older core fetch cannot overwrite a newer target-language request', async () => {
+  await loadLanguagePack('es')
+
+  let markGermanRequestSeen!: () => void
+  const germanRequestSeen = new Promise<void>(resolve => { markGermanRequestSeen = resolve })
+  let releaseGermanRequest!: () => void
+  const germanRequestRelease = new Promise<void>(resolve => { releaseGermanRequest = resolve })
+
+  globalThis.fetch = async (url: string | URL | Request) => {
+    const href = typeof url === 'string' ? url : url instanceof URL ? url.href : url.url
+    const targetLanguage = href.endsWith('/de.json') ? 'de' : 'fr'
+    if (targetLanguage === 'de') {
+      markGermanRequestSeen()
+      await germanRequestRelease
+    }
+    return new Response(JSON.stringify({
+      version: 'test',
+      sourceLanguage: 'en',
+      targetLanguage,
+      displayName: targetLanguage,
+      entries: {},
+    }), { status: 200 })
+  }
+
+  const olderGermanLoad = loadLanguagePack('de')
+  await germanRequestSeen
+  const newerFrenchLoad = loadLanguagePack('fr')
+  await newerFrenchLoad
+  assert.equal(getActiveTargetLanguage(), 'fr', 'newer French load becomes active first')
+
+  releaseGermanRequest()
+  await olderGermanLoad
+  assert.equal(
+    getActiveTargetLanguage(),
+    'fr',
+    'the superseded German response cannot overwrite the newer French request',
+  )
 })
