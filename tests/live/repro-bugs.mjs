@@ -38,6 +38,29 @@ function makeTestBuild() {
   fs.writeFileSync(mfPath, JSON.stringify(mf, null, 2))
   fs.writeFileSync(path.join(DISTTEST, 'test-sw.js'),
     'self.addEventListener("install", () => self.skipWaiting())\n')
+
+  // Playwright routing does not observe chrome-extension:// resource fetches.
+  // This disposable-build-only shim gives the rapid-language regression a
+  // deterministic pack boundary without changing production source or packs.
+  fs.writeFileSync(path.join(DISTTEST, 'test-popup-fetch-delay.js'), `
+    if (new URLSearchParams(location.search).has('delay-de-pack')) {
+      const realFetch = globalThis.fetch.bind(globalThis)
+      globalThis.fetch = async (...args) => {
+        const url = String(args[0] instanceof Request ? args[0].url : args[0])
+        if (url.endsWith('/language-packs/de.json')) {
+          globalThis.__contextoGermanPackDelayed = true
+          await new Promise(resolve => addEventListener('contexto-test-release-de-pack', resolve, { once: true }))
+        }
+        return realFetch(...args)
+      }
+    }
+  `)
+  const popupPath = path.join(DISTTEST, 'popup', 'index.html')
+  const popupHtml = fs.readFileSync(popupPath, 'utf8')
+  fs.writeFileSync(popupPath, popupHtml.replace(
+    '<script type="module"',
+    '<script src="../test-popup-fetch-delay.js"></script><script type="module"',
+  ))
 }
 
 function serveFixtures() {
@@ -471,6 +494,44 @@ async function popupRapidSavedRemovals() {
   await context.close()
 }
 
+// --- Rapid language choices must settle on only the latest panel ------------
+// A pack fetch is a real async boundary. Hold the first selected language's
+// request open, choose a second language, let that newer render finish, then
+// release the older request. The popup must not append the stale panel or leave
+// the shared pack loader on the superseded language.
+async function popupRapidLanguageSelections() {
+  const { context, sw, extId } = await launch('rapid-language-selections')
+  await seed(sw, ONBOARDED_ES)
+
+  const popup = await context.newPage()
+  await popup.goto(`chrome-extension://${extId}/popup/index.html?delay-de-pack=1`, { waitUntil: 'domcontentloaded' })
+  await popup.locator('.lang-dependent > .section > .section-title', { hasText: 'Saved Spanish Words' })
+    .waitFor({ timeout: 10000 })
+
+  await popup.locator('.lang-select').selectOption('de')
+  await popup.waitForFunction(() => globalThis.__contextoGermanPackDelayed === true, undefined, { timeout: 5000 })
+  const panelsDuringGermanLoad = await popup.locator('.lang-dependent > .section > .section-title').allTextContents()
+  await popup.locator('.lang-select').selectOption('fr')
+  await popup.locator('.lang-dependent > .section > .section-title', { hasText: 'Saved French Words' })
+    .waitFor({ timeout: 10000 })
+
+  await popup.evaluate(() => dispatchEvent(new Event('contexto-test-release-de-pack')))
+  await popup.waitForTimeout(1000)
+
+  const titles = await popup.locator('.lang-dependent > .section > .section-title').allTextContents()
+  const selected = await popup.locator('.lang-select').inputValue()
+  const stored = await sw.evaluate(async () =>
+    (await chrome.storage.local.get('contexto_settings')).contexto_settings?.targetLanguage)
+
+  check('POPUP-rapid-language-selections', 'Rapid language choices settle on only the latest language',
+    panelsDuringGermanLoad.length === 0 &&
+      selected === 'fr' && stored === 'fr' && JSON.stringify(titles) === JSON.stringify(['Saved French Words']),
+    `during load=${JSON.stringify(panelsDuringGermanLoad)}; selected=${selected}; stored=${stored}; ` +
+      `saved panels=${JSON.stringify(titles)}`)
+
+  await context.close()
+}
+
 // --- Fresh-install popup must show the actual silent first-run density ------
 // First-run initialization applies 15% before the first eligible page renders.
 // Opening the popup earlier must show that same default, not a legacy value.
@@ -871,6 +932,7 @@ async function run() {
     await bug4(base)
     await bug3(base)
     await popupRapidSavedRemovals()
+    await popupRapidLanguageSelections()
     await popupFirstRunDensity(base)
     await frozenTab(base)
     await raceBackAndForth(base)

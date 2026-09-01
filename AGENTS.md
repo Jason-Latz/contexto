@@ -31,6 +31,11 @@
   state with repeated `worker.evaluate()` calls and a bounded deadline.
 - Repeated extension smoke runs must start from cleared extension storage or a
   fresh disposable browser profile; saved-word clicks toggle prior state.
+- Playwright page routing does not observe `chrome-extension://` fetches for
+  packaged resources. To control a pack-fetch boundary in a live regression,
+  instrument only the disposable test build before the popup module loads.
+- When patching a repeated call or literal in a live harness, anchor the hunk to
+  its unique scenario function and inspect the diff before running the harness.
 - In the Contexto popup, keep the global replacement on/off control and the
   immersion slider at the top immediately after page status; language, review,
   and advanced settings follow them.

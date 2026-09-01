@@ -36,6 +36,10 @@ const TAIL_MERGE_SLICE = 4000
 let activePack: AnyLanguagePack | null = null
 let entries: Map<string, TranslationEntry> | null = null
 let expressionEntries: Array<[string, ExpressionTranslationEntry]> | null = null
+// Different-language core loads can overlap in the popup. Only the newest
+// request may publish into this module singleton; an older slow response must
+// not overwrite the pack selected after it.
+let coreLoadGeneration = 0
 
 // The niche "tail" shard (public/language-packs/<lang>.tail.json): the niche,
 // low-confidence long-tail vocabulary. It is NOT quarantined behind a toggle any
@@ -301,6 +305,9 @@ function resetTail(): void {
 export async function loadLanguagePack(
   targetLanguage: TargetLanguage = DEFAULT_TARGET_LANGUAGE,
 ): Promise<void> {
+  // Increment even when this target is already active: choosing the current
+  // language again must still supersede an older different-language fetch.
+  const generation = ++coreLoadGeneration
   const coreReady = activePack?.targetLanguage === targetLanguage && entries !== null
   if (coreReady) return
 
@@ -312,6 +319,7 @@ export async function loadLanguagePack(
   }
 
   const pack = (await response.json()) as AnyLanguagePack
+  if (generation !== coreLoadGeneration) return
   if (pack.sourceLanguage !== 'en' || pack.targetLanguage !== targetLanguage) {
     throw new Error(`[Contexto] Invalid language pack metadata for ${targetLanguage}`)
   }

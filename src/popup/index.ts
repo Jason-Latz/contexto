@@ -44,6 +44,17 @@ async function init(): Promise<void> {
   const settings = (stored[SETTINGS_KEY] ?? {}) as PopupSettings
 
   let activeLanguage = readTargetLanguage(settings)
+  let languageChangeVersion = 0
+  let targetLanguageWriteChain: Promise<void> = Promise.resolve()
+
+  // Keep target-language settings writes ordered without making pack loads wait
+  // on one another. The popup can therefore render the newest choice promptly,
+  // while storage still settles in the same order as the user's selections.
+  function persistTargetLanguage(language: TargetLanguage): Promise<void> {
+    const run = targetLanguageWriteChain.then(() => updateSettings({ targetLanguage: language }))
+    targetLanguageWriteChain = run.catch(() => {})
+    return run
+  }
 
   // Learning state belongs to the selected target language. Loading through the
   // store also performs the one-time migration from the original shared map.
@@ -71,16 +82,30 @@ async function init(): Promise<void> {
     // Persist the choice, then rebuild the language-dependent panels so the
     // Practice + Saved Words card immediately reflects the new pack.
     onChange: async (language) => {
+      const changeVersion = ++languageChangeVersion
       activeLanguage = language
       settings.targetLanguage = language
-      await updateSettings({ targetLanguage: language })
+      // The list's handlers mutate the module-global lexicon store. Remove the
+      // old language's controls before that store can switch underneath them;
+      // the replacement panel is staged off-DOM and committed when ready.
+      liveUnknownWordsHandle = null
+      languagePanels.replaceChildren()
+      await persistTargetLanguage(language)
+      if (changeVersion !== languageChangeVersion) return
       await loadLexicon(language)
-      lexicon = getLexiconForStorage()
+      if (changeVersion !== languageChangeVersion) return
+      const nextLexicon = getLexiconForStorage()
+      lexicon = nextLexicon
       latestSessionLemmas = new Set()
-      await renderLanguageDependentPanels()
+      const rendered = await renderLanguageDependentPanels(
+        language,
+        nextLexicon,
+        () => changeVersion === languageChangeVersion,
+      )
+      if (!rendered) return
       if (advancedSettingsElement) {
         advancedSettingsElement.remove()
-        advancedSettingsElement = renderAdvancedSettings(root, settings, activeLanguage)
+        advancedSettingsElement = renderAdvancedSettings(root, settings, language)
       }
     },
   })
@@ -110,22 +135,37 @@ async function init(): Promise<void> {
   languagePanels.className = 'lang-dependent'
   root.appendChild(languagePanels)
 
-  async function renderLanguageDependentPanels(): Promise<void> {
-    liveUnknownWordsHandle = null
-    while (languagePanels.firstChild) languagePanels.removeChild(languagePanels.firstChild)
+  async function renderLanguageDependentPanels(
+    panelLanguage: TargetLanguage = activeLanguage,
+    panelLexicon: Record<string, typeof lexicon[string]> = lexicon,
+    isCurrent: () => boolean = () => true,
+  ): Promise<boolean> {
+    // Build off-DOM across the awaited pack load. A superseded render can then
+    // be discarded without appending a stale second card beside the latest one.
+    const staging = document.createElement('div')
     const handle = await renderUnknownWordsList(
-      languagePanels,
-      lexicon,
+      staging,
+      panelLexicon,
       latestSessionLemmas,
       handlers,
-      activeLanguage,
+      panelLanguage,
     )
+    if (!isCurrent()) return false
+
+    liveUnknownWordsHandle = null
+    languagePanels.replaceChildren(...staging.childNodes)
     liveUnknownWordsHandle = handle
     // The active-tab reply can land while the language pack is loading.
     handle.setSessionLemmas(latestSessionLemmas)
+    return true
   }
 
-  await renderLanguageDependentPanels()
+  const initialLanguageVersion = languageChangeVersion
+  await renderLanguageDependentPanels(
+    activeLanguage,
+    lexicon,
+    () => initialLanguageVersion === languageChangeVersion,
+  )
   advancedSettingsElement = renderAdvancedSettings(root, settings, activeLanguage)
 }
 
