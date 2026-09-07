@@ -83,17 +83,24 @@ async function run() {
     await page.waitForTimeout(2500)
     try { await page.waitForSelector('[data-contexto="true"]', { timeout: 6000 }) } catch {}
 
-    const spanCount = await page.locator('[data-contexto="true"]').count()
-    const samples = await page.locator('[data-contexto="true"]').evaluateAll(
+    const renderedSpans = page.locator('[data-contexto="true"]')
+    const spanCount = await renderedSpans.count()
+    const samples = await renderedSpans.evaluateAll(
       (els) => els.slice(0, 24).map((e) => ({
         source: e.getAttribute('data-source'), target: e.getAttribute('data-target'),
       })))
+    const renderedLanguages = await renderedSpans.evaluateAll((els) =>
+      [...new Set(els.map((e) => e.getAttribute('lang') ?? ''))])
     await page.screenshot({ path: path.join(SHOTS, `multilang-${lang.code}.png`), fullPage: false })
 
-    const ok = spanCount > 0 && consoleErrors.length === 0
+    const languageOk = renderedLanguages.length === 1 && renderedLanguages[0] === lang.code
+    const ok = spanCount > 0 && languageOk && consoleErrors.length === 0
     if (!ok) failures++
-    results.push({ lang: lang.code, spanCount, consoleErrors, samples })
-    console.log(`[${ok ? 'ok' : 'FAIL'}] ${lang.name}: ${spanCount} replacements${consoleErrors.length ? ` — ${consoleErrors.length} console error(s)` : ''}`)
+    results.push({ lang: lang.code, spanCount, renderedLanguages, consoleErrors, samples })
+    const languageDetail = languageOk
+      ? ''
+      : ` — wrong language (expected ${lang.code}, saw ${renderedLanguages.join(', ') || 'none'})`
+    console.log(`[${ok ? 'ok' : 'FAIL'}] ${lang.name}: ${spanCount} replacements${languageDetail}${consoleErrors.length ? ` — ${consoleErrors.length} console error(s)` : ''}`)
     console.log('   ' + samples.slice(0, 12).map((s) => `${s.source}→${s.target}`).join('  '))
     await page.close()
   }
@@ -111,7 +118,7 @@ async function run() {
   await context.close()
   fs.writeFileSync(path.join(SHOTS, 'multilang-results.json'), JSON.stringify(results, null, 2))
   console.log(`\nscreenshots -> ${SHOTS}`)
-  if (failures) { console.log(`FAILURES: ${failures} language(s) rendered nothing or logged errors`); process.exitCode = 1 }
+  if (failures) { console.log(`FAILURES: ${failures} language(s) failed replacement, language, or console checks`); process.exitCode = 1 }
 }
 
 run().catch((e) => { console.error(e); process.exit(2) })
